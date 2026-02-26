@@ -28,7 +28,7 @@ function CandleChart() {
   const [activeTime, setActiveTime] = useState('D');
   const times = ['1m', '30m', '1h', 'D'];
 
-  const W = 500, H = 320;
+  const W = 500, H = 380;
   const padL = 8, padR = 55, padT = 20, padB = 40;
   const chartW = W - padL - padR;
   const chartH = H - padT - padB;
@@ -150,11 +150,11 @@ export default function TradingAnalysis() {
       `}</style>
       <section
         ref={sectionRef}
-        style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', paddingLeft: "12px", paddingRight: "12px", boxSizing: "border-box" }}
+        style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', paddingLeft: "12px", paddingRight: "12px", paddingTop: "20px", paddingBottom: "20px", boxSizing: "border-box" }}
       >
         <div className="relative z-10 px-4">
-          <div className="flex flex-row gap-4" style={{ alignItems: "stretch" }}>
-            <div className="w-1/2 flex flex-col space-y-2">
+          <div className="flex flex-row gap-4" style={{ alignItems: "stretch", minHeight: "unset" }}>
+            <div className="w-1/2 flex flex-col" style={{ justifyContent: "space-between", height: "100%", alignSelf: "stretch" }}>
               <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '600', letterSpacing: '0.05em' }}>
                 Trading Analysis
               </div>

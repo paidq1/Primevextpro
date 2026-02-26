@@ -15,12 +15,7 @@ const Smartsupp = () => {
     s.parentNode.insertBefore(c, s);
   }, []);
 
-  return (
-    <style>{`
-      #smartsupp-widget-container {
-      }
-    `}</style>
-  );
+  return null;
 };
 
 export default Smartsupp;

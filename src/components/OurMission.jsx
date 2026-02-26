@@ -11,62 +11,31 @@ const accordionItems = [
 const OurMission = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
-  useEffect(() => {
-    const els = document.querySelectorAll('.mission-anim');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('mission-visible');
-          else e.target.classList.remove('mission-visible');
-        });
-      },
-      { threshold: 0.01 }
-    );
-    els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section style={{ background: "#1e2235", position: "relative", width: "100%", paddingTop: "24px", paddingBottom: "24px", boxSizing: 'border-box', overflow: 'hidden' }}>
-        {/* Purple Glow Blob - behind network graphic */}
-        <div style={{ position: 'absolute', top: '0px', left: '0px', width: '150px', height: '150px', background: 'radial-gradient(circle at 40% 40%, rgba(120,60,255,0.5) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(35px)', zIndex: 0 }}></div>
-        {/* Abstract Network Graphic - Top Left */}
-        <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1, width: '80px', height: '80px', opacity: 0.5 }}>
-          <svg width='80' height='80' viewBox='0 0 80 80'>
-            <line x1='10' y1='10' x2='40' y2='30' stroke='#4a5fc1' strokeWidth='0.7' opacity='0.7'/>
-            <line x1='40' y1='30' x2='70' y2='15' stroke='#4a5fc1' strokeWidth='0.7' opacity='0.7'/>
-            <line x1='40' y1='30' x2='55' y2='55' stroke='#4a5fc1' strokeWidth='0.7' opacity='0.7'/>
-            <line x1='40' y1='30' x2='15' y2='50' stroke='#4a5fc1' strokeWidth='0.7' opacity='0.7'/>
-            <line x1='10' y1='10' x2='15' y2='50' stroke='#4a5fc1' strokeWidth='0.5' opacity='0.4'/>
-            <line x1='70' y1='15' x2='55' y2='55' stroke='#4a5fc1' strokeWidth='0.5' opacity='0.4'/>
-            <line x1='15' y1='50' x2='55' y2='55' stroke='#4a5fc1' strokeWidth='0.5' opacity='0.4'/>
-            <circle cx='40' cy='30' r='3' fill='#5b6fd4' opacity='0.9'/>
-            <circle cx='10' cy='10' r='1.5' fill='#4a5fc1' opacity='0.8'/>
-            <circle cx='70' cy='15' r='1.5' fill='#4a5fc1' opacity='0.8'/>
-            <circle cx='55' cy='55' r='1.5' fill='#4a5fc1' opacity='0.8'/>
-            <circle cx='15' cy='50' r='1.5' fill='#4a5fc1' opacity='0.8'/>
-          </svg>
-        </div>
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+    <section style={{ background: "#1e2235", position: "relative", width: "100%", boxSizing: 'border-box', overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px' }}>
+      <div style={{ position: 'absolute', top: '0px', left: '0px', width: '150px', height: '150px', background: 'radial-gradient(circle at 40% 40%, rgba(120,60,255,0.5) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(35px)', zIndex: 0 }}></div>
+      <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1, width: '120px', height: '120px' }}>
+        <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+      </div>
 
-        {/* Left: Phone - touches left edge, no margin */}
-        <div className='mission-anim mission-delay-1' style={{ flex: '0 0 38%', minWidth: 0, position: 'relative', overflow: 'hidden', alignSelf: 'flex-start', marginTop: '50px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', gap: '20px', paddingRight: '12px', minHeight: 'unset' }}>
+
+        {/* Left: Phone */}
+        <div style={{ flex: '0 0 36%', minWidth: 0, position: 'relative', maxHeight: '400px', overflow: 'hidden', marginTop: '50px' }}>
           <img src="/mission-phone.png" alt="App mockup"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </div>
 
-        {/* Right: big gap from phone, card on right side */}
-        <div className='mission-anim mission-delay-2' style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '24px 20px 24px 55px' }}>
+        {/* Right: Card - full height */}
+        <div style={{ flex: '0 0 48%', display: 'flex', alignItems: 'stretch', padding: '0px 12px 0px 0px', marginLeft: 'auto' }}>
           <div style={{
-            background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)',
-            borderRadius: '0px',
-            padding: '12px',
+            background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', minHeight: '340px',
+            padding: '16px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            gap: '5px',
+            gap: '8px',
             width: '100%',
-            minHeight: '360px',
             boxSizing: 'border-box',
             border: '1px solid rgba(255,255,255,0.08)'
           }}>
@@ -100,7 +69,6 @@ const OurMission = () => {
                 ))}
               </div>
             </div>
-
             <div style={{ display: 'flex', gap: '6px' }}>
               <button style={{ flex: 1, padding: '7px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started

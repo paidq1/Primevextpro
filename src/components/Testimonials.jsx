@@ -65,7 +65,7 @@ export default function Testimonials() {
               </div>
               <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', lineHeight: '1.6', fontStyle: 'italic', margin: 0 }}>{t.review}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
-                <img src={t.avatar + '?v=' + t.name.replace(/s/g, '')} alt={t.name} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'center center', minWidth: '36px', minHeight: '36px', maxWidth: '36px', maxHeight: '36px', overflow: 'hidden', flexShrink: 0 }} />
+                <img src={t.avatar + '?v=' + t.name.replace(/s/g, '')} alt={t.name} style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'center center', minWidth: '24px', minHeight: '24px', maxWidth: '24px', maxHeight: '24px', overflow: 'hidden', flexShrink: 0 }} />
                 <div style={{ width: '2px', height: '28px', background: '#6366f1', borderRadius: '2px' }} />
                 <div>
                   <div style={{ color: 'white', fontSize: '8px', fontWeight: '700' }}>{t.name}</div>
