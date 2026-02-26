@@ -44,7 +44,7 @@ export default function VideoResources() {
         style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', padding: '16px', position: 'relative' }}
       >
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/download.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.15, zIndex: 0 }} />
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'row', gap: '16px', alignItems: 'flex-start' }}>
+        <div className='scroll-anim' style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'row', gap: '16px', alignItems: 'flex-start' }}>
 
           {/* Left Panel */}
           <div style={{

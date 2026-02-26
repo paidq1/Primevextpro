@@ -116,7 +116,7 @@ export default function HowItWorks() {
                   </div>
                   <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', lineHeight: '1.5', marginBottom: '6px' }}>{step.description}</p>
                   {step.learnMore && (
-                    <button style={{ color: 'rgba(255,255,255,0.8)', fontSize: '9px', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                    <button style={{ color: 'rgba(255,255,255,0.8)', fontSize: '9px', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }} onClick={() => window.location.href="/signin"}>
                       Learn More <ArrowUpRight size={10} />
                     </button>
                   )}

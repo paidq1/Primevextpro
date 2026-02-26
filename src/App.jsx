@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import useScrollAnim from "./hooks/useScrollAnim";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import 'aos/dist/aos.css';
+import AOS from 'aos';
+
 import HeroSection from "./components/HeroSection";
 import MarketOverview from "./components/MarketOverview";
 import OurMission from "./components/OurMission";
@@ -11,54 +14,56 @@ import WhyChooseUs from "./components/WhyChooseUs";
 import Achievements from "./components/Achievements";
 import OurPlans from "./components/OurPlans";
 import Testimonials from "./components/Testimonials";
+import InvestmentOpportunities from "./components/InvestmentOpportunities";
 import ContactUs from "./components/ContactUs";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import Smartsupp from "./components/Smartsupp";
-import InvestmentOpportunities from "./components/InvestmentOpportunities";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
 
-class ErrorBoundary extends React.Component {
-  constructor(props) { super(props); this.state = { error: null }; }
-  componentDidCatch(error) { this.setState({ error: error.message }); }
-  render() {
-    if (this.state.error) return (
-      <div style={{color:'red',padding:'20px',fontSize:'14px',background:'white'}}>
-        <b>ERROR:</b> {this.state.error}
-      </div>
-    );
-    return this.props.children;
-  }
-}
-
-function App() {
-  useScrollAnim();
+function HomePage() {
   useEffect(() => {
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    AOS.init({ duration: 800, easing: 'ease-out', once: true, mirror: false, offset: 100 });
+    window.AOS = AOS;
   }, []);
 
   return (
-    <ErrorBoundary>
-      <div className="relative w-full min-h-screen bg-[#151c27] text-white overflow-x-hidden">
-        <HeroSection />
-        <WhyChooseSection />
-        <MarketOverview />
-        <OurMission />
-        <HowItWorks />
-        <TradingAnalysis />
-        <VideoResources />
-        <WhyChooseUs />
-        <Achievements />
-        <OurPlans />
-        <InvestmentOpportunities />
-        <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.15)" }} />
-        <Testimonials />
-        <ContactUs />
-        <FAQ />
-        <Footer />
-        <Smartsupp />
-      </div>
-    </ErrorBoundary>
+    <div className="relative w-full min-h-screen bg-[#151c27] text-white overflow-x-hidden">
+      <HeroSection onGetStarted={() => window.location.href="/signup"} />
+      <WhyChooseSection />
+      <MarketOverview />
+      <OurMission />
+      <HowItWorks />
+      <TradingAnalysis />
+      <VideoResources />
+      <WhyChooseUs />
+      <Achievements />
+      <OurPlans />
+      <InvestmentOpportunities />
+      <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.15)" }} />
+      <Testimonials />
+      <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.15)" }} />
+      <ContactUs />
+      <FAQ />
+      <Footer />
+      <Smartsupp />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
+document.addEventListener('contextmenu', e => e.preventDefault());

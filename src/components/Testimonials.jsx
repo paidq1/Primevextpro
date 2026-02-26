@@ -45,7 +45,7 @@ export default function Testimonials() {
         <div style={{ position: 'absolute', top: '-10px', left: '0px', zIndex: 1, width: '120px', height: '120px' }}>
           <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>
-        <div style={{ textAlign: 'center', marginBottom: '20px' }} data-aos='fade-up'>
+        <div className='scroll-anim' style={{ textAlign: 'center', marginBottom: '20px' }}>
           <h2 style={{ color: 'white', fontWeight: '700', fontSize: '16px', marginBottom: '8px' }}>Trusted by Traders Worldwide</h2>
           <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', lineHeight: '1.6', maxWidth: '280px', margin: '0 auto' }}>
             See how our platform has helped traders, investors, and crypto enthusiasts achieve their financial goals and experience secure, seamless trading.
@@ -53,7 +53,7 @@ export default function Testimonials() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', marginBottom: '16px', alignItems: 'flex-start' }}>
           {uniqueVisible.map((t, i) => (
-            <div key={i}
+            <div key={i} className={`scroll-anim delay-${i+1}`}
               style={{ background: 'rgba(44,62,80,0.75)', borderRadius: '0px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, animationDelay: i * 0.1 + 's' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', gap: '2px' }}>

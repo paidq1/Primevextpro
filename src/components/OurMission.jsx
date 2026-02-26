@@ -12,7 +12,7 @@ const OurMission = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="scroll-anim" style={{ background: "#1e2235", position: "relative", width: "100%", boxSizing: 'border-box', overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px' }}>
+    <section style={{ background: "#1e2235", position: "relative", width: "100%", boxSizing: 'border-box', overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px' }}>
       <div style={{ position: 'absolute', top: '0px', left: '0px', width: '150px', height: '150px', background: 'radial-gradient(circle at 40% 40%, rgba(120,60,255,0.5) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(35px)', zIndex: 0 }}></div>
       <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1, width: '120px', height: '120px' }}>
         <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
@@ -21,13 +21,13 @@ const OurMission = () => {
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', gap: '20px', paddingRight: '12px', minHeight: 'unset' }}>
 
         {/* Left: Phone */}
-        <div style={{ flex: '0 0 36%', minWidth: 0, position: 'relative', maxHeight: '400px', overflow: 'hidden', marginTop: '50px' }}>
+        <div className="scroll-anim" style={{ flex: '0 0 36%', minWidth: 0, position: 'relative', maxHeight: '400px', overflow: 'hidden', marginTop: '50px' }}>
           <img src="/mission-phone.png" alt="App mockup"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </div>
 
         {/* Right: Card - full height */}
-        <div style={{ flex: '0 0 48%', display: 'flex', alignItems: 'stretch', padding: '0px 12px 0px 0px', marginLeft: 'auto' }}>
+        <div className="scroll-anim delay-2" style={{ flex: '0 0 48%', display: 'flex', alignItems: 'stretch', padding: '0px 12px 0px 0px', marginLeft: 'auto' }}>
           <div style={{
             background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', minHeight: '340px',
             padding: '16px',
@@ -70,10 +70,10 @@ const OurMission = () => {
               </div>
             </div>
             <div style={{ display: 'flex', gap: '6px' }}>
-              <button style={{ flex: 1, padding: '7px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer' }}>
+              <button onClick={() => window.location.href="/signup"} style={{ flex: 1, padding: '7px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started
               </button>
-              <button style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }}>
+              <button style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }} onClick={() => window.location.href="/signin"}>
                 Learn More <ArrowUpRight size={8} />
               </button>
             </div>

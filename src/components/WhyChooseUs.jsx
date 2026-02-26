@@ -60,7 +60,7 @@ export default function WhyChooseUs() {
 
             {/* Buttons */}
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button style={{ padding: '8px 16px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
+              <button onClick={() => window.location.href="/signup"} style={{ padding: '8px 16px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started Today
               </button>
               <button style={{ padding: '8px 16px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>

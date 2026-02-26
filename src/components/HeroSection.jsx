@@ -77,7 +77,7 @@ function ParticleNetwork() {
   return <canvas id="particle-canvas" className="absolute inset-0 w-full h-full" />;
 }
 
-function Navbar() {
+function Navbar({ onGetStarted }) {
   return (
     <nav className="relative z-20 w-full pl-2 pr-1 pt-2 pb-2">
       <div className="flex items-center justify-between w-full whitespace-nowrap">
@@ -109,7 +109,7 @@ function Navbar() {
           </button>
         </div>
         <div className="ml-auto pl-1">
-          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap">
+          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap" onClick={onGetStarted}>
             Get Started
           </button>
         </div>
@@ -118,7 +118,7 @@ function Navbar() {
   );
 }
 
-export default function HeroSection() {
+export default function HeroSection({ onGetStarted }) {
   return (
     <section className="relative px-2 pt-0 pb-4 bg-[#151c27] overflow-hidden">
       <ParticleNetwork />
@@ -126,7 +126,7 @@ export default function HeroSection() {
       <div style={{ position: "absolute", bottom: "0px", left: "0px", width: "250px", height: "250px", background: "radial-gradient(circle at 30% 70%, rgba(120,60,255,0.45) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", zIndex: 1 }}></div>
       <div className="absolute inset-0 bg-gradient-to-b from-[#151c27]/20 via-transparent to-[#151c27]" />
 
-      <Navbar />
+      <Navbar onGetStarted={onGetStarted} />
       <MarketTicker />
 
       {/* Hero: text left, image right */}
@@ -150,10 +150,10 @@ export default function HeroSection() {
 
           {/* Buttons FIRST - before stats, sharp corners */}
           <div className="flex gap-2 pt-1">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-none font-bold text-[9px] transition-colors">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-none font-bold text-[9px] transition-colors" onClick={onGetStarted}>
               Get Started
             </button>
-            <button className="group bg-white/5 hover:bg-white/10 border border-white/20 px-4 py-2 rounded-none font-bold text-[9px] flex items-center gap-1 transition-all">
+            <button className="group bg-white/5 hover:bg-white/10 border border-white/20 px-4 py-2 rounded-none font-bold text-[9px] flex items-center gap-1 transition-all" onClick={() => window.location.href="/signin"}>
               Learn More
               <span className="inline-block transform -rotate-45 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">→</span>
             </button>

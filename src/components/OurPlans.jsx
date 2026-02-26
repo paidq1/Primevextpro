@@ -25,7 +25,7 @@ export default function OurPlans() {
               Select from our tailored plans designed to meet the needs of every trader, investor, and crypto enthusiast.
             </p>
             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
-              <button style={{ background: '#6366f1', border: 'none', color: 'white', padding: '6px 12px', borderRadius: '0px', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
+              <button onClick={() => window.location.href="/signup"} style={{ background: '#6366f1', border: 'none', color: 'white', padding: '6px 12px', borderRadius: '0px', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started Today
               </button>
               <button style={{ background: 'transparent', border: '1px solid #6366f1', color: 'white', padding: '6px 12px', borderRadius: '0px', fontSize: '8px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>

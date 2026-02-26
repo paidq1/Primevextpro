@@ -154,7 +154,7 @@ export default function TradingAnalysis() {
       >
         <div className="relative z-10 px-4">
           <div className="flex flex-row gap-4" style={{ alignItems: "stretch", minHeight: "unset" }}>
-            <div className="w-1/2 flex flex-col" style={{ justifyContent: "space-between", height: "100%", alignSelf: "stretch" }}>
+            <div className="w-1/2 flex flex-col scroll-anim" style={{ justifyContent: "space-between", height: "100%", alignSelf: "stretch" }}>
               <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '600', letterSpacing: '0.05em' }}>
                 Trading Analysis
               </div>
@@ -182,7 +182,7 @@ export default function TradingAnalysis() {
                 Start Analyzing Now <ArrowUpRight size={10} />
               </button>
             </div>
-            <div className="w-1/2" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div className="w-1/2 scroll-anim delay-2" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
               <CandleChart />
             </div>
           </div>

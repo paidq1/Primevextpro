@@ -7,7 +7,7 @@ const ContactUs = () => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   return (
-    <><section className="scroll-anim" ref={ref} style={{ background: '#0e1420', width: '100%', boxSizing: 'border-box', padding: '12px', position: 'relative', overflow: 'hidden' }}>
+    <><section ref={ref} style={{ background: '#0e1420', width: '100%', boxSizing: 'border-box', padding: '12px', position: 'relative', overflow: 'hidden' }}>
       
             {/* Dotted World Map Background */}
       <img src='/world-map.png' style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', opacity: 0.15, pointerEvents: 'none' }} />
