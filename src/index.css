@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-darkBg text-white;
+}
+
+
+/* Pop out animations */
+@keyframes popOut {
+  0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideLeft {
+  0% { opacity: 0; transform: translateX(-30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeSlideRight {
+  0% { opacity: 0; transform: translateX(30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.anim-pop { animation: popOut 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+.anim-up  { animation: fadeSlideUp 0.5s ease both; }
+.anim-left { animation: fadeSlideLeft 0.6s ease both; }
+.anim-right { animation: fadeSlideRight 0.6s ease both; }
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; }
+.delay-8 { animation-delay: 0.8s; }
+
+/* Scroll animation initial state */
+.scroll-anim {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.scroll-anim.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.scroll-anim.delay-1 { transition-delay: 0.1s; }
+.scroll-anim.delay-2 { transition-delay: 0.2s; }
+.scroll-anim.delay-3 { transition-delay: 0.3s; }
+.scroll-anim.delay-4 { transition-delay: 0.4s; }
+.scroll-anim.delay-5 { transition-delay: 0.5s; }
+
+/* Scroll animation initial state */
+.scroll-anim {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.scroll-anim.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.scroll-anim.delay-1 { transition-delay: 0.1s; }
+.scroll-anim.delay-2 { transition-delay: 0.2s; }
+.scroll-anim.delay-3 { transition-delay: 0.3s; }
+.scroll-anim.delay-4 { transition-delay: 0.4s; }
+.scroll-anim.delay-5 { transition-delay: 0.5s; }
+
+/* OurMission animations */
+.mission-anim {
+  opacity: 0;
+  transform: translateY(25px) scale(0.97);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.mission-anim.mission-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.mission-delay-1 { transition-delay: 0.1s; }
+.mission-delay-2 { transition-delay: 0.25s; }
+.mission-delay-3 { transition-delay: 0.4s; }
+.mission-delay-4 { transition-delay: 0.55s; }
+
+/* MarketOverview animations */
+.market-anim {
+  opacity: 0;
+  transform: translateY(25px) scale(0.97);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.market-anim.market-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.market-delay-1 { transition-delay: 0.1s; }
+.market-delay-2 { transition-delay: 0.3s; }
+
+/* Hero animations */
+.hero-anim {
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.hero-anim.hero-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.hero-delay-1 { transition-delay: 0.1s; }
+.hero-delay-2 { transition-delay: 0.3s; }
+.hero-delay-3 { transition-delay: 0.5s; }
+.hero-delay-4 { transition-delay: 0.7s; }
+
+/* Prevent image download */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}

@@ -1,0 +1,80 @@
+import { useEffect, useRef, useState } from 'react';
+
+const benefits = [
+  { title: 'Low Fees & Fast Transactions', desc: 'Enjoy some of the lowest transaction fees in the market, coupled with lightning-fast execution speeds.' },
+  { title: 'Advanced Trading Tools', desc: 'Access professional trading tools including charting features, technical indicators, and analysis tools.' },
+  { title: 'High-Yield Staking Programs', desc: 'Maximize your earnings with flexible staking options offering high annual percentage yields (APYs).' },
+  { title: 'Secure & Transparent Platform', desc: 'We prioritize security and transparency, using the latest blockchain technology to protect your assets.' },
+  { title: 'Diverse Investment Options', desc: 'Choose from a wide variety of cryptocurrencies and forex pairs to diversify your investment portfolio.' },
+  { title: '24/7 Customer Support', desc: 'Our expert support team is available around the clock to assist you with any issues or questions.' },
+];
+
+const Icon = () => (
+  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(60,50,180,0.7)', border: '1px solid rgba(99,102,241,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>
+    </svg>
+  </div>
+);
+
+export default function WhyChooseUs() {
+  const ref = useRef(null);
+
+  return (
+    <>
+    
+    <section ref={ref} style={{ background: '#1a2235', width: '100%', boxSizing: 'border-box', padding: '16px 8px 16px 16px', overflow: 'hidden', position: 'relative' }}>
+
+      {/* Bottom right network graphic */}
+      <div style={{ position: 'absolute', bottom: '-20px', right: '-10px', zIndex: 0, width: '140px', height: '140px' }}>
+        <img src="/1003050730-removebg-preview.png" alt="Network" style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.8 }} />
+      </div>
+
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '24px', alignItems: 'flex-start' }}>
+
+          {/* Left: Title + phone */}
+          <div style={{ flex: '0 0 32%', minWidth: 0, marginLeft: '-16px' }}>
+            <div style={{ paddingLeft: '16px' }}><p style={{ color: '#6366f1', fontSize: '8px', fontWeight: '600', margin: '0 0 4px 0', textTransform: 'uppercase' }}>Benefits</p>
+            <h2 style={{ color: 'white', fontSize: '16px', fontWeight: '800', margin: '0 0 8px 0', lineHeight: 1.3 }}>Why Choose Us?</h2>
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', lineHeight: '1.6', margin: '0 0 12px 0' }}>
+              Explore the unique advantages that set us apart from other platforms, ensuring you maximize your investment potential.
+            </p>
+            </div><img src="/mission-phone.png" alt="App" style={{ width: '100%', objectFit: 'cover', display: 'block' }} />
+          </div>
+
+          {/* Right: Benefits grid */}
+          <div style={{ flex: '0 0 55%', minWidth: 0, marginLeft: '60px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              {benefits.map((b, i) => (
+                <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <Icon />
+                  <div style={{ color: 'white', fontWeight: '700', fontSize: '7px', lineHeight: 1.3 }}>{b.title}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: '6px', lineHeight: '1.4' }}>{b.desc}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Divider */}
+            <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '12px 0' }} />
+
+            {/* Buttons */}
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button style={{ padding: '8px 16px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
+                Get Started Today
+              </button>
+              <button style={{ padding: '8px 16px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                Explore Our Features
+                <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    </>
+  );
+}
