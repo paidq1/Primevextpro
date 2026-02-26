@@ -29,7 +29,7 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <><section ref={faqRef} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '32px 16px', position: 'relative', overflow: 'hidden' }}>
+    <><section className="scroll-anim" ref={faqRef} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '32px 16px', position: 'relative', overflow: 'hidden' }}>
 
       {/* Network graph top left */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '130px', height: '130px', opacity: 0.7 }}>
@@ -57,7 +57,7 @@ const FAQ = () => {
       }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {faqs.map((faq, index) => (
-            <div key={index} style={{ animationDelay: index * 0.1 + 's',
+            <div key={index} className={`scroll-anim delay-${(index % 5) + 1}`} style={{ animationDelay: index * 0.1 + 's',
               background: '#3d5060', borderRadius: '0px', overflow: 'hidden',
             }}>
               <button

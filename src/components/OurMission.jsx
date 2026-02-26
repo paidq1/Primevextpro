@@ -12,7 +12,7 @@ const OurMission = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section style={{ background: "#1e2235", position: "relative", width: "100%", boxSizing: 'border-box', overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px' }}>
+    <section className="scroll-anim" style={{ background: "#1e2235", position: "relative", width: "100%", boxSizing: 'border-box', overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px' }}>
       <div style={{ position: 'absolute', top: '0px', left: '0px', width: '150px', height: '150px', background: 'radial-gradient(circle at 40% 40%, rgba(120,60,255,0.5) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(35px)', zIndex: 0 }}></div>
       <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1, width: '120px', height: '120px' }}>
         <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />

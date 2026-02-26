@@ -44,7 +44,7 @@ export default function InvestmentOpportunities() {
   return (
     <>
       
-      <section ref={ref} style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', width: '100%', boxSizing: 'border-box', padding: '16px', overflow: 'hidden', position: 'relative' }}>
+      <section className="scroll-anim" ref={ref} style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', width: '100%', boxSizing: 'border-box', padding: '16px', overflow: 'hidden', position: 'relative' }}>
         <svg style={{ position: 'absolute', top: 0, left: 0, width: '52%', height: '100%', opacity: 0.6, zIndex: 0 }}
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
           <polygon points="0,0 80,40 60,120" fill="#1f3b4d"/>
@@ -68,7 +68,7 @@ export default function InvestmentOpportunities() {
         <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', alignItems: 'stretch', position: 'relative', zIndex: 1 }}>
 
           {/* Left Panel */}
-          <div style={{ flex: '0 0 40%', minWidth: 0 }}>
+          <div className="scroll-anim" style={{ flex: '0 0 40%', minWidth: 0 }}>
             <p style={{ color: '#6366f1', fontSize: '7px', fontWeight: '600', margin: '0 0 6px 0' }}>Investment Opportunities</p>
             <h2 style={{ color: 'white', fontSize: '14px', fontWeight: '800', margin: '0 0 8px 0', lineHeight: 1.3 }}>
               Discover Profitable Investment <span style={{ color: '#6366f1' }}>Opportunities</span>
@@ -95,7 +95,7 @@ export default function InvestmentOpportunities() {
           </div>
 
           {/* Right Panel - Live Table */}
-          <div style={{ flex: 1, minWidth: 0, background: '#0d1117', borderRadius: '0px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <div className="scroll-anim delay-2" style={{ flex: 1, minWidth: 0, background: '#0d1117', borderRadius: '0px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '8px 10px', borderBottom: '2px solid #6366f1' }}>
               <div>
                 <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '6px', fontWeight: '600' }}>NAME</div>

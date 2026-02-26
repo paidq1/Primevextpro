@@ -16,7 +16,7 @@ export default function OurPlans() {
     <>
       
       <section ref={ref} style={{ background: '#1e2530', width: '100%', boxSizing: 'border-box', padding: '24px 16px', overflow: 'hidden' }}>
-        <div>
+        <div className="scroll-anim">
 
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
@@ -40,7 +40,7 @@ export default function OurPlans() {
           {/* Plans Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
             {plans.map((p, i) => (
-              <div key={i} style={{ background: '#2e3840', borderRadius: '0px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div key={i} className={`scroll-anim delay-${i + 1}`} style={{ background: '#2e3840', borderRadius: '0px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 
                 {/* Top row */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

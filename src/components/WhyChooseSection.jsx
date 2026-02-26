@@ -96,14 +96,14 @@ export default function WhyChooseSection() {
         </svg>
       </div>
       <div className="relative z-10 px-3">
-        <div className="text-center mb-6 anim-up delay-2">
+        <div className="text-center mb-6 scroll-anim">
           <h2 className="text-lg font-bold text-white mb-2">Why Choose Our Platform?</h2>
           <p className="text-gray-400 text-[10px] max-w-xs mx-auto leading-relaxed">
             Explore the advanced features that make us the best choice for cryptocurrency and forex traders, investors, and stakers.
           </p>
         </div>
 
-        <div className="flex flex-row gap-2 anim-up delay-4">
+        <div className="flex flex-row gap-2 scroll-anim delay-2">
           {features.map((feature, idx) => (
             <div
               key={idx} className={"scroll-anim delay-" + (idx+3)}

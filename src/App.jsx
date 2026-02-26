@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import useScrollAnim from "./hooks/useScrollAnim";
 import HeroSection from "./components/HeroSection";
 import MarketOverview from "./components/MarketOverview";
 import OurMission from "./components/OurMission";
@@ -30,6 +31,7 @@ class ErrorBoundary extends React.Component {
 }
 
 function App() {
+  useScrollAnim();
   useEffect(() => {
     document.addEventListener('contextmenu', e => e.preventDefault());
   }, []);

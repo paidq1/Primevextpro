@@ -23,7 +23,7 @@ export default function WhyChooseUs() {
   return (
     <>
     
-    <section ref={ref} style={{ background: '#1a2235', width: '100%', boxSizing: 'border-box', padding: '16px 8px 16px 16px', overflow: 'hidden', position: 'relative' }}>
+    <section className="scroll-anim" ref={ref} style={{ background: '#1a2235', width: '100%', boxSizing: 'border-box', padding: '16px 8px 16px 16px', overflow: 'hidden', position: 'relative' }}>
 
       {/* Bottom right network graphic */}
       <div style={{ position: 'absolute', bottom: '-20px', right: '-10px', zIndex: 0, width: '140px', height: '140px' }}>
@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
           <div style={{ flex: '0 0 55%', minWidth: 0, marginLeft: '60px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {benefits.map((b, i) => (
-                <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <div key={i} className={`scroll-anim delay-${i + 1}`} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <Icon />
                   <div style={{ color: 'white', fontWeight: '700', fontSize: '7px', lineHeight: 1.3 }}>{b.title}</div>
                   <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: '6px', lineHeight: '1.4' }}>{b.desc}</div>

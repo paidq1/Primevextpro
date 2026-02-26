@@ -16,7 +16,7 @@ export default function Achievements() {
     <>
       
       <section ref={ref} style={{ background: '#293137', width: '100%', boxSizing: 'border-box', padding: '32px 16px 16px 16px', overflow: 'hidden' }}>
-        <div>
+        <div className="scroll-anim">
 
           {/* Top: Title + Image */}
           <div style={{ display: 'flex', flexDirection: 'row', gap: '12px', alignItems: 'flex-start', marginBottom: '24px', margin: '0 12px 24px 12px' }}>
@@ -48,7 +48,7 @@ export default function Achievements() {
           {/* Awards Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', margin: '0 12px' }}>
             {awards.map((a, i) => (
-              <div key={i} style={{ background: '#344d58', borderRadius: '0px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '4px', fontFamily: 'sans-serif' }}>
+              <div key={i} className={`scroll-anim delay-${(i % 5) + 1}`} style={{ background: '#344d58', borderRadius: '0px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '4px', fontFamily: 'sans-serif' }}>
                 <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>{a.num}</span>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <div style={{ position: 'relative', flexShrink: 0, width: '70px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

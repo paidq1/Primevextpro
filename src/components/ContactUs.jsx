@@ -7,7 +7,7 @@ const ContactUs = () => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   return (
-    <><section ref={ref} style={{ background: '#0e1420', width: '100%', boxSizing: 'border-box', padding: '12px', position: 'relative', overflow: 'hidden' }}>
+    <><section className="scroll-anim" ref={ref} style={{ background: '#0e1420', width: '100%', boxSizing: 'border-box', padding: '12px', position: 'relative', overflow: 'hidden' }}>
       
             {/* Dotted World Map Background */}
       <img src='/world-map.png' style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', opacity: 0.15, pointerEvents: 'none' }} />
@@ -15,7 +15,7 @@ const ContactUs = () => {
       <div style={{ display: 'flex', flexDirection: 'row', gap: '12px', position: 'relative', zIndex: 1 }}>
 
         {/* Left: Form */}
-        <div style={{ flex: '0 0 52%', minWidth: 0 }}>
+        <div className="scroll-anim" style={{ flex: '0 0 52%', minWidth: 0 }}>
           <h2 style={{ color: 'white', fontWeight: '700', fontSize: '16px', marginBottom: '4px' }}>Contact Us</h2>
           <p style={{ color: 'white', fontSize: '8px', lineHeight: '1.6', marginBottom: '4px' }}>
             See how our platform has helped traders, investors, and crypto enthusiasts achieve their financial goals and experience secure, seamless trading.

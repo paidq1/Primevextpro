@@ -78,7 +78,7 @@ export default function HowItWorks() {
 
       <div className="relative z-10 px-3">
         {/* Header */}
-        <div className="text-center mb-6" data-aos="fade-up">
+        <div className="text-center mb-6 scroll-anim">
           <h2 className="text-lg font-bold text-white mb-2">How It Works</h2>
           <p className="text-gray-400 text-[10px] max-w-xs mx-auto leading-relaxed">
             Explore the advanced Start trading, staking, and investing with our user-friendly platform. Follow these simple steps to begin your financial journey.
@@ -86,9 +86,9 @@ export default function HowItWorks() {
         </div>
 
         {/* Grid */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 scroll-anim delay-2">
           {/* Row 1 - 3 cards */}
-          <div className="flex flex-row gap-2 items-start">
+          <div className="flex flex-row gap-2 items-start scroll-anim delay-3">
             {steps.slice(0, 3).map((step, idx) => (
               <div
                 key={idx}
@@ -129,7 +129,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Row 2 - 2 cards + explore box */}
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-2 scroll-anim delay-4">
             {steps.slice(3, 5).map((step, idx) => (
               <div
                 key={idx}

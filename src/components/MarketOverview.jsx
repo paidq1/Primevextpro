@@ -117,7 +117,7 @@ const MarketOverview = () => {
           <polygon points="130,340 230,320 180,400" fill="#29465b"/>
           <polygon points="230,320 340,320 280,400" fill="#1a3a4a"/>
         </svg>
-        <div style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }}>
+        <div className="scroll-anim" style={{ width: '100%', boxSizing: 'border-box', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', flexDirection: 'row', gap: '12px', alignItems: 'stretch' }}>
             {/* Left: Trading Card */}
             <div style={{
