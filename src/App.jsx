@@ -21,6 +21,7 @@ import Footer from "./components/Footer";
 import Smartsupp from "./components/Smartsupp";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
+import Dashboard from "./pages/Dashboard";
 
 function HomePage() {
   useEffect(() => {
@@ -59,6 +60,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

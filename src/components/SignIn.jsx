@@ -66,7 +66,7 @@ const SignIn = () => {
           </div>
 
           {/* Login Button */}
-          <button style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>
+          <button onClick={() => window.location.href="/dashboard"} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>
             Log in
           </button>
 

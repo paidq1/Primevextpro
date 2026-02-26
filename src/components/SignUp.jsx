@@ -138,7 +138,7 @@ const SignUp = ({ onClose, onLoginClick }) => {
             <input type="checkbox" name="agree" checked={form.agree} onChange={handleChange} style={{ accentColor: '#6366f1', width: '12px', height: '12px' }} />
             <span style={{ color: '#94a3b8', fontSize: '8px' }}>I agree to the <span style={{ color: '#6366f1', cursor: 'pointer' }}>terms</span> and <span style={{ color: '#6366f1', cursor: 'pointer' }}>conditions</span></span>
           </div>
-          <button style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Register</button>
+          <button onClick={() => window.location.href="/dashboard"} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Register</button>
           <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '8px', margin: 0 }}>Already have account? <span onClick={() => window.location.href='/signin'} style={{ color: 'white', fontWeight: '600', cursor: 'pointer' }}>Log In</span></p>
         </div>
       </div>
