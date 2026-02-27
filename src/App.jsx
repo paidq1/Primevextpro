@@ -31,6 +31,8 @@ import WithdrawDeposit from "./pages/WithdrawDeposit";
 import Packages from "./pages/Packages";
 import KYC from "./pages/KYC";
 import ReferUsers from "./pages/ReferUsers";
+import ManageBots from "./pages/ManageBots";
+import LiveTrading from "./pages/LiveTrading";
 
 function HomePage() {
   useEffect(() => {
@@ -79,6 +81,8 @@ function App() {
         <Route path="/dashboard/packages" element={<Packages />} />
         <Route path="/dashboard/kyc" element={<KYC />} />
         <Route path="/dashboard/refer-users" element={<ReferUsers />} />
+        <Route path="/dashboard/manage-bots" element={<ManageBots />} />
+        <Route path="/dashboard/live-trading" element={<LiveTrading />} />
       </Routes>
     </BrowserRouter>
   );

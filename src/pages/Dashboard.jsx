@@ -13,15 +13,15 @@ const stats = [
 ];
 
 const navItems = [
-  { icon: <User size={12} />, label: 'Profile' },
-  { icon: <LayoutDashboard size={12} />, label: 'Dashboard' },
-  { icon: <Wallet size={12} />, label: 'Deposit' },
-  { icon: <Bot size={12} />, label: 'Trading' },
-  { icon: <Package size={12} />, label: 'Plans' },
-  { icon: <BarChart2 size={12} />, label: 'Analytics' },
-  { icon: <Upload size={12} />, label: 'Withdraw' },
-  { icon: <Users size={12} />, label: 'Referrals' },
-  { icon: <Settings size={12} />, label: 'Settings' },
+  { icon: <User size={12} />, label: 'Profile', route: '/dashboard/profile' },
+  { icon: <LayoutDashboard size={12} />, label: 'Dashboard', route: '/dashboard' },
+  { icon: <Wallet size={12} />, label: 'Deposit', route: '/dashboard/withdraw-deposit' },
+  { icon: <Bot size={12} />, label: 'Bots', route: '/dashboard/manage-bots' },
+  { icon: <Package size={12} />, label: 'Packages', route: '/dashboard/packages' },
+  { icon: <BarChart2 size={12} />, label: 'Market', route: '/dashboard/live-market' },
+  { icon: <TrendingUp size={12} />, label: 'Trading', route: '/dashboard/live-trading' },
+  { icon: <Users size={12} />, label: 'Referrals', route: '/dashboard/refer-users' },
+  { icon: <Settings size={12} />, label: 'KYC', route: '/dashboard/kyc' },
 ];
 
 export default function Dashboard() {
@@ -29,6 +29,9 @@ export default function Dashboard() {
   const [amount, setAmount] = useState('100.00');
   const [activeNav, setActiveNav] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('USD');
+  const [accountType, setAccountType] = useState('REAL');
+  const [balance, setBalance] = useState('0.00');
 
   const sidebarSections = [
     {
@@ -116,7 +119,7 @@ export default function Dashboard() {
           </svg>
         </div>
         {navItems.map((item, i) => (
-          <button key={i} onClick={() => setActiveNav(i)} title={item.label} style={{ width: '34px', height: '34px', borderRadius: '0px', background: activeNav === i ? '#6366f1' : 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: activeNav === i ? 'white' : 'rgba(255,255,255,0.4)' }}>
+          <button key={i} onClick={() => { setActiveNav(i); navigate(item.route); }} title={item.label} style={{ width: '34px', height: '34px', borderRadius: '0px', background: activeNav === i ? '#6366f1' : 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: activeNav === i ? 'white' : 'rgba(255,255,255,0.4)' }}>
             {item.icon}
           </button>
         ))}
@@ -132,14 +135,14 @@ export default function Dashboard() {
             ))}
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0px', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> REAL ACCOUNT</button>
+            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0px', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> {accountType} ACCOUNT</button>
             <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0px', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> $0.00</button>
-            <button onClick={() => navigate('/')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><User size={13}/></button>
+            <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><User size={13}/></button>
           </div>
         </div>
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           <div style={{ flex: 1, overflowY: 'auto', padding: '8px' }}>
-            <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800', marginBottom: '10px' }}>✦ PRIMEVEST PRO</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}><svg viewBox='0 0 40 40' fill='none' style={{ width: '16px', height: '16px', flexShrink: 0 }}><path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/><path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/><path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/></svg><span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>PRIMEVEST PRO</span></div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
               {stats.map((s, i) => (
                 <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '8px' }}>

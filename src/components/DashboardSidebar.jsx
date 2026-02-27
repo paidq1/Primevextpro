@@ -8,7 +8,7 @@ const sidebarSections = [
       { icon: <User size={13}/>, label: 'Profile', route: '/dashboard/profile' },
       { icon: <BarChart2 size={13}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
       { icon: <Wallet size={13}/>, label: 'Stake', route: '/dashboard/stake' },
-      { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/live-market' },
+      { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/manage-bots' },
     ]
   },
   {
@@ -17,7 +17,7 @@ const sidebarSections = [
       { icon: <BarChart2 size={13}/>, label: 'Investment records', route: '/dashboard/investment-records' },
       { icon: <Clock size={13}/>, label: 'Transaction history', route: '/dashboard/transaction-history' },
       { icon: <ArrowDownCircle size={13}/>, label: 'Withdraw / Deposit', route: '/dashboard/withdraw-deposit' },
-      { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-market' },
+      { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
       { icon: <Package size={13}/>, label: 'Packages', route: '/dashboard/packages' },
       { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
       { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
