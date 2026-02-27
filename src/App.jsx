@@ -22,6 +22,15 @@ import Smartsupp from "./components/Smartsupp";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import LiveMarket from "./pages/LiveMarket";
+import Stake from "./pages/Stake";
+import InvestmentRecords from "./pages/InvestmentRecords";
+import TransactionHistory from "./pages/TransactionHistory";
+import WithdrawDeposit from "./pages/WithdrawDeposit";
+import Packages from "./pages/Packages";
+import KYC from "./pages/KYC";
+import ReferUsers from "./pages/ReferUsers";
 
 function HomePage() {
   useEffect(() => {
@@ -61,6 +70,15 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/profile" element={<Profile />} />
+        <Route path="/dashboard/live-market" element={<LiveMarket />} />
+        <Route path="/dashboard/stake" element={<Stake />} />
+        <Route path="/dashboard/investment-records" element={<InvestmentRecords />} />
+        <Route path="/dashboard/transaction-history" element={<TransactionHistory />} />
+        <Route path="/dashboard/withdraw-deposit" element={<WithdrawDeposit />} />
+        <Route path="/dashboard/packages" element={<Packages />} />
+        <Route path="/dashboard/kyc" element={<KYC />} />
+        <Route path="/dashboard/refer-users" element={<ReferUsers />} />
       </Routes>
     </BrowserRouter>
   );

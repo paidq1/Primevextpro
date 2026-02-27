@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Upload, Users, Settings, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign } from 'lucide-react';
+import DashboardSidebar from '../components/DashboardSidebar';
+import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Upload, Users, Settings, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, X, ChevronRight, Globe } from 'lucide-react';
 
 const stats = [
   { label: 'Total Deposits', value: '+ USD 0.00', btc: 'BTC: 0.00', iconBg: '#6366f1', borderColor: '#6366f1', icon: <CreditCard size={14} color="#6366f1" /> },
@@ -27,10 +28,93 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('100.00');
   const [activeNav, setActiveNav] = useState(1);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const sidebarSections = [
+    {
+      title: 'DASHBOARD',
+      items: [
+        { icon: <User size={13}/>, label: 'Profile', route: '/dashboard/profile' },
+        { icon: <BarChart2 size={13}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
+        { icon: <Wallet size={13}/>, label: 'Stake', route: '/dashboard/stake' },
+        { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/live-market' },
+      ]
+    },
+    {
+      title: 'INVESTMENTS',
+      items: [
+        { icon: <BarChart2 size={13}/>, label: 'Investment records', route: '/dashboard/investment-records' },
+        { icon: <Clock size={13}/>, label: 'Transaction history', route: '/dashboard/transaction-history' },
+        { icon: <ArrowDownCircle size={13}/>, label: 'Withdraw / Deposit', route: '/dashboard/withdraw-deposit' },
+        { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-market' },
+        { icon: <Package size={13}/>, label: 'Packages', route: '/dashboard/packages' },
+        { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
+        { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
+      ]
+    }
+  ];
+
+  const drawerJSX = (
+    <>
+
+      <div style={{
+        position: 'fixed', top: 0, left: sidebarOpen ? '0px' : '-160px', height: '100vh', width: '160px',
+        background: '#141824', zIndex: 50,
+        transition: 'left 0.3s ease', display: 'flex', flexDirection: 'column',
+        overflowY: 'auto'
+      }}>
+        <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ width: '18px', height: '18px' }}>
+              <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
+                <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
+                <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
+                <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
+              </svg>
+            </div>
+            <span style={{ color: 'white', fontSize: '10px', fontWeight: '800', letterSpacing: '0.08em' }}>PRIMEVEST <span style={{ color: '#6366f1' }}>PRO</span></span>
+          </div>
+          <button onClick={() => setSidebarOpen(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}>
+            <X size={14}/>
+          </button>
+        </div>
+        <div style={{ padding: '12px 0', flex: 1 }}>
+          {sidebarSections.map((section, si) => (
+            <div key={si} style={{ marginBottom: '16px' }}>
+              <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '6px' }}>{section.title}</div>
+              {section.items.map((item, ii) => (
+                <button key={ii} onClick={() => { if(item.route) { navigate(item.route); setSidebarOpen(false); } }} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.7)', fontSize: '9px', textAlign: 'left' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.45)' }}>{item.icon}</span>
+                    <span>{item.label}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    {item.badge && <span style={{ background: '#ef4444', color: 'white', fontSize: '6px', padding: '1px 4px', borderRadius: '2px', fontWeight: '700' }}>{item.badge}</span>}
+                    {!item.badge && <ChevronRight size={10} color="rgba(255,255,255,0.2)"/>}
+                  </div>
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Globe size={11} color="rgba(255,255,255,0.4)"/>
+          <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>EN ^</span>
+        </div>
+      </div>
+    </>
+  );
   return (
-    <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', fontFamily: "'Segoe UI', sans-serif" }}>
-      <div style={{ width: '48px', background: '#141824', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', borderRight: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
-        <div style={{ color: '#6366f1', fontWeight: '900', fontSize: '8px', marginBottom: '16px' }}>PR</div>
+    <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
+      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div style={{ width: '48px', background: '#141824', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, visibility: sidebarOpen ? 'hidden' : 'visible' }}>
+        <div style={{ width: '22px', height: '22px', marginBottom: '16px' }}>
+          <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
+            <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
+            <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
+            <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
+          </svg>
+        </div>
         {navItems.map((item, i) => (
           <button key={i} onClick={() => setActiveNav(i)} title={item.label} style={{ width: '34px', height: '34px', borderRadius: '0px', background: activeNav === i ? '#6366f1' : 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: activeNav === i ? 'white' : 'rgba(255,255,255,0.4)' }}>
             {item.icon}
@@ -38,15 +122,18 @@ export default function Dashboard() {
         ))}
       </div>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <div style={{ background: '#141824', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <div style={{ background: '#141824', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+          <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
+            <Menu size={15}/>
+          </button>
           <div style={{ display: 'flex', gap: '4px' }}>
             {[{label:'STARTER',active:false},{label:'USD',active:true},{label:'KYC',active:false}].map((tab, i) => (
-              <button key={i} style={{ padding: '4px 10px', background: tab.active ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', borderRadius: '0px', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{tab.label}</button>
+              <button key={i} style={{ padding: '4px 10px', background: tab.active ? '#6366f1' : 'rgba(255,255,255,0.15)', border: 'none', borderRadius: '0px', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{tab.label}</button>
             ))}
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0px', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> REAL ACCOUNT</button>
-            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0px', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> $0.00</button>
+            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0px', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> REAL ACCOUNT</button>
+            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0px', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> $0.00</button>
             <button onClick={() => navigate('/')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><User size={13}/></button>
           </div>
         </div>
@@ -83,22 +170,22 @@ export default function Dashboard() {
             <div style={{ background: '#252d3d', border: '1px solid rgba(99,102,241,0.5)', padding: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
-                <select style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
+                <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
                   <option>Today</option><option>This Week</option><option>This Month</option>
                 </select>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-                  <select style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
+                  <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}><option>10</option><option>25</option><option>50</option></select>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-                  <input style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
+                  <input style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '90px' }} />
                 </div>
               </div>
-              <div style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+              <div style={{ border: '1px solid rgba(255,255,255,0.15)' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px' }}>
                   {['Amount','Txn Date','Method','Txn Type','Status'].map((h, i) => (
                     <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px', fontWeight: '600' }}>{h}</span>
@@ -108,14 +195,14 @@ export default function Dashboard() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
                   <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing 0 to 0 of 0 entries</span>
                   <div style={{ display: 'flex', gap: '4px' }}>
-                    <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>‹</button>
-                    <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>›</button>
+                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>‹</button>
+                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>›</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div style={{ width: '150px', background: '#141824', borderLeft: '1px solid rgba(255,255,255,0.06)', padding: '14px 12px', flexShrink: 0, overflowY: 'auto' }}>
+          <div style={{ width: '150px', background: '#1e2538', padding: '14px 12px', paddingTop: '14px', border: '1px solid rgba(99,102,241,0.3)', marginTop: '29px', marginRight: '8px', marginBottom: '8px', borderRadius: '2px', alignSelf: 'flex-start', flexShrink: 0, overflowY: 'auto' }}>
             <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '14px' }}>TRADE ASSETS</div>
             {[
   {label:'Account', options:['---','Real Account','Demo Account','Balance']},

@@ -37,7 +37,7 @@ export default function Achievements() {
 
             {/* Right: Image with badge */}
             <div style={{ flex: 1, position: 'relative' }}>
-              <img src="/achievements-bg.jpg" alt="Team" style={{ width: '100%', borderRadius: '5px', display: 'block', borderTop: 'none', borderLeft: 'none', borderBottom: '4px solid rgba(120,80,255,0.9)', borderRight: '4px solid rgba(120,80,255,0.9)', boxShadow: '6px 6px 25px rgba(120,80,255,0.7)', height: '170px', objectFit: 'cover' }} />
+              <img src="/achievements-bg.jpg" alt="Team" style={{ width: '100%', borderRadius: '5px', display: 'block', borderTop: 'none', borderLeft: 'none', borderBottom: '4px solid rgba(120,80,255,0.9)', borderRight: '4px solid rgba(120,80,255,0.9)', boxShadow: '6px 6px 25px rgba(120,80,255,0.7)', height: '170px', objectFit: 'cover', objectPosition: 'center top' }} />
               <div style={{ position: 'absolute', bottom: '-10px', left: '-10px', background: '#2d1f6e', borderRadius: '50%', width: '58px', height: '58px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ color: 'white', fontWeight: '800', fontSize: '9px' }}>10+ Years</span>
                 <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '6px', fontWeight: '600' }}>Experience</span>
