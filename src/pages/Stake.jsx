@@ -65,13 +65,14 @@ export default function Stake() {
     setError('');
     setSubmitting(true);
     try {
-      const res = await createStake({
-        plan: selectedPlan.name,
-        amount: Number(amount),
-        apy: selectedPlan.apy,
-        duration: selectedPlan.duration.replace(' days', ''),
-        paymentMethod,
-      });
+      const formData = new FormData();
+      formData.append('plan', selectedPlan.name);
+      formData.append('amount', Number(amount));
+      formData.append('apy', selectedPlan.apy);
+      formData.append('duration', selectedPlan.duration.replace(' days', ''));
+      formData.append('paymentMethod', paymentMethod);
+      if (fileData) formData.append('paymentProof', fileData);
+      const res = await createStake(formData);
       if (res.success || res._id || res.stake) {
         setShowSuccess(true);
         getStakes().then(data => { if (Array.isArray(data)) { setStakes(data); setTotalStaked(data.reduce((s,i) => s+(i.amount||0),0)); setTotalEarned(data.reduce((s,i) => s+(i.earned||0),0)); }});
@@ -258,7 +259,7 @@ export default function Stake() {
             </div>
           ))}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing 0 to 0 of 0 entries</span>
+            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {Math.min(stakes.length, show) > 0 ? 1 : 0} to {Math.min(stakes.length, show)} of {stakes.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
               <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
               <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>

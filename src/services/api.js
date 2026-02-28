@@ -47,7 +47,7 @@ export const submitKyc = (formData) => fetch(`${BASE_URL}/kyc`, { method: 'POST'
 export const getKycStatus = () => fetch(`${BASE_URL}/kyc`, { headers: headers() }).then(r => r.json());
 
 // Stake
-export const createStake = (data) => fetch(`${BASE_URL}/stake`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(r => r.json());
+export const createStake = (formData) => fetch(`${BASE_URL}/stake`, { method: "POST", headers: { "Authorization": `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
 export const getStakes = () => fetch(`${BASE_URL}/stake`, { headers: headers() }).then(r => r.json());
 
 // Bot
