@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { loginUser } from '../services/api';
+import { loginUser } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
   const [form, setForm] = useState({ username: '', password: '', remember: false });
   const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [verifyPopup, setVerifyPopup] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -61,6 +64,21 @@ const SignIn = () => {
         <div style={{ width: '420px', height: '420px', borderRadius: '50%', background: 'rgba(180,190,205,0.25)', position: 'absolute' }} />
         <div style={{ width: '260px', height: '260px', borderRadius: '50%', background: 'rgba(180,190,205,0.2)', position: 'absolute' }} />
       </div>
+
+      {/* Verify Email Popup */}
+      {verifyPopup && (
+        <>
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='22' height='22' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Success!</div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>You need to verify your email address first.</div>
+            <button onClick={() => setVerifyPopup(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+          </div>
+        </>
+      )}
 
       {/* Success Popup */}
       {success && (
@@ -119,8 +137,8 @@ const SignIn = () => {
             <span style={{ color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Forgot Password?</span>
           </div>
 
-          <button onClick={handleSubmit} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>
-            Log in
+          <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            {loading ? 'Logging in...' : 'Log in'}
           </button>
 
           <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '8px', margin: 0 }}>

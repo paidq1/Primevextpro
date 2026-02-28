@@ -150,15 +150,30 @@ const SignUp = () => {
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '2px' };
 
   if (checkEmail) return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa' }}>
-      <div style={{ background: '#2d3748', width: '320px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
-        <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-          <svg width='28' height='28' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'/></svg>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1e2538' }}>
+      <div style={{ background: '#252d3d', width: '340px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
+        <div style={{ marginBottom: '20px' }}>
+          <svg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg' style={{ margin: '0 auto' }}>
+            <rect width='64' height='64' rx='8' fill='#f59e0b' opacity='0.15'/>
+            <path d='M12 20h40v28H12V20z' fill='#f59e0b' opacity='0.3'/>
+            <path d='M12 20l20 18 20-18' stroke='#f59e0b' strokeWidth='2' fill='none'/>
+            <circle cx='32' cy='32' r='10' fill='#f59e0b' opacity='0.8'/>
+            <text x='32' y='37' textAnchor='middle' fill='white' fontSize='14' fontWeight='bold'>@</text>
+          </svg>
         </div>
-        <h2 style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>Check Your Email</h2>
-        <p style={{ color: '#94a3b8', fontSize: '9px', marginBottom: '8px', lineHeight: '1.6' }}>We sent a verification link to your email address.</p>
-        <p style={{ color: '#94a3b8', fontSize: '9px', marginBottom: '24px', lineHeight: '1.6' }}>Click the link in the email to activate your account. Check your spam folder if you don't see it.</p>
-        <button onClick={() => window.location.href='/signin'} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Go to Login</button>
+        <h2 style={{ color: 'white', fontSize: '15px', fontWeight: '700', marginBottom: '10px' }}>Check your mailbox!</h2>
+        <p style={{ color: '#94a3b8', fontSize: '9px', marginBottom: '24px', lineHeight: '1.8' }}>
+          Hello! <strong style={{ color: 'white' }}>{form.firstName} {form.lastName}</strong>, an email has been sent to <strong style={{ color: 'white' }}>{form.email.replace(/(.{1})(.*)(@.*)/, '$1**********$3')}</strong>. Please click on the included link to confirm your email.
+        </p>
+        <button onClick={() => window.location.href='/signin'} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+          <svg width='12' height='12' fill='none' stroke='white' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8'/></svg>
+          Resend email
+        </button>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '10px' }}>
+          <button onClick={() => window.location.href='/signin'} style={{ background: 'none', border: 'none', color: '#f59e0b', fontSize: '9px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', margin: '0 auto' }}>
+            ← Return to login
+          </button>
+        </div>
       </div>
     </div>
   );
