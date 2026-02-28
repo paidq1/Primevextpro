@@ -23,7 +23,7 @@ export default function LiveTrading() {
   const [tradeType, setTradeType] = useState('');
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
+  const [submittingType, setSubmittingType] = useState(null); // 'buy' | 'sell' | null
   const [page, setPage] = useState(1);
   const perPage = 10;
 
@@ -57,12 +57,13 @@ export default function LiveTrading() {
   };
 
   const handleTrade = async (type) => {
+    if (submittingType !== null) return;
     if (!validate()) return;
-    setSubmitting(true);
+    setSubmittingType(type);
     try {
       const res = await createTrade({
         account, market, symbol,
-        type: type.toLowerCase(),
+        type: type,
         amount: parseFloat(amount),
         leverage, duration,
       });
@@ -77,13 +78,14 @@ export default function LiveTrading() {
         setMarket('---');
         setDuration('---');
         setLeverage('2x');
+        setError('');
       } else {
         setError(res.message || 'Failed to place trade.');
       }
     } catch (err) {
       setError('Network error. Please try again.');
     } finally {
-      setSubmitting(false);
+      setSubmittingType(null);
     }
   };
 
@@ -106,10 +108,6 @@ export default function LiveTrading() {
     padding: '8px 10px', outline: 'none',
     boxSizing: 'border-box',
   };
-
-  const fieldError = (val) => !val || val === '---'
-    ? { border: '1px solid rgba(239,68,68,0.4)' }
-    : {};
 
   return (
     <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
@@ -188,16 +186,16 @@ export default function LiveTrading() {
 
       {showModal && (
         <>
-          <div onClick={() => setShowModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
+          <div onClick={() => { setShowModal(false); setError(''); }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#252d3d', border: '1px solid rgba(99,102,241,0.3)', padding: '18px', width: '300px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Trade Assets</span>
-              <button onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
+              <button onClick={() => { setShowModal(false); setError(''); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
             </div>
 
             <div style={{ marginBottom: '12px' }}>
               <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' }}>Account <span style={{ color: '#ef4444' }}>*</span></label>
-              <select value={account} onChange={e => { setAccount(e.target.value); setError(''); }} style={{ ...sel, ...fieldError(account) }}>
+              <select value={account} onChange={e => { setAccount(e.target.value); setError(''); }} style={{ ...sel, border: account === '---' && error ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(255,255,255,0.08)' }}>
                 <option value='---'>--- Select Account ---</option>
                 <option value='real'>Real Account</option>
                 <option value='demo'>Demo Account</option>
@@ -206,7 +204,7 @@ export default function LiveTrading() {
 
             <div style={{ marginBottom: '12px' }}>
               <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' }}>Markets <span style={{ color: '#ef4444' }}>*</span></label>
-              <select value={market} onChange={e => { setMarket(e.target.value); setError(''); }} style={{ ...sel, ...fieldError(market) }}>
+              <select value={market} onChange={e => { setMarket(e.target.value); setError(''); }} style={{ ...sel, border: market === '---' && error ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(255,255,255,0.08)' }}>
                 <option value='---'>--- Select Market ---</option>
                 {markets.map(m => <option key={m}>{m}</option>)}
               </select>
@@ -221,7 +219,7 @@ export default function LiveTrading() {
 
             <div style={{ marginBottom: '12px' }}>
               <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' }}>Duration <span style={{ color: '#ef4444' }}>*</span></label>
-              <select value={duration} onChange={e => { setDuration(e.target.value); setError(''); }} style={{ ...sel, ...fieldError(duration) }}>
+              <select value={duration} onChange={e => { setDuration(e.target.value); setError(''); }} style={{ ...sel, border: duration === '---' && error ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(255,255,255,0.08)' }}>
                 <option value='---'>--- Select Duration ---</option>
                 {durations.map(d => <option key={d}>{d}</option>)}
               </select>
@@ -243,31 +241,45 @@ export default function LiveTrading() {
                 type='number'
                 min='10'
                 max='100000'
-                style={{ ...sel, border: (!amount || Number(amount) < 10) && amount !== '' ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(255,255,255,0.08)' }}
+                style={{ ...sel, border: amount && (Number(amount) < 10 || Number(amount) > 100000) ? '1px solid rgba(239,68,68,0.4)' : '1px solid rgba(255,255,255,0.08)' }}
               />
-              {amount && Number(amount) < 10 && (
-                <span style={{ color: '#ef4444', fontSize: '7px' }}>Minimum is $10.00</span>
-              )}
-              {amount && Number(amount) > 100000 && (
-                <span style={{ color: '#ef4444', fontSize: '7px' }}>Maximum is $100,000</span>
-              )}
+              {amount && Number(amount) < 10 && <span style={{ color: '#ef4444', fontSize: '7px' }}>Minimum is $10.00</span>}
+              {amount && Number(amount) > 100000 && <span style={{ color: '#ef4444', fontSize: '7px' }}>Maximum is $100,000</span>}
             </div>
 
-            {error ? (
+            {error && (
               <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', padding: '8px 10px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ color: '#ef4444', fontSize: '12px' }}>⚠</span>
                 <span style={{ color: '#ef4444', fontSize: '8px' }}>{error}</span>
               </div>
-            ) : (
-              <div style={{ marginBottom: '10px' }} />
             )}
 
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => handleTrade('buy')} disabled={submitting} style={{ flex: 1, padding: '10px', background: submitting ? '#374151' : '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}>
-                {submitting ? 'Placing...' : '▲ Buy'}
+            <div style={{ display: 'flex', gap: '8px', marginTop: error ? '0' : '10px' }}>
+              <button
+                onClick={() => handleTrade('buy')}
+                disabled={submittingType !== null}
+                style={{
+                  flex: 1, padding: '10px',
+                  background: submittingType === 'buy' ? '#15803d' : submittingType === 'sell' ? '#374151' : '#22c55e',
+                  border: 'none', color: 'white', fontSize: '10px', fontWeight: '700',
+                  cursor: submittingType !== null ? 'not-allowed' : 'pointer',
+                  opacity: submittingType === 'sell' ? 0.5 : 1,
+                  transition: 'all 0.2s',
+                }}>
+                {submittingType === 'buy' ? 'Placing...' : '▲ Buy'}
               </button>
-              <button onClick={() => handleTrade('sell')} disabled={submitting} style={{ flex: 1, padding: '10px', background: submitting ? '#374151' : '#ef4444', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}>
-                {submitting ? 'Placing...' : '▼ Sell'}
+              <button
+                onClick={() => handleTrade('sell')}
+                disabled={submittingType !== null}
+                style={{
+                  flex: 1, padding: '10px',
+                  background: submittingType === 'sell' ? '#b91c1c' : submittingType === 'buy' ? '#374151' : '#ef4444',
+                  border: 'none', color: 'white', fontSize: '10px', fontWeight: '700',
+                  cursor: submittingType !== null ? 'not-allowed' : 'pointer',
+                  opacity: submittingType === 'buy' ? 0.5 : 1,
+                  transition: 'all 0.2s',
+                }}>
+                {submittingType === 'sell' ? 'Placing...' : '▼ Sell'}
               </button>
             </div>
           </div>
@@ -278,12 +290,12 @@ export default function LiveTrading() {
         <>
           <div onClick={() => setShowSuccess(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }} />
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
-            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
-              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2.5'><polyline points='20 6 9 17 4 12'/></svg>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: `2px solid ${tradeType === 'buy' ? '#22c55e' : '#ef4444'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke={tradeType === 'buy' ? '#22c55e' : '#ef4444'} strokeWidth='2.5'><polyline points='20 6 9 17 4 12'/></svg>
             </div>
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Trade Placed!</div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>
-              {tradeType.charAt(0).toUpperCase() + tradeType.slice(1)} order for {symbol} submitted successfully.
+              <span style={{ color: tradeType === 'buy' ? '#22c55e' : '#ef4444', fontWeight: '700', textTransform: 'capitalize' }}>{tradeType}</span> order for <strong>{symbol}</strong> submitted successfully.
             </div>
             <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
           </div>
