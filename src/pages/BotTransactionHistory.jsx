@@ -67,7 +67,7 @@ export default function BotTransactionHistory() {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr 1fr 0.9fr 1fr 0.8fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             {['Amount','Txn Date','Method','Txn Type','Status','Txn ID','Receipt'].map((h, i) => (
-              <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '2px' }}>{h} <span style={{ opacity: 0.4 }}>↕</span></span>
+              <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '2px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '4px 6px' }}>{h} <span style={{ opacity: 0.4 }}>↕</span></span>
             ))}
           </div>
 

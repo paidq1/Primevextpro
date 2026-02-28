@@ -109,7 +109,12 @@ export default function ManageBots() {
         setError('');
         setSubmitting(true);
         const botNames = { '500': 'STARTER BOT', '1000': 'SILVER BOT', '2500': 'GOLD BOT', '5000': 'PLATINUM BOT' };
-        createBot({ botName: botNames[selectedBot] || selectedBot, amount: Number(amount), paymentMethod })
+        const formData = new FormData();
+        formData.append('botName', botNames[selectedBot] || selectedBot);
+        formData.append('amount', Number(amount));
+        formData.append('paymentMethod', paymentMethod);
+        if (fileData) formData.append('paymentProof', fileData);
+        createBot(formData)
           .then(res => {
             if (res.success || res.bot || res._id) { setShowSuccess(true); }
             else { setError(res.message || 'Subscription failed. Try again.'); }

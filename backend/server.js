@@ -23,6 +23,7 @@ app.use('/api/trade', require('./routes/trade'));
 app.use('/api/packages', require('./routes/packages'));
 app.use('/api/kyc', require('./routes/kyc'));
 app.use('/api/stake', require('./routes/stake'));
+app.use('/api/bot', require('./routes/bot'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'PrimeVest Pro API running' }));
