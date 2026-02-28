@@ -279,9 +279,15 @@ const SignUp = () => {
             {errors.agree && <div style={errStyle}>{errors.agree}</div>}
           </div>
 
-          <button onClick={handleSubmit} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>
-            Register
+          <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            {loading ? (
+              <>
+                <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' strokeWidth='2' style={{ animation: 'spin 1s linear infinite' }}><path d='M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83'/></svg>
+                Creating Account...
+              </>
+            ) : 'Register'}
           </button>
+          <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
 
           <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '8px', margin: 0 }}>
             Already have account? <span onClick={() => window.location.href='/signin'} style={{ color: 'white', fontWeight: '600', cursor: 'pointer' }}>Log In</span>
