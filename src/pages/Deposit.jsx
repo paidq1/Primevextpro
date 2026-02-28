@@ -185,7 +185,7 @@ export default function Deposit() {
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Available Balance</div>
             <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${(user?.balance || 0).toFixed(2)}</div>
           </div>
-          <button onClick={() => setShowForm(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Deposit</button>
+          <button onClick={() => navigate('/dashboard/deposit-funds')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Deposit</button>
         </div>
 
         {/* Table */}
