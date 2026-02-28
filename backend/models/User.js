@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
   referralCode: { type: String, unique: true },
   referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   kycStatus: { type: String, enum: ['pending', 'submitted', 'approved', 'rejected'], default: 'pending' },
+  kycData: { idType: String, idNumber: String, idFront: String, idBack: String, selfie: String, submittedAt: Date },
   isActive: { type: Boolean, default: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   avatar: { type: String, default: '' },

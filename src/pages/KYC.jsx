@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
+import { submitKyc, getKycStatus } from '../services/api';
 
 export default function KYC() {
   const navigate = useNavigate();
@@ -15,40 +16,92 @@ export default function KYC() {
   const [selfieName, setSelfieName] = useState('No file chosen');
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
-  const [kycStatus, setKycStatus] = useState(null); // null = not submitted, 'pending', 'approved', 'rejected'
+  const [kycStatus, setKycStatus] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   const inputStyle = { width: '100%', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
+  useEffect(() => {
+    fetchStatus();
+  }, []);
+
+  const fetchStatus = async () => {
+    setLoading(true);
+    try {
+      const data = await getKycStatus();
+      if (data && data.kycStatus) setKycStatus(data.kycStatus);
+    } catch (err) {
+      console.error('Failed to load KYC status:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const FileInput = ({ label, fileName, onChange }) => (
     <div style={{ marginBottom: '12px' }}>
-      <label style={labelStyle}>{label}</label>
+      <label style={labelStyle}>{label} <span style={{ color: '#ef4444' }}>*</span></label>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
         <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-          Choose File<input type='file' accept='image/*' style={{ display: 'none' }} onChange={onChange} />
+          Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
         </label>
-        <span style={{ color: fileName !== 'No file chosen' ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.3)', fontSize: '8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
+        <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
       </div>
     </div>
   );
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!idType) { setError('Please select an ID type.'); return; }
     if (!idNumber.trim()) { setError('Please enter your ID number.'); return; }
     if (!idFront) { setError('Please upload the front of your ID.'); return; }
     if (!idBack) { setError('Please upload the back of your ID.'); return; }
     if (!selfie) { setError('Please upload a selfie with your ID.'); return; }
     setError('');
-    setShowSuccess(true);
-    setKycStatus('pending');
+    setSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append('idType', idType);
+      formData.append('idNumber', idNumber);
+      formData.append('idFront', idFront);
+      formData.append('idBack', idBack);
+      formData.append('selfie', selfie);
+
+      const res = await submitKyc(formData);
+      if (res.message && !res.error) {
+        setShowSuccess(true);
+        setKycStatus('submitted');
+      } else {
+        setError(res.message || 'Submission failed. Please try again.');
+      }
+    } catch (err) {
+      setError('Network error. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const statusColor = { pending: '#f59e0b', approved: '#22c55e', rejected: '#ef4444' };
+  const statusColor = { pending: '#6366f1', submitted: '#f59e0b', approved: '#22c55e', rejected: '#ef4444' };
   const statusIcon = {
-    pending: <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#f59e0b' strokeWidth='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>,
+    pending: <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#6366f1' strokeWidth='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>,
+    submitted: <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#f59e0b' strokeWidth='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>,
     approved: <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2.5'><polyline points='20 6 9 17 4 12'/></svg>,
     rejected: <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#ef4444' strokeWidth='2'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>,
   };
+  const statusMessage = {
+    pending: 'You have not submitted your KYC yet.',
+    submitted: 'Your documents are under review. This may take 24-48 hours.',
+    approved: 'Your identity has been verified successfully.',
+    rejected: 'Your verification was rejected. Please resubmit with valid documents.',
+  };
+  const statusLabel = {
+    pending: 'Not Submitted',
+    submitted: 'Verification Pending',
+    approved: 'Verification Approved',
+    rejected: 'Verification Rejected',
+  };
+
+  const isLocked = kycStatus === 'submitted' || kycStatus === 'approved';
 
   return (
     <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
@@ -76,26 +129,22 @@ export default function KYC() {
           <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Identity Verification (KYC)</span>
         </div>
 
-        {/* Status Tracker */}
-        {kycStatus && (
+        {/* Status Banner */}
+        {loading ? (
+          <div style={{ background: '#252d3d', padding: '12px 16px', marginBottom: '16px', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading status...</div>
+        ) : kycStatus && (
           <div style={{ background: '#252d3d', border: `1px solid ${statusColor[kycStatus]}40`, padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: `2px solid ${statusColor[kycStatus]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               {statusIcon[kycStatus]}
             </div>
             <div>
-              <div style={{ color: statusColor[kycStatus], fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', marginBottom: '2px' }}>
-                {kycStatus === 'pending' ? 'Verification Pending' : kycStatus === 'approved' ? 'Verification Approved' : 'Verification Rejected'}
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
-                {kycStatus === 'pending' ? 'Your documents are under review. This may take 24-48 hours.' :
-                 kycStatus === 'approved' ? 'Your identity has been verified successfully.' :
-                 'Your verification was rejected. Please resubmit with valid documents.'}
-              </div>
+              <div style={{ color: statusColor[kycStatus], fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', marginBottom: '2px' }}>{statusLabel[kycStatus]}</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{statusMessage[kycStatus]}</div>
             </div>
           </div>
         )}
 
-        {/* Steps indicator */}
+        {/* Steps */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '20px' }}>
           {['ID Type & Number', 'Upload Documents', 'Selfie with ID'].map((step, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
@@ -110,44 +159,58 @@ export default function KYC() {
 
         {/* Form */}
         <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-          <div style={{ marginBottom: '12px' }}>
-            <label style={labelStyle}>ID Type</label>
-            <select value={idType} onChange={e => setIdType(e.target.value)}
-              style={{ width: '100%', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
-              <option value=''>Select ID Type</option>
-              <option value='passport'>International Passport</option>
-              <option value='national_id'>National ID Card</option>
-              <option value='drivers_license'>Driver's License</option>
-              <option value='residence_permit'>Residence Permit</option>
-            </select>
-          </div>
 
-          <div style={{ marginBottom: '12px' }}>
-            <label style={labelStyle}>ID Number</label>
-            <input value={idNumber} onChange={e => setIdNumber(e.target.value)} placeholder='Enter your ID number' style={inputStyle} />
-          </div>
-
-          <FileInput label='ID Front Side' fileName={idFrontName} onChange={e => { if(e.target.files[0]){ setIdFront(e.target.files[0]); setIdFrontName(e.target.files[0].name); }}} />
-          <FileInput label='ID Back Side' fileName={idBackName} onChange={e => { if(e.target.files[0]){ setIdBack(e.target.files[0]); setIdBackName(e.target.files[0].name); }}} />
-          <FileInput label='Selfie Holding ID' fileName={selfieName} onChange={e => { if(e.target.files[0]){ setSelfie(e.target.files[0]); setSelfieName(e.target.files[0].name); }}} />
-
-          {/* Tips */}
-          <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px' }}>
-            <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '6px' }}><svg width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='#6366f1' strokeWidth='2'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/><line x1='16' y1='13' x2='8' y2='13'/><line x1='16' y1='17' x2='8' y2='17'/><polyline points='10 9 9 9 8 9'/></svg> Tips for successful verification:</div>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', lineHeight: '1.8' }}>
-              • Ensure all documents are clear and readable<br/>
-              • ID must be valid and not expired<br/>
-              • Selfie must clearly show your face and ID together<br/>
-              • Accepted formats: JPG, PNG, PDF
+          {isLocked && (
+            <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
+              {kycStatus === 'approved' ? '✅ Your KYC is approved. No further action needed.' : '⏳ Your KYC is under review. You cannot resubmit at this time.'}
             </div>
+          )}
+
+          <div style={{ opacity: isLocked ? 0.5 : 1, pointerEvents: isLocked ? 'none' : 'auto' }}>
+            <div style={{ marginBottom: '12px' }}>
+              <label style={labelStyle}>ID Type <span style={{ color: '#ef4444' }}>*</span></label>
+              <select value={idType} onChange={e => setIdType(e.target.value)}
+                style={{ width: '100%', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                <option value=''>Select ID Type</option>
+                <option value='passport'>International Passport</option>
+                <option value='national_id'>National ID Card</option>
+                <option value='drivers_license'>Driver's License</option>
+                <option value='residence_permit'>Residence Permit</option>
+              </select>
+            </div>
+
+            <div style={{ marginBottom: '12px' }}>
+              <label style={labelStyle}>ID Number <span style={{ color: '#ef4444' }}>*</span></label>
+              <input value={idNumber} onChange={e => setIdNumber(e.target.value)} placeholder='Enter your ID number' style={inputStyle} />
+            </div>
+
+            <FileInput label='ID Front Side' fileName={idFrontName} onChange={e => { if(e.target.files[0]){ setIdFront(e.target.files[0]); setIdFrontName(e.target.files[0].name); }}} />
+            <FileInput label='ID Back Side' fileName={idBackName} onChange={e => { if(e.target.files[0]){ setIdBack(e.target.files[0]); setIdBackName(e.target.files[0].name); }}} />
+            <FileInput label='Selfie Holding ID' fileName={selfieName} onChange={e => { if(e.target.files[0]){ setSelfie(e.target.files[0]); setSelfieName(e.target.files[0].name); }}} />
+
+            {/* Tips */}
+            <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px' }}>
+              <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '6px' }}>Tips for successful verification:</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', lineHeight: '1.8' }}>
+                • Ensure all documents are clear and readable<br/>
+                • ID must be valid and not expired<br/>
+                • Selfie must clearly show your face and ID together<br/>
+                • Accepted formats: JPG, PNG, PDF
+              </div>
+            </div>
+
+            {error && (
+              <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', padding: '8px 10px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#ef4444', fontSize: '12px' }}>⚠</span>
+                <span style={{ color: '#ef4444', fontSize: '8px' }}>{error}</span>
+              </div>
+            )}
+
+            <button onClick={handleSubmit} disabled={submitting}
+              style={{ padding: '10px 28px', background: submitting ? '#374151' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+              {submitting ? 'Submitting...' : 'Submit for Verification'}
+            </button>
           </div>
-
-          <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-
-          <button onClick={handleSubmit}
-            style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
-            Submit for Verification
-          </button>
         </div>
       </div>
 
