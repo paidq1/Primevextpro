@@ -53,3 +53,5 @@ export const getStakes = () => fetch(`${BASE_URL}/stake`, { headers: headers() }
 // Bot
 export const createBot = (formData) => fetch(`${BASE_URL}/bot`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
 export const getBots = () => fetch(`${BASE_URL}/bot`, { headers: headers() }).then(r => r.json());
+
+export const getTradeStats = () => fetch(`${BASE_URL}/trade/stats`, { headers: headers() }).then(r => r.json());

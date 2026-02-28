@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
-import { createTrade, getTrades } from '../services/api';
+import { createTrade, getTrades, getTradeStats } from '../services/api';
 
 const symbols = ['BTC/USD','ETH/USD','XRP/USD','SOL/USD','BNB/USD','ADA/USD','DOGE/USD','AVAX/USD','EUR/USD','GBP/USD','USD/JPY','AAPL','TSLA','NVDA','MSFT','AMZN'];
 const markets = ['Crypto','Forex','Stocks','Commodities'];
@@ -27,9 +27,10 @@ export default function LiveTrading() {
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [page, setPage] = useState(1);
+  const [stats, setStats] = useState(null);
   const perPage = 10;
 
-  useEffect(() => { fetchTrades(); }, []);
+  useEffect(() => { fetchTrades(); fetchStats(); }, []);
 
   const fetchTrades = async () => {
     setLoading(true);
@@ -40,6 +41,14 @@ export default function LiveTrading() {
       console.error('Failed to load trades:', err);
     } finally {
       setLoading(false);
+    }
+  };
+  const fetchStats = async () => {
+    try {
+      const data = await getTradeStats();
+      if (data && data.totalTrades !== undefined) setStats(data);
+    } catch (err) {
+      console.error("Failed to load stats:", err);
     }
   };
 
@@ -140,6 +149,40 @@ export default function LiveTrading() {
           <button onClick={() => { setShowModal(true); setError(''); }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer' }}>
             + New Trade
           </button>
+
+        {/* Trade Stats */}
+        {stats && (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "14px" }}>
+            <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #6366f1" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>TOTAL TRADES</div>
+              <div style={{ color: "white", fontSize: "16px", fontWeight: "700" }}>{stats.totalTrades}</div>
+              <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>{stats.closedTrades} closed</div>
+            </div>
+            <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #22c55e" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>WIN / LOSS</div>
+              <div style={{ fontSize: "16px", fontWeight: "700" }}>
+                <span style={{ color: "#22c55e" }}>{stats.wins}W</span>
+                <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "12px" }}> / </span>
+                <span style={{ color: "#ef4444" }}>{stats.losses}L</span>
+              </div>
+              <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>closed trades</div>
+            </div>
+            <div style={{ background: "#252d3d", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444"}` }}>
+              <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>NET PROFIT / LOSS</div>
+              <div style={{ color: parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444", fontSize: "16px", fontWeight: "700" }}>
+                {parseFloat(stats.netProfitLoss) >= 0 ? "+" : ""}${stats.netProfitLoss}
+              </div>
+              <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>profit: ${stats.totalProfit} / loss: ${stats.totalLoss}</div>
+            </div>
+            <div style={{ background: "#252d3d", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444"}` }}>
+              <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>ROI</div>
+              <div style={{ color: parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444", fontSize: "16px", fontWeight: "700" }}>
+                {parseFloat(stats.roi) >= 0 ? "+" : ""}{stats.roi}%
+              </div>
+              <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>return on investment</div>
+            </div>
+          </div>
+        )}
         </div>
 
         <div style={{ background: '#252d3d' }}>
