@@ -150,7 +150,7 @@ export default function LiveTrading() {
             <span style={{ color: "white", fontSize: "11px", fontWeight: "700" }}>Trading</span>
           </div>
           {stats && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", maxWidth: "220px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", maxWidth: "220px", marginLeft: "auto" }}>
               <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #6366f1" }}>
                 <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>TOTAL TRADES</div>
                 <div style={{ color: "white", fontSize: "16px", fontWeight: "700" }}>{stats.totalTrades}</div>
