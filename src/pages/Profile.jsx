@@ -5,6 +5,59 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { updateProfile } from '../services/api';
 
+const COUNTRIES = [
+  { name: 'United States', code: '+1', flag: '🇺🇸', minLen: 10, maxLen: 10 },
+  { name: 'United Kingdom', code: '+44', flag: '🇬🇧', minLen: 10, maxLen: 10 },
+  { name: 'Nigeria', code: '+234', flag: '🇳🇬', minLen: 10, maxLen: 11 },
+  { name: 'India', code: '+91', flag: '🇮🇳', minLen: 10, maxLen: 10 },
+  { name: 'Canada', code: '+1', flag: '🇨🇦', minLen: 10, maxLen: 10 },
+  { name: 'Germany', code: '+49', flag: '🇩🇪', minLen: 10, maxLen: 11 },
+  { name: 'France', code: '+33', flag: '🇫🇷', minLen: 9, maxLen: 9 },
+  { name: 'China', code: '+86', flag: '🇨🇳', minLen: 11, maxLen: 11 },
+  { name: 'Japan', code: '+81', flag: '🇯🇵', minLen: 10, maxLen: 11 },
+  { name: 'Russia', code: '+7', flag: '🇷🇺', minLen: 10, maxLen: 10 },
+  { name: 'Brazil', code: '+55', flag: '🇧🇷', minLen: 10, maxLen: 11 },
+  { name: 'South Africa', code: '+27', flag: '🇿🇦', minLen: 9, maxLen: 9 },
+  { name: 'UAE', code: '+971', flag: '🇦🇪', minLen: 9, maxLen: 9 },
+  { name: 'Kenya', code: '+254', flag: '🇰🇪', minLen: 9, maxLen: 9 },
+  { name: 'Ghana', code: '+233', flag: '🇬🇭', minLen: 9, maxLen: 9 },
+  { name: 'Australia', code: '+61', flag: '🇦🇺', minLen: 9, maxLen: 9 },
+  { name: 'Italy', code: '+39', flag: '🇮🇹', minLen: 9, maxLen: 10 },
+  { name: 'Spain', code: '+34', flag: '🇪🇸', minLen: 9, maxLen: 9 },
+  { name: 'Mexico', code: '+52', flag: '🇲🇽', minLen: 10, maxLen: 10 },
+  { name: 'Argentina', code: '+54', flag: '🇦🇷', minLen: 10, maxLen: 10 },
+  { name: 'Pakistan', code: '+92', flag: '🇵🇰', minLen: 10, maxLen: 10 },
+  { name: 'Bangladesh', code: '+880', flag: '🇧🇩', minLen: 10, maxLen: 10 },
+  { name: 'Indonesia', code: '+62', flag: '🇮🇩', minLen: 9, maxLen: 12 },
+  { name: 'Turkey', code: '+90', flag: '🇹🇷', minLen: 10, maxLen: 10 },
+  { name: 'Saudi Arabia', code: '+966', flag: '🇸🇦', minLen: 9, maxLen: 9 },
+  { name: 'Egypt', code: '+20', flag: '🇪🇬', minLen: 10, maxLen: 10 },
+  { name: 'Tanzania', code: '+255', flag: '🇹🇿', minLen: 9, maxLen: 9 },
+  { name: 'Ethiopia', code: '+251', flag: '🇪🇹', minLen: 9, maxLen: 9 },
+  { name: 'Uganda', code: '+256', flag: '🇺🇬', minLen: 9, maxLen: 9 },
+  { name: 'Cameroon', code: '+237', flag: '🇨🇲', minLen: 9, maxLen: 9 },
+  { name: 'Senegal', code: '+221', flag: '🇸🇳', minLen: 9, maxLen: 9 },
+  { name: 'Zimbabwe', code: '+263', flag: '🇿🇼', minLen: 9, maxLen: 9 },
+  { name: 'Netherlands', code: '+31', flag: '🇳🇱', minLen: 9, maxLen: 9 },
+  { name: 'Sweden', code: '+46', flag: '🇸🇪', minLen: 9, maxLen: 9 },
+  { name: 'Norway', code: '+47', flag: '🇳🇴', minLen: 8, maxLen: 8 },
+  { name: 'Switzerland', code: '+41', flag: '🇨🇭', minLen: 9, maxLen: 9 },
+  { name: 'Poland', code: '+48', flag: '🇵🇱', minLen: 9, maxLen: 9 },
+  { name: 'Portugal', code: '+351', flag: '🇵🇹', minLen: 9, maxLen: 9 },
+  { name: 'New Zealand', code: '+64', flag: '🇳🇿', minLen: 8, maxLen: 9 },
+  { name: 'Singapore', code: '+65', flag: '🇸🇬', minLen: 8, maxLen: 8 },
+  { name: 'Malaysia', code: '+60', flag: '🇲🇾', minLen: 9, maxLen: 10 },
+  { name: 'Philippines', code: '+63', flag: '🇵🇭', minLen: 10, maxLen: 10 },
+  { name: 'Thailand', code: '+66', flag: '🇹🇭', minLen: 9, maxLen: 9 },
+  { name: 'Vietnam', code: '+84', flag: '🇻🇳', minLen: 9, maxLen: 10 },
+  { name: 'South Korea', code: '+82', flag: '🇰🇷', minLen: 9, maxLen: 10 },
+  { name: 'Israel', code: '+972', flag: '🇮🇱', minLen: 9, maxLen: 9 },
+  { name: 'Iran', code: '+98', flag: '🇮🇷', minLen: 10, maxLen: 10 },
+  { name: 'Iraq', code: '+964', flag: '🇮🇶', minLen: 10, maxLen: 10 },
+  { name: 'Morocco', code: '+212', flag: '🇲🇦', minLen: 9, maxLen: 9 },
+  { name: 'Algeria', code: '+213', flag: '🇩🇿', minLen: 9, maxLen: 9 },
+];
+
 export default function Profile() {
   const navigate = useNavigate();
   const { user, updateUser, logout } = useAuth();
@@ -18,16 +71,9 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    currency: 'US Dollar (USD)',
-    dob: '',
-    phoneCode: '+1',
-    phone: '',
-    country: '',
-    state: '',
-    city: '',
-    address: '',
+    firstName: '', lastName: '', currency: 'US Dollar (USD)',
+    dob: '', phoneCode: '+234', phone: '', country: 'Nigeria',
+    state: '', city: '', address: '',
   });
 
   useEffect(() => {
@@ -37,7 +83,7 @@ export default function Profile() {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         phone: user.phone || '',
-        phoneCode: user.phoneCode || '+1',
+        phoneCode: user.phoneCode || '+234',
         country: user.country || '',
         state: user.state || '',
         city: user.city || '',
@@ -48,13 +94,36 @@ export default function Profile() {
     }
   }, [user]);
 
+  const getSelectedCountry = () =>
+    COUNTRIES.find(c => c.code === form.phoneCode && c.name === form.country) ||
+    COUNTRIES.find(c => c.code === form.phoneCode) ||
+    COUNTRIES[0];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-    setErrors({ ...errors, [name]: '' });
+    setForm(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
-  // Only stores file locally — does NOT upload until Update Profile is clicked
+  // When country changes, auto-update phone code
+  const handleCountryChange = (e) => {
+    const selectedName = e.target.value;
+    const found = COUNTRIES.find(c => c.name === selectedName);
+    setForm(prev => ({
+      ...prev,
+      country: selectedName,
+      phoneCode: found ? found.code : prev.phoneCode,
+      phone: '', // clear phone when country changes
+    }));
+    setErrors(prev => ({ ...prev, country: '', phone: '', phoneCode: '' }));
+  };
+
+  // When phone code changes manually
+  const handlePhoneCodeChange = (e) => {
+    setForm(prev => ({ ...prev, phoneCode: e.target.value, phone: '' }));
+    setErrors(prev => ({ ...prev, phone: '' }));
+  };
+
   const handleFileChange = (e) => {
     const f = e.target.files[0];
     if (f) {
@@ -75,8 +144,19 @@ export default function Profile() {
       const age = (new Date() - new Date(form.dob)) / (1000 * 60 * 60 * 24 * 365);
       if (age < 18) newErrors.dob = 'You must be at least 18 years old';
     }
-    if (!form.phone.trim()) newErrors.phone = 'Phone number is required';
-    else if (!/^\d{7,15}$/.test(form.phone.trim())) newErrors.phone = 'Enter a valid phone number (7-15 digits)';
+    if (!form.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!/^\d+$/.test(form.phone.trim())) {
+      newErrors.phone = 'Phone number must contain digits only';
+    } else {
+      const selected = getSelectedCountry();
+      const len = form.phone.trim().length;
+      if (len < selected.minLen || len > selected.maxLen) {
+        newErrors.phone = selected.minLen === selected.maxLen
+          ? `${selected.name} numbers must be exactly ${selected.minLen} digits`
+          : `${selected.name} numbers must be ${selected.minLen}-${selected.maxLen} digits`;
+      }
+    }
     if (!form.country.trim()) newErrors.country = 'Country is required';
     if (!form.state.trim()) newErrors.state = 'State is required';
     if (!form.city.trim()) newErrors.city = 'City is required';
@@ -88,11 +168,9 @@ export default function Profile() {
   const handleSubmit = async () => {
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
-
     setLoading(true);
     try {
       const formData = new FormData();
-      // ALL fields sent to backend
       formData.append('firstName', form.firstName);
       formData.append('lastName', form.lastName);
       formData.append('phone', form.phone);
@@ -103,9 +181,7 @@ export default function Profile() {
       formData.append('address', form.address);
       formData.append('dob', form.dob);
       formData.append('currency', form.currency);
-      // Avatar only uploaded here when user clicks "Update Profile"
       if (avatarFile) formData.append('avatar', avatarFile);
-
       const res = await updateProfile(formData);
       if (res.user) {
         updateUser(res.user);
@@ -118,7 +194,6 @@ export default function Profile() {
         setErrors({ general: res.message || 'Failed to update profile. Please try again.' });
       }
     } catch (err) {
-      console.error('Profile update error:', err);
       setErrors({ general: err?.response?.data?.message || 'Failed to update profile. Please try again.' });
     } finally {
       setLoading(false);
@@ -132,8 +207,8 @@ export default function Profile() {
   });
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '3px' };
   const labelStyle = { color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' };
-
   const avatarSrc = avatarPreview || (user?.avatar ? `https://primevextpro.onrender.com${user.avatar}` : null);
+  const selectedCountry = getSelectedCountry();
 
   return (
     <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
@@ -200,10 +275,7 @@ export default function Profile() {
           <div style={{ background: '#1a2035', padding: '16px', border: '1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Edit Account</span>
-              <button
-                onClick={() => { setActiveTab('profile'); setErrors({}); setAvatarPreview(null); setAvatarFile(null); setFileName('No file chosen'); }}
-                style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}
-              >Previous →</button>
+              <button onClick={() => { setActiveTab('profile'); setErrors({}); setAvatarPreview(null); setAvatarFile(null); setFileName('No file chosen'); }} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Previous →</button>
             </div>
 
             {/* Success Modal */}
@@ -234,9 +306,7 @@ export default function Profile() {
               {avatarPreview && (
                 <div style={{ marginBottom: '8px' }}>
                   <img src={avatarPreview} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1' }}/>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '3px' }}>
-                    Preview — saved when you click Update Profile
-                  </div>
+                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '3px' }}>Preview — saved when you click Update Profile</div>
                 </div>
               )}
               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -267,13 +337,27 @@ export default function Profile() {
             {/* Currency */}
             <div style={{ marginBottom: '14px' }}>
               <label style={labelStyle}>Country Currency</label>
-              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '50%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
+              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '60%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
                 <option>US Dollar (USD)</option>
                 <option>Euro (EUR)</option>
                 <option>British Pound (GBP)</option>
                 <option>Nigerian Naira (NGN)</option>
                 <option>Indian Rupee (INR)</option>
                 <option>Canadian Dollar (CAD)</option>
+                <option>Australian Dollar (AUD)</option>
+                <option>Japanese Yen (JPY)</option>
+                <option>Chinese Yuan (CNY)</option>
+                <option>Swiss Franc (CHF)</option>
+                <option>South African Rand (ZAR)</option>
+                <option>Kenyan Shilling (KES)</option>
+                <option>Ghanaian Cedi (GHS)</option>
+                <option>UAE Dirham (AED)</option>
+                <option>Saudi Riyal (SAR)</option>
+                <option>Brazilian Real (BRL)</option>
+                <option>Mexican Peso (MXN)</option>
+                <option>Singapore Dollar (SGD)</option>
+                <option>Pakistani Rupee (PKR)</option>
+                <option>Turkish Lira (TRY)</option>
               </select>
             </div>
 
@@ -289,30 +373,65 @@ export default function Profile() {
               <div style={{ flex: 1 }}>
                 <label style={labelStyle}>Phone Number *</label>
                 <div style={{ display: 'flex' }}>
-                  <select name='phoneCode' value={form.phoneCode} onChange={handleChange} style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', borderRight: 'none', color: 'white', fontSize: '8px', padding: '7px 4px', outline: 'none' }}>
-                    <option value='+1'>+1</option><option value='+44'>+44</option><option value='+91'>+91</option>
-                    <option value='+234'>+234</option><option value='+49'>+49</option><option value='+33'>+33</option>
-                    <option value='+86'>+86</option><option value='+81'>+81</option><option value='+7'>+7</option>
-                    <option value='+55'>+55</option><option value='+27'>+27</option><option value='+971'>+971</option>
-                    <option value='+254'>+254</option><option value='+233'>+233</option>
+                  <select
+                    name='phoneCode'
+                    value={form.phoneCode}
+                    onChange={handlePhoneCodeChange}
+                    style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', borderRight: 'none', color: 'white', fontSize: '8px', padding: '7px 4px', outline: 'none', maxWidth: '70px' }}
+                  >
+                    {COUNTRIES.map((c, i) => (
+                      <option key={i} value={c.code}>{c.flag} {c.code}</option>
+                    ))}
                   </select>
-                  <input name='phone' value={form.phone} onChange={handleChange} placeholder='Phone number' style={{ flex: 1, background: '#1e2538', border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}/>
+                  <input
+                    name='phone'
+                    value={form.phone}
+                    onChange={handleChange}
+                    placeholder={`${selectedCountry.minLen}-${selectedCountry.maxLen} digits`}
+                    maxLength={selectedCountry.maxLen}
+                    style={{ flex: 1, background: '#1e2538', border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
+                  />
                 </div>
-                {errors.phone && <div style={errStyle}>{errors.phone}</div>}
+                {errors.phone
+                  ? <div style={errStyle}>{errors.phone}</div>
+                  : <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '3px' }}>
+                      {selectedCountry.flag} {selectedCountry.name} — {selectedCountry.minLen === selectedCountry.maxLen ? `${selectedCountry.minLen} digits` : `${selectedCountry.minLen}-${selectedCountry.maxLen} digits`}
+                    </div>
+                }
               </div>
             </div>
 
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '14px' }}/>
 
-            {/* Country, State, City */}
+            {/* Country dropdown */}
+            <div style={{ marginBottom: '14px' }}>
+              <label style={labelStyle}>Country *</label>
+              <select
+                name='country'
+                value={form.country}
+                onChange={handleCountryChange}
+                style={{ width: '100%', background: '#1e2538', border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}
+              >
+                <option value=''>Select Country</option>
+                {COUNTRIES.map((c, i) => (
+                  <option key={i} value={c.name}>{c.flag} {c.name}</option>
+                ))}
+              </select>
+              {errors.country && <div style={errStyle}>{errors.country}</div>}
+            </div>
+
+            {/* State & City */}
             <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
-              {[['country','Country'],['state','State'],['city','City']].map(([name, label]) => (
-                <div key={name} style={{ flex: 1 }}>
-                  <label style={labelStyle}>{label} *</label>
-                  <input name={name} value={form[name]} onChange={handleChange} placeholder={'Enter ' + label} style={inputStyle(name)}/>
-                  {errors[name] && <div style={errStyle}>{errors[name]}</div>}
-                </div>
-              ))}
+              <div style={{ flex: 1 }}>
+                <label style={labelStyle}>State *</label>
+                <input name='state' value={form.state} onChange={handleChange} placeholder='Enter State' style={inputStyle('state')}/>
+                {errors.state && <div style={errStyle}>{errors.state}</div>}
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={labelStyle}>City *</label>
+                <input name='city' value={form.city} onChange={handleChange} placeholder='Enter City' style={inputStyle('city')}/>
+                {errors.city && <div style={errStyle}>{errors.city}</div>}
+              </div>
             </div>
 
             {/* Address */}
@@ -322,7 +441,6 @@ export default function Profile() {
               {errors.address && <div style={errStyle}>{errors.address}</div>}
             </div>
 
-            {/* Submit Button */}
             <button
               onClick={handleSubmit}
               disabled={loading}
