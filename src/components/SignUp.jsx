@@ -129,7 +129,7 @@ const SignUp = () => {
         password: form.password,
       });
       if (res.message && (res.message.toLowerCase().includes('check your email') || res.message.toLowerCase().includes('registration successful') || res.message.toLowerCase().includes('verify'))) {
-        setCheckEmail(true);
+        setCheckEmail(true); // will show inline check email screen
       } else {
         setErrors({ email: res.message || 'Registration failed' });
       }

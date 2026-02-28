@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { loginUser } from '../services/api';
-import { loginUser } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
@@ -10,7 +9,6 @@ const SignIn = () => {
   const [errors, setErrors] = useState({});
   const [verifyPopup, setVerifyPopup] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
   const handleChange = (e) => {
@@ -38,6 +36,8 @@ const SignIn = () => {
         login(res.token, res.user);
         setSuccess(true);
         setTimeout(() => { window.location.href = '/dashboard'; }, 1500);
+      } else if (res.message && res.message.toLowerCase().includes('verify')) {
+        setVerifyPopup(true);
       } else {
         setErrors({ username: res.message || 'Invalid credentials' });
       }
@@ -75,7 +75,7 @@ const SignIn = () => {
             </div>
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Success!</div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>You need to verify your email address first.</div>
-            <button onClick={() => setVerifyPopup(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+            <button onClick={() => window.location.href='/check-email'} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
           </div>
         </>
       )}
