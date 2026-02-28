@@ -21,6 +21,9 @@ import Footer from "./components/Footer";
 import Smartsupp from "./components/Smartsupp";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
+import Deposit from "./pages/Deposit";
+import DepositFunds from "./pages/DepositFunds";
+import Withdraw from "./pages/Withdraw";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import LiveMarket from "./pages/LiveMarket";
@@ -33,6 +36,8 @@ import KYC from "./pages/KYC";
 import ReferUsers from "./pages/ReferUsers";
 import ManageBots from "./pages/ManageBots";
 import LiveTrading from "./pages/LiveTrading";
+import WithdrawNew from "./pages/WithdrawNew";
+import BotTransactionHistory from "./pages/BotTransactionHistory";
 
 function HomePage() {
   useEffect(() => {
@@ -71,6 +76,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/dashboard/deposit" element={<Deposit />} />
+        <Route path="/dashboard/withdraw" element={<Withdraw />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/profile" element={<Profile />} />
         <Route path="/dashboard/live-market" element={<LiveMarket />} />
@@ -83,6 +90,9 @@ function App() {
         <Route path="/dashboard/refer-users" element={<ReferUsers />} />
         <Route path="/dashboard/manage-bots" element={<ManageBots />} />
         <Route path="/dashboard/live-trading" element={<LiveTrading />} />
+        <Route path="/dashboard/withdraw/new" element={<WithdrawNew />} />
+        <Route path="/dashboard/bot-transactions" element={<BotTransactionHistory />} />
+        <Route path="/dashboard/deposit-funds" element={<DepositFunds />} />
       </Routes>
     </BrowserRouter>
   );
