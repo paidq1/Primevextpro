@@ -128,10 +128,10 @@ const SignUp = () => {
         country: selectedCountry.name,
         password: form.password,
       });
-      if (res.token) {
-        login(res.token, res.user);
-        setSuccess(true);
-        setTimeout(() => { window.location.href = '/dashboard'; }, 1500);
+      if (res.message && res.message.includes('check your email')) {
+        setCheckEmail(true);
+      } else if (res.message && res.message.includes('Registration successful')) {
+        setCheckEmail(true);
       } else {
         setErrors({ email: res.message || 'Registration failed' });
       }
