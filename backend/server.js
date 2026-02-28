@@ -27,6 +27,26 @@ app.use('/api/stake', require('./routes/stake'));
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'PrimeVest Pro API running' }));
 
+// Root route - API info
+app.get('/', (req, res) => {
+  res.json({
+    name: 'PrimeVest Pro API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: [
+      '/api/health',
+      '/api/auth',
+      '/api/user',
+      '/api/deposit',
+      '/api/withdraw',
+      '/api/trade',
+      '/api/packages',
+      '/api/kyc',
+      '/api/stake'
+    ]
+  });
+});
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
