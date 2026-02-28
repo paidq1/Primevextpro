@@ -27,7 +27,9 @@ export default function LiveTrading() {
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState("all");
   const [stats, setStats] = useState(null);
+  const [statsLoading, setStatsLoading] = useState(true);
   const perPage = 10;
 
   useEffect(() => { fetchTrades(); fetchStats(); }, []);
@@ -44,11 +46,14 @@ export default function LiveTrading() {
     }
   };
   const fetchStats = async () => {
+    setStatsLoading(true);
     try {
       const data = await getTradeStats();
       if (data && data.totalTrades !== undefined) setStats(data);
     } catch (err) {
       console.error("Failed to load stats:", err);
+    } finally {
+      setStatsLoading(false);
     }
   };
 
@@ -83,6 +88,7 @@ export default function LiveTrading() {
         setShowSuccess(true);
         setShowModal(false);
         setTrades(prev => [res.trade, ...prev]);
+        fetchStats();
         setPage(1);
         setAmount('');
         setAccount('---');
@@ -101,8 +107,12 @@ export default function LiveTrading() {
     }
   };
 
-  const totalPages = Math.ceil(trades.length / perPage);
-  const paginated = trades.slice((page - 1) * perPage, page * perPage);
+  const filtered = filter === "all" ? trades : trades.filter(t => {
+    if (filter === "buy" || filter === "sell") return t.type === filter;
+    return t.status === filter;
+  });
+  const totalPages = Math.ceil(filtered.length / perPage);
+  const paginated = filtered.slice((page - 1) * perPage, page * perPage);
 
   const statusStyle = (status) => {
     switch (status) {
@@ -149,7 +159,12 @@ export default function LiveTrading() {
             <button onClick={() => { setShowModal(true); setError(""); }} style={{ background: "#6366f1", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "7px 14px", cursor: "pointer" }}>+ New Trade</button>
             <span style={{ color: "white", fontSize: "11px", fontWeight: "700" }}>Trading</span>
           </div>
-          {stats && (
+          {statsLoading ? (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", maxWidth: "220px", marginLeft: "auto", gap: "6px" }}>
+              <div style={{ width: "16px", height: "16px", border: "2px solid rgba(99,102,241,0.3)", borderTop: "2px solid #6366f1", borderRadius: "50%", animation: "spin 0.8s linear infinite" }}></div>
+              <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "8px" }}>Loading...</span>
+            </div>
+          ) : stats && (
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", maxWidth: "220px", marginLeft: "auto" }}>
               <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #6366f1" }}>
                 <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>TOTAL TRADES</div>
@@ -178,12 +193,18 @@ export default function LiveTrading() {
             </div>
           )}
         </div>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        <div style={{ display: "flex", gap: "6px", marginBottom: "10px", flexWrap: "wrap" }}>
+          {["all","buy","sell","pending","active","closed","cancelled"].map(f => (
+            <button key={f} onClick={() => { setFilter(f); setPage(1); }} style={{ padding: "4px 10px", fontSize: "7px", fontWeight: "700", border: "none", cursor: "pointer", textTransform: "capitalize", background: filter === f ? "#6366f1" : "rgba(255,255,255,0.06)", color: filter === f ? "white" : "rgba(255,255,255,0.5)" }}>{f}</button>
+          ))}
+        </div>
 
         <div style={{ background: '#252d3d' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
-                {['Symbol','Duration','Type','Amount','Status','Date'].map((h, i) => (
+                {['Symbol','Duration','Type','Amount','Result','Status','Date'].map((h, i) => (
                   <th key={i} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '7px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid rgba(99,102,241,0.4)', textAlign: 'left' }}>{h}</th>
                 ))}
               </tr>
@@ -203,6 +224,13 @@ export default function LiveTrading() {
                     </td>
                     <td style={{ padding: '7px 6px', color: 'rgba(255,255,255,0.7)', fontSize: '7px' }}>${parseFloat(t.amount).toFixed(2)}</td>
                     <td style={{ padding: '7px 6px' }}>
+                      {t.result !== 0 ? (
+                        <span style={{ color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.result > 0 ? '+' : ''}${Math.abs(t.result).toFixed(2)}</span>
+                      ) : (
+                        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>---</span>
+                      )}
+                    </td>
+                    <td style={{ padding: '7px 6px' }}>
                       <span style={{ ...statusStyle(t.status), fontSize: '7px', padding: '2px 6px', fontWeight: '600', textTransform: 'capitalize' }}>{t.status}</span>
                     </td>
                     <td style={{ padding: '7px 6px', color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(t.createdAt).toLocaleDateString()}</td>
@@ -214,7 +242,7 @@ export default function LiveTrading() {
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>
-              Showing {trades.length === 0 ? 0 : (page - 1) * perPage + 1}–{Math.min(page * perPage, trades.length)} of {trades.length} trades
+              Showing {filtered.length === 0 ? 0 : (page - 1) * perPage + 1}–{Math.min(page * perPage, filtered.length)} of {filtered.length} trades
             </span>
             <div style={{ display: 'flex', gap: '4px' }}>
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page === 1 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page === 1 ? 'default' : 'pointer' }}>&#8249;</button>
