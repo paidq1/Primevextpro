@@ -110,7 +110,7 @@ export default function Profile() {
           <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> Trade</button>
           <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> $0.00</button>
           <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-            {avatarPreview || user?.avatar ? <img src={avatarPreview || 'http://localhost:5000' + user?.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={14} color='rgba(255,255,255,0.6)'/>}
+            {avatarPreview || user?.avatar ? <img src={avatarPreview || 'https://primevextpro.onrender.com' + user?.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={14} color='rgba(255,255,255,0.6)'/>}
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@ export default function Profile() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid rgba(255,255,255,0.2)', overflow: 'hidden' }}>
-                  {avatarPreview || user?.avatar ? <img src={avatarPreview || 'http://localhost:5000' + user?.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={26} color='rgba(255,255,255,0.7)'/>}
+                  {avatarPreview || user?.avatar ? <img src={avatarPreview || 'https://primevextpro.onrender.com' + user?.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={26} color='rgba(255,255,255,0.7)'/>}
                 </div>
                 <div>
                   <div style={{ display: 'flex', gap: '20px', marginBottom: '8px' }}>
