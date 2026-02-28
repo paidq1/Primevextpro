@@ -15,10 +15,19 @@ export default function Profile() {
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    firstName: '', lastName: '', currency: 'US Dollar (USD)',
-    dob: '', phoneCode: '+1', phone: '', country: '', state: '', city: '', address: ''
+    firstName: '',
+    lastName: '',
+    currency: 'US Dollar (USD)',
+    dob: '',
+    phoneCode: '+1',
+    phone: '',
+    country: '',
+    state: '',
+    city: '',
+    address: '',
   });
 
   useEffect(() => {
@@ -28,7 +37,13 @@ export default function Profile() {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         phone: user.phone || '',
+        phoneCode: user.phoneCode || '+1',
         country: user.country || '',
+        state: user.state || '',
+        city: user.city || '',
+        address: user.address || '',
+        dob: user.dob ? user.dob.substring(0, 10) : '',
+        currency: user.currency || 'US Dollar (USD)',
       }));
     }
   }, [user]);
@@ -37,6 +52,16 @@ export default function Profile() {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
     setErrors({ ...errors, [name]: '' });
+  };
+
+  // Only stores file locally — does NOT upload until Update Profile is clicked
+  const handleFileChange = (e) => {
+    const f = e.target.files[0];
+    if (f) {
+      setFileName(f.name);
+      setAvatarFile(f);
+      setAvatarPreview(URL.createObjectURL(f));
+    }
   };
 
   const validate = () => {
@@ -63,21 +88,40 @@ export default function Profile() {
   const handleSubmit = async () => {
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
+
+    setLoading(true);
     try {
       const formData = new FormData();
+      // ALL fields sent to backend
       formData.append('firstName', form.firstName);
       formData.append('lastName', form.lastName);
       formData.append('phone', form.phone);
+      formData.append('phoneCode', form.phoneCode);
       formData.append('country', form.country);
+      formData.append('state', form.state);
+      formData.append('city', form.city);
+      formData.append('address', form.address);
+      formData.append('dob', form.dob);
+      formData.append('currency', form.currency);
+      // Avatar only uploaded here when user clicks "Update Profile"
       if (avatarFile) formData.append('avatar', avatarFile);
+
       const res = await updateProfile(formData);
       if (res.user) {
         updateUser(res.user);
         setSuccess(true);
+        setAvatarFile(null);
+        setAvatarPreview(null);
+        setFileName('No file chosen');
         setTimeout(() => { setSuccess(false); setActiveTab('profile'); }, 2000);
+      } else {
+        setErrors({ general: res.message || 'Failed to update profile. Please try again.' });
       }
     } catch (err) {
-      setErrors({ firstName: 'Failed to update profile' });
+      console.error('Profile update error:', err);
+      setErrors({ general: err?.response?.data?.message || 'Failed to update profile. Please try again.' });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,12 +130,15 @@ export default function Profile() {
     border: '1px solid ' + (errors[field] ? '#ef4444' : 'rgba(255,255,255,0.08)'),
     color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box'
   });
-
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '3px' };
   const labelStyle = { color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' };
 
+  const avatarSrc = avatarPreview || (user?.avatar ? `https://primevextpro.onrender.com${user.avatar}` : null);
+
   return (
     <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+
+      {/* Top Nav */}
       <div style={{ background: '#1e2538', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{ width: '16px', height: '16px' }}>
@@ -102,7 +149,9 @@ export default function Profile() {
             </svg>
           </div>
           <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
-            <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='18' x2='21' y2='18'/></svg>
+            <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
+              <line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='18' x2='21' y2='18'/>
+            </svg>
           </button>
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -110,12 +159,12 @@ export default function Profile() {
           <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> Trade</button>
           <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> $0.00</button>
           <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-            {avatarPreview || user?.avatar ? <img src={avatarPreview || 'https://primevextpro.onrender.com' + user?.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={14} color='rgba(255,255,255,0.6)'/>}
+            {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar"/> : <User size={14} color='rgba(255,255,255,0.6)'/>}
           </div>
         </div>
       </div>
 
-   <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div style={{ padding: '14px' }}>
         {activeTab === 'profile' ? (
@@ -125,24 +174,24 @@ export default function Profile() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
                   <div style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>{form.firstName} {form.lastName}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px' }}>Ung</div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px' }}>{user?.email || ''}</div>
                 </div>
                 <button onClick={() => setActiveTab('edit')} style={{ background: 'rgba(0,0,0,0.2)', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Edit2 size={9}/> Edit Profile
                 </button>
-                <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>Logout</button>
+                <button onClick={() => { logout(); navigate('/signin'); }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer' }}>Logout</button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div style={{ width: '55px', height: '55px', borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '2px solid rgba(255,255,255,0.2)', overflow: 'hidden' }}>
-                  {avatarPreview || user?.avatar ? <img src={avatarPreview || 'https://primevextpro.onrender.com' + user?.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={26} color='rgba(255,255,255,0.7)'/>}
+                  {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar"/> : <User size={26} color='rgba(255,255,255,0.7)'/>}
                 </div>
                 <div>
                   <div style={{ display: 'flex', gap: '20px', marginBottom: '8px' }}>
                     <div><div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>Starter</div><div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>Plan</div></div>
-                    <div><div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>USD</div><div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>Currency</div></div>
+                    <div><div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>{form.currency?.split('(')[1]?.replace(')', '') || 'USD'}</div><div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>Currency</div></div>
                     <div><div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>—</div><div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>Gender</div></div>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px' }}>Email: johndoe@email.com</div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px' }}>Email: {user?.email || 'N/A'}</div>
                 </div>
               </div>
             </div>
@@ -151,12 +200,16 @@ export default function Profile() {
           <div style={{ background: '#1a2035', padding: '16px', border: '1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Edit Account</span>
-              <button onClick={() => { setActiveTab('profile'); setErrors({}); }} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Previous →</button>
+              <button
+                onClick={() => { setActiveTab('profile'); setErrors({}); setAvatarPreview(null); setAvatarFile(null); setFileName('No file chosen'); }}
+                style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}
+              >Previous →</button>
             </div>
 
+            {/* Success Modal */}
             {success && (
               <>
-                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
                 <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
                   <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
                     <svg width='22' height='22' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg>
@@ -168,46 +221,69 @@ export default function Profile() {
               </>
             )}
 
+            {/* General Error */}
+            {errors.general && (
+              <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid #ef4444', color: '#ef4444', fontSize: '8px', padding: '8px 10px', marginBottom: '14px' }}>
+                {errors.general}
+              </div>
+            )}
+
+            {/* Profile Picture */}
             <div style={{ marginBottom: '14px' }}>
               <label style={labelStyle}>Profile Picture</label>
+              {avatarPreview && (
+                <div style={{ marginBottom: '8px' }}>
+                  <img src={avatarPreview} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1' }}/>
+                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '3px' }}>
+                    Preview — saved when you click Update Profile
+                  </div>
+                </div>
+              )}
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <label style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                   Choose File
-                  <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { const f = e.target.files[0]; if(f){ setFileName(f.name); setAvatarFile(f); setAvatarPreview(URL.createObjectURL(f)); } }} />
+                  <input type='file' accept='image/*' style={{ display: 'none' }} onChange={handleFileChange}/>
                 </label>
                 <span style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
               </div>
             </div>
 
+            {/* First & Last Name */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
               <div style={{ flex: 1 }}>
                 <label style={labelStyle}>First Name *</label>
-                <input name='firstName' value={form.firstName} onChange={handleChange} style={inputStyle('firstName')} />
+                <input name='firstName' value={form.firstName} onChange={handleChange} style={inputStyle('firstName')}/>
                 {errors.firstName && <div style={errStyle}>{errors.firstName}</div>}
               </div>
               <div style={{ flex: 1 }}>
                 <label style={labelStyle}>Last Name *</label>
-                <input name='lastName' value={form.lastName} onChange={handleChange} style={inputStyle('lastName')} />
+                <input name='lastName' value={form.lastName} onChange={handleChange} style={inputStyle('lastName')}/>
                 {errors.lastName && <div style={errStyle}>{errors.lastName}</div>}
               </div>
             </div>
 
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '14px' }}/>
 
+            {/* Currency */}
             <div style={{ marginBottom: '14px' }}>
               <label style={labelStyle}>Country Currency</label>
               <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '50%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
-                <option>US Dollar (USD)</option><option>Euro (EUR)</option><option>British Pound (GBP)</option>
-                <option>Nigerian Naira (NGN)</option><option>Indian Rupee (INR)</option><option>Canadian Dollar (CAD)</option>
+                <option>US Dollar (USD)</option>
+                <option>Euro (EUR)</option>
+                <option>British Pound (GBP)</option>
+                <option>Nigerian Naira (NGN)</option>
+                <option>Indian Rupee (INR)</option>
+                <option>Canadian Dollar (CAD)</option>
               </select>
             </div>
 
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '14px' }}/>
 
+            {/* DOB & Phone */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
               <div style={{ flex: 1 }}>
                 <label style={labelStyle}>Date of Birth *</label>
-                <input type='date' name='dob' value={form.dob} onChange={handleChange} style={inputStyle('dob')} />
+                <input type='date' name='dob' value={form.dob} onChange={handleChange} style={inputStyle('dob')}/>
                 {errors.dob && <div style={errStyle}>{errors.dob}</div>}
               </div>
               <div style={{ flex: 1 }}>
@@ -220,7 +296,7 @@ export default function Profile() {
                     <option value='+55'>+55</option><option value='+27'>+27</option><option value='+971'>+971</option>
                     <option value='+254'>+254</option><option value='+233'>+233</option>
                   </select>
-                  <input name='phone' value={form.phone} onChange={handleChange} placeholder='Phone number' style={{ flex: 1, background: '#1e2538', border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                  <input name='phone' value={form.phone} onChange={handleChange} placeholder='Phone number' style={{ flex: 1, background: '#1e2538', border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}/>
                 </div>
                 {errors.phone && <div style={errStyle}>{errors.phone}</div>}
               </div>
@@ -228,24 +304,31 @@ export default function Profile() {
 
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginBottom: '14px' }}/>
 
+            {/* Country, State, City */}
             <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
               {[['country','Country'],['state','State'],['city','City']].map(([name, label]) => (
                 <div key={name} style={{ flex: 1 }}>
                   <label style={labelStyle}>{label} *</label>
-                  <input name={name} value={form[name]} onChange={handleChange} placeholder={'Enter ' + label} style={inputStyle(name)} />
+                  <input name={name} value={form[name]} onChange={handleChange} placeholder={'Enter ' + label} style={inputStyle(name)}/>
                   {errors[name] && <div style={errStyle}>{errors[name]}</div>}
                 </div>
               ))}
             </div>
 
+            {/* Address */}
             <div style={{ marginBottom: '16px' }}>
               <label style={labelStyle}>Address *</label>
-              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: '#1e2538', border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }} />
+              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: '#1e2538', border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
               {errors.address && <div style={errStyle}>{errors.address}</div>}
             </div>
 
-            <button onClick={handleSubmit} style={{ padding: '9px 20px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
-              Update Profile
+            {/* Submit Button */}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              style={{ padding: '9px 20px', background: loading ? '#4b4e9b' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer' }}
+            >
+              {loading ? 'Updating...' : 'Update Profile'}
             </button>
           </div>
         )}

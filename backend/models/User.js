@@ -6,7 +6,13 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   phone: { type: String, trim: true },
+  phoneCode: { type: String, trim: true, default: '+1' },
   country: { type: String, trim: true },
+  state: { type: String, trim: true },
+  city: { type: String, trim: true },
+  address: { type: String, trim: true },
+  dob: { type: String, trim: true },
+  currency: { type: String, trim: true, default: 'US Dollar (USD)' },
   password: { type: String, required: true, minlength: 6 },
   accountType: { type: String, enum: ['real', 'demo'], default: 'real' },
   balance: { type: Number, default: 0 },
@@ -23,7 +29,6 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-// Single pre-save hook for both password hashing and referral code
 userSchema.pre('save', async function() {
   if (!this.referralCode) {
     this.referralCode = 'PV' + Math.random().toString(36).substring(2, 8).toUpperCase();

@@ -18,13 +18,36 @@ exports.getDashboard = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { firstName, lastName, phone, country } = req.body;
-    const update = { firstName, lastName, phone, country };
+    console.log('--- UPDATE PROFILE HIT ---');
+    console.log('Body:', req.body);
+    console.log('File:', req.file);
+    console.log('User ID:', req.user._id);
+
+    const {
+      firstName, lastName, phone, phoneCode,
+      country, state, city, address, dob, currency
+    } = req.body;
+
+    const update = {
+      firstName, lastName, phone, phoneCode,
+      country, state, city, address, dob, currency
+    };
+
     if (req.file) update.avatar = '/uploads/' + req.file.filename;
 
-    const user = await User.findByIdAndUpdate(req.user._id, update, { new: true }).select('-password');
+    console.log('Update object:', update);
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      update,
+      { new: true }
+    ).select('-password');
+
+    console.log('Updated user:', user);
+
     res.json({ message: 'Profile updated successfully', user });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('UPDATE PROFILE ERROR:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
