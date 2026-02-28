@@ -265,7 +265,7 @@ export default function WithdrawNew() {
                     ...(selectedMethod === 'bank' && { bankName, accountName, accountNumber, routingNumber }),
                   };
                   const res = await createWithdrawal(payload);
-                  if (res.success || res._id || res.id) {
+                  if (res.transaction || res.success || res._id) {
                     setShowSuccess(true);
                   } else {
                     setError(res.message || 'Withdrawal failed. Please try again.');

@@ -270,7 +270,7 @@ export default function Withdraw() {
       <div style={{ padding: '16px' }}>
         {/* Top Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <button onClick={() => setShowMethodSelector(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>
+          <button onClick={() => navigate('/dashboard/withdraw/new')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>
             + New Withdrawal
           </button>
           <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>Recent Withdrawals</span>
