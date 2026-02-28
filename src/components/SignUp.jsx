@@ -124,13 +124,11 @@ const SignUp = () => {
         firstName: form.firstName,
         lastName: form.lastName,
         email: form.email,
-        phone: selectedCountry.dial_code + form.phone,
+        phone: selectedCountry.code + form.phone,
         country: selectedCountry.name,
         password: form.password,
       });
-      if (res.message && res.message.includes('check your email')) {
-        setCheckEmail(true);
-      } else if (res.message && res.message.includes('Registration successful')) {
+      if (res.message && (res.message.toLowerCase().includes('check your email') || res.message.toLowerCase().includes('registration successful') || res.message.toLowerCase().includes('verify'))) {
         setCheckEmail(true);
       } else {
         setErrors({ email: res.message || 'Registration failed' });
