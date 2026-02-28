@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
-import { createTrade, getTrades, getTradeStats } from '../services/api';
+import { createTrade, getTrades, getTradeStats, getDashboard } from '../services/api';
 
 const symbols = ['BTC/USD','ETH/USD','XRP/USD','SOL/USD','BNB/USD','ADA/USD','DOGE/USD','AVAX/USD','EUR/USD','GBP/USD','USD/JPY','AAPL','TSLA','NVDA','MSFT','AMZN'];
 const markets = ['Crypto','Forex','Stocks','Commodities'];
@@ -30,9 +30,10 @@ export default function LiveTrading() {
   const [filter, setFilter] = useState("all");
   const [stats, setStats] = useState(null);
   const [statsLoading, setStatsLoading] = useState(true);
+  const [balance, setBalance] = useState(null);
   const perPage = 10;
 
-  useEffect(() => { fetchTrades(); fetchStats(); }, []);
+  useEffect(() => { fetchTrades(); fetchStats(); fetchBalance(); }, []);
 
   const fetchTrades = async () => {
     setLoading(true);
@@ -57,6 +58,15 @@ export default function LiveTrading() {
     }
   };
 
+
+  const fetchBalance = async () => {
+    try {
+      const data = await getDashboard();
+      if (data && data.user) setBalance(data.user.balance);
+    } catch (err) {
+      console.error("Failed to load balance:", err);
+    }
+  };
   const validate = () => {
     if (account === '---') { setError('Please select an account.'); return false; }
     if (market === '---') { setError('Please select a market.'); return false; }
@@ -151,6 +161,17 @@ export default function LiveTrading() {
         <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>PRIMEVEST <span style={{ color: '#6366f1' }}>PRO</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>/ Live Trading</span>
         <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
+      </div>
+
+      {/* Balance Bar */}
+      <div style={{ background: "#141824", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "8px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "8px" }}>Available Balance</span>
+        </div>
+        <span style={{ color: balance !== null && balance < 50 ? "#ef4444" : "#22c55e", fontSize: "11px", fontWeight: "700" }}>
+          {balance !== null ? `$${parseFloat(balance).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "Loading..."}
+        </span>
       </div>
 
       <div style={{ padding: '14px 16px' }}>
