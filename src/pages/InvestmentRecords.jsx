@@ -1,13 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Clock, CheckCircle } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
+import { getInvestments } from '../services/api';
 
 export default function InvestmentRecords() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [show, setShow] = useState(10);
   const [search, setSearch] = useState('');
+  const [investments, setInvestments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getInvestments().then(data => {
+      if (Array.isArray(data)) setInvestments(data);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
+
+  const filtered = investments.filter(inv =>
+    inv.plan?.toLowerCase().includes(search.toLowerCase()) ||
+    inv.status?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const totalInvested = investments.reduce((s, i) => s + (i.amount || 0), 0);
+  const totalReturns = investments.reduce((s, i) => s + (i.profit || 0), 0);
+  const activeCount = investments.filter(i => i.status === 'active').length;
+  const completedCount = investments.filter(i => i.status === 'completed').length;
+
+  const statusColor = s => s === 'active' ? '#22c55e' : s === 'completed' ? '#6366f1' : s === 'cancelled' ? '#ef4444' : '#f59e0b';
 
   const statCard = (icon, label, value, color) => (
     <div style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -16,7 +38,7 @@ export default function InvestmentRecords() {
       </div>
       <div>
         <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '3px' }}>{label}</div>
-        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', fontWeight: '700' }}>{value}</div>
+        <div style={{ color: 'white', fontSize: '12px', fontWeight: '700' }}>{value}</div>
       </div>
     </div>
   );
@@ -43,18 +65,19 @@ export default function InvestmentRecords() {
       </div>
 
       <div style={{ padding: '16px' }}>
-        <div style={{ marginBottom: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Investment Records</span>
+          <button onClick={() => navigate('/dashboard/packages')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer' }}>+ New Investment</button>
         </div>
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-          {statCard(<TrendingUp size={16} color='#6366f1'/>, 'Total Invested', '$0.00', '#6366f1')}
-          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Returns', '$0.00', '#22c55e')}
+          {statCard(<TrendingUp size={16} color='#6366f1'/>, 'Total Invested', `$${totalInvested.toFixed(2)}`, '#6366f1')}
+          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Returns', `$${totalReturns.toFixed(2)}`, '#22c55e')}
         </div>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-          {statCard(<Clock size={16} color='#f59e0b'/>, 'Active Investments', '0', '#f59e0b')}
-          {statCard(<CheckCircle size={16} color='#94a3b8'/>, 'Completed', '0', '#94a3b8')}
+          {statCard(<Clock size={16} color='#f59e0b'/>, 'Active Investments', String(activeCount), '#f59e0b')}
+          {statCard(<CheckCircle size={16} color='#94a3b8'/>, 'Completed', String(completedCount), '#94a3b8')}
         </div>
 
         {/* Table */}
@@ -74,16 +97,29 @@ export default function InvestmentRecords() {
           </div>
 
           {/* Table Headers */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            {['Plan', 'Amount', 'Return', 'Start Date', 'End Date', 'Status'].map((h, i) => (
-              <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px', fontWeight: '600', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '4px 8px', display: 'block' }}>{h} ↕</span>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            {['Plan', 'Amount', 'ROI', 'Start Date', 'End Date', 'Status'].map((h, i) => (
+              <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px', fontWeight: '600', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '7px 8px', display: 'block' }}>{h} ↕</span>
             ))}
           </div>
 
-          <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No investment records found</div>
+          {loading ? (
+            <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</div>
+          ) : filtered.length === 0 ? (
+            <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No investment records found</div>
+          ) : filtered.slice(0, show).map((inv, i) => (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
+              <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
+              <span style={{ color: 'white', fontSize: '8px' }}>${inv.amount?.toFixed(2)}</span>
+              <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{inv.expiresAt ? new Date(inv.expiresAt).toLocaleDateString() : '—'}</span>
+              <span style={{ background: statusColor(inv.status) + '20', color: statusColor(inv.status), fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize', display: 'inline-block' }}>{inv.status}</span>
+            </div>
+          ))}
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing 0 to 0 of 0 entries</span>
+            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {Math.min(filtered.length, show) > 0 ? 1 : 0} to {Math.min(filtered.length, show)} of {filtered.length} entries</span>
             <div style={{ display: 'flex', gap: '4px' }}>
               <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
               <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
