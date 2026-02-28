@@ -38,6 +38,7 @@ import ManageBots from "./pages/ManageBots";
 import LiveTrading from "./pages/LiveTrading";
 import WithdrawNew from "./pages/WithdrawNew";
 import BotTransactionHistory from "./pages/BotTransactionHistory";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function HomePage() {
   useEffect(() => {
