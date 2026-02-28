@@ -76,6 +76,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/dashboard/deposit" element={<Deposit />} />
         <Route path="/dashboard/withdraw" element={<Withdraw />} />
         <Route path="/dashboard" element={<Dashboard />} />

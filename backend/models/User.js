@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
   isActive: { type: Boolean, default: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   avatar: { type: String, default: '' },
+  emailVerified: { type: Boolean, default: false },
+  emailToken: { type: String },
+  emailTokenExpire: { type: Date },
   createdAt: { type: Date, default: Date.now },
 });
 

@@ -64,6 +64,7 @@ const SignUp = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [checkEmail, setCheckEmail] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
@@ -149,6 +150,20 @@ const SignUp = () => {
   });
 
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '2px' };
+
+  if (checkEmail) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa' }}>
+      <div style={{ background: '#2d3748', width: '320px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
+        <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+          <svg width='28' height='28' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'/></svg>
+        </div>
+        <h2 style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>Check Your Email</h2>
+        <p style={{ color: '#94a3b8', fontSize: '9px', marginBottom: '8px', lineHeight: '1.6' }}>We sent a verification link to your email address.</p>
+        <p style={{ color: '#94a3b8', fontSize: '9px', marginBottom: '24px', lineHeight: '1.6' }}>Click the link in the email to activate your account. Check your spam folder if you don't see it.</p>
+        <button onClick={() => window.location.href='/signin'} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Go to Login</button>
+      </div>
+    </div>
+  );
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa', padding: '20px', boxSizing: 'border-box', position: 'relative' }}>
