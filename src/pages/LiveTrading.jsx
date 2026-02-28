@@ -24,6 +24,8 @@ export default function LiveTrading() {
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submittingType, setSubmittingType] = useState(null); // 'buy' | 'sell' | null
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [page, setPage] = useState(1);
   const perPage = 10;
 
@@ -80,7 +82,8 @@ export default function LiveTrading() {
         setLeverage('2x');
         setError('');
       } else {
-        setError(res.message || 'Failed to place trade.');
+        setErrorMessage(res.message || 'Failed to place trade.');
+        setShowError(true);
       }
     } catch (err) {
       setError('Network error. Please try again.');
@@ -286,6 +289,19 @@ export default function LiveTrading() {
         </>
       )}
 
+      {showError && (
+        <>
+          <div onClick={() => setShowError(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }} />
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#ef4444' strokeWidth='2.5'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Trade Failed</div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>{errorMessage}</div>
+            <button onClick={() => setShowError(false)} style={{ padding: '8px 28px', background: '#ef4444', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
+          </div>
+        </>
+      )}
       {showSuccess && (
         <>
           <div onClick={() => setShowSuccess(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }} />
