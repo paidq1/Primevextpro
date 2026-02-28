@@ -144,41 +144,33 @@ export default function LiveTrading() {
       </div>
 
       <div style={{ padding: '14px 16px' }}>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "14px", alignItems: "stretch" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px", minWidth: "90px" }}>
-            <button onClick={() => { setShowModal(true); setError(""); }} style={{ background: "#6366f1", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "7px 14px", cursor: "pointer" }}>+ New Trade</button>
-            <span style={{ color: "white", fontSize: "11px", fontWeight: "700" }}>Trading</span>
-          </div>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "14px", alignItems: "center" }}>
+          <button onClick={() => { setShowModal(true); setError(""); }} style={{ background: "#6366f1", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "7px 10px", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>+ New Trade</button>
           {stats && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", flex: 1 }}>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #6366f1" }}>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>TOTAL TRADES</div>
-                <div style={{ color: "white", fontSize: "16px", fontWeight: "700" }}>{stats.totalTrades}</div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>{stats.closedTrades} closed</div>
+            <div style={{ display: "flex", gap: "6px", overflowX: "auto", flex: 1 }}>
+              <div style={{ background: "#252d3d", padding: "8px 10px", borderLeft: "3px solid #6366f1", minWidth: "70px", flexShrink: 0 }}>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "6px", marginBottom: "3px" }}>TOTAL</div>
+                <div style={{ color: "white", fontSize: "13px", fontWeight: "700" }}>{stats.totalTrades}</div>
+                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "6px" }}>{stats.closedTrades} closed</div>
               </div>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #22c55e" }}>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>WIN / LOSS</div>
-                <div style={{ fontSize: "16px", fontWeight: "700" }}>
-                  <span style={{ color: "#22c55e" }}>{stats.wins}W</span>
-                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "12px" }}> / </span>
-                  <span style={{ color: "#ef4444" }}>{stats.losses}L</span>
-                </div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>closed trades</div>
+              <div style={{ background: "#252d3d", padding: "8px 10px", borderLeft: "3px solid #22c55e", minWidth: "70px", flexShrink: 0 }}>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "6px", marginBottom: "3px" }}>WIN/LOSS</div>
+                <div style={{ fontSize: "13px", fontWeight: "700" }}><span style={{ color: "#22c55e" }}>{stats.wins}W</span><span style={{ color: "rgba(255,255,255,0.3)" }}>/</span><span style={{ color: "#ef4444" }}>{stats.losses}L</span></div>
+                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "6px" }}>closed</div>
               </div>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444"}` }}>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>NET PROFIT / LOSS</div>
-                <div style={{ color: parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444", fontSize: "16px", fontWeight: "700" }}>{parseFloat(stats.netProfitLoss) >= 0 ? "+" : ""}${stats.netProfitLoss}</div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>profit: ${stats.totalProfit} / loss: ${stats.totalLoss}</div>
+              <div style={{ background: "#252d3d", padding: "8px 10px", borderLeft: `3px solid ${parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444"}`, minWidth: "80px", flexShrink: 0 }}>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "6px", marginBottom: "3px" }}>NET P/L</div>
+                <div style={{ color: parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444", fontSize: "13px", fontWeight: "700" }}>{parseFloat(stats.netProfitLoss) >= 0 ? "+" : ""}${stats.netProfitLoss}</div>
+                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "6px" }}>profit/loss</div>
               </div>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444"}` }}>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>ROI</div>
-                <div style={{ color: parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444", fontSize: "16px", fontWeight: "700" }}>{parseFloat(stats.roi) >= 0 ? "+" : ""}{stats.roi}%</div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>return on investment</div>
+              <div style={{ background: "#252d3d", padding: "8px 10px", borderLeft: `3px solid ${parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444"}`, minWidth: "60px", flexShrink: 0 }}>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "6px", marginBottom: "3px" }}>ROI</div>
+                <div style={{ color: parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444", fontSize: "13px", fontWeight: "700" }}>{parseFloat(stats.roi) >= 0 ? "+" : ""}{stats.roi}%</div>
+                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "6px" }}>return</div>
               </div>
             </div>
           )}
         </div>
-
         <div style={{ background: '#252d3d' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
