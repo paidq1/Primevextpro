@@ -105,16 +105,15 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Admin Message */}
-        {u.adminMessage && (
-          <div style={{ background: 'rgba(245,158,11,0.15)', borderTop: '1px solid #f59e0b', borderBottom: '1px solid #f59e0b', padding: '5px 12px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#f59e0b', flexShrink: 0, width: '100%', boxSizing: 'border-box' }}>
-            <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" style={{ flexShrink: 0 }}><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, minWidth: 0 }}><strong>Notice:</strong> {u.adminMessage}</span>
-          </div>
-        )}
-
         {/* Body */}
-        <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        <div style={{ flex: 1, display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
+          {u.adminMessage && (
+            <div style={{ background: 'rgba(245,158,11,0.15)', borderBottom: '1px solid #f59e0b', padding: '5px 12px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#f59e0b', flexShrink: 0, overflow: 'hidden' }}>
+              <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" style={{ flexShrink: 0 }}><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, minWidth: 0 }}><strong>Notice:</strong> {u.adminMessage}</span>
+            </div>
+          )}
+          <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
 
           {/* Left Panel */}
           <div style={{ flex: 1, overflowY: 'auto', padding: '8px', minWidth: 0 }}>
