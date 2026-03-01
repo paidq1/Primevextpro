@@ -163,14 +163,14 @@ export default function AdminPanel() {
 
         {/* Users */}
         {tab === 'users' && (
-          <div style={{ overflowX: 'auto' }}>
+          <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "80vh" }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>{['Name', 'Email', 'Balance', 'Stats', 'KYC', 'Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
                 {users.map((u, i) => (
-                  <tr key={i}>
+                  <tr key={i} style={{ verticalAlign: "top" }}>
                     <td style={tdStyle}>{u.firstName} {u.lastName}</td>
                     <td style={tdStyle}>{u.email}</td>
                     <td style={tdStyle}>
