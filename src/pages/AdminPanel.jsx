@@ -63,6 +63,21 @@ export default function AdminPanel() {
     showMsg('Balance updated');
   };
 
+  const deleteUser = async (id) => {
+    if (!window.confirm('Delete this user permanently?')) return;
+    await api(`/users/${id}`, 'DELETE');
+    api('/users').then(setUsers);
+    showMsg('User deleted');
+  };
+
+  const [msgInput, setMsgInput] = useState({});
+  const sendMessage = async (id) => {
+    if (!msgInput[id]) return;
+    await api(`/users/${id}/message`, 'POST', { message: msgInput[id] });
+    setMsgInput(m => ({ ...m, [id]: '' }));
+    showMsg('Message sent to user');
+  };
+
   const toggleBlock = async (id) => {
     await api(`/users/${id}/block`, 'PUT');
     api('/users').then(setUsers);
@@ -126,7 +141,7 @@ export default function AdminPanel() {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  {['Name', 'Email', 'Balance', 'KYC', 'Status', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}
+                  {['Name', 'Email', 'Balance', 'Message', 'KYC', 'Status', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}
                 </tr>
               </thead>
               <tbody>
@@ -143,7 +158,15 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'pending' ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}>{u.kycStatus || 'none'}</td>
                     <td style={{ ...tdStyle, color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? 'Blocked' : 'Active'}</td>
                     <td style={tdStyle}>
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Write message..." style={{ width: '100px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 5px' }} />
+                        <button onClick={() => sendMessage(u._id)} style={btnStyle('#f59e0b')}>Send</button>
+                      </div>
+                      {u.adminMessage && <div style={{ fontSize: '6px', color: '#f59e0b', marginTop: '2px' }}>Current: {u.adminMessage}</div>}
+                    </td>
+                    <td style={tdStyle}>
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
+                      <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
                   </tr>
                 ))}

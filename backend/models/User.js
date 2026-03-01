@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
   totalReferrals: { type: Number, default: 0 },
   isAdmin: { type: Boolean, default: false },
   isBlocked: { type: Boolean, default: false },
+  adminMessage: { type: String, default: '' },
   referralCode: { type: String, unique: true },
   referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   kycStatus: { type: String, enum: ['pending', 'submitted', 'approved', 'rejected'], default: 'pending' },

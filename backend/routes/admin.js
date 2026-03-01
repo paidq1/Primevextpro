@@ -127,4 +127,25 @@ router.put('/kyc/:id', adminAuth, async (req, res) => {
   }
 });
 
+// Delete user
+router.delete('/users/:id', adminAuth, async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'User deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Send message to user
+router.post('/users/:id/message', adminAuth, async (req, res) => {
+  try {
+    const { message } = req.body;
+    await User.findByIdAndUpdate(req.params.id, { adminMessage: message });
+    res.json({ message: 'Message sent' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
