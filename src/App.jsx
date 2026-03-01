@@ -2,13 +2,6 @@ import React, { useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  if (loading) return <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ color: 'white', fontSize: '12px' }}>Loading...</div></div>;
-  if (!user) return <Navigate to="/signin" replace />;
-  return children;
-};
-
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return null;
