@@ -163,6 +163,14 @@ router.post('/users/:id/message', adminAuth, async (req, res) => {
   }
 });
 
+router.delete('/users/:id/message', adminAuth, async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, { adminMessage: '' });
+    res.json({ message: 'Message deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 module.exports = router;
 
 // Get all trades

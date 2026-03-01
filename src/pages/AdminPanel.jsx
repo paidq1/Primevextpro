@@ -97,6 +97,12 @@ export default function AdminPanel() {
     showMsg('Message sent to user');
   };
 
+  const deleteMessage = async (id) => {
+    await api(`/users/${id}/message`, 'DELETE');
+    api('/users').then(setUsers);
+    showMsg('Message deleted');
+  };
+
   const toggleBlock = async (id) => {
     await api(`/users/${id}/block`, 'PUT');
     api('/users').then(setUsers);
@@ -201,9 +207,11 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}>{u.kycStatus || 'none'}</td>
                     <td style={{ ...tdStyle, color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? 'Blocked' : 'Active'}</td>
                     <td style={tdStyle}>
-                      <div style={{ display: 'flex', gap: '2px' }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>{u.adminMessage && <span style={{ color: "#f59e0b", fontSize: "6px", maxWidth: "140px", wordBreak: "break-word", whiteSpace: "normal" }}>Current: {u.adminMessage}</span>}<div style={{ display: "flex", gap: "2px" }}>
                         <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Message..." style={{ width: '140px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 4px' }} />
                         <button onClick={() => sendMessage(u._id)} style={btnStyle('#f59e0b')}>Send</button>
+                        <button onClick={() => deleteMessage(u._id)} style={btnStyle("#ef4444")}>Del Msg</button>
+                      </div>
                       </div>
                     </td>
                     <td style={tdStyle}>
