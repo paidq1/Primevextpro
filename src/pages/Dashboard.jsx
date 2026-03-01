@@ -235,8 +235,9 @@ export default function Dashboard() {
                 setTradeError(''); setTradeType('Sell'); setTradeSuccess(true);
               }} style={{ flex: 1, padding: '8px', background: '#ef4444', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Sell</button>
             </div>
-          </div></div>
-
+          </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
