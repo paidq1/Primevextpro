@@ -50,7 +50,7 @@ export default function Withdraw() {
   }, []);
 
   const validate = () => {
-    if (!amount || isNaN(amount) || Number(amount) < 10) { setError('Minimum withdrawal is $10.00'); return false; }
+    if (!amount || isNaN(amount) || Number(amount) < 100) { setError('Minimum withdrawal is $100.00'); return false; }
     if (selected === 'crypto' && (!address || address.length < 20)) { setError('Please enter a valid wallet address.'); return false; }
     if (selected === 'bank') {
       if (!bankName) { setError('Please enter your bank name.'); return false; }
@@ -72,16 +72,24 @@ export default function Withdraw() {
     try {
       const body = {
         amount: parseFloat(amount),
-        method: methods.find(m => m.id === selected)?.label,
-        walletAddress: address,
-        bankDetails: selected === 'bank' ? { bankName, accountName, accountNumber, swiftCode } : null,
+        method: selected,
+        ...(selected === 'crypto' && { coin, network, walletAddress: address }),
+        ...((selected === 'cashapp' || selected === 'paypal') && { accountEmail: address }),
+        ...((selected === 'westernunion' || selected === 'moneygram') && { receiverName, receiverAddress, receiverPhone }),
+        ...(selected === 'bank' && { bankName, accountName, accountNumber, routingNumber: swiftCode }),
       };
       const res = await createWithdrawal(body);
       if (res.transaction) {
         setWithdrawals(prev => [res.transaction, ...prev]);
+        setShowSuccess(true);
+      } else {
+        setError(res.message || 'Withdrawal failed. Please try again.');
+        setShowForm(true);
       }
-    } catch(e) {}
-    setShowSuccess(true);
+    } catch(e) {
+      setError('Network error. Please check your connection.');
+      setShowForm(true);
+    }
   };
 
   const statusColor = s => s === 'approved' ? '#22c55e' : s === 'pending' ? '#f59e0b' : '#ef4444';
@@ -201,7 +209,7 @@ export default function Withdraw() {
             </div>
             <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginBottom: '8px' }}>Available balance: ${(user?.balance || 0).toFixed(2)}</div>
             <div style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '10px', marginBottom: '12px' }}>
-              {[['Withdrawal Fee','1%'],['Minimum','$10.00'],['Processing','1-3 Business Days']].map(([k,v]) => (
+              {[['Withdrawal Fee','1%'],['Minimum','$100.00'],['Processing','1-3 Business Days']].map(([k,v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{k}</span>
                   <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{v}</span>
