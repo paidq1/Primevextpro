@@ -16,6 +16,11 @@ exports.createTrade = async (req, res) => {
       account, market, symbol, type, amount: parseFloat(amount), leverage, duration,
     });
 
+    // Deduct amount from balance for real accounts
+    if (account === 'real') {
+      await User.findByIdAndUpdate(req.user._id, { $inc: { balance: -parseFloat(amount) } });
+    }
+
     res.status(201).json({ message: 'Trade placed successfully', trade });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
