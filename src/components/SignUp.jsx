@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -65,6 +66,7 @@ const SignUp = () => {
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
@@ -129,7 +131,7 @@ const SignUp = () => {
         password: form.password,
       });
       if (res.message && (res.message.toLowerCase().includes('check your email') || res.message.toLowerCase().includes('registration successful') || res.message.toLowerCase().includes('verify'))) {
-        setCheckEmail(true); // will show inline check email screen
+        navigate('/check-email', { state: { email: form.email, name: form.firstName + ' ' + form.lastName } });
       } else {
         setErrors({ email: res.message || 'Registration failed' });
       }

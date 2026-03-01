@@ -65,6 +65,39 @@ exports.register = async (req, res) => {
   }
 };
 
+exports.resendVerification = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: 'Email not found' });
+    if (user.emailVerified) return res.status(400).json({ message: 'Email already verified' });
+
+    const emailToken = crypto.randomBytes(32).toString('hex');
+    user.emailToken = emailToken;
+    user.emailTokenExpire = Date.now() + 24 * 60 * 60 * 1000;
+    await user.save();
+
+    const verifyUrl = `${process.env.FRONTEND_URL}/verify-email/${emailToken}`;
+    await sendEmail({
+      to: user.email,
+      subject: 'Verify Your PrimeVest Pro Account',
+      html: `
+        <div style="font-family: 'Segoe UI', sans-serif; max-width: 500px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
+          <h2 style="color: white;">Hello ${user.firstName},</h2>
+          <p style="color: rgba(255,255,255,0.7);">Click below to verify your email address.</p>
+          <div style="text-align: center; margin: 28px 0;">
+            <a href="${verifyUrl}" style="background: #6366f1; color: white; padding: 12px 32px; text-decoration: none; font-size: 13px; font-weight: 600; border-radius: 4px; display: inline-block;">Verify Email Address</a>
+          </div>
+          <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">This link expires in 24 hours.</p>
+        </div>
+      `
+    });
+    res.json({ message: 'Verification email resent successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
 exports.verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;

@@ -10,6 +10,8 @@ const headers = () => ({
 // Auth
 export const registerUser = (data) => fetch(`${BASE_URL}/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json());
 
+export const resendVerification = (email) => fetch(`${BASE_URL}/auth/resend-verification`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) }).then(r => r.json());
+
 export const loginUser = (data) => fetch(`${BASE_URL}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json());
 
 export const getMe = () => fetch(`${BASE_URL}/auth/me`, { headers: headers() }).then(r => r.json());
