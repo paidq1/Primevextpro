@@ -57,3 +57,4 @@ export const createBot = (formData) => fetch(`${BASE_URL}/bot`, { method: 'POST'
 export const getBots = () => fetch(`${BASE_URL}/bot`, { headers: headers() }).then(r => r.json());
 
 export const getTradeStats = () => fetch(`${BASE_URL}/trade/stats`, { headers: headers() }).then(r => r.json());
+export const getReferrals = () => fetch(`${BASE_URL}/referral`, { headers: headers() }).then(r => r.json());

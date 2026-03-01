@@ -1,16 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Copy, Users, DollarSign, Gift } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
+import { getReferrals } from '../services/api';
 
 export default function ReferUsers() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [show, setShow] = useState(10);
+  const [data, setData] = useState({ referralCode: '', totalReferrals: 0, commission: 0, referredUsers: [] });
+  const [loading, setLoading] = useState(true);
 
-  const referralCode = 'PRIME-USER123';
-  const referralLink = `https://primevestprox.cc/register?ref=${referralCode}`;
+  useEffect(() => {
+    getReferrals().then(res => {
+      if (res.referralCode) setData(res);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
+
+  const referralLink = `${window.location.origin}/signup?ref=${data.referralCode}`;
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text).catch(() => {
@@ -32,7 +41,7 @@ export default function ReferUsers() {
       </div>
       <div>
         <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '3px' }}>{label}</div>
-        <div style={{ color: value === '0' || value === '$0.00' ? 'rgba(255,255,255,0.4)' : color, fontSize: '12px', fontWeight: '700' }}>{value}</div>
+        <div style={{ color, fontSize: '12px', fontWeight: '700' }}>{value}</div>
       </div>
     </div>
   );
@@ -50,107 +59,78 @@ export default function ReferUsers() {
             <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
         </div>
-        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>PRIMEVEST <span style={{ color: '#6366f1' }}>PRO</span></span>
-        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', marginLeft: '4px' }}>/ Refer Users</span>
-        <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
+        <span style={{ fontWeight: '700', fontSize: '11px' }}>PrimeVest Pro</span>
+        <div style={{ marginLeft: 'auto', cursor: 'pointer' }} onClick={() => setSidebarOpen(true)}>
+          <svg width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </div>
       </div>
 
-      <div style={{ padding: '16px' }}>
+      <div style={{ padding: '16px', maxWidth: '480px', margin: '0 auto' }}>
         <div style={{ marginBottom: '16px' }}>
-          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Referral Program</span>
-        </div>
-
-        {/* Commission Banner */}
-        <div style={{ background: 'linear-gradient(135deg, #6366f120, #22c55e20)', border: '1px solid rgba(99,102,241,0.3)', padding: '14px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#6366f120', border: '1px solid #6366f140', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <Gift size={18} color='#6366f1' />
-          </div>
-          <div>
-            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '3px' }}>Earn <span style={{ color: '#22c55e' }}>10% Commission</span> on Every Referral!</div>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', lineHeight: '1.6' }}>Invite friends to PrimeVest Pro and earn 10% of their first deposit automatically credited to your account.</div>
-          </div>
+          <h2 style={{ fontSize: '13px', fontWeight: '700', margin: '0 0 4px' }}>Refer & Earn</h2>
+          <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', margin: 0 }}>Invite friends and earn commission on their activity</p>
         </div>
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-          {statCard(<Users size={16} color='#6366f1'/>, 'Total Referrals', '0', '#6366f1')}
-          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Earnings', '$0.00', '#22c55e')}
+          {statCard(<Users size={14} color="#6366f1"/>, 'Total Referrals', data.totalReferrals, '#6366f1')}
+          {statCard(<DollarSign size={14} color="#22c55e"/>, 'Commission Earned', `$${data.commission.toFixed(2)}`, '#22c55e')}
+          {statCard(<Gift size={14} color="#f59e0b"/>, 'Pending Rewards', '$0.00', '#f59e0b')}
         </div>
 
         {/* Referral Code */}
-        <div style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', marginBottom: '16px' }}>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '10px', fontWeight: '600' }}>YOUR REFERRAL CODE</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-            <div style={{ flex: 1, background: '#1e2538', border: '1px solid rgba(99,102,241,0.3)', padding: '8px 12px', color: '#6366f1', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
-              {referralCode}
+        <div style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
+          <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>YOUR REFERRAL CODE</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+            <div style={{ flex: 1, background: '#1e2538', padding: '8px 10px', fontSize: '11px', fontWeight: '700', color: '#6366f1', letterSpacing: '1px', borderRadius: '4px' }}>
+              {loading ? '...' : data.referralCode}
             </div>
-            <button onClick={() => handleCopy(referralCode)}
-              style={{ background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '8px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <Copy size={10}/> {copied ? 'Copied!' : 'Copy Code'}
+            <button onClick={() => handleCopy(data.referralCode)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Copy size={10}/> Copy
             </button>
           </div>
-
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '8px', fontWeight: '600' }}>YOUR REFERRAL LINK</div>
+          <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', marginBottom: '6px' }}>REFERRAL LINK</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ flex: 1, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', color: 'rgba(255,255,255,0.5)', fontSize: '8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {referralLink}
+            <div style={{ flex: 1, background: '#1e2538', padding: '8px 10px', fontSize: '7px', color: 'rgba(255,255,255,0.6)', borderRadius: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {loading ? '...' : referralLink}
             </div>
-            <button onClick={() => handleCopy(referralLink)}
-              style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '8px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <Copy size={10}/> Copy Link
+            <button onClick={() => handleCopy(referralLink)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Copy size={10}/> {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
         </div>
 
-        {/* How it works */}
-        <div style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)', padding: '12px 14px', marginBottom: '16px' }}>
-          <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '10px' }}>HOW IT WORKS</div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {[
-              { step: '1', text: 'Share your referral link or code with friends' },
-              { step: '2', text: 'Friend registers using your link or code' },
-              { step: '3', text: 'Earn 10% when they make their first deposit' },
-            ].map((item, i) => (
-              <div key={i} style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#6366f1', color: 'white', fontSize: '9px', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px' }}>{item.step}</div>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', lineHeight: '1.5' }}>{item.text}</div>
+        {/* Referred Users Table */}
+        <div style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <span style={{ fontSize: '9px', fontWeight: '600' }}>Referred Users ({data.totalReferrals})</span>
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', borderBottom: '1px solid #6366f1' }}>
+              {['Username', 'Commission', 'Status', 'Date'].map(h => (
+                <div key={h} style={{ padding: '6px 8px', fontSize: '7px', fontWeight: '700', color: 'rgba(255,255,255,0.5)', borderRight: '1px solid #6366f1', display: 'block' }}>{h}</div>
+              ))}
+            </div>
+            {loading ? (
+              <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>Loading...</div>
+            ) : data.referredUsers.length === 0 ? (
+              <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>No referrals yet</div>
+            ) : data.referredUsers.slice(0, show).map((u, i) => (
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                <div style={{ padding: '8px', fontSize: '7px', color: 'white' }}>{u.username}</div>
+                <div style={{ padding: '8px', fontSize: '7px', color: '#22c55e' }}>${u.commission}</div>
+                <div style={{ padding: '8px', fontSize: '7px', color: u.status === 'Active' ? '#22c55e' : '#f59e0b' }}>{u.status}</div>
+                <div style={{ padding: '8px', fontSize: '7px', color: 'rgba(255,255,255,0.5)' }}>{new Date(u.date).toLocaleDateString()}</div>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Referral History Table */}
-        <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', fontWeight: '600', marginBottom: '10px' }}>Referral History</div>
-        <div style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-              <select value={show} onChange={e => setShow(Number(e.target.value))} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
-                <option>10</option><option>25</option><option>50</option>
-              </select>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
+          {data.referredUsers.length > show && (
+            <div style={{ padding: '10px', textAlign: 'center' }}>
+              <button onClick={() => setShow(s => s + 10)} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontSize: '8px', padding: '6px 16px', cursor: 'pointer', borderRadius: '4px' }}>Load More</button>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-              <input style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
-            </div>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            {['Username', 'Commission', 'Status', 'Date'].map((h, i) => (
-              <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px', fontWeight: '600', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '4px 8px', display: 'block' }}>{h} ↕</span>
-            ))}
-          </div>
-          <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No referrals yet</div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing 0 to 0 of 0 entries</span>
-            <div style={{ display: 'flex', gap: '4px' }}>
-              <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
-              <button style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -67,6 +67,8 @@ const SignUp = () => {
   const [success, setSuccess] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
   const navigate = useNavigate();
+  const urlParams = new URLSearchParams(window.location.search);
+  const refCode = urlParams.get('ref') || '';
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
@@ -129,6 +131,7 @@ const SignUp = () => {
         phone: selectedCountry.code + form.phone,
         country: selectedCountry.name,
         password: form.password,
+        referralCode: refCode,
       });
       if (res.message && (res.message.toLowerCase().includes('check your email') || res.message.toLowerCase().includes('registration successful') || res.message.toLowerCase().includes('verify'))) {
         setSuccess(true);
