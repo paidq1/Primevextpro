@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [amount, setAmount] = useState('100.00');
   const [activeNav, setActiveNav] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showNotice, setShowNotice] = useState(true);
 
   useEffect(() => {
     getDashboard().then(data => setDashData(data));
@@ -104,6 +105,15 @@ export default function Dashboard() {
             <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0 }}>{u.avatar ? <img src={'https://primevextpro.onrender.com' + u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} /> : null}<User size={13} style={{ display: u.avatar ? 'none' : 'block' }}/></button>
           </div>
         </div>
+
+        {/* Admin Notice Toast */}
+        {u.adminMessage && showNotice && (
+          <div style={{ position: 'fixed', top: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 200, background: '#f59e0b', color: 'white', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '9px', fontWeight: '600', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', minWidth: '260px', maxWidth: '320px', borderRadius: '4px' }}>
+            <svg width="12" height="12" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth="2" style={{ flexShrink: 0 }}><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span style={{ flex: 1 }}>{u.adminMessage}</span>
+            <button onClick={() => setShowNotice(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '12px', padding: 0 }}>×</button>
+          </div>
+        )}
 
         {/* Body */}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
