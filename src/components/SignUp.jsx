@@ -131,7 +131,7 @@ const SignUp = () => {
         phone: selectedCountry.code + form.phone,
         country: selectedCountry.name,
         password: form.password,
-        referralCode: refCode,
+        referralCode: form.referralCode,
       });
       if (res.message && (res.message.toLowerCase().includes('check your email') || res.message.toLowerCase().includes('registration successful') || res.message.toLowerCase().includes('verify'))) {
         setSuccess(true);
@@ -290,6 +290,18 @@ const SignUp = () => {
               </div>
               {errors.confirmPassword && <div style={errStyle}>{errors.confirmPassword}</div>}
             </div>
+          </div>
+
+          {/* Referral Code */}
+          <div>
+            <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Referral Code <span style={{ color: 'rgba(255,255,255,0.3)' }}>(Optional)</span></label>
+            <input
+              name="referralCode"
+              value={form.referralCode}
+              onChange={handleChange}
+              placeholder="Enter referral code"
+              style={{ width: '100%', background: '#374151', border: '1px solid transparent', borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px', boxSizing: 'border-box', outline: 'none' }}
+            />
           </div>
 
           <div>
