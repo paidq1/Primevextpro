@@ -168,7 +168,7 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? 'Blocked' : 'Active'}</td>
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', gap: '2px' }}>
-                        <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Message..." style={{ width: '60px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 4px' }} />
+                        <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Message..." style={{ width: '140px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 4px' }} />
                         <button onClick={() => sendMessage(u._id)} style={btnStyle('#f59e0b')}>Send</button>
                       </div>
                     </td>
