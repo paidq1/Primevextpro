@@ -51,7 +51,7 @@ export default function Dashboard() {
   const [tradeSuccess, setTradeSuccess] = useState(false);
   const [tradeType, setTradeType] = useState('');
 
-  return (
+  return (<>
     <style>{`@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }`}</style>
     <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -259,5 +259,6 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+  </>
   );
 }
