@@ -94,14 +94,14 @@ export default function Dashboard() {
             <Menu size={15}/>
           </button>
           <div style={{ display: 'flex', gap: '4px' }}>
-            {[{label:'STARTER',active:false},{label:'USD',active:true},{label:'KYC',active:false}].map((tab, i) => (
-              <button key={i} style={{ padding: '4px 10px', background: tab.active ? '#6366f1' : 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{tab.label}</button>
-            ))}
+            <button onClick={() => navigate('/dashboard/packages')} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{u.plan?.toUpperCase() || 'STARTER'}</button>
+            <button style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{u.currency || 'USD'}</button>
+            <button onClick={() => navigate('/dashboard/kyc')} style={{ padding: '4px 10px', background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.15)', border: 'none', color: u.kycStatus === 'approved' ? '#22c55e' : 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>KYC {u.kycStatus === 'approved' ? '✓' : ''}</button>
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
             <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
-            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
-            <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0 }}>{user?.avatar ? <img src={'https://primevextpro.onrender.com' + user.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display='none'; }} /> : <User size={13}/>}</button>
+            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
+            <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0 }}>{u.avatar ? <img src={'https://primevextpro.onrender.com' + u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display='none'; }} /> : <User size={13}/>}</button>
           </div>
         </div>
 
