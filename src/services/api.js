@@ -1,5 +1,15 @@
 const BASE_URL = 'https://primevextpro.onrender.com/api';
 
+// Global response handler - auto logout on 401
+const handleResponse = async (res) => {
+  if (res.status === 401) {
+    localStorage.removeItem('token');
+    window.location.href = '/signin';
+    return {};
+  }
+  return res.json();
+};
+
 const getToken = () => localStorage.getItem('token');
 
 const headers = () => ({
@@ -8,54 +18,54 @@ const headers = () => ({
 });
 
 // Auth
-export const registerUser = (data) => fetch(`${BASE_URL}/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json());
+export const registerUser = (data) => fetch(`${BASE_URL}/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(handleResponse);
 
-export const resendVerification = (email) => fetch(`${BASE_URL}/auth/resend-verification`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) }).then(r => r.json());
+export const resendVerification = (email) => fetch(`${BASE_URL}/auth/resend-verification`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) }).then(handleResponse);
 
-export const loginUser = (data) => fetch(`${BASE_URL}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json());
+export const loginUser = (data) => fetch(`${BASE_URL}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(handleResponse);
 
-export const getMe = () => fetch(`${BASE_URL}/auth/me`, { headers: headers() }).then(r => r.json());
+export const getMe = () => fetch(`${BASE_URL}/auth/me`, { headers: headers() }).then(handleResponse);
 
-export const changePassword = (data) => fetch(`${BASE_URL}/auth/change-password`, { method: 'PUT', headers: headers(), body: JSON.stringify(data) }).then(r => r.json());
+export const changePassword = (data) => fetch(`${BASE_URL}/auth/change-password`, { method: 'PUT', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
 
 // User
-export const getDashboard = () => fetch(`${BASE_URL}/user/dashboard`, { headers: headers() }).then(r => r.json());
-export const getTransactions = () => fetch(`${BASE_URL}/user/transactions`, { headers: headers() }).then(r => r.json());
+export const getDashboard = () => fetch(`${BASE_URL}/user/dashboard`, { headers: headers() }).then(handleResponse);
+export const getTransactions = () => fetch(`${BASE_URL}/user/transactions`, { headers: headers() }).then(handleResponse);
 
-export const updateProfile = (formData) => fetch(`${BASE_URL}/user/profile`, { method: 'PUT', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
+export const updateProfile = (formData) => fetch(`${BASE_URL}/user/profile`, { method: 'PUT', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(handleResponse);
 
 // Deposit
-export const createDeposit = (formData) => fetch(`${BASE_URL}/deposit`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
+export const createDeposit = (formData) => fetch(`${BASE_URL}/deposit`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(handleResponse);
 
-export const getDeposits = () => fetch(`${BASE_URL}/deposit`, { headers: headers() }).then(r => r.json());
+export const getDeposits = () => fetch(`${BASE_URL}/deposit`, { headers: headers() }).then(handleResponse);
 
 // Withdraw
-export const createWithdrawal = (data) => fetch(`${BASE_URL}/withdraw`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(r => r.json());
+export const createWithdrawal = (data) => fetch(`${BASE_URL}/withdraw`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
 
-export const getWithdrawals = () => fetch(`${BASE_URL}/withdraw`, { headers: headers() }).then(r => r.json());
+export const getWithdrawals = () => fetch(`${BASE_URL}/withdraw`, { headers: headers() }).then(handleResponse);
 
 // Trade
-export const createTrade = (data) => fetch(`${BASE_URL}/trade`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(r => r.json());
+export const createTrade = (data) => fetch(`${BASE_URL}/trade`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
 
-export const getTrades = () => fetch(`${BASE_URL}/trade`, { headers: headers() }).then(r => r.json());
+export const getTrades = () => fetch(`${BASE_URL}/trade`, { headers: headers() }).then(handleResponse);
 
 // Packages
-export const joinPlan = (data) => fetch(`${BASE_URL}/packages`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(r => r.json());
+export const joinPlan = (data) => fetch(`${BASE_URL}/packages`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
 
-export const getInvestments = () => fetch(`${BASE_URL}/packages`, { headers: headers() }).then(r => r.json());
+export const getInvestments = () => fetch(`${BASE_URL}/packages`, { headers: headers() }).then(handleResponse);
 
 // KYC
-export const submitKyc = (formData) => fetch(`${BASE_URL}/kyc`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
+export const submitKyc = (formData) => fetch(`${BASE_URL}/kyc`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(handleResponse);
 
-export const getKycStatus = () => fetch(`${BASE_URL}/kyc`, { headers: headers() }).then(r => r.json());
+export const getKycStatus = () => fetch(`${BASE_URL}/kyc`, { headers: headers() }).then(handleResponse);
 
 // Stake
-export const createStake = (formData) => fetch(`${BASE_URL}/stake`, { method: "POST", headers: { "Authorization": `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
-export const getStakes = () => fetch(`${BASE_URL}/stake`, { headers: headers() }).then(r => r.json());
+export const createStake = (formData) => fetch(`${BASE_URL}/stake`, { method: "POST", headers: { "Authorization": `Bearer ${getToken()}` }, body: formData }).then(handleResponse);
+export const getStakes = () => fetch(`${BASE_URL}/stake`, { headers: headers() }).then(handleResponse);
 
 // Bot
-export const createBot = (formData) => fetch(`${BASE_URL}/bot`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
-export const getBots = () => fetch(`${BASE_URL}/bot`, { headers: headers() }).then(r => r.json());
+export const createBot = (formData) => fetch(`${BASE_URL}/bot`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(handleResponse);
+export const getBots = () => fetch(`${BASE_URL}/bot`, { headers: headers() }).then(handleResponse);
 
-export const getTradeStats = () => fetch(`${BASE_URL}/trade/stats`, { headers: headers() }).then(r => r.json());
-export const getReferrals = () => fetch(`${BASE_URL}/referral`, { headers: headers() }).then(r => r.json());
+export const getTradeStats = () => fetch(`${BASE_URL}/trade/stats`, { headers: headers() }).then(handleResponse);
+export const getReferrals = () => fetch(`${BASE_URL}/referral`, { headers: headers() }).then(handleResponse);
