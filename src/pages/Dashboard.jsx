@@ -52,6 +52,7 @@ export default function Dashboard() {
   const [tradeType, setTradeType] = useState('');
 
   return (
+    <style>{`@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }`}</style>
     <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -98,7 +99,7 @@ export default function Dashboard() {
           <div style={{ display: 'flex', gap: '4px' }}>
             <button onClick={() => navigate('/dashboard/packages')} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{u.plan?.toUpperCase() || 'STARTER'}</button>
             <button style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{u.currency || 'USD'}</button>
-            <button onClick={() => navigate('/dashboard/kyc')} style={{ padding: '4px 10px', background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.15)', border: 'none', color: u.kycStatus === 'approved' ? '#22c55e' : 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>KYC {u.kycStatus === 'approved' ? '✓' : ''}</button>
+            <button onClick={() => navigate("/dashboard/kyc")} style={{ padding: "4px 10px", background: u.kycStatus === "approved" ? "rgba(34,197,94,0.2)" : u.kycStatus === "rejected" ? "rgba(239,68,68,0.2)" : u.kycStatus === "submitted" ? "rgba(245,158,11,0.2)" : "rgba(239,68,68,0.15)", border: u.kycStatus === "approved" ? "1px solid #22c55e" : u.kycStatus === "rejected" ? "1px solid #ef4444" : "1px solid #f59e0b", color: u.kycStatus === "approved" ? "#22c55e" : u.kycStatus === "rejected" ? "#ef4444" : "#f59e0b", fontSize: "8px", fontWeight: "700", cursor: "pointer", animation: (!u.kycStatus || u.kycStatus === "pending") ? "pulse 2s infinite" : "none" }}>KYC {u.kycStatus === "approved" ? "✓" : u.kycStatus === "rejected" ? "✗" : u.kycStatus === "submitted" ? "⏳" : "!"}</button>
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
             <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
