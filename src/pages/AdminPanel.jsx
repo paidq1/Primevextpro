@@ -60,7 +60,6 @@ export default function AdminPanel() {
     api('/stats').then(setStats);
     showMsg(`KYC ${status}`);
   };
-  };
 
   const updateBalance = async (id) => {
     if (!editBalance[id]) return;
