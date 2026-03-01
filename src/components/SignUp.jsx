@@ -140,7 +140,6 @@ const SignUp = () => {
       } else {
         setErrors({ email: res.message || "Registration failed" });
       }
-      }
     } catch (err) {
       setErrors({ email: 'Server error. Please try again.' });
     } finally {
