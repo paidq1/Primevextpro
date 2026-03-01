@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getDashboard } from '../services/api';
+import { getDashboard, getTransactions } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings } from 'lucide-react';
@@ -23,12 +23,14 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [dashData, setDashData] = useState(null);
+  const [transactions, setTransactions] = useState([]);
   const [amount, setAmount] = useState('100.00');
   const [activeNav, setActiveNav] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showNotice, setShowNotice] = useState(true);
 
-  useEffect(() => {
+    getDashboard().then(data => setDashData(data));
+    getTransactions().then(data => Array.isArray(data) ? setTransactions(data) : setTransactions([]));
     getDashboard().then(data => setDashData(data));
   }, []);
 
@@ -189,9 +191,19 @@ export default function Dashboard() {
                     <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px', fontWeight: '600' }}>{h}</span>
                   ))}
                 </div>
-                <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No data available in table</div>
+                {transactions.length === 0 ? (
+                  <div style={{ padding: "24px", textAlign: "center", color: "rgba(255,255,255,0.25)", fontSize: "8px" }}>No transactions yet</div>
+                ) : transactions.slice(0, 10).map((t, i) => (
+                  <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", padding: "7px 10px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                    <span style={{ color: t.type === "withdrawal" ? "#ef4444" : "#22c55e", fontSize: "8px", fontWeight: "700" }}>{t.type === "withdrawal" ? "-" : "+"}${t.amount?.toFixed(2)}</span>
+                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "7px" }}>{new Date(t.createdAt).toLocaleDateString()}</span>
+                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "7px", textTransform: "capitalize" }}>{t.method || "---"}</span>
+                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "7px", textTransform: "capitalize" }}>{t.type}</span>
+                    <span style={{ fontSize: "7px", color: t.status === "approved" ? "#22c55e" : t.status === "pending" ? "#f59e0b" : "#ef4444", textTransform: "capitalize" }}>{t.status}</span>
+                  </div>
+                ))}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing 0 to 0 of 0 entries</span>
+                  <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "8px" }}>Showing {Math.min(transactions.length, 10)} of {transactions.length} entries</span>
                   <div style={{ display: 'flex', gap: '4px' }}>
                     <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
                     <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>

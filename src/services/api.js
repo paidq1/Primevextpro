@@ -20,6 +20,7 @@ export const changePassword = (data) => fetch(`${BASE_URL}/auth/change-password`
 
 // User
 export const getDashboard = () => fetch(`${BASE_URL}/user/dashboard`, { headers: headers() }).then(r => r.json());
+export const getTransactions = () => fetch(`${BASE_URL}/user/transactions`, { headers: headers() }).then(r => r.json());
 
 export const updateProfile = (formData) => fetch(`${BASE_URL}/user/profile`, { method: 'PUT', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData }).then(r => r.json());
 

@@ -19,3 +19,14 @@ router.get('/dashboard', auth, getDashboard);
 router.put('/profile', auth, upload.single('avatar'), updateProfile);
 
 module.exports = router;
+
+const Transaction = require('../models/Transaction');
+
+router.get('/transactions', auth, async (req, res) => {
+  try {
+    const transactions = await Transaction.find({ user: req.user._id }).sort({ createdAt: -1 });
+    res.json(transactions);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
