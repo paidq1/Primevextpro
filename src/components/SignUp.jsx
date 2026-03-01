@@ -233,16 +233,17 @@ const SignUp = () => {
             </div>
           </div>
 
-          <div>
-            <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Username *</label>
-            <input name="username" value={form.username} onChange={handleChange} placeholder="Username" style={inputStyle('username')} />
-            {errors.username && <div style={errStyle}>{errors.username}</div>}
-          </div>
-
-          <div>
-            <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Email Address *</label>
-            <input name="email" value={form.email} onChange={handleChange} placeholder="example@gmail.com" style={inputStyle('email')} />
-            {errors.email && <div style={errStyle}>{errors.email}</div>}
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Username *</label>
+              <input name="username" value={form.username} onChange={handleChange} placeholder="Username" style={inputStyle('username')} />
+              {errors.username && <div style={errStyle}>{errors.username}</div>}
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Email *</label>
+              <input name="email" value={form.email} onChange={handleChange} placeholder="example@gmail.com" style={inputStyle('email')} />
+              {errors.email && <div style={errStyle}>{errors.email}</div>}
+            </div>
           </div>
 
           <div>
@@ -256,11 +257,17 @@ const SignUp = () => {
             {errors.phone && <div style={errStyle}>{errors.phone}</div>}
           </div>
 
-          <div>
-            <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Country Currency</label>
-            <select name="currency" value={form.currency} onChange={handleChange} style={{ width: '100%', background: '#374151', border: 'none', borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px', boxSizing: 'border-box', outline: 'none' }}>
-              {countries.map((c, i) => <option key={i} value={c}>{c}</option>)}
-            </select>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Currency</label>
+              <select name="currency" value={form.currency} onChange={handleChange} style={{ width: '100%', background: '#374151', border: 'none', borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px', boxSizing: 'border-box', outline: 'none' }}>
+                {countries.map((c, i) => <option key={i} value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Referral Code <span style={{ color: 'rgba(255,255,255,0.3)' }}>(Optional)</span></label>
+              <input name="referralCode" value={form.referralCode} onChange={handleChange} placeholder="Enter code" style={{ width: '100%', background: '#374151', border: '1px solid transparent', borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px', boxSizing: 'border-box', outline: 'none' }} />
+            </div>
           </div>
 
           <div style={{ display: 'flex', gap: '8px' }}>
@@ -292,17 +299,7 @@ const SignUp = () => {
             </div>
           </div>
 
-          {/* Referral Code */}
-          <div>
-            <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Referral Code <span style={{ color: 'rgba(255,255,255,0.3)' }}>(Optional)</span></label>
-            <input
-              name="referralCode"
-              value={form.referralCode}
-              onChange={handleChange}
-              placeholder="Enter referral code"
-              style={{ width: '100%', background: '#374151', border: '1px solid transparent', borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px', boxSizing: 'border-box', outline: 'none' }}
-            />
-          </div>
+
 
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
