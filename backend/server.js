@@ -26,7 +26,8 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Protected uploads - admin only
+app.use("/uploads", require("./middleware/adminAuth"), express.static(path.join(__dirname, "uploads")));
 
 // Rate limiting
 const globalLimiter = rateLimit({
