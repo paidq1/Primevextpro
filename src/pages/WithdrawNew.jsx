@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createWithdrawal } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 
@@ -20,6 +21,7 @@ const methods = [
 
 export default function WithdrawNew() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [step, setStep] = useState(1); // 1 = select method, 2 = fill form
   const [selectedMethod, setSelectedMethod] = useState(null);

@@ -271,10 +271,13 @@ router.put('/withdrawals/:id', adminAuth, async (req, res) => {
 
     if (status === 'approved' && prevStatus === 'pending') {
       await User.findByIdAndUpdate(transaction.user, {
-        $inc: { balance: -transaction.amount, totalWithdrawals: transaction.amount }
+        $inc: { totalWithdrawals: transaction.amount }
       });
     } else if (status === 'rejected' && prevStatus === 'pending') {
-      // No balance change needed - balance not deducted until approval
+      // Refund balance since it was deducted on request
+      await User.findByIdAndUpdate(transaction.user, {
+        $inc: { balance: transaction.amount }
+      });
     }
 
     res.json({ message: 'Withdrawal ' + status, transaction });

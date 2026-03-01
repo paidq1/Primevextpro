@@ -2,10 +2,24 @@ import React, { useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 
+const PrivateRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ color: 'white', fontSize: '12px' }}>Loading...</div></div>;
+  if (!user) return <Navigate to="/signin" replace />;
+  return children;
+};
+
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return null;
   if (!user || !user.isAdmin) return <Navigate to="/dashboard" replace />;
+  return children;
+};
+
+const PrivateRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ color: 'white', fontSize: '12px' }}>Loading...</div></div>;
+  if (!user) return <Navigate to="/signin" replace />;
   return children;
 };
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -91,23 +105,23 @@ function App() {
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
         <Route path="/check-email" element={<CheckEmail />} />
-        <Route path="/dashboard/deposit" element={<Deposit />} />
-        <Route path="/dashboard/withdraw" element={<Withdraw />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/profile" element={<Profile />} />
-        <Route path="/dashboard/live-market" element={<LiveMarket />} />
-        <Route path="/dashboard/stake" element={<Stake />} />
-        <Route path="/dashboard/investment-records" element={<InvestmentRecords />} />
-        <Route path="/dashboard/transaction-history" element={<TransactionHistory />} />
-        <Route path="/dashboard/withdraw-deposit" element={<WithdrawDeposit />} />
-        <Route path="/dashboard/packages" element={<Packages />} />
-        <Route path="/dashboard/kyc" element={<KYC />} />
-        <Route path="/dashboard/refer-users" element={<ReferUsers />} />
-        <Route path="/dashboard/manage-bots" element={<ManageBots />} />
-        <Route path="/dashboard/live-trading" element={<LiveTrading />} />
-        <Route path="/dashboard/withdraw/new" element={<WithdrawNew />} />
-        <Route path="/dashboard/bot-transactions" element={<BotTransactionHistory />} />
-        <Route path="/dashboard/deposit-funds" element={<DepositFunds />} />
+        <Route path="/dashboard/deposit" element={<PrivateRoute><Deposit /></PrivateRoute>} />
+        <Route path="/dashboard/withdraw" element={<PrivateRoute><Withdraw /></PrivateRoute>} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/dashboard/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/dashboard/live-market" element={<PrivateRoute><LiveMarket /></PrivateRoute>} />
+        <Route path="/dashboard/stake" element={<PrivateRoute><Stake /></PrivateRoute>} />
+        <Route path="/dashboard/investment-records" element={<PrivateRoute><InvestmentRecords /></PrivateRoute>} />
+        <Route path="/dashboard/transaction-history" element={<PrivateRoute><TransactionHistory /></PrivateRoute>} />
+        <Route path="/dashboard/withdraw-deposit" element={<PrivateRoute><WithdrawDeposit /></PrivateRoute>} />
+        <Route path="/dashboard/packages" element={<PrivateRoute><Packages /></PrivateRoute>} />
+        <Route path="/dashboard/kyc" element={<PrivateRoute><KYC /></PrivateRoute>} />
+        <Route path="/dashboard/refer-users" element={<PrivateRoute><ReferUsers /></PrivateRoute>} />
+        <Route path="/dashboard/manage-bots" element={<PrivateRoute><ManageBots /></PrivateRoute>} />
+        <Route path="/dashboard/live-trading" element={<PrivateRoute><LiveTrading /></PrivateRoute>} />
+        <Route path="/dashboard/withdraw/new" element={<PrivateRoute><WithdrawNew /></PrivateRoute>} />
+        <Route path="/dashboard/bot-transactions" element={<PrivateRoute><BotTransactionHistory /></PrivateRoute>} />
+        <Route path="/dashboard/deposit-funds" element={<PrivateRoute><DepositFunds /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );
