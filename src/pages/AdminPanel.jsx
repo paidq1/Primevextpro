@@ -14,6 +14,7 @@ export default function AdminPanel() {
   const [users, setUsers] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
+  const [trades, setTrades] = useState([]);
   const [kyc, setKyc] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editBalance, setEditBalance] = useState({});
@@ -31,6 +32,7 @@ export default function AdminPanel() {
     if (tab === 'deposits') api('/deposits').then(setDeposits);
     if (tab === 'withdrawals') api('/withdrawals').then(setWithdrawals);
     if (tab === 'kyc') api('/kyc').then(setKyc);
+    if (tab === 'trades') api('/trades').then(setTrades);
   }, [tab]);
 
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
@@ -56,6 +58,15 @@ export default function AdminPanel() {
     showMsg(`KYC ${status}`);
   };
 
+
+  const [tradeEdit, setTradeEdit] = useState({});
+  const updateTrade = async (id) => {
+    const t = tradeEdit[id];
+    if (!t) return;
+    await api(`/trades/${id}`, 'PUT', { result: parseFloat(t.result || 0), status: t.status || 'closed' });
+    api('/trades').then(setTrades);
+    showMsg('Trade updated');
+  };
   const updateBalance = async (id) => {
     if (!editBalance[id]) return;
     await api(`/users/${id}/balance`, 'PUT', { balance: parseFloat(editBalance[id]) });
@@ -84,7 +95,7 @@ export default function AdminPanel() {
     showMsg('User status updated');
   };
 
-  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc'];
+  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades'];
   const statCards = [
     { label: 'Total Users', value: stats.totalUsers || 0, color: '#6366f1' },
     { label: 'Pending Deposits', value: stats.pendingDeposits || 0, color: '#f59e0b' },
@@ -250,17 +261,3 @@ export default function AdminPanel() {
                         <button onClick={() => approveKyc(k._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveKyc(k._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
                       </>}
-                      {k.kycDocuments?.length > 0 && k.kycDocuments.map((doc, j) => (
-                        <a key={j} href={'https://primevextpro.onrender.com' + doc} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block', marginBottom: '2px' }}>Doc {j+1}</a>
-                      ))}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}

@@ -109,7 +109,7 @@ router.put('/withdrawals/:id', adminAuth, async (req, res) => {
 // Get all KYC
 router.get('/kyc', adminAuth, async (req, res) => {
   try {
-    const users = await User.find({ kycStatus: { $in: ['pending', 'approved', 'rejected'] } }).select('firstName lastName email kycStatus kycDocuments createdAt').sort({ createdAt: -1 });
+    const users = await User.find({ kycStatus: { $in: ['pending', 'approved', 'rejected'] } }).select('firstName lastName email kycStatus kycData createdAt').sort({ createdAt: -1 });
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -149,3 +149,43 @@ router.post('/users/:id/message', adminAuth, async (req, res) => {
 });
 
 module.exports = router;
+
+// Get all trades
+router.get('/trades', adminAuth, async (req, res) => {
+  try {
+    const Trade = require('../models/Trade');
+    const trades = await Trade.find().populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(trades);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Update trade result and status
+router.put('/trades/:id', adminAuth, async (req, res) => {
+  try {
+    const Trade = require('../models/Trade');
+    const { result, status } = req.body;
+    const trade = await Trade.findById(req.params.id);
+    if (!trade) return res.status(404).json({ message: 'Trade not found' });
+
+    trade.result = parseFloat(result);
+    trade.status = status;
+    if (status === 'closed') trade.closedAt = new Date();
+    await trade.save();
+
+    // Update user balance and profit if closed
+    if (status === 'closed') {
+      await User.findByIdAndUpdate(trade.user, {
+        $inc: {
+          balance: parseFloat(result),
+          totalProfit: parseFloat(result) > 0 ? parseFloat(result) : 0,
+        }
+      });
+    }
+
+    res.json({ message: 'Trade updated', trade });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});

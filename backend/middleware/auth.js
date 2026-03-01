@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id).select('-password');
     if (!user) return res.status(401).json({ message: 'User not found' });
-    if (!user.isActive) return res.status(401).json({ message: 'Account disabled' });
+    if (!user.isActive || user.isBlocked) return res.status(401).json({ message: 'Account disabled' });
 
     req.user = user;
     next();
