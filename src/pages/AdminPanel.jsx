@@ -320,7 +320,16 @@ export default function AdminPanel() {
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: '150px' }}>
                         <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                          <input placeholder="Result $" type="number" value={tradeEdit[t._id]?.result ?? ''} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], result: e.target.value } }))} style={{ width: '60px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 5px' }} />
+                          <select value={tradeEdit[t._id]?.outcome ?? ''} onChange={e => {
+                            const outcome = e.target.value;
+                            const profit = outcome === 'win' ? Math.abs(t.amount) : outcome === 'loss' ? -Math.abs(t.amount) : 0;
+                            setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], outcome, result: profit } }));
+                          }} style={{ background: tradeEdit[t._id]?.outcome === 'win' ? '#166534' : tradeEdit[t._id]?.outcome === 'loss' ? '#7f1d1d' : '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px', cursor: 'pointer' }}>
+                            <option value="">Outcome</option>
+                            <option value="win">Win</option>
+                            <option value="loss">Loss</option>
+                          </select>
+                          <input placeholder="$ profit/loss" type="number" value={tradeEdit[t._id]?.result ?? ''} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], result: e.target.value } }))} style={{ width: '65px', background: '#374151', border: 'none', color: tradeEdit[t._id]?.outcome === 'win' ? '#22c55e' : '#ef4444', fontSize: '7px', padding: '3px 5px' }} />
                           <select value={tradeEdit[t._id]?.status ?? t.status} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], status: e.target.value } }))} style={{ background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px' }}>
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
