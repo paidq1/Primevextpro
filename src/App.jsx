@@ -39,6 +39,7 @@ import LiveTrading from "./pages/LiveTrading";
 import WithdrawNew from "./pages/WithdrawNew";
 import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
+import AdminPanel from "./pages/AdminPanel";
 import CheckEmail from "./pages/CheckEmail";
 
 function HomePage() {
@@ -79,6 +80,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/dashboard/deposit" element={<Deposit />} />
         <Route path="/dashboard/withdraw" element={<Withdraw />} />
