@@ -25,6 +25,12 @@ app.use('/api/kyc', require('./routes/kyc'));
 app.use('/api/stake', require('./routes/stake'));
 app.use('/api/bot', require('./routes/bot'));
 
+// Keep alive ping every 14 minutes to prevent Render free tier sleep
+setInterval(() => {
+  const https = require('https');
+  https.get('https://primevextpro.onrender.com/api/health', () => {}).on('error', () => {});
+}, 14 * 60 * 1000);
+
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'PrimeVest Pro API running' }));
 
