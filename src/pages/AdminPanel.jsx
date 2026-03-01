@@ -8,24 +8,23 @@ const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `B
 
 export default function AdminPanel() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const [tab, setTab] = useState('stats');
   const [stats, setStats] = useState({});
   const [users, setUsers] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
-  const [trades, setTrades] = useState([]);
   const [kyc, setKyc] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [trades, setTrades] = useState([]);
   const [editBalance, setEditBalance] = useState({});
+  const [tradeEdit, setTradeEdit] = useState({});
+  const [msgInput, setMsgInput] = useState({});
   const [msg, setMsg] = useState('');
 
   const api = (path, method = 'GET', body) =>
     fetch(`${BASE_URL}/admin${path}`, { method, headers: headers(), body: body ? JSON.stringify(body) : undefined }).then(r => r.json());
 
-  useEffect(() => {
-    api('/stats').then(setStats);
-  }, []);
+  useEffect(() => { api('/stats').then(setStats); }, []);
 
   useEffect(() => {
     if (tab === 'users') api('/users').then(setUsers);
@@ -58,15 +57,6 @@ export default function AdminPanel() {
     showMsg(`KYC ${status}`);
   };
 
-
-  const [tradeEdit, setTradeEdit] = useState({});
-  const updateTrade = async (id) => {
-    const t = tradeEdit[id];
-    if (!t) return;
-    await api(`/trades/${id}`, 'PUT', { result: parseFloat(t.result || 0), status: t.status || 'closed' });
-    api('/trades').then(setTrades);
-    showMsg('Trade updated');
-  };
   const updateBalance = async (id) => {
     if (!editBalance[id]) return;
     await api(`/users/${id}/balance`, 'PUT', { balance: parseFloat(editBalance[id]) });
@@ -81,7 +71,6 @@ export default function AdminPanel() {
     showMsg('User deleted');
   };
 
-  const [msgInput, setMsgInput] = useState({});
   const sendMessage = async (id) => {
     if (!msgInput[id]) return;
     await api(`/users/${id}/message`, 'POST', { message: msgInput[id] });
@@ -95,7 +84,16 @@ export default function AdminPanel() {
     showMsg('User status updated');
   };
 
+  const updateTrade = async (id) => {
+    const t = tradeEdit[id];
+    if (!t) return;
+    await api(`/trades/${id}`, 'PUT', { result: parseFloat(t.result || 0), status: t.status || 'closed' });
+    api('/trades').then(setTrades);
+    showMsg('Trade updated');
+  };
+
   const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades'];
+
   const statCards = [
     { label: 'Total Users', value: stats.totalUsers || 0, color: '#6366f1' },
     { label: 'Pending Deposits', value: stats.pendingDeposits || 0, color: '#f59e0b' },
@@ -109,6 +107,7 @@ export default function AdminPanel() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+
       {/* Header */}
       <div style={{ background: '#141824', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>PRIMEVEST <span style={{ color: '#6366f1' }}>PRO</span></span>
@@ -122,13 +121,14 @@ export default function AdminPanel() {
       {msg && <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}
 
       {/* Tabs */}
-      <div style={{ background: '#141824', padding: '0 16px', display: 'flex', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#141824', padding: '0 16px', display: 'flex', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)', overflowX: 'auto' }}>
         {tabs.map(t => (
-          <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === t ? '#6366f1' : 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === t ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase' }}>{t}</button>
+          <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === t ? '#6366f1' : 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === t ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{t}</button>
         ))}
       </div>
 
       <div style={{ padding: '16px' }}>
+
         {/* Stats */}
         {tab === 'stats' && (
           <div>
@@ -151,9 +151,7 @@ export default function AdminPanel() {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr>
-                  {['Name', 'Email', 'Balance', 'KYC', 'Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}
-                </tr>
+                <tr>{['Name', 'Email', 'Balance', 'KYC', 'Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
                 {users.map((u, i) => (
@@ -166,12 +164,12 @@ export default function AdminPanel() {
                         <button onClick={() => updateBalance(u._id)} style={btnStyle('#6366f1')}>Set</button>
                       </div>
                     </td>
-                    <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'pending' ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}>{u.kycStatus || 'none'}</td>
+                    <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}>{u.kycStatus || 'none'}</td>
                     <td style={{ ...tdStyle, color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? 'Blocked' : 'Active'}</td>
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', gap: '2px' }}>
                         <input value={msgInput[u._id] || ''} onChange={e => setMsgInput(m => ({ ...m, [u._id]: e.target.value }))} placeholder="Message..." style={{ width: '60px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 4px' }} />
-                        <button onClick={() => sendMessage(u._id)} style={btnStyle('#f59e0b')}>✓</button>
+                        <button onClick={() => sendMessage(u._id)} style={btnStyle('#f59e0b')}>Send</button>
                       </div>
                     </td>
                     <td style={tdStyle}>
@@ -247,17 +245,74 @@ export default function AdminPanel() {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr>{['Name', 'Email', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                <tr>{['Name', 'Email', 'ID Type', 'Status', 'Date', 'Docs', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
                 {kyc.map((k, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{k.firstName} {k.lastName}</td>
                     <td style={tdStyle}>{k.email}</td>
-                    <td style={{ ...tdStyle, color: k.kycStatus === 'approved' ? '#22c55e' : k.kycStatus === 'pending' ? '#f59e0b' : '#ef4444' }}>{k.kycStatus}</td>
+                    <td style={tdStyle}>{k.kycData?.idType || '---'}</td>
+                    <td style={{ ...tdStyle, color: k.kycStatus === 'approved' ? '#22c55e' : k.kycStatus === 'submitted' ? '#f59e0b' : '#ef4444' }}>{k.kycStatus}</td>
                     <td style={tdStyle}>{new Date(k.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
-                      {k.kycStatus === 'pending' && <>
+                      {k.kycData?.idFront && <a href={'https://primevextpro.onrender.com' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
+                      {k.kycData?.idBack && <a href={'https://primevextpro.onrender.com' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
+                      {k.kycData?.selfie && <a href={'https://primevextpro.onrender.com' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
+                    </td>
+                    <td style={tdStyle}>
+                      {(k.kycStatus === 'submitted' || k.kycStatus === 'pending') && <>
                         <button onClick={() => approveKyc(k._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveKyc(k._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
                       </>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Trades */}
+        {tab === 'trades' && (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr>{['User', 'Symbol', 'Type', 'Amount', 'Duration', 'Result', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+              </thead>
+              <tbody>
+                {trades.map((t, i) => (
+                  <tr key={i}>
+                    <td style={tdStyle}>{t.user?.firstName} {t.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)' }}>{t.user?.email}</span></td>
+                    <td style={tdStyle}>{t.symbol}</td>
+                    <td style={{ ...tdStyle, color: t.type === 'buy' ? '#22c55e' : '#ef4444', textTransform: 'capitalize' }}>{t.type}</td>
+                    <td style={tdStyle}>${t.amount?.toFixed(2)}</td>
+                    <td style={tdStyle}>{t.duration}</td>
+                    <td style={{ ...tdStyle, color: t.result > 0 ? '#22c55e' : t.result < 0 ? '#ef4444' : 'rgba(255,255,255,0.4)' }}>{t.result > 0 ? '+' : ''}${Math.abs(t.result || 0).toFixed(2)}</td>
+                    <td style={{ ...tdStyle, color: t.status === 'closed' ? '#9ca3af' : t.status === 'active' ? '#22c55e' : '#818cf8', textTransform: 'capitalize' }}>{t.status}</td>
+                    <td style={tdStyle}>{new Date(t.createdAt).toLocaleDateString()}</td>
+                    <td style={tdStyle}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: '150px' }}>
+                        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                          <input placeholder="Result $" type="number" value={tradeEdit[t._id]?.result ?? ''} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], result: e.target.value } }))} style={{ width: '60px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 5px' }} />
+                          <select value={tradeEdit[t._id]?.status ?? t.status} onChange={e => setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], status: e.target.value } }))} style={{ background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px' }}>
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
+                            <option value="closed">Closed</option>
+                            <option value="cancelled">Cancelled</option>
+                          </select>
+                          <button onClick={() => updateTrade(t._id)} style={btnStyle('#6366f1')}>Save</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
