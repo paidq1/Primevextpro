@@ -107,7 +107,7 @@ export default function Dashboard() {
 
         {/* Admin Message */}
         {u.adminMessage && (
-          <div style={{ background: 'rgba(245,158,11,0.15)', border: '1px solid #f59e0b', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#f59e0b', overflow: 'hidden', width: '100%', boxSizing: 'border-box' }}>
+          <div style={{ background: 'rgba(245,158,11,0.15)', border: '1px solid #f59e0b', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#f59e0b', minWidth: 0, flexShrink: 0 }}>
             <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" style={{ flexShrink: 0 }}><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}><strong>Notice:</strong> {u.adminMessage}</span>
           </div>
