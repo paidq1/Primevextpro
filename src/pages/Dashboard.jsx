@@ -11,10 +11,10 @@ const navItems = [
   { icon: <User size={12} />, label: 'Profile', route: '/dashboard/profile' },
   { icon: <LayoutDashboard size={12} />, label: 'Dashboard', route: '/dashboard' },
   { icon: <Wallet size={12} />, label: 'Deposit', route: '/dashboard/withdraw-deposit' },
-  { icon: <Bot size={12} />, label: 'Bots', route: '/dashboard/live-market' },
+  { icon: <Bot size={12} />, label: 'Bots', route: '/dashboard/bot-transactions' },
   { icon: <Package size={12} />, label: 'Packages', route: '/dashboard/packages' },
   { icon: <BarChart2 size={12} />, label: 'Market', route: '/dashboard/live-market' },
-  { icon: <TrendingUp size={12} />, label: 'Trading', route: '/dashboard/live-market' },
+  { icon: <TrendingUp size={12} />, label: 'Trading', route: '/dashboard/live-trading' },
   { icon: <Users size={12} />, label: 'Referrals', route: '/dashboard/refer-users' },
   { icon: <Settings size={12} />, label: 'KYC', route: '/dashboard/kyc' },
 ];
