@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: ['http://localhost:5173', 'https://primevextpro.onrender.com'], credentials: true }));
+app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -25,41 +25,35 @@ app.use('/api/kyc', require('./routes/kyc'));
 app.use('/api/stake', require('./routes/stake'));
 app.use('/api/bot', require('./routes/bot'));
 
-// Keep alive ping every 14 minutes to prevent Render free tier sleep
-setInterval(() => {
-  const https = require('https');
-  https.get('https://primevextpro.onrender.com/api/health', () => {}).on('error', () => {});
-}, 14 * 60 * 1000);
-
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'PrimeVest Pro API running' }));
 
-// Root route - API info
-app.get('/', (req, res) => {
-  res.json({
-    name: 'PrimeVest Pro API',
-    version: '1.0.0',
-    status: 'running',
-    endpoints: [
-      '/api/health',
-      '/api/auth',
-      '/api/user',
-      '/api/deposit',
-      '/api/withdraw',
-      '/api/trade',
-      '/api/packages',
-      '/api/kyc',
-      '/api/stake'
-    ]
-  });
-});
+app.get('/', (req, res) => res.json({ name: 'PrimeVest Pro API', status: 'running' }));
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB connected');
-    app.listen(process.env.PORT || 5000, () => {
-      console.log(`🚀 Server running on port ${process.env.PORT || 5000}`);
-    });
-  })
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+// MongoDB connection with caching for serverless
+let cachedDb = null;
+async function connectDB() {
+  if (cachedDb) return cachedDb;
+  const db = await mongoose.connect(process.env.MONGO_URI);
+  cachedDb = db;
+  return db;
+}
+
+// Connect and export for serverless
+connectDB().catch(err => console.error('MongoDB error:', err));
+
+// Keep alive for Render (ignored on Vercel)
+if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
+  setInterval(() => {
+    const https = require('https');
+    https.get('https://primevextpro.onrender.com/api/health', () => {}).on('error', () => {});
+  }, 14 * 60 * 1000);
+}
+
+module.exports = app;
+
+// Start server if not serverless
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+}
