@@ -1,24 +1,9 @@
 import React, { useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
-
-const AdminRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  if (loading) return null;
-  if (!user || !user.isAdmin) return <Navigate to="/dashboard" replace />;
-  return children;
-};
-
-const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  if (loading) return <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ color: 'white', fontSize: '12px' }}>Loading...</div></div>;
-  if (!user) return <Navigate to="/signin" replace />;
-  return children;
-};
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'aos/dist/aos.css';
 import AOS from 'aos';
-
 import HeroSection from "./components/HeroSection";
 import MarketOverview from "./components/MarketOverview";
 import OurMission from "./components/OurMission";
@@ -57,6 +42,21 @@ import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
 import CheckEmail from "./pages/CheckEmail";
+
+const AdminRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  if (!user || !user.isAdmin) return <Navigate to="/dashboard" replace />;
+  return children;
+};
+
+const PrivateRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ color: 'white', fontSize: '12px' }}>Loading...</div></div>;
+  if (!user) return <Navigate to="/signin" replace />;
+  return children;
+};
+
 
 function HomePage() {
   useEffect(() => {
