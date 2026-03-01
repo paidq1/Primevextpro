@@ -28,10 +28,9 @@ export default function Dashboard() {
   const [activeNav, setActiveNav] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showNotice, setShowNotice] = useState(true);
-
+  useEffect(() => {
     getDashboard().then(data => setDashData(data));
     getTransactions().then(data => Array.isArray(data) ? setTransactions(data) : setTransactions([]));
-    getDashboard().then(data => setDashData(data));
   }, []);
 
   const u = dashData?.user || user || {};
