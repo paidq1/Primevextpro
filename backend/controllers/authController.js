@@ -32,6 +32,7 @@ exports.register = async (req, res) => {
 
     const verifyUrl = `${process.env.FRONTEND_URL}/verify-email/${emailToken}`;
 
+    console.log('Sending email to:', user.email);
     await sendEmail({
       to: user.email,
       subject: 'Verify Your PrimeVest Pro Account',
@@ -56,6 +57,7 @@ exports.register = async (req, res) => {
       `
     });
 
+    console.log('Email sent successfully');
     res.status(201).json({ message: 'Registration successful! Please check your email to verify your account.' });
 
   } catch (err) {
