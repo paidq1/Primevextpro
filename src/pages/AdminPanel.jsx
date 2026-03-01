@@ -64,6 +64,21 @@ export default function AdminPanel() {
     showMsg('Balance updated');
   };
 
+  const [editStats, setEditStats] = useState({});
+  const updateUserStats = async (id) => {
+    const s = editStats[id];
+    if (!s) return;
+    await api(`/users/${id}/stats`, 'PUT', {
+      totalDeposits: parseFloat(s.totalDeposits || 0),
+      totalWithdrawals: parseFloat(s.totalWithdrawals || 0),
+      totalProfit: parseFloat(s.totalProfit || 0),
+      totalReferrals: parseFloat(s.totalReferrals || 0),
+      totalPackages: parseFloat(s.totalPackages || 0),
+    });
+    api('/users').then(setUsers);
+    showMsg('User stats updated');
+  };
+
   const deleteUser = async (id) => {
     if (!window.confirm('Delete this user permanently?')) return;
     await api(`/users/${id}`, 'DELETE');
@@ -151,7 +166,7 @@ export default function AdminPanel() {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr>{['Name', 'Email', 'Balance', 'KYC', 'Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                <tr>{['Name', 'Email', 'Balance', 'Stats', 'KYC', 'Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
                 {users.map((u, i) => (
@@ -162,6 +177,17 @@ export default function AdminPanel() {
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                         <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ width: '70px', background: '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px 5px' }} />
                         <button onClick={() => updateBalance(u._id)} style={btnStyle('#6366f1')}>Set</button>
+                      </div>
+                    </td>
+                    <td style={tdStyle}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+                        {[["totalDeposits","Deposits"],["totalWithdrawals","Withdrawals"],["totalProfit","Profit"],["totalReferrals","Referrals"],["totalPackages","Packages"]].map(([field, label]) => (
+                          <div key={field} style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+                            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "6px", width: "55px" }}>{label}:</span>
+                            <input type="number" placeholder={u[field]?.toFixed(2) ?? "0"} value={editStats[u._id]?.[field] ?? ""} onChange={e => setEditStats(p => ({ ...p, [u._id]: { ...p[u._id], [field]: e.target.value } }))} style={{ width: "55px", background: "#374151", border: "none", color: "white", fontSize: "6px", padding: "2px 4px" }} />
+                          </div>
+                        ))}
+                        <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "3px" }}>Update</button>
                       </div>
                     </td>
                     <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}>{u.kycStatus || 'none'}</td>

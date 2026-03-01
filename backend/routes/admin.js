@@ -40,6 +40,21 @@ router.put('/users/:id/balance', adminAuth, async (req, res) => {
   }
 });
 
+// Update user stats
+router.put('/users/:id/stats', adminAuth, async (req, res) => {
+  try {
+    const { totalDeposits, totalWithdrawals, totalProfit, totalReferrals, totalPackages } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { totalDeposits, totalWithdrawals, totalProfit, totalReferrals, totalPackages },
+      { new: true }
+    ).select('-password');
+    res.json({ message: 'Stats updated', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Toggle user block
 router.put('/users/:id/block', adminAuth, async (req, res) => {
   try {
