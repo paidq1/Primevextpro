@@ -171,8 +171,6 @@ router.delete('/users/:id/message', adminAuth, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-module.exports = router;
-
 // Get all trades
 router.get('/trades', adminAuth, async (req, res) => {
   try {
@@ -217,3 +215,93 @@ router.put('/trades/:id', adminAuth, async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
+
+// Get all deposits
+router.get('/deposits', adminAuth, async (req, res) => {
+  try {
+    const deposits = await Transaction.find({ type: 'deposit' }).populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(deposits);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Approve/Reject deposit
+router.put('/deposits/:id', adminAuth, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const transaction = await Transaction.findById(req.params.id);
+    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
+
+    transaction.status = status;
+    await transaction.save();
+
+    if (status === 'approved') {
+      await User.findByIdAndUpdate(transaction.user, {
+        $inc: { balance: transaction.amount, totalDeposits: transaction.amount }
+      });
+    }
+
+    res.json({ message: 'Deposit ' + status, transaction });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Get all withdrawals
+router.get('/withdrawals', adminAuth, async (req, res) => {
+  try {
+    const withdrawals = await Transaction.find({ type: 'withdrawal' }).populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(withdrawals);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Approve/Reject withdrawal
+router.put('/withdrawals/:id', adminAuth, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const transaction = await Transaction.findById(req.params.id);
+    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
+
+    const prevStatus = transaction.status;
+    transaction.status = status;
+    await transaction.save();
+
+    if (status === 'approved' && prevStatus === 'pending') {
+      await User.findByIdAndUpdate(transaction.user, {
+        $inc: { balance: -transaction.amount, totalWithdrawals: transaction.amount }
+      });
+    } else if (status === 'rejected' && prevStatus === 'pending') {
+      // No balance change needed - balance not deducted until approval
+    }
+
+    res.json({ message: 'Withdrawal ' + status, transaction });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Get all KYC submissions
+router.get('/kyc', adminAuth, async (req, res) => {
+  try {
+    const users = await User.find({ kycStatus: { $in: ['submitted', 'approved', 'rejected'] } }).select('-password').sort({ createdAt: -1 });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Approve/Reject KYC
+router.put('/kyc/:id', adminAuth, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const user = await User.findByIdAndUpdate(req.params.id, { kycStatus: status }, { new: true }).select('-password');
+    res.json({ message: 'KYC ' + status, user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+module.exports = router;
