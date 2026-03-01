@@ -60,10 +60,11 @@ export default function ReferUsers() {
           </svg>
         </div>
         <span style={{ fontWeight: '700', fontSize: '11px' }}>PrimeVest Pro</span>
-        <div style={{ marginLeft: 'auto', cursor: 'pointer' }} onClick={() => setSidebarOpen(true)}>
-          <svg width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        <div style={{ marginLeft: 'auto', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', color: 'rgba(255,255,255,0.6)', fontSize: '9px' }} onClick={() => navigate(-1)}>
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
           </svg>
+          Back
         </div>
       </div>
 
