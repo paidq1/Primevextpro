@@ -108,7 +108,7 @@ export default function Dashboard() {
         {/* Body */}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
           {u.adminMessage && (
-            <div style={{ background: 'rgba(245,158,11,0.15)', borderBottom: '1px solid #f59e0b', padding: '5px 12px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#f59e0b', flexShrink: 0, overflow: 'hidden' }}>
+            <div style={{ background: 'rgba(245,158,11,0.15)', borderBottom: '1px solid #f59e0b', padding: '5px 8px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '8px', color: '#f59e0b', flexShrink: 0, position: 'absolute', top: '60px', left: '48px', right: 0, zIndex: 10 }}>
               <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" style={{ flexShrink: 0 }}><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, minWidth: 0 }}><strong>Notice:</strong> {u.adminMessage}</span>
             </div>
