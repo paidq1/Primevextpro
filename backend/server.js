@@ -25,6 +25,7 @@ app.use('/api/kyc', require('./routes/kyc'));
 app.use('/api/stake', require('./routes/stake'));
 app.use('/api/bot', require('./routes/bot'));
 app.use('/api/referral', require('./routes/referral'));
+app.use('/api/admin', require('./routes/admin'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'PrimeVest Pro API running' }));
