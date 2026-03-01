@@ -1,9 +1,21 @@
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
 const sendEmail = async ({ to, subject, html }) => {
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  await resend.emails.send({
-    from: 'PrimeVest Pro <onboarding@resend.dev>',
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+
+  await transporter.sendMail({
+    from: `"PrimeVest Pro" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html,
