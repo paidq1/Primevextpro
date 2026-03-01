@@ -3,18 +3,33 @@ const User = require('../models/User');
 
 exports.createWithdrawal = async (req, res) => {
   try {
-    const { amount, method, walletAddress, bankDetails } = req.body;
-    if (!amount || amount < 10) return res.status(400).json({ message: 'Minimum withdrawal is $10' });
+    const { amount, method, walletAddress, coin, network, accountEmail, receiverName, receiverAddress, receiverPhone, bankName, accountName, accountNumber, routingNumber } = req.body;
+
+    if (!amount || amount < 100) return res.status(400).json({ message: 'Minimum withdrawal is $100' });
 
     const user = await User.findById(req.user._id);
-    if (user.balance < amount) return res.status(400).json({ message: 'Insufficient balance' });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (user.balance < parseFloat(amount)) return res.status(400).json({ message: `Insufficient balance. Your balance is $${user.balance.toFixed(2)}` });
+    if (user.kycStatus !== 'approved') return res.status(400).json({ message: 'KYC verification required before withdrawing funds' });
+
+    // Build payment details based on method
+    let bankDetails = {};
+    if (method === 'crypto') bankDetails = { coin, network, walletAddress };
+    else if (method === 'cashapp' || method === 'paypal') bankDetails = { accountEmail };
+    else if (method === 'western_union' || method === 'moneygram') bankDetails = { receiverName, receiverAddress, receiverPhone };
+    else if (method === 'bank') bankDetails = { bankName, accountName, accountNumber, routingNumber };
+
+    // Deduct balance immediately
+    await User.findByIdAndUpdate(req.user._id, {
+      $inc: { balance: -parseFloat(amount), totalWithdrawals: parseFloat(amount) }
+    });
 
     const transaction = await Transaction.create({
       user: req.user._id,
       type: 'withdrawal',
       amount: parseFloat(amount),
       method,
-      walletAddress,
+      walletAddress: method === 'crypto' ? walletAddress : '',
       bankDetails,
       status: 'pending',
     });
