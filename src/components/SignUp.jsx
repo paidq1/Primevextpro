@@ -133,11 +133,13 @@ const SignUp = () => {
         password: form.password,
         referralCode: form.referralCode,
       });
-      if (res.message && (res.message.toLowerCase().includes('check your email') || res.message.toLowerCase().includes('registration successful') || res.message.toLowerCase().includes('verify'))) {
+      if (res.token) {
+        login(res.token, res.user);
         setSuccess(true);
-        setTimeout(() => { window.location.href = '/signin'; }, 2000);
+        setTimeout(() => { window.location.href = "/dashboard"; }, 1500);
       } else {
-        setErrors({ email: res.message || 'Registration failed' });
+        setErrors({ email: res.message || "Registration failed" });
+      }
       }
     } catch (err) {
       setErrors({ email: 'Server error. Please try again.' });
