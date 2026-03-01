@@ -33,7 +33,8 @@ exports.register = async (req, res) => {
     const verifyUrl = `${process.env.FRONTEND_URL}/verify-email/${emailToken}`;
 
     console.log('Sending email to:', user.email);
-    await sendEmail({
+    // Send email in background - don't await
+    sendEmail({
       to: user.email,
       subject: 'Verify Your PrimeVest Pro Account',
       html: `
@@ -57,8 +58,8 @@ exports.register = async (req, res) => {
       `
     });
 
-    console.log('Email sent successfully');
     res.status(201).json({ message: 'Registration successful! Please check your email to verify your account.' });
+    console.log('Email sending in background...');
 
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -78,7 +79,8 @@ exports.resendVerification = async (req, res) => {
     await user.save();
 
     const verifyUrl = `${process.env.FRONTEND_URL}/verify-email/${emailToken}`;
-    await sendEmail({
+    // Send email in background - don't await
+    sendEmail({
       to: user.email,
       subject: 'Verify Your PrimeVest Pro Account',
       html: `
