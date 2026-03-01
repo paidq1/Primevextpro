@@ -131,7 +131,8 @@ const SignUp = () => {
         password: form.password,
       });
       if (res.message && (res.message.toLowerCase().includes('check your email') || res.message.toLowerCase().includes('registration successful') || res.message.toLowerCase().includes('verify'))) {
-        navigate('/check-email', { state: { email: form.email, name: form.firstName + ' ' + form.lastName } });
+        setSuccess(true);
+        setTimeout(() => { window.location.href = '/signin'; }, 2000);
       } else {
         setErrors({ email: res.message || 'Registration failed' });
       }
