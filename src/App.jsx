@@ -1,4 +1,13 @@
 import React, { useEffect } from "react";
+import { useAuth } from "./context/AuthContext";
+import { Navigate } from "react-router-dom";
+
+const AdminRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  if (!user || !user.isAdmin) return <Navigate to="/dashboard" replace />;
+  return children;
+};
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'aos/dist/aos.css';
 import AOS from 'aos';
@@ -80,7 +89,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
-        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/dashboard/deposit" element={<Deposit />} />
         <Route path="/dashboard/withdraw" element={<Withdraw />} />

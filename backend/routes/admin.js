@@ -197,6 +197,11 @@ router.put('/trades/:id', adminAuth, async (req, res) => {
           totalProfit: parseFloat(result) > 0 ? parseFloat(result) : 0,
         }
       });
+
+    // Refund balance if cancelled and trade was real account
+    if (status === 'cancelled' && trade.account === 'real') {
+      await User.findByIdAndUpdate(trade.user, { $inc: { balance: trade.amount } });
+    }
     }
 
     res.json({ message: 'Trade updated', trade });

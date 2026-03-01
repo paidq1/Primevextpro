@@ -154,6 +154,7 @@ exports.login = async (req, res) => {
         accountType: user.accountType,
         referralCode: user.referralCode,
         kycStatus: user.kycStatus,
+        isAdmin: user.isAdmin,
         avatar: user.avatar,
       }
     });

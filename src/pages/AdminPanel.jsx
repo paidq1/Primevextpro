@@ -16,6 +16,7 @@ export default function AdminPanel() {
   const [withdrawals, setWithdrawals] = useState([]);
   const [kyc, setKyc] = useState([]);
   const [trades, setTrades] = useState([]);
+  const [userSearch, setUserSearch] = useState("");
   const [editBalance, setEditBalance] = useState({});
   const [tradeEdit, setTradeEdit] = useState({});
   const [msgInput, setMsgInput] = useState({});
@@ -37,6 +38,7 @@ export default function AdminPanel() {
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
 
   const approveDeposit = async (id, status) => {
+    if (!window.confirm(`Are you sure you want to ${status} this deposit?`)) return;
     await api(`/deposits/${id}`, 'PUT', { status });
     api('/deposits').then(setDeposits);
     api('/stats').then(setStats);
@@ -44,6 +46,7 @@ export default function AdminPanel() {
   };
 
   const approveWithdrawal = async (id, status) => {
+    if (!window.confirm(`Are you sure you want to ${status} this withdrawal?`)) return;
     await api(`/withdrawals/${id}`, 'PUT', { status });
     api('/withdrawals').then(setWithdrawals);
     api('/stats').then(setStats);
@@ -51,10 +54,12 @@ export default function AdminPanel() {
   };
 
   const approveKyc = async (id, status) => {
+    if (!window.confirm(`Are you sure you want to ${status} this KYC?`)) return;
     await api(`/kyc/${id}`, 'PUT', { status });
     api('/kyc').then(setKyc);
     api('/stats').then(setStats);
     showMsg(`KYC ${status}`);
+  };
   };
 
   const updateBalance = async (id) => {
@@ -164,12 +169,16 @@ export default function AdminPanel() {
         {/* Users */}
         {tab === 'users' && (
           <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "80vh" }}>
+            <div style={{ padding: "8px 0", marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
+              <input value={userSearch} onChange={e => setUserSearch(e.target.value)} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
+              <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
+            </div>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>{['Name', 'Email', 'Balance', 'Stats', 'KYC', 'Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {users.map((u, i) => (
+                {users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).map((u, i) => (
                   <tr key={i} style={{ verticalAlign: "top" }}>
                     <td style={tdStyle}>{u.firstName} {u.lastName}</td>
                     <td style={tdStyle}>{u.email}</td>
@@ -323,7 +332,7 @@ export default function AdminPanel() {
                           <select value={tradeEdit[t._id]?.outcome ?? ''} onChange={e => {
                             const outcome = e.target.value;
                             const profit = outcome === 'win' ? Math.abs(t.amount) : outcome === 'loss' ? -Math.abs(t.amount) : 0;
-                            setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], outcome, result: profit } }));
+                            setTradeEdit(p => ({ ...p, [t._id]: { ...p[t._id], outcome, result: profit, status: outcome ? "closed" : p[t._id]?.status } }));
                           }} style={{ background: tradeEdit[t._id]?.outcome === 'win' ? '#166534' : tradeEdit[t._id]?.outcome === 'loss' ? '#7f1d1d' : '#374151', border: 'none', color: 'white', fontSize: '7px', padding: '3px', cursor: 'pointer' }}>
                             <option value="">Outcome</option>
                             <option value="win">Win</option>
