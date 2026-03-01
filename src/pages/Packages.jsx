@@ -26,6 +26,13 @@ export default function Packages() {
   const [error, setError] = useState('');
 
   const userBalance = user?.balance || 0;
+  const [investments, setInvestments] = useState([]);
+
+  useEffect(() => {
+    getInvestments().then(res => {
+      if (Array.isArray(res)) setInvestments(res);
+    }).catch(() => {});
+  }, [success]);
 
   const handleJoin = (plan, i) => {
     const amt = parseFloat(amounts[i]);
@@ -70,6 +77,8 @@ export default function Packages() {
       setSubmitting(false);
     }
   };
+
+  const activeInvestments = investments.filter(i => i.status === 'active');
 
   return (
     <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
@@ -172,6 +181,25 @@ export default function Packages() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
           <span style={{ color: 'white', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em' }}>PACKAGES</span>
         </div>
+
+        {/* Active Investments */}
+        {activeInvestments.length > 0 && (
+          <div style={{ marginBottom: '16px' }}>
+            <div style={{ fontSize: '9px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>ACTIVE INVESTMENTS</div>
+            {activeInvestments.map((inv, i) => (
+              <div key={i} style={{ background: '#252d3d', border: '1px solid rgba(34,197,94,0.3)', padding: '10px 12px', marginBottom: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ fontSize: '9px', fontWeight: '700', color: '#22c55e' }}>{inv.plan}</div>
+                  <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)' }}>{inv.roi} · {inv.duration} days</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: '9px', fontWeight: '700' }}>${parseFloat(inv.amount).toLocaleString()}</div>
+                  <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>Expires {new Date(inv.expiresAt).toLocaleDateString()}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           {plans.map((plan, i) => (
