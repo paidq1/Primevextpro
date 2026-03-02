@@ -89,11 +89,11 @@ function Navbar({ onGetStarted }) {
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
           </div>
-          <span className="text-white font-bold text-[8px] tracking-widest whitespace-nowrap mt-1">
+          <span className="text-white font-bold text-[7px] tracking-wider whitespace-nowrap mt-1">
             VERTEXTRADE <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">PRO</span>
           </span>
         </div>
-        <div className="flex items-center gap-3 ml-12 flex-shrink-0 flex-nowrap">
+        <div className="flex items-center gap-2 ml-16 flex-shrink-0 flex-nowrap">
           <a href="#" className="text-white text-[9px] font-normal relative whitespace-nowrap">
             Home
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-purple-500 rounded-full"></span>

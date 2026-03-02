@@ -43,17 +43,18 @@ import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
 import CheckEmail from "./pages/CheckEmail";
 import NotFound from "./pages/NotFound";
+import LoadingScreen from "./components/LoadingScreen";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return null;
+  if (loading) return <LoadingScreen />;
   if (!user || !user.isAdmin) return <Navigate to="/dashboard" replace />;
   return children;
 };
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ color: 'white', fontSize: '12px' }}>Loading...</div></div>;
+  if (loading) return <LoadingScreen />;
   if (!user) return <Navigate to="/signin" replace />;
   return children;
 };
