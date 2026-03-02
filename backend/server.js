@@ -14,6 +14,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'https://vertextradsepro.vercel.app',
+  'https://vertextradsepro-ljzdt6jnj-vertextradespro-9143s-projects.vercel.app',
   'https://vertextrades.onrender.com'
 ];
 app.use(cors({
