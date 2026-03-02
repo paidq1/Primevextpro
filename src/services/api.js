@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://primevextpro.onrender.com/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api';
 
 // Global response handler
 const handleResponse = async (res) => {
