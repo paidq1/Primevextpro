@@ -207,7 +207,7 @@ export default function Profile() {
   });
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '3px' };
   const labelStyle = { color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' };
-  const avatarSrc = avatarPreview || (user?.avatar && user.avatar !== '' ? `https://primevextpro.onrender.com${user.avatar}` : null);
+  const avatarSrc = avatarPreview || (user?.avatar && user.avatar !== '' ? `https://vertextradepro.onrender.com${user.avatar}` : null);
   const selectedCountry = getSelectedCountry();
 
   return (

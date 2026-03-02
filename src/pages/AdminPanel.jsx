@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const BASE_URL = 'https://primevextpro.onrender.com/api';
+const BASE_URL = 'https://vertextradepro.onrender.com/api';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 
@@ -155,15 +155,25 @@ export default function AdminPanel() {
     try {
       let res;
       if (emailTarget) {
-        res = await sendUserEmail(emailTarget._id, { subject: emailSubject, message: emailMessage });
+        res = await fetch(`${BASE_URL}/admin/users/${emailTarget._id}/email`, {
+          method: 'POST', headers: headers(),
+          body: JSON.stringify({ subject: emailSubject, message: emailMessage })
+        }).then(r => r.json());
       } else {
-        res = await sendBulkEmail({ subject: emailSubject, message: emailMessage });
+        res = await fetch(`${BASE_URL}/admin/email/bulk`, {
+          method: 'POST', headers: headers(),
+          body: JSON.stringify({ subject: emailSubject, message: emailMessage })
+        }).then(r => r.json());
       }
-      setEmailSuccess(res.message || 'Email sent!');
-      setEmailSubject('');
-      setEmailMessage('');
+      if (res.message) {
+        setEmailSuccess(res.message);
+        setEmailSubject('');
+        setEmailMessage('');
+      } else {
+        setEmailSuccess('Failed: ' + (res.message || 'Unknown error'));
+      }
     } catch(e) {
-      setMsg('Failed to send email');
+      setEmailSuccess('Failed to send email');
     }
     setEmailSending(false);
   };
@@ -173,7 +183,7 @@ export default function AdminPanel() {
 
       {/* Header */}
       <div style={{ background: '#141824', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>PRIMEVEST <span style={{ color: '#6366f1' }}>PRO</span></span>
+        <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>/ Admin Panel</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
           <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer' }}>Dashboard</button>
@@ -386,7 +396,7 @@ export default function AdminPanel() {
                         <button onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
                       </>}
-                      {d.proofImage && <button onClick={() => setProofImage('https://primevextpro.onrender.com' + d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
+                      {d.proofImage && <button onClick={() => setProofImage('https://vertextradepro.onrender.com' + d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
                     </td>
                   </tr>
                 ))}
@@ -452,9 +462,9 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: k.kycStatus === 'approved' ? '#22c55e' : k.kycStatus === 'submitted' ? '#f59e0b' : '#ef4444' }}>{k.kycStatus}</td>
                     <td style={tdStyle}>{new Date(k.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
-                      {k.kycData?.idFront && <a href={'https://primevextpro.onrender.com' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
-                      {k.kycData?.idBack && <a href={'https://primevextpro.onrender.com' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
-                      {k.kycData?.selfie && <a href={'https://primevextpro.onrender.com' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
+                      {k.kycData?.idFront && <a href={'https://vertextradepro.onrender.com' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
+                      {k.kycData?.idBack && <a href={'https://vertextradepro.onrender.com' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
+                      {k.kycData?.selfie && <a href={'https://vertextradepro.onrender.com' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
                     </td>
                     <td style={tdStyle}>
                       {(k.kycStatus === 'submitted' || k.kycStatus === 'pending') && <>
@@ -556,8 +566,8 @@ export default function AdminPanel() {
             <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {selectedUser.avatar ? (
-                  <img src={'https://primevextpro.onrender.com' + selectedUser.avatar} alt="avatar"
-                    onClick={() => setProofImage('https://primevextpro.onrender.com' + selectedUser.avatar)}
+                  <img src={'https://vertextradepro.onrender.com' + selectedUser.avatar} alt="avatar"
+                    onClick={() => setProofImage('https://vertextradepro.onrender.com' + selectedUser.avatar)}
                     style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1', cursor: 'pointer' }} />
                 ) : (
                   <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '700', color: 'white' }}>
@@ -566,7 +576,7 @@ export default function AdminPanel() {
                 )}
                 <div>
                   <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
-                  {selectedUser.avatar && <div onClick={() => setProofImage('https://primevextpro.onrender.com' + selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '7px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
+                  {selectedUser.avatar && <div onClick={() => setProofImage('https://vertextradepro.onrender.com' + selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '7px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
                 </div>
               </div>
               <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '20px', cursor: 'pointer' }}>×</button>

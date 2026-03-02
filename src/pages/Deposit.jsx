@@ -100,7 +100,7 @@ export default function Deposit() {
         <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>PRIMEVEST <span style={{ color: '#6366f1' }}>PRO</span></span>
+        <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', marginLeft: '4px' }}>/ Deposit</span>
         <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
@@ -153,7 +153,7 @@ export default function Deposit() {
                 <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '3px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '6px', padding: '3px 6px', cursor: 'pointer', marginBottom: '6px', width: '100%', justifyContent: 'center' }}>
                   <Copy size={8}/> {copied ? 'Copied!' : 'Copy'}
                 </button>
-                <div style={{ color: 'white', fontSize: '7px', fontWeight: '700', marginBottom: '6px' }}>Deposit USDT to PrimeVest Pro</div>
+                <div style={{ color: 'white', fontSize: '7px', fontWeight: '700', marginBottom: '6px' }}>Deposit USDT to VertexTrade Pro</div>
                 <img src='/qrcode.jpg' alt='QR' style={{ width: '80px', height: '80px', margin: '0 auto 6px', display: 'block' }}/>
                 <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '6px', marginBottom: '3px' }}>Network: TRC20</div>
                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '5px' }}>*USDT only</div>

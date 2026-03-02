@@ -17,7 +17,7 @@ const FloatingChat = () => {
           <p style={{ color: '#94a3b8', fontSize: '8px', lineHeight: '1.6', marginBottom: '10px' }}>
             Hi! How can we help you today? Our support team is available 24/7.
           </p>
-          <a href="mailto:support@primevestprox.cc" style={{
+          <a href="mailto:support@vertextradeprox.cc" style={{
             display: 'block', background: '#6366f1', color: 'white',
             fontSize: '8px', fontWeight: '600', padding: '8px',
             borderRadius: '4px', textAlign: 'center', textDecoration: 'none',

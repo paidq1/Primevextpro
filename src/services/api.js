@@ -1,4 +1,4 @@
-const BASE_URL = 'https://primevextpro.onrender.com/api';
+const BASE_URL = 'https://vertextradepro.onrender.com/api';
 
 // Global response handler
 const handleResponse = async (res) => {

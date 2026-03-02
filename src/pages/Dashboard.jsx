@@ -104,7 +104,7 @@ export default function Dashboard() {
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
             <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
             <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
-            <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0 }}>{u.avatar ? <img src={'https://primevextpro.onrender.com' + u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} /> : null}<User size={13} style={{ display: u.avatar ? 'none' : 'block' }}/></button>
+            <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0 }}>{u.avatar ? <img src={'https://vertextradepro.onrender.com' + u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} /> : null}<User size={13} style={{ display: u.avatar ? 'none' : 'block' }}/></button>
           </div>
         </div>
 
@@ -131,7 +131,7 @@ export default function Dashboard() {
                 <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
                 <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
               </svg>
-              <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>PRIMEVEST PRO</span>
+              <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>VERTEXTRADE PRO</span>
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginLeft: '4px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 

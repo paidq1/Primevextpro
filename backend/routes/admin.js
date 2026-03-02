@@ -323,13 +323,13 @@ router.post('/users/:id/email', adminAuth, async (req, res) => {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
           <div style="text-align: center; margin-bottom: 24px;">
-            <h1 style="color: #6366f1; font-size: 24px;">PrimeVest Pro</h1>
+            <h1 style="color: #6366f1; font-size: 24px;">VertexTrade Pro</h1>
           </div>
           <div style="background: #252d3d; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
             <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Dear ${user.firstName} ${user.lastName},</p>
             <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6; white-space: pre-line;">${message}</p>
           </div>
-          <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">This email was sent from PrimeVest Pro admin panel.</p>
+          <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">This email was sent from VertexTrade Pro admin panel.</p>
         </div>
       `
     });
@@ -357,13 +357,13 @@ router.post('/email/bulk', adminAuth, async (req, res) => {
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
               <div style="text-align: center; margin-bottom: 24px;">
-                <h1 style="color: #6366f1; font-size: 24px;">PrimeVest Pro</h1>
+                <h1 style="color: #6366f1; font-size: 24px;">VertexTrade Pro</h1>
               </div>
               <div style="background: #252d3d; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
                 <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Dear ${user.firstName} ${user.lastName},</p>
                 <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6; white-space: pre-line;">${message}</p>
               </div>
-              <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">This email was sent from PrimeVest Pro admin panel.</p>
+              <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">This email was sent from VertexTrade Pro admin panel.</p>
             </div>
           `
         });

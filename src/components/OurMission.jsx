@@ -43,7 +43,7 @@ const OurMission = () => {
               <h2 style={{ color: 'white', fontWeight: '700', fontSize: '12px', margin: 0 }}>Our Mission</h2>
               <div style={{ width: '24px', height: '2px', background: '#6366f1' }} />
               <p style={{ color: 'white', fontSize: '7px', lineHeight: '1.6', margin: 0 }}>
-                Founded in 2020, PrimeVest Pro is dedicated to providing secure and innovative financial solutions. Our mission is to empower our clients with the tools and knowledge to succeed in the dynamic world of crypto and forex trading. We are committed to transparency, integrity, and the highest standards of security. Our vision is to be the leading platform for crypto and forex trading worldwide, trusted by our clients for our expertise, reliability, and commitment to their success.
+                Founded in 2020, VertexTrade Pro is dedicated to providing secure and innovative financial solutions. Our mission is to empower our clients with the tools and knowledge to succeed in the dynamic world of crypto and forex trading. We are committed to transparency, integrity, and the highest standards of security. Our vision is to be the leading platform for crypto and forex trading worldwide, trusted by our clients for our expertise, reliability, and commitment to their success.
               </p>
               <div style={{ width: '24px', height: '1px', background: 'rgba(99,102,241,0.4)' }} />
               <div style={{ display: 'flex', flexDirection: 'column' }}>

@@ -13,8 +13,8 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://primevextpro.onrender.com',
-  'https://primevest-pro.vercel.app',
+  'https://vertextradepro.onrender.com',
+  'https://vertextrade-pro.vercel.app',
 ];
 app.use(cors({
   origin: (origin, callback) => {
@@ -67,8 +67,8 @@ app.use('/api/referral', require('./routes/referral'));
 app.use('/api/admin', require('./routes/admin'));
 
 // Health check
-app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'PrimeVest Pro API running' }));
-app.get('/', (req, res) => res.json({ name: 'PrimeVest Pro API', status: 'running' }));
+app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'VertexTrade Pro API running' }));
+app.get('/', (req, res) => res.json({ name: 'VertexTrade Pro API', status: 'running' }));
 
 // MongoDB connection
 let cachedDb = null;
@@ -87,7 +87,7 @@ connectDB()
 if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
   setInterval(() => {
     const https = require('https');
-    https.get('https://primevextpro.onrender.com/api/health', () => {}).on('error', () => {});
+    https.get('https://vertextradepro.onrender.com/api/health', () => {}).on('error', () => {});
   }, 14 * 60 * 1000);
 }
 

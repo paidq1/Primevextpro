@@ -90,7 +90,7 @@ function Navbar({ onGetStarted }) {
             </svg>
           </div>
           <span className="text-white font-bold text-[8px] tracking-widest whitespace-nowrap mt-1">
-            PRIMEVEST <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">PRO</span>
+            VERTEXTRADE <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">PRO</span>
           </span>
         </div>
         <div className="flex items-center gap-3 ml-12 flex-shrink-0 flex-nowrap">
