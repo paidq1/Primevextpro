@@ -15,6 +15,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://primevextpro.onrender.com',
   'https://primevest-pro.vercel.app',
+  'https://vertextradespro.vercel.app',
 ];
 app.use(cors({
   origin: (origin, callback) => {
