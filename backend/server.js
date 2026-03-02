@@ -13,8 +13,8 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://vertextradepro.onrender.com',
-  'https://vertextrade-pro.vercel.app',
+  'https://primevextpro.onrender.com',
+  'https://primevest-pro.vercel.app',
 ];
 app.use(cors({
   origin: (origin, callback) => {
@@ -87,7 +87,7 @@ connectDB()
 if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
   setInterval(() => {
     const https = require('https');
-    https.get('https://vertextradepro.onrender.com/api/health', () => {}).on('error', () => {});
+    https.get('https://primevextpro.onrender.com/api/health', () => {}).on('error', () => {});
   }, 14 * 60 * 1000);
 }
 
