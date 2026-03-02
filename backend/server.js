@@ -62,7 +62,7 @@ connectDB()
 
 setInterval(() => {
   const https = require('https');
-  https.get('https://primevextpro.onrender.com/api/health', () => {}).on('error', () => {});
+  https.get('https://vertextrades.onrender.com/api/health', () => {}).on('error', () => {});
 }, 14 * 60 * 1000);
 
 module.exports = app;
