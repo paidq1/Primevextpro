@@ -15,6 +15,12 @@ export default function AdminPanel() {
   const [deposits, setDeposits] = useState([]);
   const [proofImage, setProofImage] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [emailModal, setEmailModal] = useState(false);
+  const [emailTarget, setEmailTarget] = useState(null); // null = bulk
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
+  const [emailSending, setEmailSending] = useState(false);
+  const [emailSuccess, setEmailSuccess] = useState('');
   const [depositFilter, setDepositFilter] = useState('all');
   const [withdrawalFilter, setWithdrawalFilter] = useState('all');
   const [depositSearch, setDepositSearch] = useState('');
@@ -142,6 +148,25 @@ export default function AdminPanel() {
   const thStyle = { padding: '8px', fontSize: '7px', color: 'rgba(255,255,255,0.5)', fontWeight: '700', textAlign: 'left', borderBottom: '1px solid rgba(255,255,255,0.08)', whiteSpace: 'nowrap' };
   const tdStyle = { padding: '8px', fontSize: '7px', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.04)', whiteSpace: 'nowrap' };
   const btnStyle = (color) => ({ padding: '3px 8px', background: color, border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer', borderRadius: '2px', marginRight: '4px' });
+
+  const handleSendEmail = async () => {
+    if (!emailSubject || !emailMessage) { setMsg('Please fill subject and message'); return; }
+    setEmailSending(true);
+    try {
+      let res;
+      if (emailTarget) {
+        res = await sendUserEmail(emailTarget._id, { subject: emailSubject, message: emailMessage });
+      } else {
+        res = await sendBulkEmail({ subject: emailSubject, message: emailMessage });
+      }
+      setEmailSuccess(res.message || 'Email sent!');
+      setEmailSubject('');
+      setEmailMessage('');
+    } catch(e) {
+      setMsg('Failed to send email');
+    }
+    setEmailSending(false);
+  };
 
   return (
     <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
@@ -279,6 +304,7 @@ export default function AdminPanel() {
             <div style={{ padding: "8px 0", marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
               <input value={userSearch} onChange={e => setUserSearch(e.target.value)} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
               <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
+              <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}>📧 Email All</button>
             </div>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
@@ -318,6 +344,7 @@ export default function AdminPanel() {
                     </td>
                     <td style={tdStyle}>
                       <button onClick={() => setSelectedUser(u)} style={btnStyle('#818cf8')}>View</button>
+                      <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={btnStyle('#6366f1')}>Email</button>
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
                       <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
@@ -490,6 +517,37 @@ export default function AdminPanel() {
           </div>
         )}
       </div>
+
+      {/* Email Modal */}
+      {emailModal && (
+        <div onClick={() => setEmailModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '380px', borderRadius: '4px', padding: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>
+                {emailTarget ? `Email to ${emailTarget.firstName} ${emailTarget.lastName}` : 'Bulk Email - All Users'}
+              </span>
+              <button onClick={() => setEmailModal(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '20px', cursor: 'pointer' }}>×</button>
+            </div>
+            {emailTarget && <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '12px' }}>To: {emailTarget.email}</div>}
+            {!emailTarget && <div style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid #6366f1', padding: '8px', marginBottom: '12px', color: '#818cf8', fontSize: '8px' }}>⚠️ This will send email to ALL {users.length} users</div>}
+            <div style={{ marginBottom: '10px' }}>
+              <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Subject</label>
+              <input value={emailSubject} onChange={e => setEmailSubject(e.target.value)} placeholder="Email subject..." style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+            <div style={{ marginBottom: '14px' }}>
+              <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Message</label>
+              <textarea value={emailMessage} onChange={e => setEmailMessage(e.target.value)} placeholder="Type your message..." rows={5} style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '8px 10px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
+            </div>
+            {emailSuccess && <div style={{ color: '#22c55e', fontSize: '9px', marginBottom: '10px' }}>{emailSuccess}</div>}
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setEmailModal(false)} style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={handleSendEmail} disabled={emailSending} style={{ flex: 1, padding: '9px', background: emailSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: emailSending ? 'not-allowed' : 'pointer' }}>
+                {emailSending ? 'Sending...' : 'Send Email'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* User Details Modal */}
       {selectedUser && (

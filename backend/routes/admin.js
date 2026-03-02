@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const adminAuth = require('../middleware/adminAuth');
+const sendEmail = require('../utils/sendEmail');
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');
 
@@ -304,6 +305,75 @@ router.put('/kyc/:id', adminAuth, async (req, res) => {
     res.json({ message: 'KYC ' + status, user });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Send email to user
+router.post('/users/:id/email', adminAuth, async (req, res) => {
+  try {
+    const { subject, message } = req.body;
+    if (!subject || !message) return res.status(400).json({ message: 'Subject and message required' });
+    
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    await sendEmail({
+      to: user.email,
+      subject,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <h1 style="color: #6366f1; font-size: 24px;">PrimeVest Pro</h1>
+          </div>
+          <div style="background: #252d3d; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+            <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Dear ${user.firstName} ${user.lastName},</p>
+            <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6; white-space: pre-line;">${message}</p>
+          </div>
+          <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">This email was sent from PrimeVest Pro admin panel.</p>
+        </div>
+      `
+    });
+
+    res.json({ message: 'Email sent successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to send email', error: err.message });
+  }
+});
+
+// Send bulk email to all users
+router.post('/email/bulk', adminAuth, async (req, res) => {
+  try {
+    const { subject, message } = req.body;
+    if (!subject || !message) return res.status(400).json({ message: 'Subject and message required' });
+
+    const users = await User.find({ isActive: true }).select('email firstName lastName');
+    
+    let sent = 0;
+    for (const user of users) {
+      try {
+        await sendEmail({
+          to: user.email,
+          subject,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
+              <div style="text-align: center; margin-bottom: 24px;">
+                <h1 style="color: #6366f1; font-size: 24px;">PrimeVest Pro</h1>
+              </div>
+              <div style="background: #252d3d; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Dear ${user.firstName} ${user.lastName},</p>
+                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6; white-space: pre-line;">${message}</p>
+              </div>
+              <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">This email was sent from PrimeVest Pro admin panel.</p>
+            </div>
+          `
+        });
+        sent++;
+      } catch(e) {}
+    }
+
+    res.json({ message: `Email sent to ${sent} users` });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to send bulk email', error: err.message });
   }
 });
 

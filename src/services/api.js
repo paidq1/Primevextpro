@@ -64,3 +64,7 @@ export const getBots = () => fetch(`${BASE_URL}/bot`, { headers: headers() }).th
 
 export const getTradeStats = () => fetch(`${BASE_URL}/trade/stats`, { headers: headers() }).then(handleResponse);
 export const getReferrals = () => fetch(`${BASE_URL}/referral`, { headers: headers() }).then(handleResponse);
+
+// Admin Email
+export const sendUserEmail = (id, data) => fetch(`${BASE_URL}/admin/users/${id}/email`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
+export const sendBulkEmail = (data) => fetch(`${BASE_URL}/admin/email/bulk`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
