@@ -8,7 +8,7 @@ const getTokenExpiry = (token) => {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
     return payload.exp * 1000; // convert to ms
-  } catch {
+  } catch (e) {
     return null;
   }
 };

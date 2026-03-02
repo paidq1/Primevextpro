@@ -42,6 +42,7 @@ import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
 import CheckEmail from "./pages/CheckEmail";
+import NotFound from "./pages/NotFound";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();

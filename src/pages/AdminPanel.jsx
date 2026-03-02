@@ -13,6 +13,12 @@ export default function AdminPanel() {
   const [stats, setStats] = useState({});
   const [users, setUsers] = useState([]);
   const [deposits, setDeposits] = useState([]);
+  const [proofImage, setProofImage] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [depositFilter, setDepositFilter] = useState('all');
+  const [withdrawalFilter, setWithdrawalFilter] = useState('all');
+  const [depositSearch, setDepositSearch] = useState('');
+  const [withdrawalSearch, setWithdrawalSearch] = useState('');
   const [withdrawals, setWithdrawals] = useState([]);
   const [kyc, setKyc] = useState([]);
   const [trades, setTrades] = useState([]);
@@ -118,6 +124,13 @@ export default function AdminPanel() {
   };
 
   const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades'];
+  const pendingCount = (arr) => arr.filter(x => x.status === 'pending' || x.kycStatus === 'submitted').length;
+  const tabLabel = (t) => {
+    if (t === 'deposits') return `Deposits${deposits.filter(d => d.status === 'pending').length ? ' (' + deposits.filter(d => d.status === 'pending').length + ')' : ''}`;
+    if (t === 'withdrawals') return `Withdrawals${withdrawals.filter(w => w.status === 'pending').length ? ' (' + withdrawals.filter(w => w.status === 'pending').length + ')' : ''}`;
+    if (t === 'kyc') return `KYC${kyc.filter(k => k.kycStatus === 'submitted').length ? ' (' + kyc.filter(k => k.kycStatus === 'submitted').length + ')' : ''}`;
+    return t.charAt(0).toUpperCase() + t.slice(1);
+  };
 
   const statCards = [
     { label: 'Total Users', value: stats.totalUsers || 0, color: '#6366f1' },
@@ -165,8 +178,97 @@ export default function AdminPanel() {
                 </div>
               ))}
             </div>
-            <div style={{ background: '#252d3d', padding: '12px', fontSize: '8px', color: 'rgba(255,255,255,0.5)' }}>
-              Total Deposits: {stats.totalDeposits || 0} · Total Withdrawals: {stats.totalWithdrawals || 0}
+
+            {/* Deposits by status chart */}
+            <div style={{ background: '#252d3d', padding: '14px', marginBottom: '12px' }}>
+              <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Deposits Overview</div>
+              {(() => {
+                const pending = deposits.filter(d => d.status === 'pending').length;
+                const approved = deposits.filter(d => d.status === 'approved').length;
+                const rejected = deposits.filter(d => d.status === 'rejected').length;
+                const total = deposits.length || 1;
+                const totalAmount = deposits.filter(d => d.status === 'approved').reduce((a, d) => a + d.amount, 0);
+                return (
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
+                      {[['Pending', pending, '#f59e0b'], ['Approved', approved, '#22c55e'], ['Rejected', rejected, '#ef4444']].map(([l,v,col]) => (
+                        <div key={l} style={{ textAlign: 'center' }}>
+                          <div style={{ color: col, fontSize: '18px', fontWeight: '700' }}>{v}</div>
+                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{l}</div>
+                        </div>
+                      ))}
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ color: '#6366f1', fontSize: '18px', fontWeight: '700' }}>${totalAmount.toFixed(0)}</div>
+                        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Approved $</div>
+                      </div>
+                    </div>
+                    <div style={{ height: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '4px', display: 'flex', overflow: 'hidden' }}>
+                      <div style={{ width: (approved/total*100) + '%', background: '#22c55e' }} />
+                      <div style={{ width: (pending/total*100) + '%', background: '#f59e0b' }} />
+                      <div style={{ width: (rejected/total*100) + '%', background: '#ef4444' }} />
+                    </div>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
+                      {[['Approved', '#22c55e'], ['Pending', '#f59e0b'], ['Rejected', '#ef4444']].map(([l,c]) => (
+                        <div key={l} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <div style={{ width: '8px', height: '8px', background: c, borderRadius: '2px' }} />
+                          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{l}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Withdrawals by status chart */}
+            <div style={{ background: '#252d3d', padding: '14px', marginBottom: '12px' }}>
+              <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Withdrawals Overview</div>
+              {(() => {
+                const pending = withdrawals.filter(w => w.status === 'pending').length;
+                const approved = withdrawals.filter(w => w.status === 'approved').length;
+                const rejected = withdrawals.filter(w => w.status === 'rejected').length;
+                const total = withdrawals.length || 1;
+                const totalAmount = withdrawals.filter(w => w.status === 'approved').reduce((a, w) => a + w.amount, 0);
+                return (
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
+                      {[['Pending', pending, '#f59e0b'], ['Approved', approved, '#22c55e'], ['Rejected', rejected, '#ef4444']].map(([l,v,col]) => (
+                        <div key={l} style={{ textAlign: 'center' }}>
+                          <div style={{ color: col, fontSize: '18px', fontWeight: '700' }}>{v}</div>
+                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{l}</div>
+                        </div>
+                      ))}
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ color: '#ec4899', fontSize: '18px', fontWeight: '700' }}>${totalAmount.toFixed(0)}</div>
+                        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Approved $</div>
+                      </div>
+                    </div>
+                    <div style={{ height: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '4px', display: 'flex', overflow: 'hidden' }}>
+                      <div style={{ width: (approved/total*100) + '%', background: '#22c55e' }} />
+                      <div style={{ width: (pending/total*100) + '%', background: '#f59e0b' }} />
+                      <div style={{ width: (rejected/total*100) + '%', background: '#ef4444' }} />
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Users overview */}
+            <div style={{ background: '#252d3d', padding: '14px' }}>
+              <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Users Overview</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {[
+                  ['Total', users.length, '#6366f1'],
+                  ['Active', users.filter(u => !u.isBlocked).length, '#22c55e'],
+                  ['Blocked', users.filter(u => u.isBlocked).length, '#ef4444'],
+                  ['KYC Done', users.filter(u => u.kycStatus === 'approved').length, '#f59e0b'],
+                ].map(([l,v,col]) => (
+                  <div key={l} style={{ textAlign: 'center' }}>
+                    <div style={{ color: col, fontSize: '18px', fontWeight: '700' }}>{v}</div>
+                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{l}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -215,6 +317,7 @@ export default function AdminPanel() {
                       </div>
                     </td>
                     <td style={tdStyle}>
+                      <button onClick={() => setSelectedUser(u)} style={btnStyle('#818cf8')}>View</button>
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
                       <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
@@ -227,13 +330,24 @@ export default function AdminPanel() {
 
         {/* Deposits */}
         {tab === 'deposits' && (
+          <div>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+              <input value={depositSearch} onChange={e => setDepositSearch(e.target.value)} placeholder="Search user or method..." style={{ background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
+              {['all','pending','approved','rejected'].map(f => (
+                <button key={f} onClick={() => setDepositFilter(f)} style={{ padding: '6px 12px', background: depositFilter === f ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+              ))}
+            </div>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>{['User', 'Amount', 'Method', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {deposits.map((d, i) => (
+                {deposits.filter(d => {
+                  const matchFilter = depositFilter === 'all' || d.status === depositFilter;
+                  const matchSearch = !depositSearch || (d.user?.firstName + ' ' + d.user?.lastName + ' ' + d.user?.email + ' ' + d.method).toLowerCase().includes(depositSearch.toLowerCase());
+                  return matchFilter && matchSearch;
+                }).map((d, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{d.user?.firstName} {d.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)' }}>{d.user?.email}</span></td>
                     <td style={{ ...tdStyle, color: '#22c55e' }}>${d.amount?.toFixed(2)}</td>
@@ -245,24 +359,36 @@ export default function AdminPanel() {
                         <button onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
                       </>}
-                      {d.proof && <a href={'https://primevextpro.onrender.com' + d.proof} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Proof</a>}
+                      {d.proofImage && <button onClick={() => setProofImage('https://primevextpro.onrender.com' + d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          </div>
         )}
 
         {/* Withdrawals */}
         {tab === 'withdrawals' && (
+          <div>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+              <input value={withdrawalSearch} onChange={e => setWithdrawalSearch(e.target.value)} placeholder="Search user or method..." style={{ background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '6px 10px', outline: 'none', flex: 1, minWidth: '150px' }} />
+              {['all','pending','approved','rejected'].map(f => (
+                <button key={f} onClick={() => setWithdrawalFilter(f)} style={{ padding: '6px 12px', background: withdrawalFilter === f ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+              ))}
+            </div>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr>{['User', 'Amount', 'Wallet', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                <tr>{['User', 'Amount', 'Method', 'Status', 'Date', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {withdrawals.map((w, i) => (
+                {withdrawals.filter(w => {
+                  const matchFilter = withdrawalFilter === 'all' || w.status === withdrawalFilter;
+                  const matchSearch = !withdrawalSearch || (w.user?.firstName + ' ' + w.user?.lastName + ' ' + w.user?.email + ' ' + w.method).toLowerCase().includes(withdrawalSearch.toLowerCase());
+                  return matchFilter && matchSearch;
+                }).map((w, i) => (
                   <tr key={i}>
                     <td style={tdStyle}>{w.user?.firstName} {w.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)' }}>{w.user?.email}</span></td>
                     <td style={{ ...tdStyle, color: '#ec4899' }}>${w.amount?.toFixed(2)}</td>
@@ -279,6 +405,7 @@ export default function AdminPanel() {
                 ))}
               </tbody>
             </table>
+          </div>
           </div>
         )}
 
@@ -362,8 +489,91 @@ export default function AdminPanel() {
             </table>
           </div>
         )}
-
       </div>
+
+      {/* User Details Modal */}
+      {selectedUser && (
+        <div onClick={() => setSelectedUser(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '4px' }}>
+            <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                {selectedUser.avatar ? (
+                  <img src={'https://primevextpro.onrender.com' + selectedUser.avatar} alt="avatar"
+                    onClick={() => setProofImage('https://primevextpro.onrender.com' + selectedUser.avatar)}
+                    style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1', cursor: 'pointer' }} />
+                ) : (
+                  <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '700', color: 'white' }}>
+                    {selectedUser.firstName?.[0]}{selectedUser.lastName?.[0]}
+                  </div>
+                )}
+                <div>
+                  <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
+                  {selectedUser.avatar && <div onClick={() => setProofImage('https://primevextpro.onrender.com' + selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '7px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
+                </div>
+              </div>
+              <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '20px', cursor: 'pointer' }}>×</button>
+            </div>
+            <div style={{ padding: '14px 16px' }}>
+              {/* Profile Info */}
+              <div style={{ marginBottom: '14px' }}>
+                <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Profile</div>
+                {[
+                  ['Email', selectedUser.email],
+                  ['Phone', selectedUser.phone || '---'],
+                  ['Country', selectedUser.country || '---'],
+                  ['KYC Status', selectedUser.kycStatus],
+                  ['Account Type', selectedUser.accountType],
+                  ['Referral Code', selectedUser.referralCode],
+                  ['Status', selectedUser.isBlocked ? 'Blocked' : 'Active'],
+                  ['Joined', new Date(selectedUser.createdAt).toLocaleDateString()],
+                ].map(([k,v]) => (
+                  <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>{k}</span>
+                    <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+              {/* Stats */}
+              <div style={{ marginBottom: '14px' }}>
+                <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
+                {[
+                  ['Balance', '$' + (selectedUser.balance?.toFixed(2) || '0.00')],
+                  ['Total Deposits', '$' + (selectedUser.totalDeposits?.toFixed(2) || '0.00')],
+                  ['Total Withdrawals', '$' + (selectedUser.totalWithdrawals?.toFixed(2) || '0.00')],
+                  ['Total Profit', '$' + (selectedUser.totalProfit?.toFixed(2) || '0.00')],
+                  ['Total Referrals', selectedUser.totalReferrals || 0],
+                ].map(([k,v]) => (
+                  <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>{k}</span>
+                    <span style={{ color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+              {/* Admin message */}
+              {selectedUser.adminMessage && (
+                <div style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid #f59e0b', padding: '8px', marginBottom: '14px' }}>
+                  <div style={{ color: '#f59e0b', fontSize: '7px', fontWeight: '700', marginBottom: '4px' }}>Admin Message</div>
+                  <div style={{ color: 'white', fontSize: '8px' }}>{selectedUser.adminMessage}</div>
+                </div>
+              )}
+              <button onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Proof Image Modal */}
+      {proofImage && (
+        <>
+          <div onClick={() => setProofImage(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
+              <button onClick={() => setProofImage(null)} style={{ position: 'absolute', top: '-40px', right: 0, background: 'none', border: 'none', color: 'white', fontSize: '28px', cursor: 'pointer' }}>×</button>
+              <img src={proofImage} alt="Payment Proof" style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', border: '2px solid rgba(255,255,255,0.2)' }} />
+              <a href={proofImage} target="_blank" rel="noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: '10px', color: '#6366f1', fontSize: '11px' }}>Open in new tab</a>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

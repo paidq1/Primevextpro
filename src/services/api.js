@@ -1,15 +1,7 @@
 const BASE_URL = 'https://primevextpro.onrender.com/api';
 
-// Global response handler - auto logout on 401
+// Global response handler
 const handleResponse = async (res) => {
-  if (res.status === 401) {
-    // Only redirect if we're on a dashboard page
-    if (window.location.pathname.startsWith('/dashboard') || window.location.pathname.startsWith('/admin')) {
-      localStorage.removeItem('token');
-      window.location.href = '/signin';
-    }
-    return {};
-  }
   return res.json();
 };
 
