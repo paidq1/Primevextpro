@@ -13,7 +13,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://primevextpro.onrender.com',
+  'https://vertextrades.onrender.com',
   'https://primevest-pro.vercel.app',
   'https://vertextradespro.vercel.app',
 ];
@@ -88,7 +88,7 @@ connectDB()
 if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
   setInterval(() => {
     const https = require('https');
-    https.get('https://primevextpro.onrender.com/api/health', () => {}).on('error', () => {});
+    https.get('https://vertextrades.onrender.com/api/health', () => {}).on('error', () => {});
   }, 14 * 60 * 1000);
 }
 
