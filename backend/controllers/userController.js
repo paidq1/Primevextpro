@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { uploadToCloudinary } = require('../utils/cloudinary');
 const Transaction = require('../models/Transaction');
 const Trade = require('../models/Trade');
 const Investment = require('../models/Investment');
@@ -33,7 +34,10 @@ exports.updateProfile = async (req, res) => {
       country, state, city, address, dob, currency
     };
 
-    if (req.file) update.avatar = '/uploads/' + req.file.filename;
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file, 'vertextrade/avatars');
+      update.avatar = result.secure_url;
+    }
 
     console.log('Update object:', update);
 

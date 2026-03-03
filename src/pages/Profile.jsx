@@ -201,20 +201,20 @@ export default function Profile() {
   };
 
   const inputStyle = (field) => ({
-    width: '100%', background: '#1e2538',
+    width: '100%', background: '#161f33',
     border: '1px solid ' + (errors[field] ? '#ef4444' : 'rgba(255,255,255,0.08)'),
     color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box'
   });
   const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '3px' };
   const labelStyle = { color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' };
-  const avatarSrc = avatarPreview || (user?.avatar && user.avatar !== '' ? `https://vertextrades.onrender.com${user.avatar}` : null);
+  const avatarSrc = avatarPreview || (user?.avatar && user.avatar !== '' ? user.avatar : null);
   const selectedCountry = getSelectedCountry();
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Top Nav */}
-      <div style={{ background: '#1e2538', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ background: '#161f33', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{ width: '16px', height: '16px' }}>
             <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
@@ -230,9 +230,9 @@ export default function Profile() {
           </button>
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
-          <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#f59e0b', fontSize: '8px', cursor: 'pointer' }}>&#8383; 0.00</button>
+          <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#f59e0b', fontSize: '8px', cursor: 'pointer' }}>&#8383; {((user?.balance || 0) * 0.000015).toFixed(6)}</button>
           <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> Trade</button>
-          <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> $0.00</button>
+          <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> ${(user?.balance || 0).toFixed(2)}</button>
           <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
             {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}/> : null}<User size={14} color='rgba(255,255,255,0.6)' style={{ display: avatarSrc ? 'none' : 'block' }}/>
           </div>
@@ -310,11 +310,11 @@ export default function Profile() {
                 </div>
               )}
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <label style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                   Choose File
                   <input type='file' accept='image/*' style={{ display: 'none' }} onChange={handleFileChange}/>
                 </label>
-                <span style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
+                <span style={{ background: '#161f33', border: '1px solid rgba(255,255,255,0.08)', borderLeft: 'none', color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '6px 12px', flex: 1 }}>{fileName}</span>
               </div>
             </div>
 
@@ -337,7 +337,7 @@ export default function Profile() {
             {/* Currency */}
             <div style={{ marginBottom: '14px' }}>
               <label style={labelStyle}>Country Currency</label>
-              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '60%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
+              <select name='currency' value={form.currency} onChange={handleChange} style={{ width: '60%', background: '#161f33', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}>
                 <option>US Dollar (USD)</option>
                 <option>Euro (EUR)</option>
                 <option>British Pound (GBP)</option>
@@ -377,7 +377,7 @@ export default function Profile() {
                     name='phoneCode'
                     value={form.phoneCode}
                     onChange={handlePhoneCodeChange}
-                    style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', borderRight: 'none', color: 'white', fontSize: '8px', padding: '7px 4px', outline: 'none', maxWidth: '70px' }}
+                    style={{ background: '#161f33', border: '1px solid rgba(255,255,255,0.08)', borderRight: 'none', color: 'white', fontSize: '8px', padding: '7px 4px', outline: 'none', maxWidth: '70px' }}
                   >
                     {COUNTRIES.map((c, i) => (
                       <option key={i} value={c.code}>{c.flag} {c.code}</option>
@@ -389,7 +389,7 @@ export default function Profile() {
                     onChange={handleChange}
                     placeholder={`${selectedCountry.minLen}-${selectedCountry.maxLen} digits`}
                     maxLength={selectedCountry.maxLen}
-                    style={{ flex: 1, background: '#1e2538', border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
+                    style={{ flex: 1, background: '#161f33', border: '1px solid ' + (errors.phone ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box' }}
                   />
                 </div>
                 {errors.phone
@@ -410,7 +410,7 @@ export default function Profile() {
                 name='country'
                 value={form.country}
                 onChange={handleCountryChange}
-                style={{ width: '100%', background: '#1e2538', border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}
+                style={{ width: '100%', background: '#161f33', border: '1px solid ' + (errors.country ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none' }}
               >
                 <option value=''>Select Country</option>
                 {COUNTRIES.map((c, i) => (
@@ -437,7 +437,7 @@ export default function Profile() {
             {/* Address */}
             <div style={{ marginBottom: '16px' }}>
               <label style={labelStyle}>Address *</label>
-              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: '#1e2538', border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
+              <textarea name='address' value={form.address} onChange={handleChange} placeholder='Enter your address here' rows={3} style={{ width: '100%', background: '#161f33', border: '1px solid ' + (errors.address ? '#ef4444' : 'rgba(255,255,255,0.08)'), color: 'white', fontSize: '9px', padding: '7px 10px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}/>
               {errors.address && <div style={errStyle}>{errors.address}</div>}
             </div>
 

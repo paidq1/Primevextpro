@@ -20,7 +20,7 @@ export default function KYC() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const inputStyle = { width: '100%', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function KYC() {
   const FileInput = ({ label, fileName, onChange }) => (
     <div style={{ marginBottom: '12px' }}>
       <label style={labelStyle}>{label} <span style={{ color: '#ef4444' }}>*</span></label>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
         <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
           Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
         </label>
@@ -104,11 +104,11 @@ export default function KYC() {
   const isLocked = kycStatus === 'submitted' || kycStatus === 'approved';
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#141824', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -131,9 +131,9 @@ export default function KYC() {
 
         {/* Status Banner */}
         {loading ? (
-          <div style={{ background: '#252d3d', padding: '12px 16px', marginBottom: '16px', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading status...</div>
+          <div style={{ background: '#2e3a52', padding: '12px 16px', marginBottom: '16px', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading status...</div>
         ) : kycStatus && (
-          <div style={{ background: '#252d3d', border: `1px solid ${statusColor[kycStatus]}40`, padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ background: '#2e3a52', border: `1px solid ${statusColor[kycStatus]}40`, padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: `2px solid ${statusColor[kycStatus]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               {statusIcon[kycStatus]}
             </div>
@@ -170,7 +170,7 @@ export default function KYC() {
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>ID Type <span style={{ color: '#ef4444' }}>*</span></label>
               <select value={idType} onChange={e => setIdType(e.target.value)}
-                style={{ width: '100%', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                style={{ width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: idType ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                 <option value=''>Select ID Type</option>
                 <option value='passport'>International Passport</option>
                 <option value='national_id'>National ID Card</option>

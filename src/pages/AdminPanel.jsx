@@ -179,10 +179,10 @@ export default function AdminPanel() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
-      <div style={{ background: '#141824', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>/ Admin Panel</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
@@ -194,7 +194,7 @@ export default function AdminPanel() {
       {msg && <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}
 
       {/* Tabs */}
-      <div style={{ background: '#141824', padding: '0 16px', display: 'flex', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)', overflowX: 'auto' }}>
+      <div style={{ background: '#1a2236', padding: '0 16px', display: 'flex', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)', overflowX: 'auto' }}>
         {tabs.map(t => (
           <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === t ? '#6366f1' : 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === t ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{t}</button>
         ))}
@@ -207,7 +207,7 @@ export default function AdminPanel() {
           <div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '16px' }}>
               {statCards.map((s, i) => (
-                <div key={i} style={{ background: '#252d3d', border: `1px solid ${s.color}40`, padding: '14px' }}>
+                <div key={i} style={{ background: '#2e3a52', border: `1px solid ${s.color}40`, padding: '14px' }}>
                   <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '6px' }}>{s.label}</div>
                   <div style={{ color: s.color, fontSize: '22px', fontWeight: '700' }}>{s.value}</div>
                 </div>
@@ -215,7 +215,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Deposits by status chart */}
-            <div style={{ background: '#252d3d', padding: '14px', marginBottom: '12px' }}>
+            <div style={{ background: '#2e3a52', padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Deposits Overview</div>
               {(() => {
                 const pending = deposits.filter(d => d.status === 'pending').length;
@@ -256,7 +256,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Withdrawals by status chart */}
-            <div style={{ background: '#252d3d', padding: '14px', marginBottom: '12px' }}>
+            <div style={{ background: '#2e3a52', padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Withdrawals Overview</div>
               {(() => {
                 const pending = withdrawals.filter(w => w.status === 'pending').length;
@@ -289,7 +289,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Users overview */}
-            <div style={{ background: '#252d3d', padding: '14px' }}>
+            <div style={{ background: '#2e3a52', padding: '14px' }}>
               <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Users Overview</div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {[
@@ -531,7 +531,7 @@ export default function AdminPanel() {
       {/* Email Modal */}
       {emailModal && (
         <div onClick={() => setEmailModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '380px', borderRadius: '4px', padding: '20px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#161f33', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '380px', borderRadius: '4px', padding: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>
                 {emailTarget ? `Email to ${emailTarget.firstName} ${emailTarget.lastName}` : 'Bulk Email - All Users'}
@@ -562,7 +562,7 @@ export default function AdminPanel() {
       {/* User Details Modal */}
       {selectedUser && (
         <div onClick={() => setSelectedUser(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#1e2538', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '4px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#161f33', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '4px' }}>
             <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {selectedUser.avatar ? (

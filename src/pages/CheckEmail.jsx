@@ -26,8 +26,8 @@ export default function CheckEmail() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1e2538' }}>
-      <div style={{ background: '#252d3d', width: '340px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#161f33' }}>
+      <div style={{ background: '#2e3a52', width: '340px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
         <div style={{ marginBottom: '20px' }}>
           <svg width='80' height='70' viewBox='0 0 80 70' fill='none' xmlns='http://www.w3.org/2000/svg' style={{ margin: '0 auto', display: 'block' }}>
             <rect x='5' y='15' width='70' height='50' rx='4' fill='#f59e0b' opacity='0.2'/>

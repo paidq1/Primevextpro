@@ -77,11 +77,11 @@ export default function ManageBots() {
   const activeCount = activeBots.filter(b => b.status === 'active').length;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1e2538', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#141824', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -111,46 +111,14 @@ export default function ManageBots() {
             ['Total Bots', activeBots.length, '#6366f1'],
             ['Total Earned', `$${totalEarned.toFixed(2)}`, '#f59e0b'],
           ].map(([l,v,c]) => (
-            <div key={l} style={{ background: '#252d3d', padding: '10px', border: `1px solid ${c}30` }}>
+            <div key={l} style={{ background: '#2e3a52', padding: '10px', border: `1px solid ${c}30` }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
               <div style={{ color: c, fontSize: '16px', fontWeight: '700' }}>{v}</div>
             </div>
           ))}
         </div>
 
-        {/* Active Bots */}
-        {activeBots.filter(b => b.status === 'active').length > 0 && (
-          <div style={{ marginBottom: '20px' }}>
-            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>Active Bots</div>
-            {activeBots.filter(b => b.status === 'active').map((b, i) => {
-              const bot = bots.find(x => x.name === b.botName) || {};
-              const daysLeft = b.expiresAt ? Math.max(0, Math.ceil((new Date(b.expiresAt) - new Date()) / (1000*60*60*24))) : 0;
-              const totalDays = bot.days || 1;
-              const progress = Math.min(100, Math.max(0, ((totalDays - daysLeft) / totalDays) * 100));
-              return (
-                <div key={i} style={{ background: '#252d3d', border: `1px solid ${bot.color || '#6366f1'}40`, padding: '12px', marginBottom: '8px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ color: bot.color || '#6366f1', fontSize: '10px', fontWeight: '700' }}>{b.botName}</span>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <span style={{ color: '#22c55e', fontSize: '8px', background: 'rgba(34,197,94,0.1)', padding: '2px 8px' }}>ACTIVE</span>
-                      <button onClick={() => cancelBot(b._id)} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid #ef4444', color: '#ef4444', fontSize: '7px', padding: '2px 8px', cursor: 'pointer' }}>Cancel</button>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Invested: <span style={{ color: 'white' }}>${b.amount?.toLocaleString()}</span></span>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Daily: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned || 0).toFixed(2)}</span></span>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Days left: <span style={{ color: 'white' }}>{daysLeft}</span></span>
-                  </div>
-                  <div style={{ height: '4px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px' }}>
-                    <div style={{ width: progress + '%', height: '100%', background: bot.color || '#6366f1', borderRadius: '2px', transition: 'width 0.3s' }} />
-                  </div>
-                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '4px' }}>Expires: {new Date(b.expiresAt).toLocaleDateString()}</div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+
 
         {/* Bot Plans */}
         <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>Available Bot Plans</div>
@@ -161,7 +129,7 @@ export default function ManageBots() {
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
             return (
-              <div key={i} style={{ background: '#252d3d', border: `1px solid ${bot.color}40`, padding: '12px', position: 'relative', overflow: 'hidden' }}>
+              <div key={i} style={{ background: '#2e3a52', border: `1px solid ${bot.color}40`, padding: '12px', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: bot.color }} />
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '8px', letterSpacing: '1px' }}>{bot.name}</div>
                 <div style={{ marginBottom: '8px' }}>
@@ -190,39 +158,13 @@ export default function ManageBots() {
           })}
         </div>
 
-        {/* Bot History */}
-        {activeBots.filter(b => b.status !== 'active').length > 0 && (
-          <div style={{ marginTop: '20px' }}>
-            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>Bot History</div>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr>{['Bot', 'Amount', 'Daily Rate', 'Duration', 'Status', 'Date'].map(h => (
-                    <th key={h} style={{ padding: '8px', background: '#141824', color: 'rgba(255,255,255,0.5)', fontSize: '7px', textAlign: 'left', fontWeight: '600' }}>{h}</th>
-                  ))}</tr>
-                </thead>
-                <tbody>
-                  {activeBots.filter(b => b.status !== 'active').map((b, i) => (
-                    <tr key={i}>
-                      <td style={{ padding: '8px', fontSize: '8px', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>{b.botName}</td>
-                      <td style={{ padding: '8px', fontSize: '8px', color: '#22c55e', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>${b.amount?.toLocaleString()}</td>
-                      <td style={{ padding: '8px', fontSize: '8px', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>{b.dailyRate}</td>
-                      <td style={{ padding: '8px', fontSize: '8px', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>{b.duration}</td>
-                      <td style={{ padding: '8px', fontSize: '8px', borderBottom: '1px solid rgba(255,255,255,0.04)', color: b.status === 'completed' ? '#22c55e' : b.status === 'cancelled' ? '#ef4444' : '#f59e0b' }}>{b.status}</td>
-                      <td style={{ padding: '8px', fontSize: '8px', color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>{new Date(b.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+
       </div>
 
       {/* Confirm Modal */}
       {confirmBot && (
         <div onClick={() => setConfirmBot(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#1e2538', border: `1px solid ${confirmBot.color}40`, width: '100%', maxWidth: '320px', padding: '20px', borderRadius: '4px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#161f33', border: `1px solid ${confirmBot.color}40`, width: '100%', maxWidth: '320px', padding: '20px', borderRadius: '4px' }}>
             <div style={{ color: confirmBot.color, fontSize: '12px', fontWeight: '800', marginBottom: '12px' }}>{confirmBot.name}</div>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
               You are about to subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>${confirmBot.amount.toLocaleString()}</strong>. This amount will be deducted from your balance immediately.

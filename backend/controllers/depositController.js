@@ -1,5 +1,6 @@
 const Transaction = require('../models/Transaction');
 const User = require('../models/User');
+const { uploadToCloudinary } = require('../utils/cloudinary');
 
 exports.createDeposit = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ exports.createDeposit = async (req, res) => {
       amount: parseFloat(amount),
       method,
       status: 'pending',
-      proofImage: req.file ? '/uploads/' + req.file.filename : '',
+      proofImage: req.file ? (await uploadToCloudinary(req.file, 'vertextrade/proofs')).secure_url : '',
     });
 
     res.status(201).json({ message: 'Deposit submitted successfully', transaction });

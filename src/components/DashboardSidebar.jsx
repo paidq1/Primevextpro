@@ -38,8 +38,8 @@ export default function DashboardSidebar({ open, onClose }) {
       {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100 }} />}
       <div style={{
         position: 'fixed', top: 0, left: open ? '0' : '-180px', height: '100vh', width: '170px',
-        background: '#1a2035', zIndex: 101, transition: 'left 0.3s ease',
-        display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.06)', overflowY: 'auto'
+        background: '#1e2845', zIndex: 101, transition: 'left 0.3s ease',
+        display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.12)', overflowY: 'auto'
       }}>
         {/* Logo */}
         <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
@@ -62,7 +62,7 @@ export default function DashboardSidebar({ open, onClose }) {
         <div style={{ padding: '12px 0', flex: 1 }}>
           {sidebarSections.map((section, si) => (
             <div key={si} style={{ marginBottom: '16px' }}>
-              <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '6px' }}>{section.title}</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', fontWeight: '700', letterSpacing: '0.1em', padding: '0 16px', marginBottom: '6px' }}>{section.title}</div>
               {section.items.map((item, ii) => (
                 <div key={ii}>
                   <button onClick={() => {
@@ -72,9 +72,9 @@ export default function DashboardSidebar({ open, onClose }) {
                       navigate(item.route); onClose();
                     }
                   }}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.7)', fontSize: '9px', textAlign: 'left' }}>
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 16px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.9)', fontSize: '9px', textAlign: 'left' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.45)' }}>{item.icon}</span>
+                      <span style={{ color: '#6366f1' }}>{item.icon}</span>
                       <span>{item.label}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -83,11 +83,11 @@ export default function DashboardSidebar({ open, onClose }) {
                     </div>
                   </button>
                   {item.submenu && openSubmenu === si+'-'+ii && (
-                    <div style={{ background: 'rgba(0,0,0,0.2)', paddingLeft: '38px' }}>
+                    <div style={{ background: 'rgba(99,102,241,0.08)', paddingLeft: '38px', borderLeft: '2px solid #6366f1', marginLeft: '16px' }}>
                       {item.submenu.map((sub, si2) => (
                         <button key={si2} onClick={() => { navigate(sub.route); onClose(); }}
-                          style={{ width: '100%', padding: '8px 16px 8px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.55)', fontSize: '8px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span style={{ color: '#6366f1' }}>›</span> {sub.label}
+                          style={{ width: '100%', padding: '9px 16px 9px 0', background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', fontSize: '9px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
+                          <span style={{ color: '#6366f1', fontSize: '12px' }}>›</span> {sub.label}
                         </button>
                       ))}
                     </div>
