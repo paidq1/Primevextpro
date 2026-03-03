@@ -415,6 +415,7 @@ export default function AdminPanel() {
                     <td style={tdStyle}>
                       <button onClick={() => setSelectedUser(u)} style={btnStyle('#818cf8')}>View</button>
                       <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={btnStyle('#6366f1')}>Email</button>
+                      <button onClick={() => generateResetLink(u._id, u.firstName + ' ' + u.lastName)} style={btnStyle('#f59e0b')}>Reset PW</button>
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
                       <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
