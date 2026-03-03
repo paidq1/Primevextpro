@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../services/api';
+import { loginUser, forgotPassword } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
   const [form, setForm] = useState({ username: '', password: '', remember: false });
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotMsg, setForgotMsg] = useState('');
+  const [forgotLoading, setForgotLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [verifyPopup, setVerifyPopup] = useState(false);
   const [verifyEmail, setVerifyEmail] = useState('');
@@ -138,7 +142,7 @@ const SignIn = () => {
               <input type="checkbox" name="remember" checked={form.remember} onChange={handleChange} style={{ accentColor: '#6366f1', width: '12px', height: '12px' }} />
               <span style={{ color: 'white', fontSize: '8px' }}>Remember me</span>
             </div>
-            <span style={{ color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Forgot Password?</span>
+            <span onClick={() => setShowForgot(true)} style={{ color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Forgot Password?</span>
           </div>
 
           <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
@@ -151,6 +155,35 @@ const SignIn = () => {
         </div>
       </div>
     </div>
+
+      {/* Forgot Password Modal */}
+      {showForgot && (
+        <>
+          <div onClick={() => { setShowForgot(false); setForgotMsg(''); }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }} />
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: '#1e2538', padding: '28px 24px', width: '300px', borderRadius: '8px', border: '1px solid rgba(99,102,241,0.3)' }}>
+            <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '6px' }}>Forgot Password?</div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', marginBottom: '16px' }}>Enter your email and we'll send a reset link.</div>
+            <input value={forgotEmail} onChange={e => setForgotEmail(e.target.value)} placeholder='Enter your email'
+              style={{ width: '100%', background: '#374151', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '9px', color: 'white', fontSize: '9px', boxSizing: 'border-box', outline: 'none', marginBottom: '10px' }} />
+            {forgotMsg && <div style={{ color: forgotMsg.includes('sent') ? '#22c55e' : '#ef4444', fontSize: '8px', marginBottom: '10px' }}>{forgotMsg}</div>}
+            <button onClick={async () => {
+              if (!forgotEmail) { setForgotMsg('Please enter your email'); return; }
+              setForgotLoading(true);
+              try {
+                const res = await forgotPassword(forgotEmail);
+                setForgotMsg(res.message || 'Reset email sent!');
+              } catch(e) {
+                setForgotMsg('Server error. Please try again.');
+              } finally {
+                setForgotLoading(false);
+              }
+            }} disabled={forgotLoading} style={{ width: '100%', padding: '9px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', marginBottom: '8px' }}>
+              {forgotLoading ? 'Sending...' : 'Send Reset Link'}
+            </button>
+            <button onClick={() => { setShowForgot(false); setForgotMsg(''); }} style={{ width: '100%', padding: '9px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', color: 'rgba(255,255,255,0.5)', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+          </div>
+        </>
+      )}
   );
 };
 

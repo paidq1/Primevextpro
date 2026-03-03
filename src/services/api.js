@@ -21,6 +21,10 @@ export const loginUser = (data) => fetch(`${BASE_URL}/auth/login`, { method: 'PO
 
 export const getMe = () => fetch(`${BASE_URL}/auth/me`, { headers: headers() }).then(handleResponse);
 
+export const forgotPassword = (email) => fetch(`${BASE_URL}/auth/forgot-password`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) }).then(handleResponse);
+
+export const resetPassword = (token, password) => fetch(`${BASE_URL}/auth/reset-password/${token}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password }) }).then(handleResponse);
+
 export const changePassword = (data) => fetch(`${BASE_URL}/auth/change-password`, { method: 'PUT', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
 
 // User

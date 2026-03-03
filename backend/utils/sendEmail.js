@@ -1,23 +1,21 @@
 const nodemailer = require('nodemailer');
 
-const sendEmail = async ({ to, subject, html }) => {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-    tls: { rejectUnauthorized: false }
-  });
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
-  await transporter.sendMail({
+const sendEmail = async ({ to, subject, html }) => {
+  const mailOptions = {
     from: `"VertexTrade Pro" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html,
-  });
+  };
+  return await transporter.sendMail(mailOptions);
 };
 
 module.exports = sendEmail;
