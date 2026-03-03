@@ -16,9 +16,11 @@ const processBotProfits = async () => {
         continue;
       }
 
-      // Calculate daily profit with slight randomness (+/- 10%)
+      // Calculate profit per 30-minute interval with slight randomness (+/- 10%)
+      // Daily rate split into 48 intervals (24hrs / 30min = 48)
       const dailyRate = parseFloat(bot.dailyRate) / 100;
-      const baseProfit = bot.amount * dailyRate;
+      const intervalRate = dailyRate / 48;
+      const baseProfit = bot.amount * intervalRate;
       const variation = baseProfit * (Math.random() * 0.2 - 0.1); // -10% to +10%
       const profit = Math.max(0, parseFloat((baseProfit + variation).toFixed(2)));
 
