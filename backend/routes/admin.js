@@ -446,6 +446,44 @@ router.post('/email/bulk', adminAuth, async (req, res) => {
   }
 });
 
+// Get user's bots
+router.get('/users/:id/bots', adminAuth, async (req, res) => {
+  try {
+    const Bot = require('../models/Bot');
+    const bots = await Bot.find({ user: req.params.id }).sort({ createdAt: -1 });
+    res.json(bots);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get user's investments/packages
+router.get('/users/:id/investments', adminAuth, async (req, res) => {
+  try {
+    const Investment = require('../models/Investment');
+    const investments = await Investment.find({ user: req.params.id }).sort({ createdAt: -1 });
+    res.json(investments);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Add manual profit to user
+router.post('/users/:id/profit', adminAuth, async (req, res) => {
+  try {
+    const { amount, note } = req.body;
+    if (!amount || isNaN(amount)) return res.status(400).json({ message: 'Valid amount required' });
+    const user = await User.findByIdAndUpdate(req.params.id, 
+      { $inc: { balance: parseFloat(amount), totalProfit: parseFloat(amount) } },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ success: true, message: `$${amount} profit added to ${user.firstName}`, user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Admin generate password reset link for user
 router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
   try {

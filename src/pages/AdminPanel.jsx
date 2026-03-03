@@ -34,6 +34,39 @@ export default function AdminPanel() {
   const [msgInput, setMsgInput] = useState({});
   const [msg, setMsg] = useState('');
   const [resetLink, setResetLink] = useState('');
+  const [userBots, setUserBots] = useState([]);
+  const [userInvestments, setUserInvestments] = useState([]);
+  const [userDetailTab, setUserDetailTab] = useState('info');
+  const [profitAmount, setProfitAmount] = useState('');
+  const [profitLoading, setProfitLoading] = useState(false);
+
+  const addProfit = async (userId, userName) => {
+    if (!profitAmount || isNaN(profitAmount)) { showMsg('Enter valid amount'); return; }
+    setProfitLoading(true);
+    const res = await api(`/users/${userId}/profit`, 'POST', { amount: profitAmount });
+    if (res.success) {
+      setUsers(prev => prev.map(u => u._id === userId ? { ...u, balance: u.balance + parseFloat(profitAmount), totalProfit: (u.totalProfit||0) + parseFloat(profitAmount) } : u));
+      logActivity('Profit added', `$${profitAmount} to ${userName}`);
+      showMsg(res.message);
+      setProfitAmount('');
+    } else {
+      showMsg(res.message || 'Failed');
+    }
+    setProfitLoading(false);
+  };
+
+  const loadUserDetails = async (u) => {
+    setSelectedUser(u);
+    setUserDetailTab('info');
+    setUserBots([]);
+    setUserInvestments([]);
+    const [bots, investments] = await Promise.all([
+      api(`/users/${u._id}/bots`),
+      api(`/users/${u._id}/investments`)
+    ]);
+    setUserBots(Array.isArray(bots) ? bots : []);
+    setUserInvestments(Array.isArray(investments) ? investments : []);
+  };
 
   const generateResetLink = async (userId, userName) => {
     const res = await api(`/users/${userId}/reset-password`, 'POST');
@@ -154,11 +187,13 @@ export default function AdminPanel() {
     showMsg('User stats updated');
   };
 
-  const deleteUser = async (id) => {
-    if (!window.confirm('Delete this user permanently?')) return;
+  const deleteUser = async (id, name) => {
+    if (!window.confirm(`Delete ${name || 'this user'} permanently?`)) return;
     await api(`/users/${id}`, 'DELETE');
-    api('/users').then(setUsers);
+    setUsers(prev => prev.filter(u => u._id !== id));
+    logActivity('User deleted', name || id);
     showMsg('User deleted');
+    setSelectedUser(null);
   };
 
   const sendMessage = async (id) => {
@@ -413,10 +448,11 @@ export default function AdminPanel() {
                       </div>
                     </td>
                     <td style={tdStyle}>
-                      <button onClick={() => setSelectedUser(u)} style={btnStyle('#818cf8')}>View</button>
+                      <button onClick={() => loadUserDetails(u)} style={btnStyle('#818cf8')}>View</button>
                       <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={btnStyle('#6366f1')}>Email</button>
                       <button onClick={() => generateResetLink(u._id, u.firstName + ' ' + u.lastName)} style={btnStyle('#f59e0b')}>Reset PW</button>
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
+                      <button onClick={() => deleteUser(u._id, u.firstName + ' ' + u.lastName)} style={btnStyle('#7f1d1d')}>Delete</button>
                       <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
                   </tr>
@@ -682,12 +718,12 @@ export default function AdminPanel() {
       {selectedUser && (
         <div onClick={() => setSelectedUser(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div onClick={e => e.stopPropagation()} style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '4px' }}>
+            
+            {/* Modal Header */}
             <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {selectedUser.avatar ? (
-                  <img src={selectedUser.avatar} alt="avatar"
-                    onClick={() => setProofImage(selectedUser.avatar)}
-                    style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1', cursor: 'pointer' }} />
+                  <img src={selectedUser.avatar} alt="avatar" onClick={() => setProofImage(selectedUser.avatar)} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1', cursor: 'pointer' }} />
                 ) : (
                   <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '700', color: 'white' }}>
                     {selectedUser.firstName?.[0]}{selectedUser.lastName?.[0]}
@@ -700,51 +736,127 @@ export default function AdminPanel() {
               </div>
               <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '20px', cursor: 'pointer' }}>×</button>
             </div>
-            <div style={{ padding: '14px 16px' }}>
-              {/* Profile Info */}
-              <div style={{ marginBottom: '14px' }}>
-                <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Profile</div>
-                {[
-                  ['Email', selectedUser.email],
-                  ['Phone', selectedUser.phone || '---'],
-                  ['Country', selectedUser.country || '---'],
-                  ['KYC Status', selectedUser.kycStatus],
-                  ['Account Type', selectedUser.accountType],
-                  ['Referral Code', selectedUser.referralCode],
-                  ['Status', selectedUser.isBlocked ? 'Blocked' : 'Active'],
-                  ['Joined', new Date(selectedUser.createdAt).toLocaleDateString()],
-                ].map(([k,v]) => (
-                  <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>{k}</span>
-                    <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{v}</span>
-                  </div>
-                ))}
-              </div>
-              {/* Stats */}
-              <div style={{ marginBottom: '14px' }}>
-                <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
-                {[
-                  ['Balance', '$' + (selectedUser.balance?.toFixed(2) || '0.00')],
-                  ['Total Deposits', '$' + (selectedUser.totalDeposits?.toFixed(2) || '0.00')],
-                  ['Total Withdrawals', '$' + (selectedUser.totalWithdrawals?.toFixed(2) || '0.00')],
-                  ['Total Profit', '$' + (selectedUser.totalProfit?.toFixed(2) || '0.00')],
-                  ['Total Referrals', selectedUser.totalReferrals || 0],
-                ].map(([k,v]) => (
-                  <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>{k}</span>
-                    <span style={{ color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>{v}</span>
-                  </div>
-                ))}
-              </div>
-              {/* Admin message */}
-              {selectedUser.adminMessage && (
-                <div style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid #f59e0b', padding: '8px', marginBottom: '14px' }}>
-                  <div style={{ color: '#f59e0b', fontSize: '7px', fontWeight: '700', marginBottom: '4px' }}>Admin Message</div>
-                  <div style={{ color: 'white', fontSize: '8px' }}>{selectedUser.adminMessage}</div>
-                </div>
-              )}
-              <button onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Close</button>
+
+            {/* Tabs */}
+            <div style={{ display: 'flex', gap: '4px', padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', flexWrap: 'wrap' }}>
+              {['info', 'bots', 'investments', 'profit'].map(t => (
+                <button key={t} onClick={() => setUserDetailTab(t)} style={{ padding: '5px 12px', background: userDetailTab === t ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', textTransform: 'capitalize', fontWeight: userDetailTab === t ? '700' : '400' }}>{t}</button>
+              ))}
+              <button onClick={() => deleteUser(selectedUser._id, selectedUser.firstName + ' ' + selectedUser.lastName)} style={{ padding: '5px 12px', background: '#7f1d1d', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', marginLeft: 'auto' }}>Delete</button>
             </div>
+
+            {/* Info Tab */}
+            {userDetailTab === 'info' && (
+              <div style={{ padding: '14px 16px' }}>
+                {selectedUser.adminMessage && (
+                  <div style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid #f59e0b', padding: '8px', marginBottom: '14px' }}>
+                    <div style={{ color: '#f59e0b', fontSize: '7px', fontWeight: '700', marginBottom: '4px' }}>Admin Message</div>
+                    <div style={{ color: 'white', fontSize: '8px' }}>{selectedUser.adminMessage}</div>
+                  </div>
+                )}
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Profile</div>
+                  {[
+                    ['Email', selectedUser.email],
+                    ['Phone', selectedUser.phone || '---'],
+                    ['Country', selectedUser.country || '---'],
+                    ['KYC Status', selectedUser.kycStatus],
+                    ['Account Type', selectedUser.accountType],
+                    ['Referral Code', selectedUser.referralCode],
+                    ['Status', selectedUser.isBlocked ? 'Blocked' : 'Active'],
+                    ['Joined', new Date(selectedUser.createdAt).toLocaleDateString()],
+                  ].map(([k,v]) => (
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>{k}</span>
+                      <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
+                  {[
+                    ['Balance', '$' + (selectedUser.balance?.toFixed(2) || '0.00')],
+                    ['Total Deposits', '$' + (selectedUser.totalDeposits?.toFixed(2) || '0.00')],
+                    ['Total Withdrawals', '$' + (selectedUser.totalWithdrawals?.toFixed(2) || '0.00')],
+                    ['Total Profit', '$' + (selectedUser.totalProfit?.toFixed(2) || '0.00')],
+                    ['Total Referrals', selectedUser.totalReferrals || 0],
+                  ].map(([k,v]) => (
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>{k}</span>
+                      <span style={{ color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                <button onClick={() => setSelectedUser(null)} style={{ width: '100%', padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Close</button>
+              </div>
+            )}
+
+            {/* Bots Tab */}
+            {userDetailTab === 'bots' && (
+              <div style={{ padding: '14px 16px' }}>
+                <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '10px' }}>Bot Subscriptions ({userBots.length})</div>
+                {userBots.length === 0 ? (
+                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '20px', textAlign: 'center' }}>No bots subscribed</div>
+                ) : userBots.map((b, i) => (
+                  <div key={i} style={{ background: 'rgba(255,255,255,0.04)', padding: '10px', marginBottom: '6px', borderLeft: '2px solid #6366f1' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                      <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>{b.botName}</span>
+                      <span style={{ color: b.status === 'active' ? '#22c55e' : '#9ca3af', fontSize: '7px' }}>{b.status}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Invested: <span style={{ color: 'white' }}>${b.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</span></span>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Rate: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Investments Tab */}
+            {userDetailTab === 'investments' && (
+              <div style={{ padding: '14px 16px' }}>
+                <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '10px' }}>Investment Packages ({userInvestments.length})</div>
+                {userInvestments.length === 0 ? (
+                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '20px', textAlign: 'center' }}>No investments</div>
+                ) : userInvestments.map((inv, i) => (
+                  <div key={i} style={{ background: 'rgba(255,255,255,0.04)', padding: '10px', marginBottom: '6px', borderLeft: '2px solid #f59e0b' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                      <span style={{ color: '#f59e0b', fontSize: '9px', fontWeight: '700' }}>{inv.plan}</span>
+                      <span style={{ color: '#22c55e', fontSize: '7px' }}>{inv.roi}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Amount: <span style={{ color: 'white' }}>${inv.amount?.toLocaleString()}</span></span>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Profit Tab */}
+            {userDetailTab === 'profit' && (
+              <div style={{ padding: '14px 16px' }}>
+                <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '10px' }}>Manual Profit Credit</div>
+                <div style={{ background: 'rgba(255,255,255,0.04)', padding: '14px', marginBottom: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>Current Balance</span>
+                    <span style={{ color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>${selectedUser.balance?.toFixed(2)}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>Total Profit</span>
+                    <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>${selectedUser.totalProfit?.toFixed(2) || '0.00'}</span>
+                  </div>
+                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '6px' }}>Amount to Credit ($)</label>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input type="number" value={profitAmount} onChange={e => setProfitAmount(e.target.value)} placeholder="Enter amount" style={{ flex: 1, background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none' }} />
+                    <button onClick={() => addProfit(selectedUser._id, selectedUser.firstName)} disabled={profitLoading} style={{ ...btnStyle('#22c55e'), padding: '8px 16px' }}>{profitLoading ? '...' : 'Credit'}</button>
+                  </div>
+                </div>
+                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>This will add to both balance and total profit.</p>
+              </div>
+            )}
+
           </div>
         </div>
       )}
