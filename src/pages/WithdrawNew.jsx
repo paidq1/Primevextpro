@@ -205,6 +205,17 @@ export default function WithdrawNew() {
         <button onClick={() => navigate('/dashboard/withdraw')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
 
+      {/* KYC Warning */}
+      {user && user.kycStatus !== 'approved' && (
+        <div style={{ margin: '12px 16px', background: 'rgba(245,158,11,0.1)', border: '1px solid #f59e0b', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <svg width="16" height="16" fill="none" stroke="#f59e0b" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+          <div>
+            <div style={{ color: '#f59e0b', fontSize: '9px', fontWeight: '700' }}>KYC Verification Required</div>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginTop: '2px' }}>You must complete KYC verification before withdrawing. <span onClick={() => navigate('/dashboard/kyc')} style={{ color: '#6366f1', cursor: 'pointer', textDecoration: 'underline' }}>Verify now →</span></div>
+          </div>
+        </div>
+      )}
+
       <div style={{ padding: '16px' }}>
         <div style={{ marginBottom: '16px' }}>
           <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>New Withdrawal</span>
