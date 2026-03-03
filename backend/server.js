@@ -57,10 +57,16 @@ app.use('/api/admin', require('./routes/admin'));
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'VertexTrade Pro API running' }));
 app.get('/', (req, res) => res.json({ name: 'VertexTrade Pro API', status: 'running' }));
 
+// Ensure DB connected before every request (for Vercel serverless)
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
 let cachedDb = null;
 async function connectDB() {
   if (cachedDb) return cachedDb;
-  const db = await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 30000, connectTimeoutMS: 30000, bufferCommands: false });
+  const db = await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 30000, connectTimeoutMS: 30000 });
   cachedDb = db;
   return db;
 }
