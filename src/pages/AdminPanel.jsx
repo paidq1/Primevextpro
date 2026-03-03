@@ -33,6 +33,17 @@ export default function AdminPanel() {
   const [tradeEdit, setTradeEdit] = useState({});
   const [msgInput, setMsgInput] = useState({});
   const [msg, setMsg] = useState('');
+  const [resetLink, setResetLink] = useState('');
+
+  const generateResetLink = async (userId, userName) => {
+    const res = await api(`/users/${userId}/reset-password`, 'POST');
+    if (res.resetLink) {
+      setResetLink(res.resetLink);
+      logActivity('Reset link generated', userName);
+    } else {
+      showMsg(res.message || 'Failed to generate reset link');
+    }
+  };
 
   // Pagination
   const [userPage, setUserPage] = useState(1);
@@ -619,6 +630,21 @@ export default function AdminPanel() {
           </div>
         )}
       </div>
+
+      {/* Reset Link Modal */}
+      {resetLink && (
+        <div onClick={() => setResetLink('')} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#1a2e4a', border: '1px solid #6366f1', width: '100%', maxWidth: '400px', padding: '20px', borderRadius: '4px' }}>
+            <div style={{ color: 'white', fontSize: '11px', fontWeight: '700', marginBottom: '12px' }}>🔗 Password Reset Link</div>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '10px' }}>Copy this link and send it manually to the user. Valid for 1 hour.</p>
+            <div style={{ background: '#0e1628', padding: '10px', fontSize: '7px', color: '#6366f1', wordBreak: 'break-all', marginBottom: '12px', border: '1px solid rgba(99,102,241,0.3)' }}>{resetLink}</div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => { navigator.clipboard.writeText(resetLink); showMsg('Link copied!'); }} style={{ ...btnStyle('#6366f1'), flex: 1 }}>Copy Link</button>
+              <button onClick={() => setResetLink('')} style={{ ...btnStyle('#374151'), flex: 1 }}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Email Modal */}
       {emailModal && (

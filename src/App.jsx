@@ -44,6 +44,7 @@ import AdminPanel from "./pages/AdminPanel";
 import ResetPassword from "./pages/ResetPassword";
 import CheckEmail from "./pages/CheckEmail";
 import NotFound from "./pages/NotFound";
+import ResetPassword from "./pages/ResetPassword";
 import LoadingScreen from "./components/LoadingScreen";
 
 const AdminRoute = ({ children }) => {
@@ -119,6 +120,7 @@ function App() {
         <Route path="/dashboard/withdraw/new" element={<PrivateRoute><WithdrawNew /></PrivateRoute>} />
         <Route path="/dashboard/bot-transactions" element={<PrivateRoute><BotTransactionHistory /></PrivateRoute>} />
         <Route path="/dashboard/deposit-funds" element={<PrivateRoute><DepositFunds /></PrivateRoute>} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

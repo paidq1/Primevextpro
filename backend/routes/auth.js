@@ -54,3 +54,31 @@ router.post('/reset-password/:token', async (req, res) => {
 });
 
 module.exports = router;
+
+// Reset password with token
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { token, email, password } = req.body;
+    if (!token || !email || !password) return res.status(400).json({ message: 'All fields required' });
+
+    const user = await User.findOne({ 
+      email, 
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: new Date() }
+    });
+
+    if (!user) return res.status(400).json({ message: 'Invalid or expired reset link' });
+
+    const bcrypt = require('bcryptjs');
+    const hashed = await bcrypt.hash(password, 10);
+    await User.findByIdAndUpdate(user._id, { 
+      password: hashed, 
+      resetPasswordToken: undefined, 
+      resetPasswordExpires: undefined 
+    });
+
+    res.json({ success: true, message: 'Password reset successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});

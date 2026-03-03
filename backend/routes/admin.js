@@ -446,4 +446,32 @@ router.post('/email/bulk', adminAuth, async (req, res) => {
   }
 });
 
+// Admin generate password reset link for user
+router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const crypto = require('crypto');
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    await User.findByIdAndUpdate(req.params.id, {
+      resetPasswordToken: resetToken,
+      resetPasswordExpires: resetExpires
+    });
+
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}&email=${user.email}`;
+
+    res.json({ 
+      success: true, 
+      resetLink,
+      message: 'Reset link generated. Valid for 1 hour. Copy and send to user manually.',
+      expiresAt: resetExpires
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
 module.exports = router;
