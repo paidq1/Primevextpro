@@ -1,3 +1,4 @@
+const { uploadToCloudinary } = require('../utils/cloudinary');
 const User = require('../models/User');
 
 exports.submitKyc = async (req, res) => {

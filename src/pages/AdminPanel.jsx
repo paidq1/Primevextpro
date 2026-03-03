@@ -177,7 +177,7 @@ export default function AdminPanel() {
     showMsg('Trade updated');
   };
 
-  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades'];
+  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'activity'];
   const pendingCount = (arr) => arr.filter(x => x.status === 'pending' || x.kycStatus === 'submitted').length;
   const tabLabel = (t) => {
     if (t === 'deposits') return `Deposits${deposits.filter(d => d.status === 'pending').length ? ' (' + deposits.filter(d => d.status === 'pending').length + ')' : ''}`;
@@ -460,7 +460,7 @@ export default function AdminPanel() {
                         <button onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
                       </>}
-                      {d.proofImage && <button onClick={() => setProofImage('https://vertextradepro.onrender.com' + d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
+                      {d.proofImage && <button onClick={() => setProofImage(d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
                     </td>
                   </tr>
                 ))}
@@ -658,8 +658,8 @@ export default function AdminPanel() {
             <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {selectedUser.avatar ? (
-                  <img src={'https://vertextradepro.onrender.com' + selectedUser.avatar} alt="avatar"
-                    onClick={() => setProofImage('https://vertextradepro.onrender.com' + selectedUser.avatar)}
+                  <img src={selectedUser.avatar} alt="avatar"
+                    onClick={() => setProofImage(selectedUser.avatar)}
                     style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1', cursor: 'pointer' }} />
                 ) : (
                   <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '700', color: 'white' }}>
@@ -668,7 +668,7 @@ export default function AdminPanel() {
                 )}
                 <div>
                   <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>{selectedUser.firstName} {selectedUser.lastName}</div>
-                  {selectedUser.avatar && <div onClick={() => setProofImage('https://vertextradepro.onrender.com' + selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '7px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
+                  {selectedUser.avatar && <div onClick={() => setProofImage(selectedUser.avatar)} style={{ color: '#6366f1', fontSize: '7px', cursor: 'pointer', marginTop: '2px' }}>View full photo</div>}
                 </div>
               </div>
               <button onClick={() => setSelectedUser(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '20px', cursor: 'pointer' }}>×</button>
