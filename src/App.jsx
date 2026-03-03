@@ -44,7 +44,6 @@ import AdminPanel from "./pages/AdminPanel";
 import ResetPassword from "./pages/ResetPassword";
 import CheckEmail from "./pages/CheckEmail";
 import NotFound from "./pages/NotFound";
-import ResetPassword from "./pages/ResetPassword";
 import LoadingScreen from "./components/LoadingScreen";
 
 const AdminRoute = ({ children }) => {
