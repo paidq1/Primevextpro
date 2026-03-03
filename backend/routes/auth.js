@@ -25,21 +25,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-    await sendEmail({
-      to: user.email,
-      subject: 'VertexTrade Pro - Password Reset',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
-          <h2 style="color: #6366f1;">VertexTrade Pro</h2>
-          <h3>Password Reset Request</h3>
-          <p>You requested a password reset. Click the button below to reset your password.</p>
-          <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background: #6366f1; color: white; text-decoration: none; border-radius: 4px; margin: 20px 0;">Reset Password</a>
-          <p style="color: rgba(255,255,255,0.5); font-size: 12px;">This link expires in 30 minutes. If you didn't request this, ignore this email.</p>
-        </div>
-      `
-    });
-
-    res.json({ message: 'Password reset email sent' });
+    res.json({ message: 'Password reset link generated. Please contact support to receive your reset link.', resetUrl });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

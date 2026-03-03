@@ -12,6 +12,7 @@ const SignIn = () => {
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotMsg, setForgotMsg] = useState('');
   const [forgotLoading, setForgotLoading] = useState(false);
+  const [forgotLink, setForgotLink] = useState('');
   const { login } = useAuth();
 
   const handleChange = (e) => {
@@ -134,13 +135,18 @@ const SignIn = () => {
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', marginBottom: '16px' }}>Enter your email and we'll send a reset link.</div>
             <input value={forgotEmail} onChange={e => setForgotEmail(e.target.value)} placeholder='Enter your email'
               style={{ width: '100%', background: '#374151', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', padding: '9px', color: 'white', fontSize: '9px', boxSizing: 'border-box', outline: 'none', marginBottom: '10px' }} />
-            {forgotMsg && <div style={{ color: forgotMsg.includes('sent') ? '#22c55e' : '#ef4444', fontSize: '8px', marginBottom: '10px' }}>{forgotMsg}</div>}
+            {forgotMsg && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '10px' }}>{forgotMsg}{forgotLink && <a href={forgotLink} style={{ display: 'block', color: '#6366f1', marginTop: '6px', wordBreak: 'break-all' }}>Click to Reset Password</a>}</div>}
             <button onClick={async () => {
               if (!forgotEmail) { setForgotMsg('Please enter your email'); return; }
               setForgotLoading(true);
               try {
                 const res = await forgotPassword(forgotEmail);
-                setForgotMsg(res.message || 'Reset email sent!');
+                if (res.resetUrl) {
+                  setForgotMsg('Click here to reset your password');
+                  setForgotLink(res.resetUrl);
+                } else {
+                  setForgotMsg(res.message || 'Request submitted!');
+                }
               } catch(e) {
                 setForgotMsg('Server error. Please try again.');
               } finally {
