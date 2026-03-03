@@ -37,6 +37,21 @@ const globalLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: {
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: { message: 'Too many login attempts, please try again in 15 minutes.' } });
 const adminLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 50, message: { message: 'Too many admin requests.' } });
 
+let cachedDb = null;
+async function connectDB() {
+  if (cachedDb) return cachedDb;
+  const db = await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 30000, connectTimeoutMS: 30000 });
+  cachedDb = db;
+  console.log('✅ MongoDB connected');
+  return db;
+}
+
+// Ensure DB connected before every request
+app.use(async (req, res, next) => {
+  try { await connectDB(); } catch(e) { return res.status(500).json({ message: 'DB connection failed' }); }
+  next();
+});
+
 app.use('/api/', globalLimiter);
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
@@ -57,23 +72,10 @@ app.use('/api/admin', require('./routes/admin'));
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'VertexTrade Pro API running' }));
 app.get('/', (req, res) => res.json({ name: 'VertexTrade Pro API', status: 'running' }));
 
-// Ensure DB connected before every request (for Vercel serverless)
-app.use(async (req, res, next) => {
-  await connectDB();
-  next();
-});
 
-let cachedDb = null;
-async function connectDB() {
-  if (cachedDb) return cachedDb;
-  const db = await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 30000, connectTimeoutMS: 30000 });
-  cachedDb = db;
-  return db;
-}
 
-connectDB()
-  .then(() => console.log('✅ MongoDB connected'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+connectDB();
+
 
 setInterval(() => {
   const https = require('https');
