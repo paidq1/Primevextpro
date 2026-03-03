@@ -60,7 +60,7 @@ app.get('/', (req, res) => res.json({ name: 'VertexTrade Pro API', status: 'runn
 let cachedDb = null;
 async function connectDB() {
   if (cachedDb) return cachedDb;
-  const db = await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 30000, connectTimeoutMS: 30000 });
+  const db = await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 30000, connectTimeoutMS: 30000, bufferCommands: false });
   cachedDb = db;
   return db;
 }
