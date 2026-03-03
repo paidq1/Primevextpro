@@ -53,7 +53,7 @@ export default function Dashboard() {
 
   return (<>
     <style>{`@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }`}</style>
-    <div style={{ minHeight: '100vh', background: '#161f33', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Trade Success Modal */}
@@ -72,7 +72,7 @@ export default function Dashboard() {
       )}
 
       {/* Icon Sidebar */}
-      <div style={{ width: '48px', background: '#1a2236', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, visibility: sidebarOpen ? 'hidden' : 'visible' }}>
+      <div style={{ width: '48px', background: '#132035', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, visibility: sidebarOpen ? 'hidden' : 'visible' }}>
         <div style={{ width: '22px', height: '22px', marginBottom: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
             <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -92,7 +92,7 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0, maxWidth: '100%' }}>
 
         {/* Top Nav */}
-        <div style={{ background: '#1a2236', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ background: '#132035', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
@@ -104,7 +104,7 @@ export default function Dashboard() {
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
             <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
             <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
-            <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0 }}>{u.avatar ? <img src={'https://vertextrades.onrender.com' + u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} /> : null}<User size={13} style={{ display: u.avatar ? 'none' : 'block' }}/></button>
+            <button onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 0 }}>{u.avatar ? <img src={u.avatar} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} /> : null}<User size={13} style={{ display: u.avatar ? 'none' : 'block' }}/></button>
           </div>
         </div>
 
@@ -138,7 +138,7 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
               {stats.map((s, i) => (
-                <div key={i} style={{ background: '#2e3a52', border: '1px solid ' + s.borderColor + '80', padding: '8px' }}>
+                <div key={i} style={{ background: '#1a2e4a', border: '1px solid ' + s.borderColor + '80', padding: '8px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px' }}>{s.label}</span>
                     <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
@@ -156,7 +156,7 @@ export default function Dashboard() {
             </div>
 
             {/* Chart */}
-            <div style={{ marginBottom: '12px', border: '1px solid rgba(99,102,241,0.5)', overflow: 'hidden', background: '#2e3a52', height: '220px' }}>
+            <div style={{ marginBottom: '12px', border: '1px solid rgba(99,102,241,0.5)', overflow: 'hidden', background: '#1a2e4a', height: '220px' }}>
               <iframe
                 src="https://s.tradingview.com/widgetembed/?symbol=BINANCE%3ABTCUSDT&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=252d3d&studies=%5B%5D&theme=dark&style=3&timezone=Etc%2FUTC&withdateranges=1&showpopupbutton=0&locale=en&hide_top_toolbar=0&hide_legend=0&hide_volume=1&scale=1&bgcolor=%23252d3d&gridcolor=rgba(255%2C255%2C255%2C0.04)"
                 style={{ width: '238%', height: '530px', border: 'none', display: 'block', transform: 'scale(0.42)', transformOrigin: 'top left', marginBottom: '-145px' }}
@@ -167,7 +167,7 @@ export default function Dashboard() {
             </div>
 
             {/* Transaction List */}
-            <div style={{ background: '#2e3a52', border: '1px solid rgba(99,102,241,0.5)', padding: '8px' }}>
+            <div style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.5)', padding: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
                 <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
@@ -215,7 +215,7 @@ export default function Dashboard() {
 
           {/* Right Panel - Trade Assets */}
           <div style={{ width: '155px', background: 'transparent', borderLeft: 'none', padding: '10px', overflowY: 'auto', flexShrink: 0, paddingTop: '34px' }}>
-            <div style={{ background: '#2e3a52', border: '1px solid rgba(99,102,241,0.4)', padding: '10px', height: 'fit-content' }}><div style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '14px' }}>TRADE ASSETS</div>
+            <div style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.4)', padding: '10px', height: 'fit-content' }}><div style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '14px' }}>TRADE ASSETS</div>
             {[
               { label: 'Account', val: tradeAccount, set: setTradeAccount, options: ['---','Real Account','Demo Account'] },
               { label: 'Markets', val: tradeMarket, set: setTradeMarket, options: ['---','Crypto','Forex','Stocks','Commodities'] },
@@ -227,14 +227,14 @@ export default function Dashboard() {
                 <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
                   {field.label}{field.hasIcon && <Clock size={9} color="#f59e0b"/>}
                 </label>
-                <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#161f33', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 7px', outline: 'none' }}>
+                <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 7px', outline: 'none' }}>
                   {field.options.map((o, j) => <option key={j}>{o}</option>)}
                 </select>
               </div>
             ))}
             <div style={{ marginBottom: '8px' }}>
               <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
-              <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#161f33', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 7px', outline: 'none', boxSizing: 'border-box' }} />
+              <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 7px', outline: 'none', boxSizing: 'border-box' }} />
             </div>
             <div style={{ color: '#ef4444', fontSize: '7px', marginBottom: '6px', minHeight: '12px' }}>{tradeError}</div>
             <div style={{ display: 'flex', gap: '5px' }}>

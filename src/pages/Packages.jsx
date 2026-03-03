@@ -81,7 +81,7 @@ export default function Packages() {
   const activeInvestments = investments.filter(i => i.status === 'active');
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Low Balance Notice */}
@@ -106,7 +106,7 @@ export default function Packages() {
       {confirmPlan && (
         <>
           <div onClick={() => setConfirmPlan(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 151, background: '#2e3a52', border: '1px solid rgba(99,102,241,0.4)', padding: '20px', width: '260px' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 151, background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.4)', padding: '20px', width: '260px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Confirm Investment</span>
               <button onClick={() => setConfirmPlan(null)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}><X size={13}/></button>
@@ -152,7 +152,7 @@ export default function Packages() {
       )}
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
             <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -173,7 +173,7 @@ export default function Packages() {
 
       <div style={{ padding: '14px' }}>
         {/* Balance display */}
-        <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 14px', marginBottom: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 14px', marginBottom: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>Available Balance</span>
           <span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${userBalance.toFixed(2)}</span>
         </div>
@@ -187,7 +187,7 @@ export default function Packages() {
           <div style={{ marginBottom: '16px' }}>
             <div style={{ fontSize: '9px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>ACTIVE INVESTMENTS</div>
             {activeInvestments.map((inv, i) => (
-              <div key={i} style={{ background: '#2e3a52', border: '1px solid rgba(34,197,94,0.3)', padding: '10px 12px', marginBottom: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(34,197,94,0.3)', padding: '10px 12px', marginBottom: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div style={{ fontSize: '9px', fontWeight: '700', color: '#22c55e' }}>{inv.plan}</div>
                   <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)' }}>{inv.roi} · {inv.duration} days</div>
@@ -203,7 +203,7 @@ export default function Packages() {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           {plans.map((plan, i) => (
-            <div key={i} style={{ background: '#2e3a52', border: '1px solid rgba(99,102,241,0.3)', padding: '12px' }}>
+            <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                 <span style={{ color: '#818cf8', fontSize: '7px', fontWeight: '600' }}>{plan.roi}</span>
                 <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -227,7 +227,7 @@ export default function Packages() {
               <input
                 value={amounts[i]}
                 onChange={e => { const a = [...amounts]; a[i] = e.target.value; setAmounts(a); }}
-                style={{ width: '100%', background: '#161f33', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '10px' }}
+                style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '10px' }}
               />
               <button onClick={() => handleJoin(plan, i)} style={{ width: '100%', padding: '7px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>
                 Join Plan

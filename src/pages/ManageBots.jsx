@@ -77,11 +77,11 @@ export default function ManageBots() {
   const activeCount = activeBots.filter(b => b.status === 'active').length;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -111,7 +111,7 @@ export default function ManageBots() {
             ['Total Bots', activeBots.length, '#6366f1'],
             ['Total Earned', `$${totalEarned.toFixed(2)}`, '#f59e0b'],
           ].map(([l,v,c]) => (
-            <div key={l} style={{ background: '#2e3a52', padding: '10px', border: `1px solid ${c}30` }}>
+            <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: `1px solid ${c}30` }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
               <div style={{ color: c, fontSize: '16px', fontWeight: '700' }}>{v}</div>
             </div>
@@ -129,7 +129,7 @@ export default function ManageBots() {
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
             return (
-              <div key={i} style={{ background: '#2e3a52', border: `1px solid ${bot.color}40`, padding: '12px', position: 'relative', overflow: 'hidden' }}>
+              <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${bot.color}40`, padding: '12px', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: bot.color }} />
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '8px', letterSpacing: '1px' }}>{bot.name}</div>
                 <div style={{ marginBottom: '8px' }}>
@@ -164,7 +164,7 @@ export default function ManageBots() {
       {/* Confirm Modal */}
       {confirmBot && (
         <div onClick={() => setConfirmBot(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#161f33', border: `1px solid ${confirmBot.color}40`, width: '100%', maxWidth: '320px', padding: '20px', borderRadius: '4px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#0e1628', border: `1px solid ${confirmBot.color}40`, width: '100%', maxWidth: '320px', padding: '20px', borderRadius: '4px' }}>
             <div style={{ color: confirmBot.color, fontSize: '12px', fontWeight: '800', marginBottom: '12px' }}>{confirmBot.name}</div>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
               You are about to subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>${confirmBot.amount.toLocaleString()}</strong>. This amount will be deducted from your balance immediately.

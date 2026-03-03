@@ -41,11 +41,11 @@ export default function BotTransactionHistory() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
             <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -78,7 +78,7 @@ export default function BotTransactionHistory() {
             ['Total Earned', `$${totalEarned.toFixed(2)}`, '#f59e0b'],
             ['Total Invested', `$${totalInvested.toLocaleString()}`, '#ec4899'],
           ].map(([l,v,c]) => (
-            <div key={l} style={{ background: '#2e3a52', padding: '10px', border: `1px solid ${c}30` }}>
+            <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: `1px solid ${c}30` }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
               <div style={{ color: c, fontSize: '15px', fontWeight: '700' }}>{v}</div>
             </div>
@@ -98,7 +98,7 @@ export default function BotTransactionHistory() {
               const progress = Math.min(100, Math.max(0, ((totalDays - daysLeft) / totalDays) * 100));
               const color = botColors[b.botName] || '#6366f1';
               return (
-                <div key={i} style={{ background: '#2e3a52', border: `1px solid ${color}40`, padding: '12px', marginBottom: '8px' }}>
+                <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${color}40`, padding: '12px', marginBottom: '8px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ color, fontSize: '10px', fontWeight: '700' }}>{b.botName}</span>
                     <span style={{ color: '#22c55e', fontSize: '8px', background: 'rgba(34,197,94,0.1)', padding: '2px 8px' }}>ACTIVE</span>
@@ -134,7 +134,7 @@ export default function BotTransactionHistory() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           Bot History
         </div>
-        <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

@@ -134,7 +134,7 @@ export default function LiveTrading() {
   };
 
   const sel = {
-    width: '100%', background: '#161f33',
+    width: '100%', background: '#0e1628',
     border: '1px solid rgba(255,255,255,0.08)',
     color: 'white', fontSize: '9px',
     padding: '8px 10px', outline: 'none',
@@ -142,10 +142,10 @@ export default function LiveTrading() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
             <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -164,7 +164,7 @@ export default function LiveTrading() {
       </div>
 
       {/* Balance Bar */}
-      <div style={{ background: "#141824", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "8px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "#132035", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "8px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "8px" }}>Available Balance</span>
@@ -187,12 +187,12 @@ export default function LiveTrading() {
             </div>
           ) : stats && (
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", maxWidth: "220px", marginLeft: "auto" }}>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #6366f1" }}>
+              <div style={{ background: "#1a2e4a", padding: "12px", borderLeft: "3px solid #6366f1" }}>
                 <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>TOTAL TRADES</div>
                 <div style={{ color: "white", fontSize: "16px", fontWeight: "700" }}>{stats.totalTrades}</div>
                 <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>{stats.closedTrades} closed</div>
               </div>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: "3px solid #22c55e" }}>
+              <div style={{ background: "#1a2e4a", padding: "12px", borderLeft: "3px solid #22c55e" }}>
                 <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>WIN / LOSS</div>
                 <div style={{ fontSize: "16px", fontWeight: "700" }}>
                   <span style={{ color: "#22c55e" }}>{stats.wins}W</span>
@@ -201,12 +201,12 @@ export default function LiveTrading() {
                 </div>
                 <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>closed trades</div>
               </div>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444"}` }}>
+              <div style={{ background: "#1a2e4a", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444"}` }}>
                 <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>NET PROFIT / LOSS</div>
                 <div style={{ color: parseFloat(stats.netProfitLoss) >= 0 ? "#22c55e" : "#ef4444", fontSize: "16px", fontWeight: "700" }}>{parseFloat(stats.netProfitLoss) >= 0 ? "+" : ""}${stats.netProfitLoss}</div>
                 <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>profit: ${stats.totalProfit} / loss: ${stats.totalLoss}</div>
               </div>
-              <div style={{ background: "#252d3d", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444"}` }}>
+              <div style={{ background: "#1a2e4a", padding: "12px", borderLeft: `3px solid ${parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444"}` }}>
                 <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "7px", marginBottom: "4px" }}>ROI</div>
                 <div style={{ color: parseFloat(stats.roi) >= 0 ? "#22c55e" : "#ef4444", fontSize: "16px", fontWeight: "700" }}>{parseFloat(stats.roi) >= 0 ? "+" : ""}{stats.roi}%</div>
                 <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "7px" }}>return on investment</div>
@@ -221,7 +221,7 @@ export default function LiveTrading() {
           ))}
         </div>
 
-        <div style={{ background: '#2e3a52' }}>
+        <div style={{ background: '#1a2e4a' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
@@ -276,7 +276,7 @@ export default function LiveTrading() {
       {showModal && (
         <>
           <div onClick={() => { setShowModal(false); setError(''); }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#2e3a52', border: '1px solid rgba(99,102,241,0.3)', padding: '18px', width: '300px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '18px', width: '300px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Trade Assets</span>
               <button onClick={() => { setShowModal(false); setError(''); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>

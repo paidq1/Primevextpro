@@ -33,15 +33,15 @@ export default function DepositFunds() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const inputStyle = { width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -68,7 +68,7 @@ export default function DepositFunds() {
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>Payment Method</label>
               <select value={depositMethod} onChange={e => setDepositMethod(e.target.value)}
-                style={{ width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                 <option value='crypto'>Crypto</option>
                 <option value='bank'>Bank Transfer</option>
               </select>
@@ -81,7 +81,7 @@ export default function DepositFunds() {
 
             <div style={{ marginBottom: '16px' }}>
               <label style={labelStyle}>Payment Proof</label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
                 <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                   Choose File<input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]) { setFileName(e.target.files[0].name); setFileData(e.target.files[0]); } }} />
                 </label>

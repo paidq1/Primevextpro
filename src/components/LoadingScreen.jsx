@@ -2,7 +2,7 @@ export default function LoadingScreen() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#161f33',
+      background: '#0e1628',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',

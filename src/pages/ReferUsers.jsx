@@ -35,7 +35,7 @@ export default function ReferUsers() {
   };
 
   const statCard = (icon, label, value, color) => (
-    <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
       <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
         {icon}
       </div>
@@ -47,11 +47,11 @@ export default function ReferUsers() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
@@ -74,10 +74,10 @@ export default function ReferUsers() {
         </div>
 
         {/* Referral Code */}
-        <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', marginBottom: '12px', borderRadius: '4px' }}>
           <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>YOUR REFERRAL CODE</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-            <div style={{ flex: 1, background: '#161f33', padding: '8px 10px', fontSize: '11px', fontWeight: '700', color: '#6366f1', letterSpacing: '1px', borderRadius: '4px' }}>
+            <div style={{ flex: 1, background: '#0e1628', padding: '8px 10px', fontSize: '11px', fontWeight: '700', color: '#6366f1', letterSpacing: '1px', borderRadius: '4px' }}>
               {loading ? '...' : data.referralCode}
             </div>
             <button onClick={() => handleCopy(data.referralCode)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -86,7 +86,7 @@ export default function ReferUsers() {
           </div>
           <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', marginBottom: '6px' }}>REFERRAL LINK</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ flex: 1, background: '#161f33', padding: '8px 10px', fontSize: '7px', color: 'rgba(255,255,255,0.6)', borderRadius: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ flex: 1, background: '#0e1628', padding: '8px 10px', fontSize: '7px', color: 'rgba(255,255,255,0.6)', borderRadius: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {loading ? '...' : referralLink}
             </div>
             <button onClick={() => handleCopy(referralLink)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -96,7 +96,7 @@ export default function ReferUsers() {
         </div>
 
         {/* Referred Users Table */}
-        <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
           <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <span style={{ fontSize: '9px', fontWeight: '600' }}>Referred Users ({data.totalReferrals})</span>
           </div>

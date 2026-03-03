@@ -81,15 +81,15 @@ export default function Deposit() {
     d.status?.toLowerCase().includes(search.toLowerCase())
   ).slice(0, show);
 
-  const inputStyle = { width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -109,7 +109,7 @@ export default function Deposit() {
       {showForm && (
         <>
           <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#161f33', border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#0e1628', border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '320px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Deposit Funds</span>
               <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
@@ -121,7 +121,7 @@ export default function Deposit() {
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Payment Method</label>
                   <select value={depositMethod} onChange={e => setDepositMethod(e.target.value)}
-                    style={{ width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                    style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                     <option value='crypto'>Crypto (USDT)</option>
                     <option value='bank'>Bank Transfer</option>
                   </select>
@@ -132,7 +132,7 @@ export default function Deposit() {
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', padding: '5px 8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '5px 8px' }}>
                     <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                       Choose File
                       <input type='file' accept='image/*' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]){ setFileData(e.target.files[0]); setFileName(e.target.files[0].name); }}}/>
@@ -181,7 +181,7 @@ export default function Deposit() {
       <div style={{ padding: '16px' }}>
         {/* Balance + New Deposit */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '8px 14px' }}>
+          <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '8px 14px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Available Balance</div>
             <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${(user?.balance || 0).toFixed(2)}</div>
           </div>
@@ -189,7 +189,7 @@ export default function Deposit() {
         </div>
 
         {/* Table */}
-        <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

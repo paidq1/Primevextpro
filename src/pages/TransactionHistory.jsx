@@ -58,11 +58,11 @@ export default function TransactionHistory() {
   const pendingCount = transactions.filter(t => t.status === 'pending').length;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
             <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -90,15 +90,15 @@ export default function TransactionHistory() {
 
         {/* Summary Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
-          <div style={{ flex: 1, background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
+          <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Total Deposits</div>
             <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${totalDeposits.toFixed(2)}</div>
           </div>
-          <div style={{ flex: 1, background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
+          <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Total Withdrawals</div>
             <div style={{ color: '#ec4899', fontSize: '11px', fontWeight: '700' }}>${totalWithdrawals.toFixed(2)}</div>
           </div>
-          <div style={{ flex: 1, background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
+          <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Pending</div>
             <div style={{ color: '#f59e0b', fontSize: '11px', fontWeight: '700' }}>{pendingCount}</div>
           </div>
@@ -117,7 +117,7 @@ export default function TransactionHistory() {
         </div>
 
         {/* Table */}
-        <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

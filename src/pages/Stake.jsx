@@ -86,12 +86,12 @@ export default function Stake() {
     }
   };
 
-  const inputStyle = { width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
 
   const statusColor = s => s === 'active' ? '#22c55e' : s === 'completed' ? '#6366f1' : s === 'cancelled' ? '#ef4444' : '#f59e0b';
   const statCard = (icon, label, value, color) => (
-    <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
       <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
         {icon}
       </div>
@@ -103,11 +103,11 @@ export default function Stake() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -144,7 +144,7 @@ export default function Stake() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '20px' }}>
           {stakePlans.map((plan, i) => (
             <div key={i} onClick={() => { setSelectedPlan(plan); setAmount(String(plan.min)); }}
-              style={{ background: selectedPlan?.name === plan.name ? plan.bg : '#2e3a52', border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : 'rgba(255,255,255,0.08)'}`, padding: '12px', cursor: 'pointer', transition: 'all 0.2s' }}>
+              style={{ background: selectedPlan?.name === plan.name ? plan.bg : '#1a2e4a', border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : 'rgba(255,255,255,0.08)'}`, padding: '12px', cursor: 'pointer', transition: 'all 0.2s' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                 <span style={{ color: plan.color, fontSize: '9px', fontWeight: '800' }}>{plan.name}</span>
                 <span style={{ background: plan.bg, color: plan.color, fontSize: '8px', fontWeight: '700', padding: '2px 7px', border: `1px solid ${plan.color}40` }}>{plan.apy} APY</span>
@@ -168,7 +168,7 @@ export default function Stake() {
           <div style={{ flex: 1 }}>
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>Selected Plan</label>
-              <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
+              <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
                 {selectedPlan ? `${selectedPlan.name} — ${selectedPlan.apy} APY — ${selectedPlan.duration}` : 'No plan selected — choose above'}
               </div>
             </div>
@@ -181,7 +181,7 @@ export default function Stake() {
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>Payment Method</label>
               <select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}
-                style={{ width: '100%', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', color: paymentMethod ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
+                style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: paymentMethod ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
                 <option value=''>Select Payment Method</option>
                 <option value='crypto'>Crypto (USDT)</option>
                 <option value='bank'>Bank Transfer</option>
@@ -190,7 +190,7 @@ export default function Stake() {
 
             <div style={{ marginBottom: '16px' }}>
               <label style={labelStyle}>Payment Proof</label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#2e3a52', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
                 <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                   Choose File<input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]){ setFileData(e.target.files[0]); setFileName(e.target.files[0].name); }}} />
                 </label>
@@ -225,7 +225,7 @@ export default function Stake() {
 
         {/* Active Stakes Table */}
         <div style={{ marginTop: '24px', color: 'rgba(255,255,255,0.7)', fontSize: '9px', fontWeight: '600', marginBottom: '10px' }}>Active Stakes</div>
-        <div style={{ background: '#2e3a52', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>

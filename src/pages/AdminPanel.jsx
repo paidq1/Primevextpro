@@ -34,6 +34,36 @@ export default function AdminPanel() {
   const [msgInput, setMsgInput] = useState({});
   const [msg, setMsg] = useState('');
 
+  // Pagination
+  const [userPage, setUserPage] = useState(1);
+  const [depositPage, setDepositPage] = useState(1);
+  const [withdrawalPage, setWithdrawalPage] = useState(1);
+  const PAGE_SIZE = 10;
+
+  // Activity log
+  const [activityLog, setActivityLog] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('adminActivityLog') || '[]'); } catch { return []; }
+  });
+  const logActivity = (action, detail) => {
+    const entry = { action, detail, time: new Date().toLocaleString() };
+    setActivityLog(prev => {
+      const updated = [entry, ...prev].slice(0, 100);
+      localStorage.setItem('adminActivityLog', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  // CSV Export
+  const exportCSV = (data, filename) => {
+    if (!data.length) return;
+    const keys = Object.keys(data[0]).filter(k => !['__v','proofImage','bankDetails'].includes(k));
+    const csv = [keys.join(','), ...data.map(row => keys.map(k => JSON.stringify(row[k] ?? '')).join(','))].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const api = (path, method = 'GET', body) =>
     fetch(`${BASE_URL}/admin${path}`, { method, headers: headers(), body: body ? JSON.stringify(body) : undefined }).then(r => r.json());
 
@@ -48,6 +78,24 @@ export default function AdminPanel() {
   }, [tab]);
 
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
+
+  const updateDepositStatus = async (id, status) => {
+    const res = await api(`/deposits/${id}`, 'PUT', { status });
+    if (res.transaction || res.deposit) {
+      setDeposits(prev => prev.map(d => d._id === id ? { ...d, status } : d));
+      logActivity('Deposit ' + status, `ID: ${id.slice(-6)}`);
+      showMsg('Deposit ' + status);
+    }
+  };
+
+  const updateWithdrawalStatus = async (id, status) => {
+    const res = await api(`/withdrawals/${id}`, 'PUT', { status });
+    if (res.transaction || res.withdrawal) {
+      setWithdrawals(prev => prev.map(w => w._id === id ? { ...w, status } : w));
+      logActivity('Withdrawal ' + status, `ID: ${id.slice(-6)}`);
+      showMsg('Withdrawal ' + status);
+    }
+  };
 
   const approveDeposit = async (id, status) => {
     if (!window.confirm(`Are you sure you want to ${status} this deposit?`)) return;
@@ -179,10 +227,10 @@ export default function AdminPanel() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#161f33', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
-      <div style={{ background: '#1a2236', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <span style={{ color: 'white', fontSize: '12px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>/ Admin Panel</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
@@ -194,7 +242,7 @@ export default function AdminPanel() {
       {msg && <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}
 
       {/* Tabs */}
-      <div style={{ background: '#1a2236', padding: '0 16px', display: 'flex', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)', overflowX: 'auto' }}>
+      <div style={{ background: '#132035', padding: '0 16px', display: 'flex', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.1)', overflowX: 'auto' }}>
         {tabs.map(t => (
           <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 14px', background: 'none', border: 'none', color: tab === t ? '#6366f1' : 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderBottom: tab === t ? '2px solid #6366f1' : '2px solid transparent', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{t}</button>
         ))}
@@ -207,7 +255,7 @@ export default function AdminPanel() {
           <div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '16px' }}>
               {statCards.map((s, i) => (
-                <div key={i} style={{ background: '#2e3a52', border: `1px solid ${s.color}40`, padding: '14px' }}>
+                <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${s.color}40`, padding: '14px' }}>
                   <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '6px' }}>{s.label}</div>
                   <div style={{ color: s.color, fontSize: '22px', fontWeight: '700' }}>{s.value}</div>
                 </div>
@@ -215,7 +263,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Deposits by status chart */}
-            <div style={{ background: '#2e3a52', padding: '14px', marginBottom: '12px' }}>
+            <div style={{ background: '#1a2e4a', padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Deposits Overview</div>
               {(() => {
                 const pending = deposits.filter(d => d.status === 'pending').length;
@@ -256,7 +304,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Withdrawals by status chart */}
-            <div style={{ background: '#2e3a52', padding: '14px', marginBottom: '12px' }}>
+            <div style={{ background: '#1a2e4a', padding: '14px', marginBottom: '12px' }}>
               <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Withdrawals Overview</div>
               {(() => {
                 const pending = withdrawals.filter(w => w.status === 'pending').length;
@@ -289,7 +337,7 @@ export default function AdminPanel() {
             </div>
 
             {/* Users overview */}
-            <div style={{ background: '#2e3a52', padding: '14px' }}>
+            <div style={{ background: '#1a2e4a', padding: '14px' }}>
               <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', marginBottom: '12px' }}>Users Overview</div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {[
@@ -312,8 +360,9 @@ export default function AdminPanel() {
         {tab === 'users' && (
           <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "80vh" }}>
             <div style={{ padding: "8px 0", marginBottom: "8px", display: "flex", gap: "8px", alignItems: "center" }}>
-              <input value={userSearch} onChange={e => setUserSearch(e.target.value)} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
+              <input value={userSearch} onChange={e => { setUserSearch(e.target.value); setUserPage(1); }} placeholder="Search by name or email..." style={{ flex: 1, background: "#374151", border: "none", color: "white", fontSize: "8px", padding: "6px 10px", outline: "none" }} />
               <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "7px" }}>{users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).length} users</span>
+              <button onClick={() => exportCSV(users, 'users.csv')} style={{ ...btnStyle('#22c55e'), whiteSpace: 'nowrap' }}>⬇ CSV</button>
               <button onClick={() => { setEmailTarget(null); setEmailModal(true); setEmailSuccess(''); }} style={{ ...btnStyle('#6366f1'), whiteSpace: 'nowrap' }}>📧 Email All</button>
             </div>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -321,7 +370,7 @@ export default function AdminPanel() {
                 <tr>{['Name', 'Email', 'Balance', 'Stats', 'KYC', 'Status', 'Msg', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())).map((u, i) => (
+                {(() => { const filtered = users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase())); const paginated = filtered.slice((userPage-1)*PAGE_SIZE, userPage*PAGE_SIZE); return paginated; })().map((u, i) => (
                   <tr key={i} style={{ verticalAlign: "top" }}>
                     <td style={tdStyle}>{u.firstName} {u.lastName}</td>
                     <td style={tdStyle}>{u.email}</td>
@@ -362,6 +411,21 @@ export default function AdminPanel() {
                 ))}
               </tbody>
             </table>
+            {/* User Pagination */}
+            {(() => {
+              const filtered = users.filter(u => (u.firstName + " " + u.lastName + " " + u.email).toLowerCase().includes(userSearch.toLowerCase()));
+              const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+              if (totalPages <= 1) return null;
+              return (
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', marginTop: '8px' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Page {userPage} of {totalPages} ({filtered.length} users)</span>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <button onClick={() => setUserPage(p => Math.max(1, p-1))} disabled={userPage === 1} style={{ ...btnStyle('#374151'), opacity: userPage === 1 ? 0.4 : 1 }}>‹ Prev</button>
+                    <button onClick={() => setUserPage(p => Math.min(totalPages, p+1))} disabled={userPage === totalPages} style={{ ...btnStyle('#374151'), opacity: userPage === totalPages ? 0.4 : 1 }}>Next ›</button>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 
@@ -526,12 +590,40 @@ export default function AdminPanel() {
             </table>
           </div>
         )}
+
+        {/* Activity Log */}
+        {tab === 'activity' && (
+          <div style={{ padding: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+              <span style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>Activity Log</span>
+              <button onClick={() => { setActivityLog([]); localStorage.removeItem('adminActivityLog'); }} style={{ ...btnStyle('#ef4444') }}>Clear Log</button>
+            </div>
+            {activityLog.length === 0 ? (
+              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No activity recorded yet</div>
+            ) : (
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>{['Action', 'Detail', 'Time'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {activityLog.map((log, i) => (
+                    <tr key={i}>
+                      <td style={{ ...tdStyle, color: log.action.includes('approved') ? '#22c55e' : log.action.includes('rejected') ? '#ef4444' : '#6366f1', fontWeight: '600' }}>{log.action}</td>
+                      <td style={tdStyle}>{log.detail}</td>
+                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{log.time}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Email Modal */}
       {emailModal && (
         <div onClick={() => setEmailModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#161f33', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '380px', borderRadius: '4px', padding: '20px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '380px', borderRadius: '4px', padding: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>
                 {emailTarget ? `Email to ${emailTarget.firstName} ${emailTarget.lastName}` : 'Bulk Email - All Users'}
@@ -562,7 +654,7 @@ export default function AdminPanel() {
       {/* User Details Modal */}
       {selectedUser && (
         <div onClick={() => setSelectedUser(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#161f33', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '4px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', width: '100%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '4px' }}>
             <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 {selectedUser.avatar ? (
