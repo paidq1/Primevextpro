@@ -139,6 +139,7 @@ export default function ManageBots() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Invested: <span style={{ color: 'white' }}>${b.amount?.toLocaleString()}</span></span>
                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Daily: <span style={{ color: '#22c55e' }}>{b.dailyRate}</span></span>
+                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Earned: <span style={{ color: '#f59e0b' }}>${(b.earned || 0).toFixed(2)}</span></span>
                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Days left: <span style={{ color: 'white' }}>{daysLeft}</span></span>
                   </div>
                   <div style={{ height: '4px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px' }}>

@@ -7,6 +7,14 @@ const rateLimit = require('express-rate-limit');
 
 dotenv.config();
 
+const processBotProfits = require('./utils/botCron');
+
+// Run bot profit cron every 24 hours
+const BOT_CRON_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+setInterval(processBotProfits, BOT_CRON_INTERVAL);
+// Also run once on startup after 1 minute delay
+setTimeout(processBotProfits, 60 * 1000);
+
 const app = express();
 app.set('trust proxy', 1); // Trust Render's proxy
 
