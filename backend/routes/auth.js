@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 const { register, login, getMe, changePassword } = require('../controllers/authController');
 const auth = require('../middleware/auth');
+const User = require('../models/User');
+const sendEmail = require('../utils/sendEmail');
 
 router.post('/register', register);
 router.post('/login', login);
 router.get('/me', auth, getMe);
 router.put('/change-password', auth, changePassword);
-
-module.exports = router;
-
-const crypto = require('crypto');
-const sendEmail = require('../utils/sendEmail');
 
 // Forgot password
 router.post('/forgot-password', async (req, res) => {
@@ -22,7 +20,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetToken = crypto.randomBytes(32).toString('hex');
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpire = Date.now() + 30 * 60 * 1000; // 30 minutes
+    user.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
     await user.save({ validateBeforeSave: false });
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
