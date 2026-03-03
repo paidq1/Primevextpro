@@ -42,7 +42,7 @@ app.use('/api/trade', require('./routes/trade'));
 app.use('/api/packages', require('./routes/packages'));
 app.use('/api/kyc', require('./routes/kyc'));
 app.use('/api/stake', require('./routes/stake'));
-app.use('/api/bot', require('./routes/bot'));
+app.use('/api/bots', require('./routes/bot'));
 app.use('/api/referral', require('./routes/referral'));
 app.use('/api/admin', require('./routes/admin'));
 

@@ -8,12 +8,12 @@ const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 
 const bots = [
-  { name: 'STARTER BOT',  amount: 500,   dailyRate: '5%',  duration: '7 days',   days: 7,   color: '#22c55e' },
-  { name: 'SILVER BOT',   amount: 1000,  dailyRate: '8%',  duration: '14 days',  days: 14,  color: '#94a3b8' },
-  { name: 'GOLD BOT',     amount: 2500,  dailyRate: '12%', duration: '30 days',  days: 30,  color: '#f59e0b' },
-  { name: 'PLATINUM BOT', amount: 5000,  dailyRate: '18%', duration: '60 days',  days: 60,  color: '#6366f1' },
-  { name: 'DIAMOND BOT',  amount: 10000, dailyRate: '25%', duration: '90 days',  days: 90,  color: '#22d3ee' },
-  { name: 'ELITE BOT',    amount: 25000, dailyRate: '35%', duration: '120 days', days: 120, color: '#ec4899' },
+  { name: 'STARTER BOT',  amount: 500,   dailyRate: '15%', duration: '7 days',   days: 7,   color: '#6366f1' },
+  { name: 'SILVER BOT',   amount: 1000,  dailyRate: '20%', duration: '14 days',  days: 14,  color: '#6366f1' },
+  { name: 'GOLD BOT',     amount: 2500,  dailyRate: '25%', duration: '30 days',  days: 30,  color: '#6366f1' },
+  { name: 'PLATINUM BOT', amount: 5000,  dailyRate: '30%', duration: '60 days',  days: 60,  color: '#6366f1' },
+  { name: 'DIAMOND BOT',  amount: 10000, dailyRate: '35%', duration: '90 days',  days: 90,  color: '#6366f1' },
+  { name: 'ELITE BOT',    amount: 25000, dailyRate: '40%', duration: '120 days', days: 120, color: '#6366f1' },
 ];
 
 export default function ManageBots() {
