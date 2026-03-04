@@ -129,7 +129,7 @@ export default function ManageBots() {
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
             return (
-              <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${bot.color}40`, padding: '12px', position: 'relative', overflow: 'hidden' }}>
+              <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${bot.color}40`, padding: '12px', position: 'relative', overflow: 'visible' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: bot.color }} />
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '8px', letterSpacing: '1px' }}>{bot.name}</div>
                 <div style={{ marginBottom: '8px' }}>

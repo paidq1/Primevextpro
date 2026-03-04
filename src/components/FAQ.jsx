@@ -29,7 +29,7 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <><section className="scroll-anim" ref={faqRef} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '32px 16px', position: 'relative', overflow: 'hidden' }}>
+    <><section id="faq" className="scroll-anim" ref={faqRef} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '32px 16px', position: 'relative', overflow: 'hidden' }}>
 
       {/* Network graph top left */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '130px', height: '130px', opacity: 0.7 }}>
@@ -106,7 +106,7 @@ const FAQ = () => {
           <p style={{ color: '#94a3b8', fontSize: '8px', lineHeight: '1.6', marginBottom: '12px' }}>
             If you didn't find the answer you were looking for, our support team is here to help. Reach out to us directly for more assistance or explore our detailed support resources.
           </p>
-          <button style={{
+          <button onClick={() => window.location.href='/signup'} style={{
             display: 'flex', alignItems: 'center', gap: '6px',
             background: '#6366f1', border: 'none', borderRadius: '4px',
             color: 'white', fontSize: '9px', fontWeight: '600',

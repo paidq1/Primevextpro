@@ -7,7 +7,7 @@ const ContactUs = () => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   return (
-    <><section ref={ref} style={{ background: '#0e1420', width: '100%', boxSizing: 'border-box', padding: '12px', position: 'relative', overflow: 'hidden' }}>
+    <><section id="contact" ref={ref} style={{ background: '#0e1420', width: '100%', boxSizing: 'border-box', padding: '12px', position: 'relative', overflow: 'hidden' }}>
       
             {/* Dotted World Map Background */}
       <img src='/world-map.png' style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', opacity: 0.15, pointerEvents: 'none' }} />
@@ -74,7 +74,7 @@ const ContactUs = () => {
           </div>
 
           {/* Send Button */}
-          <button style={{
+          <button onClick={() => { alert("Message sent! We will get back to you soon."); }} style={{
             width: '100%', padding: '7px', background: '#6366f1', border: 'none',
             borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600',
             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',

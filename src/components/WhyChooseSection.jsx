@@ -63,7 +63,7 @@ const PolyBg = ({ highlight }) => (
 export default function WhyChooseSection() {
   useScrollAnim();
   return (
-    <section className="relative w-full py-8 bg-[#0d1117] overflow-hidden">
+    <section id="staking" className="relative w-full py-8 bg-[#0d1117] overflow-hidden">
 
       
 

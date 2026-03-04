@@ -41,7 +41,7 @@ export default function Testimonials() {
   return (
     <>
       
-      <section ref={ref} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '24px 16px 20px 16px', overflow: 'hidden', position: 'relative' }}>
+      <section id="reviews" ref={ref} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '24px 16px 20px 16px', overflow: 'hidden', position: 'relative' }}>
         <div style={{ position: 'absolute', top: '-10px', left: '0px', zIndex: 1, width: '120px', height: '120px' }}>
           <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>

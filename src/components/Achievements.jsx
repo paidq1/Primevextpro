@@ -27,7 +27,7 @@ export default function Achievements() {
               <p style={{ color: 'white', fontSize: '7px', lineHeight: '1.5', margin: '0 0 10px 0' }}>
                 We are proud to have received numerous prestigious awards that recognize our commitment to innovation, security, and customer satisfaction in the cryptocurrency and trading industry.
               </p>
-              <button style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'transparent', border: '1px solid #6366f1', color: 'white', padding: '7px 12px', borderRadius: '4px', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
+              <button style={{ display: "flex", alignItems: "center", gap: "4px", background: "transparent", border: "1px solid #6366f1", color: "white", padding: "7px 12px", fontSize: "8px", fontWeight: "600", cursor: "pointer" }} onClick={() => window.location.href="/signup"}>
                 Explore Our Features
                 <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10"/>

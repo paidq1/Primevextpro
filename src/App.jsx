@@ -42,6 +42,10 @@ import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
 import ResetPassword from "./pages/ResetPassword";
+import TradingInfo from "./pages/TradingInfo";
+import StakingInfo from "./pages/StakingInfo";
+import InvestingInfo from "./pages/InvestingInfo";
+import Terms from "./pages/Terms";
 import CheckEmail from "./pages/CheckEmail";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
@@ -62,6 +66,10 @@ const PrivateRoute = ({ children }) => {
 
 
 function HomePage() {
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    return () => { document.documentElement.style.scrollBehavior = ''; };
+  }, []);
   useEffect(() => {
     AOS.init({ duration: 800, easing: 'ease-out', once: true, mirror: false, offset: 100 });
     window.AOS = AOS;
@@ -120,6 +128,10 @@ function App() {
         <Route path="/dashboard/bot-transactions" element={<PrivateRoute><BotTransactionHistory /></PrivateRoute>} />
         <Route path="/dashboard/deposit-funds" element={<PrivateRoute><DepositFunds /></PrivateRoute>} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/trading-info" element={<TradingInfo />} />
+        <Route path="/staking-info" element={<StakingInfo />} />
+        <Route path="/investing-info" element={<InvestingInfo />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -46,7 +46,7 @@ export default function KYC() {
         <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
           Choose File<input type='file' accept='image/*,.pdf' style={{ display: 'none' }} onChange={onChange} />
         </label>
-        <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
+        <span style={{ color: fileName !== 'No file chosen' ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '8px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>{fileName}</span>
       </div>
     </div>
   );

@@ -86,7 +86,7 @@ export default function ReferUsers() {
           </div>
           <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.5)', marginBottom: '6px' }}>REFERRAL LINK</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ flex: 1, background: '#0e1628', padding: '8px 10px', fontSize: '7px', color: 'rgba(255,255,255,0.6)', borderRadius: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ flex: 1, background: '#0e1628', padding: '8px 10px', fontSize: '7px', color: 'rgba(255,255,255,0.6)', borderRadius: '4px', overflow: 'visible', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {loading ? '...' : referralLink}
             </div>
             <button onClick={() => handleCopy(referralLink)} style={{ padding: '8px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -96,7 +96,7 @@ export default function ReferUsers() {
         </div>
 
         {/* Referred Users Table */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'visible' }}>
           <div style={{ padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <span style={{ fontSize: '9px', fontWeight: '600' }}>Referred Users ({data.totalReferrals})</span>
           </div>

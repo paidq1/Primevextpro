@@ -64,7 +64,7 @@ const PolyBg = ({ highlight }) => (
 
 export default function HowItWorks() {
   return (
-    <section className="relative w-full py-8 bg-[#0b0e14] overflow-hidden">
+    <section id="how" className="relative w-full py-8 bg-[#0b0e14] overflow-hidden">
 
       {/* Top right crypto */}
       <div style={{ position: 'absolute', top: '0px', right: '0px', zIndex: 5, width: '120px', height: '100px' }}>
@@ -183,7 +183,7 @@ export default function HowItWorks() {
                 <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: '11px', marginBottom: '6px' }}>Explore Our Advanced Features</h3>
                 <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', lineHeight: '1.5' }}>Unlock more tools and features designed to enhance your trading experience.</p>
               </div>
-              <button style={{
+              <button onClick={() => window.location.href='/signup'} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 background: 'transparent', border: '1px solid rgba(255,255,255,0.3)',
                 color: 'white', padding: '8px 10px', borderRadius: '4px',

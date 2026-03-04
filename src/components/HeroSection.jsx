@@ -79,7 +79,7 @@ function ParticleNetwork() {
 
 function Navbar({ onGetStarted }) {
   return (
-    <nav className="relative z-20 w-full pl-2 pr-1 pt-2 pb-2">
+    <nav style={{ position: "relative", zIndex: 9999 }} className="relative z-20 w-full pl-2 pr-1 pt-2 pb-2">
       <div className="flex items-center justify-between w-full whitespace-nowrap">
         <div className="flex items-center gap-2 flex-shrink-0">
           <div className="w-5 h-5 mt-1">
@@ -94,19 +94,33 @@ function Navbar({ onGetStarted }) {
           </span>
         </div>
         <div className="flex items-center gap-2 ml-16 flex-shrink-0 flex-nowrap">
-          <a href="#" className="text-white text-[9px] font-normal relative whitespace-nowrap">
+          <a href="#home" className="text-white text-[9px] font-normal relative whitespace-nowrap">
             Home
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-purple-500 rounded-full"></span>
           </a>
-          <a href="#" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Trading</a>
-          <a href="#" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Staking</a>
-          <a href="#" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Investing</a>
-          <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
-            Links<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
-          </button>
-          <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
-            Company<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
-          </button>
+          <a href="/trading-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Trading</a>
+          <a href="/staking-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Staking</a>
+          <a href="/investing-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Investing</a>
+          <div style={{ position: 'relative' }} className="group">
+            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
+              Links<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
+              {[['Market','#market'],['How It Works','#how'],['Benefits','#why'],['Investment Plans','/investing-info'],["FAQ's",'#faq']].map(([l,h])=>(
+                <a key={l} href={h} className="block px-3 py-1.5 text-[9px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
+              ))}
+            </div>
+          </div>
+          <div style={{ position: 'relative' }} className="group">
+            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
+              Company<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
+              {[['About Us','#why'],['Contact Us','#contact'],['Terms & Conditions','/terms']].map(([l,h])=>(
+                <a key={l} href={h} className="block px-3 py-1.5 text-[9px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="ml-auto pl-1">
           <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap" onClick={onGetStarted}>
@@ -120,7 +134,7 @@ function Navbar({ onGetStarted }) {
 
 export default function HeroSection({ onGetStarted }) {
   return (
-    <section className="relative px-2 pt-0 pb-4 bg-[#151c27] overflow-hidden">
+    <section id="home" className="relative px-2 pt-0 pb-4 bg-[#151c27] overflow-hidden">
       <ParticleNetwork />
       {/* Purple glow - bottom left */}
       <div style={{ position: "absolute", bottom: "0px", left: "0px", width: "250px", height: "250px", background: "radial-gradient(circle at 30% 70%, rgba(120,60,255,0.45) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", zIndex: 1 }}></div>

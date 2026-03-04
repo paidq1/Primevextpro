@@ -87,7 +87,7 @@ const MarketOverview = () => {
         .market-visible { animation: popIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
         .market-hidden { opacity: 0; transform: translateY(40px) scale(0.97); }
       `}</style>
-      <section
+      <section id="market"
         ref={sectionRef}
         style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', padding: '16px 12px', width: '100%', position: 'relative', overflow: 'hidden', boxSizing: 'border-box' }}
       >

@@ -67,7 +67,7 @@ const Footer = () => {
                   placeholder="Enter Your Email"
                   style={{ background: '#1a2535', width: '100px', border: '1px solid rgba(255,255,255,0.1)', borderRight: 'none', borderRadius: '0px', padding: '6px 8px', color: 'white', fontSize: '7px', outline: 'none' }}
                 />
-                <button style={{ background: '#6366f1', border: 'none', borderRadius: '0px', padding: '6px 10px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <button onClick={() => window.location.href='/signup'} style={{ background: '#6366f1', border: 'none', borderRadius: '0px', padding: '6px 10px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                   Subscribe
                 </button>
               </div>
@@ -81,13 +81,13 @@ const Footer = () => {
           <div style={{ width: '28px', height: '2px', background: '#6366f1', marginBottom: '12px' }} />
           <div style={{ display: 'flex', gap: '16px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {['Home', 'About Us', 'Trading', 'Staking', 'Investing', 'Investment Plans', 'Terms & Conditions'].map((link, i) => (
-                <a key={i} href="#" style={{ color: 'white', fontSize: '7px', textDecoration: 'none' }}>{link}</a>
+              {[['Home','#home'],['About Us','#why'],['Trading','/trading-info'],['Staking','/staking-info'],['Investing','/investing-info'],['Investment Plans','#plans'],['Terms & Conditions','/terms']].map(([link,href], i) => (
+                <a key={i} href={href} style={{ color: 'white', fontSize: '7px', textDecoration: 'none' }}>{link}</a>
               ))}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {['Market', 'How It Works', 'Benefits of Trading', 'Customer Reviews', 'Contact Us', "FAQ's"].map((link, i) => (
-                <a key={i} href="#" style={{ color: 'white', fontSize: '7px', textDecoration: 'none' }}>{link}</a>
+              {[['Market','#market'],['How It Works','#how'],['Benefits of Trading','#why'],['Customer Reviews','#reviews'],['Contact Us','#contact'],["FAQ's",'#faq']].map(([link,href], i) => (
+                <a key={i} href={href} style={{ color: 'white', fontSize: '7px', textDecoration: 'none' }}>{link}</a>
               ))}
             </div>
           </div>

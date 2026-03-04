@@ -1,10 +1,11 @@
 import { useRef } from 'react';
 
+// @section trading
 export default function TradingAnalysis() {
   const sectionRef = useRef(null);
 
   return (
-    <section ref={sectionRef} style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', padding: "30px 16px", boxSizing: "border-box", position: 'relative', overflow: 'hidden' }}>
+    <section id="trading" ref={sectionRef} style={{ background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', padding: "30px 16px", boxSizing: "border-box", position: 'relative', overflow: 'hidden' }}>
       <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.6, zIndex: 0 }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice">
         <polygon points="0,0 80,40 60,120" fill="#1f3b4d"/>
         <polygon points="80,40 160,0 140,90" fill="#29465b"/>
