@@ -17,16 +17,17 @@ export default function DepositFunds() {
   const [fileName, setFileName] = useState('No file chosen');
   const [fileData, setFileData] = useState(null);
 
-  const walletAddresses = {
-    BTC: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
-    ETH: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
-    USDT: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS',
-    BNB: 'bnb1grpf0955h0ykzq3ar5nmum7y6gdfl6lxfn46h2',
-    XRP: 'rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh',
-    SOL: '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU',
+  const coinData = {
+    USDT: { address: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS', network: 'TRC20 (Tron)' },
+    ETH:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'Ethereum (ERC20)' },
+    USDC: { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
+    BNB:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
+    SOL:  { address: 'EZT8kz4psrz7rTkbs8kN8ARbzQfkhzmutRRBefJLCiAN', network: 'Solana (SOL)' },
+    BTC:  { address: '1B587SJUL5RSNjr41iU2e8eGencRRjUU8d', network: 'Bitcoin (BTC)' },
   };
-  const walletAddress = walletAddresses[coin] || walletAddresses['USDT'];
-  const coins = ['BTC', 'ETH', 'USDT', 'BNB', 'XRP', 'SOL'];
+  const walletAddress = coinData[coin]?.address || coinData['USDT'].address;
+  const walletNetwork = coinData[coin]?.network || coinData['USDT'].network;
+  const coins = ['USDT', 'ETH', 'USDC', 'BNB', 'SOL', 'BTC'];
 
   const handleCopy = () => {
     navigator.clipboard.writeText(walletAddress).catch(() => {
@@ -124,7 +125,15 @@ export default function DepositFunds() {
 
         {depositMethod === 'crypto' ? (
           <div style={{ width: '180px', flexShrink: 0, background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '14px', textAlign: 'center' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px', textAlign: 'left' }}>USDT Address:</div>
+            <div style={{ marginBottom: '10px' }}>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '6px' }}>Select Coin:</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                {coins.map(c => (
+                  <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 10px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: coin === c ? 'none' : '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', fontWeight: coin === c ? '700' : '400', cursor: 'pointer' }}>{c}</button>
+                ))}
+              </div>
+            </div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px', textAlign: 'left' }}>{coin} Address:</div>
               <div style={{ color: '#6366f1', fontSize: '7px', wordBreak: 'break-all', marginBottom: '6px', textAlign: 'left' }}>{walletAddress}</div>
             <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '4px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', marginBottom: '8px', width: '100%', justifyContent: 'center' }}>{copied ? 'Copied!' : 'Copy Address'}</button>
             <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Deposit USDT to VertexTrade Pro</div>
@@ -135,7 +144,7 @@ export default function DepositFunds() {
     </div>
     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Network</span>
-      <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '7px' }}>TRC20 (Tron)</span>
+      <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '7px' }}>{walletNetwork}</span>
     </div>
     <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '6px', marginBottom: '8px' }}>*Do not deposit assets other than USDT.</div>
     <div style={{ color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>✦ VertexTrade Pro</div>

@@ -24,15 +24,16 @@ export default function Deposit() {
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
 
-  const walletAddresses = {
-    BTC: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
-    ETH: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
-    USDT: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS',
-    BNB: 'bnb1grpf0955h0ykzq3ar5nmum7y6gdfl6lxfn46h2',
-    XRP: 'rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh',
-    SOL: '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU',
+  const coinData = {
+    USDT: { address: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS', network: 'TRC20 (Tron)' },
+    ETH:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'Ethereum (ERC20)' },
+    USDC: { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
+    BNB:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
+    SOL:  { address: 'EZT8kz4psrz7rTkbs8kN8ARbzQfkhzmutRRBefJLCiAN', network: 'Solana (SOL)' },
+    BTC:  { address: '1B587SJUL5RSNjr41iU2e8eGencRRjUU8d', network: 'Bitcoin (BTC)' },
   };
-  const walletAddress = walletAddresses[coin] || walletAddresses['USDT'];
+  const walletAddress = coinData[coin]?.address || coinData['USDT'].address;
+  const walletNetwork = coinData[coin]?.network || coinData['USDT'].network;
 
   useEffect(() => {
     getDeposits().then(data => {
