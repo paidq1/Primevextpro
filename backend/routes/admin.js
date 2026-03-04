@@ -513,3 +513,30 @@ router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
 });
 
 module.exports = router;
+
+// Contact form submission
+router.post('/contact', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    if (!name || !email || !message) return res.status(400).json({ message: 'All fields required' });
+    
+    // Store in DB as a simple log
+    const Contact = require('../models/Contact');
+    await Contact.create({ name, email, message });
+    
+    res.json({ success: true, message: 'Message received! We will get back to you soon.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get all contact messages
+router.get('/contacts', adminAuth, async (req, res) => {
+  try {
+    const Contact = require('../models/Contact');
+    const contacts = await Contact.find().sort({ createdAt: -1 });
+    res.json(contacts);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});

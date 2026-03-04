@@ -122,7 +122,7 @@ function Navbar({ onGetStarted }) {
             </div>
           </div>
         </div>
-        <div className="ml-auto pl-1">
+        <div className="ml-auto pl-1 pr-2">
           <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap" onClick={onGetStarted}>
             Get Started
           </button>
@@ -134,7 +134,7 @@ function Navbar({ onGetStarted }) {
 
 export default function HeroSection({ onGetStarted }) {
   return (
-    <section id="home" className="relative px-2 pt-0 pb-4 bg-[#151c27] overflow-hidden">
+    <section id="home" className="relative pt-0 pb-4 bg-[#151c27] overflow-hidden">
       <ParticleNetwork />
       {/* Purple glow - bottom left */}
       <div style={{ position: "absolute", bottom: "0px", left: "0px", width: "250px", height: "250px", background: "radial-gradient(circle at 30% 70%, rgba(120,60,255,0.45) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", zIndex: 1 }}></div>
@@ -144,7 +144,7 @@ export default function HeroSection({ onGetStarted }) {
       <MarketTicker />
 
       {/* Hero: text left, image right */}
-      <div className="relative z-10 flex flex-row items-start gap-2 pt-3">
+      <div className="relative z-10 flex flex-row items-start gap-2 pt-3 pl-2">
 
         {/* Left: text content */}
         <div className="flex-1 space-y-2 min-w-0 pt-1">

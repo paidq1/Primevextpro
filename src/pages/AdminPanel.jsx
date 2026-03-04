@@ -85,6 +85,7 @@ export default function AdminPanel() {
   const PAGE_SIZE = 10;
 
   // Activity log
+  const [contacts, setContacts] = useState([]);
   const [activityLog, setActivityLog] = useState(() => {
     try { return JSON.parse(localStorage.getItem('adminActivityLog') || '[]'); } catch { return []; }
   });
@@ -119,6 +120,7 @@ export default function AdminPanel() {
     if (tab === 'withdrawals') api('/withdrawals').then(setWithdrawals);
     if (tab === 'kyc') api('/kyc').then(setKyc);
     if (tab === 'trades') api('/trades').then(setTrades);
+    if (tab === 'contacts') api('/contacts').then(d => setContacts(Array.isArray(d) ? d : []));
   }, [tab]);
 
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
@@ -223,7 +225,7 @@ export default function AdminPanel() {
     showMsg('Trade updated');
   };
 
-  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'activity'];
+  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'activity', 'contacts'];
   const pendingCount = (arr) => arr.filter(x => x.status === 'pending' || x.kycStatus === 'submitted').length;
   const tabLabel = (t) => {
     if (t === 'deposits') return `Deposits${deposits.filter(d => d.status === 'pending').length ? ' (' + deposits.filter(d => d.status === 'pending').length + ')' : ''}`;
@@ -635,6 +637,32 @@ export default function AdminPanel() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Contacts */}
+        {tab === 'contacts' && (
+          <div style={{ padding: '12px' }}>
+            <div style={{ color: 'white', fontSize: '11px', fontWeight: '700', marginBottom: '12px' }}>Contact Messages ({contacts.length})</div>
+            {contacts.length === 0 ? (
+              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No contact messages yet</div>
+            ) : (
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>{['Name', 'Email', 'Message', 'Date'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {contacts.map((m, i) => (
+                    <tr key={i}>
+                      <td style={tdStyle}>{m.name}</td>
+                      <td style={tdStyle}>{m.email}</td>
+                      <td style={{ ...tdStyle, maxWidth: '200px', wordBreak: 'break-word' }}>{m.message}</td>
+                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{new Date(m.createdAt).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         )}
 

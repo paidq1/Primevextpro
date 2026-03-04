@@ -3,6 +3,28 @@ import { useState, useEffect, useRef } from 'react';
 const ContactUs = () => {
   const ref = useRef(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) { setError('All fields are required'); return; }
+    setSubmitting(true); setError(''); setSuccess('');
+    try {
+      const res = await fetch('https://vertextrades.onrender.com/api/admin/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      }).then(r => r.json());
+      if (res.success) {
+        setSuccess('Message sent! We will get back to you soon.');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        setError(res.message || 'Failed to send message');
+      }
+    } catch { setError('Network error. Please try again.'); }
+    setSubmitting(false);
+  };
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -74,7 +96,9 @@ const ContactUs = () => {
           </div>
 
           {/* Send Button */}
-          <button onClick={() => { alert("Message sent! We will get back to you soon."); }} style={{
+          {success && <div style={{ color: '#22c55e', fontSize: '9px', marginBottom: '8px', padding: '8px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)' }}>{success}</div>}
+          {error && <div style={{ color: '#ef4444', fontSize: '9px', marginBottom: '8px', padding: '8px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)' }}>{error}</div>}
+          <button onClick={handleSubmit} disabled={submitting} style={{
             width: '100%', padding: '7px', background: '#6366f1', border: 'none',
             borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600',
             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
