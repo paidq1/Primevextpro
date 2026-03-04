@@ -1,6 +1,36 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { User, BarChart2, Wallet, Bot, TrendingUp, Clock, ArrowDownCircle, Package, Lock, Users, ChevronRight, Globe, X, Download, Bell } from 'lucide-react';
+
+function useNotifications() {
+  const [notifications, setNotifications] = useState([]);
+  const [unread, setUnread] = useState(0);
+
+  const fetch_ = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('https://vertextrades.onrender.com/api/notifications', {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(r => r.json());
+      if (res.notifications) { setNotifications(res.notifications); setUnread(res.unread); }
+    } catch {}
+  };
+
+  useEffect(() => { fetch_(); const t = setInterval(fetch_, 30000); return () => clearInterval(t); }, []);
+
+  const markAllRead = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await fetch('https://vertextrades.onrender.com/api/notifications/read-all', {
+        method: 'PUT', headers: { Authorization: `Bearer ${token}` }
+      });
+      setUnread(0);
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    } catch {}
+  };
+
+  return { notifications, unread, markAllRead };
+}
 
 const sidebarSections = [
   {
@@ -32,6 +62,19 @@ const sidebarSections = [
 export default function DashboardSidebar({ open, onClose }) {
   const navigate = useNavigate();
   const [openSubmenu, setOpenSubmenu] = useState(null);
+
+  const { notifications, unread, markAllRead } = useNotifications();
+  const [notifOpen, setNotifOpen] = useState(false);
+  const notifRef = useRef();
+
+  useEffect(() => {
+    const handle = (e) => { if (notifRef.current && !notifRef.current.contains(e.target)) setNotifOpen(false); };
+    document.addEventListener('mousedown', handle);
+    return () => document.removeEventListener('mousedown', handle);
+  }, []);
+
+  const typeColor = (type) => ({ deposit: '#22c55e', withdrawal: '#f59e0b', profit: '#6366f1', referral: '#ec4899', kyc: '#22d3ee', system: '#9ca3af' })[type] || '#9ca3af';
+  const timeAgo = (date) => { const d = Math.floor((Date.now() - new Date(date))/1000); if(d<60) return d+'s ago'; if(d<3600) return Math.floor(d/60)+'m ago'; if(d<86400) return Math.floor(d/3600)+'h ago'; return Math.floor(d/86400)+'d ago'; };
 
   return (
     <>
@@ -104,6 +147,32 @@ export default function DashboardSidebar({ open, onClose }) {
           <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>EN ^</span>
         </div>
       </div>
+      {/* Notification Panel */}
+      {notifOpen && (
+        <div ref={notifRef} style={{ position: 'fixed', top: 0, left: '240px', width: '280px', height: '100vh', background: '#132035', borderRight: '1px solid rgba(255,255,255,0.1)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              {unread > 0 && <button onClick={markAllRead} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '8px', cursor: 'pointer' }}>Mark all read</button>}
+              <button onClick={() => setNotifOpen(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '16px', cursor: 'pointer' }}>×</button>
+            </div>
+          </div>
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            {notifications.length === 0 ? (
+              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No notifications yet</div>
+            ) : notifications.map((n, i) => (
+              <div key={i} style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.read ? 'transparent' : 'rgba(99,102,241,0.06)', display: 'flex', gap: '10px' }}>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: typeColor(n.type), marginTop: '4px', flexShrink: 0 }} />
+                <div>
+                  <div style={{ color: 'white', fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', lineHeight: '1.4' }}>{n.message}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '7px', marginTop: '4px' }}>{timeAgo(n.createdAt)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }
