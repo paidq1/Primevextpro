@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 const dotenv = require('dotenv');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
@@ -18,6 +21,9 @@ setTimeout(processBotProfits, 60 * 1000);
 const app = express();
 app.set('trust proxy', 1); // Trust Render's proxy
 
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(mongoSanitize());
+app.use(xss());
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || origin.includes('vercel.app') || origin.includes('localhost')) {

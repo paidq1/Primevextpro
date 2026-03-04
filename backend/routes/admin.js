@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const adminAuth = require('../middleware/adminAuth');
+const rateLimit = require('express-rate-limit');
+const contactLimiter = rateLimit({ windowMs: 60 * 60 * 1000, max: 5, message: { message: 'Too many messages. Try again later.' } });
 const sendEmail = require('../utils/sendEmail');
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');
@@ -515,10 +517,14 @@ router.post('/users/:id/reset-password', adminAuth, async (req, res) => {
 module.exports = router;
 
 // Contact form submission
-router.post('/contact', async (req, res) => {
+router.post('/contact', contactLimiter, async (req, res) => {
   try {
     const { name, email, message } = req.body;
     if (!name || !email || !message) return res.status(400).json({ message: 'All fields required' });
+    if (name.length > 100) return res.status(400).json({ message: 'Name too long' });
+    if (message.length > 1000) return res.status(400).json({ message: 'Message too long' });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return res.status(400).json({ message: 'Invalid email address' });
     
     // Store in DB as a simple log
     const Contact = require('../models/Contact');
