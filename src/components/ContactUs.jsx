@@ -8,7 +8,7 @@ const ContactUs = () => {
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
-    if (!form.name || !form.email || !form.message) { setError('All fields are required'); return; }
+    if (!form.name || !form.email || !form.message) { setError('All fields are required'); setTimeout(() => setError(''), 3000); return; }
     setSubmitting(true); setError(''); setSuccess('');
     try {
       const res = await fetch('https://vertextrades.onrender.com/api/admin/contact', {
@@ -17,12 +17,12 @@ const ContactUs = () => {
         body: JSON.stringify(form)
       }).then(r => r.json());
       if (res.success) {
-        setSuccess('Message sent! We will get back to you soon.');
+        setSuccess('Message sent! We will get back to you soon.'); setTimeout(() => setSuccess(''), 4000);
         setForm({ name: '', email: '', message: '' });
       } else {
-        setError(res.message || 'Failed to send message');
+        setError(res.message || 'Failed to send message'); setTimeout(() => setError(''), 3000);
       }
-    } catch { setError('Network error. Please try again.'); }
+    } catch { setError('Network error. Please try again.'); setTimeout(() => setError(''), 3000); }
     setSubmitting(false);
   };
 

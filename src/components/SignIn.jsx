@@ -39,7 +39,7 @@ const SignIn = () => {
       if (res.token) {
         login(res.token, res.user);
         setSuccess(true);
-        setTimeout(() => { window.location.href = '/dashboard'; }, 1500);
+        setTimeout(() => { window.location.replace('/dashboard'); }, 1500);
       } else {
         setErrors({ username: res.message || 'Invalid credentials' });
       }
@@ -79,16 +79,18 @@ const SignIn = () => {
             <p style={{ color: '#94a3b8', fontSize: '8px' }}>Enter your email or username and password to access your dashboard.</p>
           </div>
 
-          {success ? (
-            <div style={{ textAlign: 'center', padding: '20px 0' }}>
-              <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
-                <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2.5'><polyline points='20 6 9 17 4 12'/></svg>
-              </div>
-              <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Login Successful!</div>
-              <div style={{ color: '#94a3b8', fontSize: '9px', marginTop: '6px' }}>Redirecting to your dashboard...</div>
-            </div>
-          ) : (
+          {success && (
             <>
+              <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
+              <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
+                <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2.5'><polyline points='20 6 9 17 4 12'/></svg>
+                </div>
+                <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Login Successful!</div>
+                <div style={{ color: '#555', fontSize: '9px', lineHeight: '1.6' }}>Redirecting to your dashboard...</div>
+              </div>
+            </>
+          )}
               <div style={{ marginBottom: '12px' }}>
                 <label style={{ color: '#94a3b8', fontSize: '8px', display: 'block', marginBottom: '4px' }}>Email or Username</label>
                 <input name='username' value={form.username} onChange={handleChange} placeholder='Enter email or username' style={inputStyle('username')} />
@@ -122,8 +124,6 @@ const SignIn = () => {
               <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '8px', margin: 0 }}>
                 Don't have an account? <span onClick={() => window.location.href='/signup'} style={{ color: 'white', fontWeight: '600', cursor: 'pointer' }}>Sign Up</span>
               </p>
-            </>
-          )}
         </div>
       </div>
 

@@ -39,7 +39,7 @@ const sidebarSections = [
       { icon: <User size={13}/>, label: 'Profile', route: '/dashboard/profile' },
       { icon: <BarChart2 size={13}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
       { icon: <Wallet size={13}/>, label: 'Stake', route: '/dashboard/stake' },
-      { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/bot-transactions' },
+      { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/manage-bots' },
     ]
   },
   {

@@ -284,7 +284,7 @@ export default function WithdrawNew() {
                     setError(res.message || 'Withdrawal failed. Please try again.');
                   }
                 } catch (err) {
-                  setError('Network error. Please check your connection.');
+                  setError('Network error. Please check your connection.'); setTimeout(() => setError(''), 3000);
                 } finally {
                   setSubmitting(false);
                 }

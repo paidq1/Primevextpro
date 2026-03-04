@@ -7,7 +7,7 @@ export default function NotFound() {
       <div style={{ color: '#6366f1', fontSize: '72px', fontWeight: '800', lineHeight: 1 }}>404</div>
       <div style={{ color: 'white', fontSize: '16px', fontWeight: '600', marginTop: '12px' }}>Page Not Found</div>
       <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px', marginTop: '8px', marginBottom: '24px' }}>The page you're looking for doesn't exist.</div>
-      <button onClick={() => navigate('/dashboard')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '10px 24px', cursor: 'pointer' }}>
+      <button onClick={() => navigate('/')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '10px 24px', cursor: 'pointer' }}>
         Go to Dashboard
       </button>
     </div>

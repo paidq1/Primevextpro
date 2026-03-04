@@ -54,9 +54,9 @@ export default function KYC() {
   const handleSubmit = async () => {
     if (!idType) { setError('Please select an ID type.'); return; }
     if (!idNumber.trim()) { setError('Please enter your ID number.'); return; }
-    if (!idFront) { setError('Please upload the front of your ID.'); return; }
-    if (!idBack) { setError('Please upload the back of your ID.'); return; }
-    if (!selfie) { setError('Please upload a selfie with your ID.'); return; }
+    if (!idFront) { setError('Please upload the front of your ID.'); setTimeout(() => setError(''), 3000); return; }
+    if (!idBack) { setError('Please upload the back of your ID.'); setTimeout(() => setError(''), 3000); return; }
+    if (!selfie) { setError('Please upload a selfie with your ID.'); setTimeout(() => setError(''), 3000); return; }
     setError('');
     setSubmitting(true);
     try {
