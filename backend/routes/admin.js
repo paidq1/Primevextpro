@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const adminAuth = require('../middleware/adminAuth');
+const Notification = require('../models/Notification');
 const rateLimit = require('express-rate-limit');
 const contactLimiter = rateLimit({ windowMs: 60 * 60 * 1000, max: 5, message: { message: 'Too many messages. Try again later.' } });
 const sendEmail = require('../utils/sendEmail');
@@ -317,6 +318,15 @@ router.put('/withdrawals/:id', adminAuth, async (req, res) => {
       });
     }
 
+        // Send notification
+    try {
+      await Notification.create({
+        user: withdrawal.user,
+        title: isApproved ? 'Withdrawal Approved ✅' : 'Withdrawal Rejected ❌',
+        message: isApproved ? `Your withdrawal of $${withdrawal.amount} has been approved and is being processed.` : `Your withdrawal of $${withdrawal.amount} was rejected. Funds returned to balance.`,
+        type: 'withdrawal'
+      });
+    } catch(e) {}
     // Send email notification
     try {
       const user = await User.findById(transaction.user);

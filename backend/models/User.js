@@ -25,6 +25,8 @@ const userSchema = new mongoose.Schema({
   adminMessage: { type: String, default: '' },
   referralCode: { type: String, unique: true },
   referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  referralEarnings: { type: Number, default: 0 },
+  referralClaimed: { type: Number, default: 0 },
   kycStatus: { type: String, enum: ['pending', 'submitted', 'approved', 'rejected'], default: 'pending' },
   kycData: { idType: String, idNumber: String, idFront: String, idBack: String, selfie: String, submittedAt: Date },
   isActive: { type: Boolean, default: true },

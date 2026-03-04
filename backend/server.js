@@ -73,6 +73,7 @@ app.use('/api/kyc', require('./routes/kyc'));
 app.use('/api/stake', require('./routes/stake'));
 app.use('/api/bots', require('./routes/bot'));
 app.use('/api/referral', require('./routes/referral'));
+app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/admin', require('./routes/admin'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'VertexTrade Pro API running' }));

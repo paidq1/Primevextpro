@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { getDashboard, getTransactions } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
+import NotificationBell from '../components/NotificationBell';
 import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings } from 'lucide-react';
 
 // stats defined inside component using real data
@@ -93,6 +94,7 @@ export default function Dashboard() {
 
         {/* Top Nav */}
         <div style={{ background: '#132035', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+          <NotificationBell />
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
