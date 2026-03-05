@@ -20,7 +20,8 @@ export default function Stake() {
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
-  const [show, setShow] = useState(10);
+  const [page, setPage] = useState(1);
+  const perPage = 10;
   const [stakes, setStakes] = useState([]);
   const [loadingStakes, setLoadingStakes] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -198,7 +199,7 @@ export default function Stake() {
             <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</div>
           ) : stakes.length === 0 ? (
             <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No stakes found</div>
-          ) : stakes.slice(0, show).map((s, i) => {
+          ) : stakes.slice((page-1)*perPage, page*perPage).map((s, i) => {
             const totalDays = parseInt(s.duration) || 30;
             const elapsed = Math.floor((Date.now() - new Date(s.createdAt)) / (1000 * 60 * 60 * 24));
             const daysLeft = Math.max(0, totalDays - elapsed);
@@ -251,8 +252,15 @@ export default function Stake() {
               </div>
             );
           })}
-          <div style={{ padding: '8px 12px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {Math.min(stakes.length, show)} of {stakes.length} entries</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {stakes.length === 0 ? 0 : (page-1)*perPage+1}–{Math.min(page*perPage, stakes.length)} of {stakes.length} entries</span>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page} of {Math.ceil(stakes.length/perPage)||1}</span>
+              <button onClick={() => setPage(p=>Math.min(Math.ceil(stakes.length/perPage),p+1))} disabled={page>=Math.ceil(stakes.length/perPage)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=Math.ceil(stakes.length/perPage)?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=Math.ceil(stakes.length/perPage)?'default':'pointer' }}>›</button>
+              <button onClick={() => setPage(Math.ceil(stakes.length/perPage))} disabled={page>=Math.ceil(stakes.length/perPage)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=Math.ceil(stakes.length/perPage)?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=Math.ceil(stakes.length/perPage)?'default':'pointer' }}>»</button>
+            </div>
           </div>
         </div>
       </div>
