@@ -199,7 +199,10 @@ export default function LiveTrading() {
 
         <div style={{ padding: '14px 16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Trading</span>
+            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+              Live Trading
+            </span>
             <button onClick={() => { setShowModal(true); setError(''); }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer' }}>+ New Trade</button>
           </div>
 
