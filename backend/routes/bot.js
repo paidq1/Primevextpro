@@ -5,12 +5,12 @@ const User = require('../models/User');
 const auth = require('../middleware/auth');
 
 const botDetails = {
-  'STARTER BOT':  { dailyRate: '5%',  duration: '7 days',  days: 7,  amount: 500  },
-  'SILVER BOT':   { dailyRate: '8%',  duration: '14 days', days: 14, amount: 1000 },
-  'GOLD BOT':     { dailyRate: '12%', duration: '30 days', days: 30, amount: 2500 },
-  'PLATINUM BOT': { dailyRate: '18%', duration: '60 days', days: 60, amount: 5000 },
-  'DIAMOND BOT':  { dailyRate: '25%', duration: '90 days', days: 90, amount: 10000},
-  'ELITE BOT':    { dailyRate: '35%', duration: '120 days',days: 120,amount: 25000},
+  'STARTER BOT':  { dailyRate: '10%', duration: '7 days',  days: 7,  amount: 500  },
+  'SILVER BOT':   { dailyRate: '16%', duration: '14 days', days: 14, amount: 1000 },
+  'GOLD BOT':     { dailyRate: '24%', duration: '30 days', days: 30, amount: 2500 },
+  'PLATINUM BOT': { dailyRate: '36%', duration: '60 days', days: 60, amount: 5000 },
+  'DIAMOND BOT':  { dailyRate: '50%', duration: '90 days', days: 90, amount: 10000},
+  'ELITE BOT':    { dailyRate: '70%', duration: '120 days',days: 120,amount: 25000},
 };
 
 // Get all bots for user

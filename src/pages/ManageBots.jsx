@@ -8,12 +8,12 @@ const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 
 const bots = [
-  { name: 'STARTER BOT',  amount: 500,   dailyRate: '15%', duration: '7 days',   days: 7,   color: '#6366f1' },
-  { name: 'SILVER BOT',   amount: 1000,  dailyRate: '20%', duration: '14 days',  days: 14,  color: '#6366f1' },
-  { name: 'GOLD BOT',     amount: 2500,  dailyRate: '25%', duration: '30 days',  days: 30,  color: '#6366f1' },
-  { name: 'PLATINUM BOT', amount: 5000,  dailyRate: '30%', duration: '60 days',  days: 60,  color: '#6366f1' },
-  { name: 'DIAMOND BOT',  amount: 10000, dailyRate: '35%', duration: '90 days',  days: 90,  color: '#6366f1' },
-  { name: 'ELITE BOT',    amount: 25000, dailyRate: '40%', duration: '120 days', days: 120, color: '#6366f1' },
+  { name: 'STARTER BOT',  amount: 500,   dailyRate: '10%', duration: '7 days',   days: 7,   color: '#22c55e' },
+  { name: 'SILVER BOT',   amount: 1000,  dailyRate: '16%', duration: '14 days',  days: 14,  color: '#94a3b8' },
+  { name: 'GOLD BOT',     amount: 2500,  dailyRate: '24%', duration: '30 days',  days: 30,  color: '#f59e0b' },
+  { name: 'PLATINUM BOT', amount: 5000,  dailyRate: '36%', duration: '60 days',  days: 60,  color: '#6366f1' },
+  { name: 'DIAMOND BOT',  amount: 10000, dailyRate: '50%', duration: '90 days',  days: 90,  color: '#22d3ee' },
+  { name: 'ELITE BOT',    amount: 25000, dailyRate: '70%', duration: '120 days', days: 120, color: '#ec4899' },
 ];
 
 export default function ManageBots() {
@@ -178,7 +178,7 @@ export default function ManageBots() {
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
             return (
-              <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${bot.color}40`, padding: '12px', position: 'relative', overflow: 'visible' }}>
+              <div key={i} style={{ background: '#1a2e4a', border: `1px solid ${bot.color}60`, padding: '12px', position: 'relative', overflow: 'visible' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: bot.color }} />
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '8px', letterSpacing: '1px' }}>{bot.name}</div>
                 <div style={{ marginBottom: '8px' }}>
