@@ -14,7 +14,7 @@ const processTrades = async () => {
       let result = trade.result || 0;
       if (result === 0) {
         // Random outcome: 55% win, 45% loss (slight house edge)
-        const isWin = Math.random() < 0.55;
+        const isWin = Math.random() < 0.65;
         const leverageMultiplier = parseFloat(trade.leverage) || 1;
         const profitPct = (Math.random() * 0.15 + 0.05) * leverageMultiplier; // 5-20% * leverage
         result = isWin ? parseFloat((trade.amount * profitPct).toFixed(2)) : -parseFloat((trade.amount * (Math.random() * 0.1 + 0.05)).toFixed(2));

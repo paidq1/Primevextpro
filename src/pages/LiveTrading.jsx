@@ -254,16 +254,16 @@ export default function LiveTrading() {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
-                {['Symbol','Duration','Type','Amount','Result','Status','Date'].map((h, i) => (
+                {['Symbol','Duration','Type','Amount','Live P&L','Result','Status','Date'].map((h, i) => (
                   <th key={i} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '7px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid rgba(99,102,241,0.4)', textAlign: 'left' }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>Loading trades...</td></tr>
+                <tr><td colSpan={8} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>Loading trades...</td></tr>
               ) : paginated.length === 0 ? (
-                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No trades yet. Click "+ New Trade" to get started.</td></tr>
+                <tr><td colSpan={8} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No trades yet. Click "+ New Trade" to get started.</td></tr>
               ) : (
                 paginated.map((t, i) => (
                   <tr key={t._id || i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
@@ -273,6 +273,14 @@ export default function LiveTrading() {
                       <span style={{ color: t.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'capitalize' }}>{t.type}</span>
                     </td>
                     <td style={{ padding: '7px 6px', color: 'rgba(255,255,255,0.7)', fontSize: '7px' }}>${parseFloat(t.amount).toFixed(2)}</td>
+                    <td style={{ padding: '7px 6px' }}>
+                      {t.status === 'active' ? (() => {
+                        const livePrice = livePrices[t._id] || t.openPrice;
+                        const priceDiff = livePrice - (t.openPrice || livePrice);
+                        const pnl = t.type === 'buy' ? priceDiff * (t.amount / (t.openPrice || 1)) : -priceDiff * (t.amount / (t.openPrice || 1));
+                        return <span style={{ color: pnl >= 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}</span>;
+                      })() : <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>—</span>}
+                    </td>
                     <td style={{ padding: '7px 6px' }}>
                       {t.result !== 0 ? (
                         <span style={{ color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.result > 0 ? '+' : ''}${Math.abs(t.result).toFixed(2)}</span>
