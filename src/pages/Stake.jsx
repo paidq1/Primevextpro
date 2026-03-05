@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createStake, getStakes } from '../services/api';
+import { getStakes } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { Copy, TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -18,12 +18,8 @@ export default function Stake() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [amount, setAmount] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [fileData, setFileData] = useState(null);
-  const [fileName, setFileName] = useState('No file chosen');
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [show, setShow] = useState(10);
   const [stakes, setStakes] = useState([]);
   const [loadingStakes, setLoadingStakes] = useState(true);
@@ -31,19 +27,14 @@ export default function Stake() {
   const [totalStaked, setTotalStaked] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
 
-  const coinData = {
-    USDT: { address: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS', network: 'TRC20 (Tron)' },
-    ETH:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'Ethereum (ERC20)' },
-    USDC: { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
-    BNB:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
-    SOL:  { address: 'EZT8kz4psrz7rTkbs8kN8ARbzQfkhzmutRRBefJLCiAN', network: 'Solana (SOL)' },
-    BTC:  { address: '1B587SJUL5RSNjr41iU2e8eGencRRjUU8d', network: 'Bitcoin (BTC)' },
-  };
-  const [stakeCoin, setStakeCoin] = useState('USDT');
-  const walletAddress = coinData[stakeCoin]?.address || coinData['USDT'].address;
-  const walletNetwork = coinData[stakeCoin]?.network || coinData['USDT'].network;
+
+
+  const [balance, setBalance] = useState(0);
 
   useEffect(() => {
+    fetch('https://vertextrades.onrender.com/api/user/dashboard', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    }).then(r => r.json()).then(d => setBalance(d.balance || 0)).catch(() => {});
     getStakes().then(data => {
       if (Array.isArray(data)) {
         setStakes(data);
@@ -77,14 +68,17 @@ export default function Stake() {
     setError('');
     setSubmitting(true);
     try {
-      const formData = new FormData();
-      formData.append('plan', selectedPlan.name);
-      formData.append('amount', Number(amount));
-      formData.append('apy', selectedPlan.apy);
-      formData.append('duration', selectedPlan.duration.replace(' days', ''));
-      formData.append('paymentMethod', paymentMethod);
-      if (fileData) formData.append('paymentProof', fileData);
-      const res = await createStake(formData);
+      const token = localStorage.getItem('token');
+      const res = await fetch('https://vertextrades.onrender.com/api/stake', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({
+          plan: selectedPlan.name,
+          amount: Number(amount),
+          apy: selectedPlan.apy,
+          duration: selectedPlan.duration.replace(' days', '')
+        })
+      }).then(r => r.json());
       if (res.success || res._id || res.stake) {
         setShowSuccess(true);
         getStakes().then(data => { if (Array.isArray(data)) { setStakes(data); setTotalStaked(data.reduce((s,i) => s+(i.amount||0),0)); setTotalEarned(data.reduce((s,i) => s+(i.earned||0),0)); }});
@@ -187,6 +181,7 @@ export default function Stake() {
 
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>Amount to Stake (USD)</label>
+              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '4px' }}>Available Balance: <span style={{ color: '#22c55e', fontWeight: '700' }}>${balance.toFixed(2)}</span></div>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={selectedPlan ? `Min $${selectedPlan.min}` : '0.00'} style={inputStyle} />
             </div>
 

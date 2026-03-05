@@ -1,19 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Stake = require('../models/Stake');
+const User = require('../models/User');
+const Notification = require('../models/Notification');
 const auth = require('../middleware/auth');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
-});
-const upload = multer({ storage });
 
 // Get all stakes for user
 router.get('/', auth, async (req, res) => {
@@ -26,16 +16,26 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Create new stake
-router.post('/', auth, upload.single('paymentProof'), async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
-    const { plan, amount, apy, duration, paymentMethod } = req.body;
+    const { plan, amount, apy, duration } = req.body;
 
-    if (!plan || !amount || !apy || !duration || !paymentMethod) {
+    if (!plan || !amount || !apy || !duration) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     if (amount <= 0) {
       return res.status(400).json({ message: 'Invalid amount' });
     }
+
+    // Check user balance
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (user.balance < Number(amount)) {
+      return res.status(400).json({ message: `Insufficient balance. You need $${Number(amount).toLocaleString()} to stake.` });
+    }
+
+    // Deduct from balance
+    await User.findByIdAndUpdate(req.user.id, { $inc: { balance: -Number(amount) } });
 
     const days = parseInt(duration);
     const expiresAt = new Date();
@@ -47,12 +47,21 @@ router.post('/', auth, upload.single('paymentProof'), async (req, res) => {
       amount: Number(amount),
       apy,
       duration,
-      paymentMethod,
-      paymentProof: req.file ? '/uploads/' + req.file.filename : '',
+      paymentMethod: 'balance',
+      status: 'active',
       expiresAt,
     });
 
     await stake.save();
+
+    // Send notification
+    await Notification.create({
+      user: req.user.id,
+      title: 'Stake Activated ✅',
+      message: `Your ${plan} stake of $${Number(amount).toLocaleString()} at ${apy} APY has been activated for ${duration}.`,
+      type: 'deposit'
+    });
+
     res.json({ success: true, stake });
   } catch (err) {
     console.error('Stake error:', err);
