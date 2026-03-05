@@ -580,7 +580,7 @@ router.get('/stakes/all', adminAuth, async (req, res) => {
 });
 
 // Cancel bot
-router.put('/bots/admin/:id/cancel', adminAuth, async (req, res) => {
+router.put('/bots/:id/cancel', adminAuth, async (req, res) => {
   try {
     const Bot = require('../models/Bot');
     const bot = await Bot.findByIdAndUpdate(req.params.id, { status: 'cancelled' }, { new: true });
@@ -591,7 +591,7 @@ router.put('/bots/admin/:id/cancel', adminAuth, async (req, res) => {
 });
 
 // Delete bot
-router.delete('/bots/admin/:id', adminAuth, async (req, res) => {
+router.delete('/bots/:id', adminAuth, async (req, res) => {
   try {
     const Bot = require('../models/Bot');
     await Bot.findByIdAndDelete(req.params.id);
@@ -602,7 +602,7 @@ router.delete('/bots/admin/:id', adminAuth, async (req, res) => {
 });
 
 // Cancel stake
-router.put('/stakes/admin/:id/cancel', adminAuth, async (req, res) => {
+router.put('/stakes/:id/cancel', adminAuth, async (req, res) => {
   try {
     const Stake = require('../models/Stake');
     const stake = await Stake.findByIdAndUpdate(req.params.id, { status: 'cancelled' }, { new: true });
@@ -613,7 +613,7 @@ router.put('/stakes/admin/:id/cancel', adminAuth, async (req, res) => {
 });
 
 // Delete stake
-router.delete('/stakes/admin/:id', adminAuth, async (req, res) => {
+router.delete('/stakes/:id', adminAuth, async (req, res) => {
   try {
     const Stake = require('../models/Stake');
     await Stake.findByIdAndDelete(req.params.id);

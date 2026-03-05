@@ -668,10 +668,10 @@ export default function AdminPanel() {
                       <td style={tdStyle}>
                         <div style={{ display: 'flex', gap: '4px' }}>
                           {b.status === 'active' && (
-                            <button onClick={() => api(`/bots/admin/${b._id}/cancel`, 'PUT').then(() => api('/bots/all').then(d => setAllBots(Array.isArray(d)?d:[])))}
+                            <button onClick={() => api(`/bots/${b._id}/cancel`, 'PUT').then(() => api('/bots/all').then(d => setAllBots(Array.isArray(d)?d:[])))}
                               style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Cancel</button>
                           )}
-                          <button onClick={() => api(`/bots/admin/${b._id}`, 'DELETE').then(() => setAllBots(prev => prev.filter(x => x._id !== b._id)))}
+                          <button onClick={() => api(`/bots/${b._id}`, 'DELETE').then(() => setAllBots(prev => prev.filter(x => x._id !== b._id)))}
                             style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Delete</button>
                         </div>
                       </td>
@@ -707,10 +707,10 @@ export default function AdminPanel() {
                       <td style={tdStyle}>
                         <div style={{ display: 'flex', gap: '4px' }}>
                           {s.status === 'active' && (
-                            <button onClick={() => api(`/stakes/admin/${s._id}/cancel`, 'PUT').then(() => api('/stakes/all').then(d => setAllStakes(Array.isArray(d)?d:[])))}
+                            <button onClick={() => api(`/stakes/${s._id}/cancel`, 'PUT').then(() => api('/stakes/all').then(d => setAllStakes(Array.isArray(d)?d:[])))}
                               style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Cancel</button>
                           )}
-                          <button onClick={() => api(`/stakes/admin/${s._id}`, 'DELETE').then(() => setAllStakes(prev => prev.filter(x => x._id !== s._id)))}
+                          <button onClick={() => api(`/stakes/${s._id}`, 'DELETE').then(() => setAllStakes(prev => prev.filter(x => x._id !== s._id)))}
                             style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Delete</button>
                         </div>
                       </td>
