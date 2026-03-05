@@ -578,3 +578,47 @@ router.get('/stakes/all', adminAuth, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Cancel bot
+router.put('/bots/admin/:id/cancel', adminAuth, async (req, res) => {
+  try {
+    const Bot = require('../models/Bot');
+    const bot = await Bot.findByIdAndUpdate(req.params.id, { status: 'cancelled' }, { new: true });
+    res.json({ success: true, bot });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Delete bot
+router.delete('/bots/admin/:id', adminAuth, async (req, res) => {
+  try {
+    const Bot = require('../models/Bot');
+    await Bot.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Cancel stake
+router.put('/stakes/admin/:id/cancel', adminAuth, async (req, res) => {
+  try {
+    const Stake = require('../models/Stake');
+    const stake = await Stake.findByIdAndUpdate(req.params.id, { status: 'cancelled' }, { new: true });
+    res.json({ success: true, stake });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Delete stake
+router.delete('/stakes/admin/:id', adminAuth, async (req, res) => {
+  try {
+    const Stake = require('../models/Stake');
+    await Stake.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});

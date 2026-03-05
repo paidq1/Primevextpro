@@ -653,7 +653,7 @@ export default function AdminPanel() {
             ) : (
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr>{['User', 'Bot', 'Amount', 'Daily Rate', 'Earned', 'Status', 'Expires'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                  <tr>{['User', 'Bot', 'Amount', 'Daily Rate', 'Earned', 'Status', 'Expires', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
                 </thead>
                 <tbody>
                   {allBots.map((b, i) => (
@@ -665,6 +665,16 @@ export default function AdminPanel() {
                       <td style={{ ...tdStyle, color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</td>
                       <td style={{ ...tdStyle }}><span style={{ background: b.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: b.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{b.status}</span></td>
                       <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{b.expiresAt ? new Date(b.expiresAt).toLocaleDateString() : '-'}</td>
+                      <td style={tdStyle}>
+                        <div style={{ display: 'flex', gap: '4px' }}>
+                          {b.status === 'active' && (
+                            <button onClick={() => api(`/bots/admin/${b._id}/cancel`, 'PUT').then(() => api('/bots/all').then(d => setAllBots(Array.isArray(d)?d:[])))}
+                              style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Cancel</button>
+                          )}
+                          <button onClick={() => api(`/bots/admin/${b._id}`, 'DELETE').then(() => setAllBots(prev => prev.filter(x => x._id !== b._id)))}
+                            style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Delete</button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -682,7 +692,7 @@ export default function AdminPanel() {
             ) : (
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr>{['User', 'Plan', 'Amount', 'APY', 'Earned', 'Status', 'Expires'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                  <tr>{['User', 'Plan', 'Amount', 'APY', 'Earned', 'Status', 'Expires', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
                 </thead>
                 <tbody>
                   {allStakes.map((s, i) => (
@@ -694,6 +704,16 @@ export default function AdminPanel() {
                       <td style={{ ...tdStyle, color: '#f59e0b' }}>${(s.earned||0).toFixed(4)}</td>
                       <td style={{ ...tdStyle }}><span style={{ background: s.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: s.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{s.status}</span></td>
                       <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{s.expiresAt ? new Date(s.expiresAt).toLocaleDateString() : '-'}</td>
+                      <td style={tdStyle}>
+                        <div style={{ display: 'flex', gap: '4px' }}>
+                          {s.status === 'active' && (
+                            <button onClick={() => api(`/stakes/admin/${s._id}/cancel`, 'PUT').then(() => api('/stakes/all').then(d => setAllStakes(Array.isArray(d)?d:[])))}
+                              style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Cancel</button>
+                          )}
+                          <button onClick={() => api(`/stakes/admin/${s._id}`, 'DELETE').then(() => setAllStakes(prev => prev.filter(x => x._id !== s._id)))}
+                            style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Delete</button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
