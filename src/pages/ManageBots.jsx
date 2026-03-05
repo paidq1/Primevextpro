@@ -120,6 +120,55 @@ export default function ManageBots() {
 
 
 
+        {/* Active Bot Progress */}
+        {activeBots.filter(b => b.status === 'active').length > 0 && (
+          <div style={{ marginBottom: '16px' }}>
+            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>🤖 Active Bots</div>
+            {activeBots.filter(b => b.status === 'active').map((b, i) => {
+              const totalDays = parseInt(b.duration) || 7;
+              const daysLeft = b.expiresAt ? Math.max(0, Math.ceil((new Date(b.expiresAt) - new Date()) / (1000*60*60*24))) : 0;
+              const elapsed = totalDays - daysLeft;
+              const progress = Math.min(100, Math.max(0, (elapsed / totalDays) * 100));
+              const earned = b.earned || 0;
+              const roi = b.amount > 0 ? ((earned / b.amount) * 100).toFixed(2) : '0.00';
+              return (
+                <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <span style={{ color: '#6366f1', fontSize: '10px', fontWeight: '800' }}>{b.botName}</span>
+                    <span style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontSize: '7px', padding: '2px 8px', fontWeight: '700' }}>ACTIVE</span>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '6px', marginBottom: '10px' }}>
+                    {[
+                      ['Invested', `$${(b.amount||0).toLocaleString()}`, 'white'],
+                      ['Daily Rate', b.dailyRate, '#22c55e'],
+                      ['Earned', `$${earned.toFixed(2)}`, '#f59e0b'],
+                      ['ROI', `${roi}%`, parseFloat(roi) >= 0 ? '#22c55e' : '#ef4444'],
+                    ].map(([l,v,col]) => (
+                      <div key={l} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.04)', padding: '6px' }}>
+                        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>{l}</div>
+                        <div style={{ color: col, fontSize: '10px', fontWeight: '700' }}>{v}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginBottom: '4px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{elapsed} / {totalDays} days</span>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{daysLeft} days left</span>
+                    </div>
+                    <div style={{ background: 'rgba(255,255,255,0.08)', height: '5px', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div style={{ width: progress + '%', height: '100%', background: '#6366f1', borderRadius: '3px', transition: 'width 0.3s' }} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{progress.toFixed(0)}% complete</span>
+                      <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>Expires: {b.expiresAt ? new Date(b.expiresAt).toLocaleDateString() : '-'}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
         {/* Bot Plans */}
         <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>Available Bot Plans</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
