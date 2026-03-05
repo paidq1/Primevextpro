@@ -162,7 +162,7 @@ export default function KYC() {
 
           {isLocked && (
             <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '10px 12px', marginBottom: '14px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>
-              {kycStatus === 'approved' ? '✅ Your KYC is approved. No further action needed.' : '⏳ Your KYC is under review. You cannot resubmit at this time.'}
+              {kycStatus === 'approved' ? 'Your KYC is approved. No further action needed.' : 'Your KYC is under review. You cannot resubmit at this time.'}
             </div>
           )}
 
@@ -201,7 +201,7 @@ export default function KYC() {
 
             {error && (
               <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', padding: '8px 10px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ color: '#ef4444', fontSize: '12px' }}>⚠</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                 <span style={{ color: '#ef4444', fontSize: '8px' }}>{error}</span>
               </div>
             )}
