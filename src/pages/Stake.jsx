@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getStakes } from '../services/api';
 import { useNavigate } from 'react-router-dom';
-import { Copy, TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
+import { TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
 
 const stakePlans = [
@@ -45,26 +45,12 @@ export default function Stake() {
     }).catch(() => setLoadingStakes(false));
   }, []);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(walletAddress).catch(() => {
-      const el = document.createElement('textarea');
-      el.value = walletAddress;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-    });
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const handleSubmit = async () => {
     if (!selectedPlan) { setError('Please select a staking plan.'); return; }
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
     if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} plan is $${selectedPlan.min}.`); return; }
     if (selectedPlan.max && Number(amount) > selectedPlan.max) { setError(`Maximum stake for ${selectedPlan.name} plan is $${selectedPlan.max}.`); return; }
-    if (!paymentMethod) { setError('Please select a payment method.'); return; }
-    if (!fileData) { setError('Please upload payment proof.'); return; }
     setError('');
     setSubmitting(true);
     try {
@@ -185,48 +171,10 @@ export default function Stake() {
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={selectedPlan ? `Min $${selectedPlan.min}` : '0.00'} style={inputStyle} />
             </div>
 
-            <div style={{ marginBottom: '12px' }}>
-              <label style={labelStyle}>Payment Method</label>
-              <select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}
-                style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: paymentMethod ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }}>
-                <option value=''>Select Payment Method</option>
-                <option value='crypto'>Crypto (USDT)</option>
-                <option value='bank'>Bank Transfer</option>
-              </select>
-            </div>
-
-            <div style={{ marginBottom: '16px' }}>
-              <label style={labelStyle}>Payment Proof</label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 10px' }}>
-                <label style={{ background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                  Choose File<input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]){ setFileData(e.target.files[0]); setFileName(e.target.files[0].name); }}} />
-                </label>
-                <span style={{ color: fileData ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.3)', fontSize: '8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{fileName}</span>
-              </div>
-            </div>
-
             <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-
-            <button onClick={handleSubmit} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
-              {submitting ? 'Submitting...' : 'Stake Now'}
+            <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer', width: '100%' }}>
+              {submitting ? 'Processing...' : 'Stake Now'}
             </button>
-          </div>
-
-          {/* QR Panel */}
-          <div style={{ width: '180px', flexShrink: 0, background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '14px', textAlign: 'center' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px', textAlign: 'left' }}>USDT Address:</div>
-            <div style={{ color: '#6366f1', fontSize: '7px', wordBreak: 'break-all', marginBottom: '6px', textAlign: 'left' }}>{walletAddress}</div>
-            <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '4px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', marginBottom: '8px', width: '100%', justifyContent: 'center' }}>
-              <Copy size={9}/> {copied ? 'Copied!' : 'Copy Address'}
-            </button>
-            <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Deposit USDT to VertexTrade Pro</div>
-            <img src='/qrcode.jpg' alt='QR' style={{ width: '110px', height: '110px', margin: '0 auto 10px', display: 'block' }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Network</span>
-              <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '7px' }}>TRC20 (Tron)</span>
-            </div>
-            <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '6px', marginBottom: '8px' }}>*Do not deposit assets other than USDT.</div>
-            <div style={{ color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
           </div>
         </div>
 

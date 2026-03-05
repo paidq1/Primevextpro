@@ -12,6 +12,7 @@ const stakeSchema = new mongoose.Schema({
   earned: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   expiresAt: { type: Date },
+  lastProfitAt: { type: Date },
 });
 
 module.exports = mongoose.model('Stake', stakeSchema);
