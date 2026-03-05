@@ -20,7 +20,7 @@ const processTrades = async () => {
         result = isWin ? parseFloat((trade.amount * profitPct).toFixed(2)) : -parseFloat((trade.amount * (Math.random() * 0.1 + 0.05)).toFixed(2));
       }
 
-      const payout = trade.amount + result;
+      const payout = result > 0 ? trade.amount + result : 0; // Full loss on loss
       const closePrice = parseFloat((trade.openPrice * (1 + (result > 0 ? 0.01 : -0.01))).toFixed(4));
 
       await Trade.findByIdAndUpdate(trade._id, {
