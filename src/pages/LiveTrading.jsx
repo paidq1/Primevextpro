@@ -199,7 +199,7 @@ export default function LiveTrading() {
 
         <div style={{ padding: '14px 16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>📈 Live Trading</span>
+            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Trading</span>
             <button onClick={() => { setShowModal(true); setError(''); }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer' }}>+ New Trade</button>
           </div>
 
