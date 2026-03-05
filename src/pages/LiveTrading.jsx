@@ -31,9 +31,34 @@ export default function LiveTrading() {
   const [stats, setStats] = useState(null);
   const [statsLoading, setStatsLoading] = useState(true);
   const [balance, setBalance] = useState(null);
+  const [stopLoss, setStopLoss] = useState('');
+  const [takeProfit, setTakeProfit] = useState('');
+  const [livePrices, setLivePrices] = useState({});
   const perPage = 10;
 
   useEffect(() => { fetchTrades(); fetchStats(); fetchBalance(); }, []);
+
+  // Simulate live prices for active trades
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLivePrices(prev => {
+        const next = { ...prev };
+        trades.filter(t => t.status === 'active').forEach(t => {
+          const base = prev[t._id] || t.openPrice || 100;
+          const change = base * (Math.random() * 0.006 - 0.003);
+          next[t._id] = parseFloat((base + change).toFixed(4));
+        });
+        return next;
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [trades]);
+
+  // Auto-refresh trades every 15 seconds to catch closed trades
+  useEffect(() => {
+    const interval = setInterval(() => { fetchTrades(); fetchStats(); fetchBalance(); }, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchTrades = async () => {
     setLoading(true);
@@ -92,6 +117,8 @@ export default function LiveTrading() {
         type: type,
         amount: parseFloat(amount),
         leverage, duration,
+        stopLoss: stopLoss ? parseFloat(stopLoss) : null,
+        takeProfit: takeProfit ? parseFloat(takeProfit) : null,
       });
       if (res.trade) {
         setTradeType(type);
@@ -105,6 +132,8 @@ export default function LiveTrading() {
         setMarket('---');
         setDuration('---');
         setLeverage('2x');
+        setStopLoss('');
+        setTakeProfit('');
         setError('');
       } else {
         setErrorMessage(res.message || 'Failed to place trade.');
@@ -334,6 +363,17 @@ export default function LiveTrading() {
               />
               {amount && Number(amount) < 10 && <span style={{ color: '#ef4444', fontSize: '7px' }}>Minimum is $10.00</span>}
               {amount && Number(amount) > 100000 && <span style={{ color: '#ef4444', fontSize: '7px' }}>Maximum is $100,000</span>}
+            </div>
+
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+              <div style={{ flex: 1 }}>
+                <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' }}>Stop Loss ($)</label>
+                <input value={stopLoss} onChange={e => setStopLoss(e.target.value)} placeholder='Optional' type='number' style={sel} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', display: 'block', marginBottom: '4px' }}>Take Profit ($)</label>
+                <input value={takeProfit} onChange={e => setTakeProfit(e.target.value)} placeholder='Optional' type='number' style={sel} />
+              </div>
             </div>
 
             {error && (

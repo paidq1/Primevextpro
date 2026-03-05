@@ -13,6 +13,12 @@ const tradeSchema = new mongoose.Schema({
   status: { type: String, enum: ['pending', 'active', 'closed', 'cancelled'], default: 'pending' },
   createdAt: { type: Date, default: Date.now },
   closedAt: { type: Date },
+  expiresAt: { type: Date },
+  openPrice: { type: Number, default: 0 },
+  closePrice: { type: Number, default: 0 },
+  stopLoss: { type: Number, default: null },
+  takeProfit: { type: Number, default: null },
+  profitLoss: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model('Trade', tradeSchema);

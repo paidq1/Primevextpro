@@ -12,6 +12,7 @@ dotenv.config();
 
 const processBotProfits = require('./utils/botCron');
 const processStakeProfits = require('./utils/stakeCron');
+const processTrades = require('./utils/tradeCron');
 
 // Run bot profit cron every 30 minutes
 const BOT_CRON_INTERVAL = 30 * 60 * 1000; // 30 minutes
@@ -20,6 +21,8 @@ setInterval(processStakeProfits, BOT_CRON_INTERVAL);
 // Also run once on startup after 1 minute delay
 setTimeout(processBotProfits, 60 * 1000);
 setTimeout(processStakeProfits, 90 * 1000);
+setInterval(processTrades, 15 * 1000); // Check every 15 seconds
+setTimeout(processTrades, 5 * 1000);
 
 const app = express();
 app.set('trust proxy', 1); // Trust Render's proxy
