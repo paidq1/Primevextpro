@@ -5,10 +5,12 @@ import { Copy, TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
 
 const stakePlans = [
-  { name: 'BRONZE', apy: '8%', min: 100, max: 999, duration: '30 days', color: '#cd7f32', bg: '#cd7f3220' },
-  { name: 'SILVER', apy: '12%', min: 1000, max: 4999, duration: '60 days', color: '#94a3b8', bg: '#94a3b820' },
-  { name: 'GOLD', apy: '18%', min: 5000, max: 9999, duration: '90 days', color: '#f59e0b', bg: '#f59e0b20' },
-  { name: 'PLATINUM', apy: '25%', min: 10000, max: null, duration: '180 days', color: '#6366f1', bg: '#6366f120' },
+  { name: 'STARTER',  apy: '5%',  min: 500,   max: 999,   duration: '7 days',   color: '#22c55e', bg: '#22c55e20' },
+  { name: 'SILVER',   apy: '8%',  min: 1000,  max: 2499,  duration: '14 days',  color: '#94a3b8', bg: '#94a3b820' },
+  { name: 'GOLD',     apy: '12%', min: 2500,  max: 4999,  duration: '30 days',  color: '#f59e0b', bg: '#f59e0b20' },
+  { name: 'PLATINUM', apy: '18%', min: 5000,  max: 9999,  duration: '60 days',  color: '#6366f1', bg: '#6366f120' },
+  { name: 'DIAMOND',  apy: '25%', min: 10000, max: 24999, duration: '90 days',  color: '#22d3ee', bg: '#22d3ee20' },
+  { name: 'ELITE',    apy: '35%', min: 25000, max: null,  duration: '120 days', color: '#ec4899', bg: '#ec489920' },
 ];
 
 export default function Stake() {
@@ -29,7 +31,17 @@ export default function Stake() {
   const [totalStaked, setTotalStaked] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
 
-  const walletAddress = 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS';
+  const coinData = {
+    USDT: { address: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS', network: 'TRC20 (Tron)' },
+    ETH:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'Ethereum (ERC20)' },
+    USDC: { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
+    BNB:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (Binance Smart Chain)' },
+    SOL:  { address: 'EZT8kz4psrz7rTkbs8kN8ARbzQfkhzmutRRBefJLCiAN', network: 'Solana (SOL)' },
+    BTC:  { address: '1B587SJUL5RSNjr41iU2e8eGencRRjUU8d', network: 'Bitcoin (BTC)' },
+  };
+  const [stakeCoin, setStakeCoin] = useState('USDT');
+  const walletAddress = coinData[stakeCoin]?.address || coinData['USDT'].address;
+  const walletNetwork = coinData[stakeCoin]?.network || coinData['USDT'].network;
 
   useEffect(() => {
     getStakes().then(data => {

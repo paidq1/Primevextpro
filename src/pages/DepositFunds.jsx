@@ -136,11 +136,11 @@ export default function DepositFunds() {
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px', textAlign: 'left' }}>{coin} Address:</div>
               <div style={{ color: '#6366f1', fontSize: '7px', wordBreak: 'break-all', marginBottom: '6px', textAlign: 'left' }}>{walletAddress}</div>
             <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '4px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', marginBottom: '8px', width: '100%', justifyContent: 'center' }}>{copied ? 'Copied!' : 'Copy Address'}</button>
-            <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Deposit USDT to VertexTrade Pro</div>
+            <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Deposit {coin} to VertexTrade Pro</div>
              <img src='/qrcode.jpg' alt='QR' style={{ width: '110px', height: '110px', margin: '0 auto 10px', display: 'block' }} />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Address</span>
-      <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '7px', wordBreak: 'break-all', maxWidth: '100px', textAlign: 'right' }}>TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS</span>
+      <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '7px', wordBreak: 'break-all', maxWidth: '100px', textAlign: 'right' }}>{walletAddress}</span>
     </div>
     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Network</span>
