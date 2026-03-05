@@ -215,7 +215,7 @@ export default function LiveTrading() {
             ].map((s, i) => (
               <div key={i} style={{ background: '#1a2e4a', padding: '10px', borderLeft: `3px solid ${s.color}` }}>
                 <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{s.label}</div>
-                <div style={{ fontSize: '13px', fontWeight: '700', color: typeof s.value === 'string' ? s.color : 'inherit' }}>{s.value}</div>
+                <div style={{ fontSize: '13px', fontWeight: '700' }}>{s.value}</div>
                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{s.sub}</div>
               </div>
             ))}
