@@ -209,7 +209,7 @@ export default function LiveTrading() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '14px' }}>
             {[
               { label: 'Total Trades', value: stats ? stats.totalTrades : '—', sub: stats ? `${stats.closedTrades} closed` : '', color: '#6366f1' },
-              { label: 'Win / Loss', value: stats ? `${stats.wins}W / ${stats.losses}L` : '—', sub: 'closed trades', color: '#22c55e' },
+              { label: 'Win / Loss', value: stats ? <span><span style={{color:'#22c55e',fontWeight:'700'}}>{stats.wins}W</span><span style={{color:'rgba(255,255,255,0.4)'}}> / </span><span style={{color:'#ef4444',fontWeight:'700'}}>{stats.losses}L</span></span> : '—', sub: 'closed trades', color: '#22c55e' },
               { label: 'Net P&L', value: stats ? `${parseFloat(stats.netProfitLoss)>=0?'+':''}$${stats.netProfitLoss}` : '—', sub: stats ? `profit: $${stats.totalProfit}` : '', color: stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444' },
               { label: 'ROI', value: stats ? `${parseFloat(stats.roi)>=0?'+':''}${stats.roi}%` : '—', sub: 'return on investment', color: stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444' },
             ].map((s, i) => (
