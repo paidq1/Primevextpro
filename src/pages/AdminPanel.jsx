@@ -86,6 +86,8 @@ export default function AdminPanel() {
 
   // Activity log
   const [contacts, setContacts] = useState([]);
+  const [allBots, setAllBots] = useState([]);
+  const [allStakes, setAllStakes] = useState([]);
   const [activityLog, setActivityLog] = useState(() => {
     try { return JSON.parse(localStorage.getItem('adminActivityLog') || '[]'); } catch { return []; }
   });
@@ -121,6 +123,8 @@ export default function AdminPanel() {
     if (tab === 'kyc') api('/kyc').then(setKyc);
     if (tab === 'trades') api('/trades').then(setTrades);
     if (tab === 'contacts') api('/contacts').then(d => setContacts(Array.isArray(d) ? d : []));
+    if (tab === 'bots') api('/bots/all').then(d => setAllBots(Array.isArray(d) ? d : []));
+    if (tab === 'stakes') api('/stakes/all').then(d => setAllStakes(Array.isArray(d) ? d : []));
   }, [tab]);
 
   const showMsg = (m) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
@@ -225,7 +229,7 @@ export default function AdminPanel() {
     showMsg('Trade updated');
   };
 
-  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'activity', 'contacts'];
+  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'bots', 'stakes', 'activity', 'contacts'];
   const pendingCount = (arr) => arr.filter(x => x.status === 'pending' || x.kycStatus === 'submitted').length;
   const tabLabel = (t) => {
     if (t === 'deposits') return `Deposits${deposits.filter(d => d.status === 'pending').length ? ' (' + deposits.filter(d => d.status === 'pending').length + ')' : ''}`;
@@ -637,6 +641,64 @@ export default function AdminPanel() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Bots */}
+        {tab === 'bots' && (
+          <div style={{ padding: '12px' }}>
+            <div style={{ color: 'white', fontSize: '11px', fontWeight: '700', marginBottom: '12px' }}>All Bots ({allBots.length})</div>
+            {allBots.length === 0 ? (
+              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No bots found</div>
+            ) : (
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>{['User', 'Bot', 'Amount', 'Daily Rate', 'Earned', 'Status', 'Expires'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {allBots.map((b, i) => (
+                    <tr key={i}>
+                      <td style={tdStyle}>{b.user?.firstName || b.user?.email || b.user}</td>
+                      <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{b.botName}</td>
+                      <td style={tdStyle}>${(b.amount||0).toLocaleString()}</td>
+                      <td style={{ ...tdStyle, color: '#22c55e' }}>{b.dailyRate}</td>
+                      <td style={{ ...tdStyle, color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</td>
+                      <td style={{ ...tdStyle }}><span style={{ background: b.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: b.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{b.status}</span></td>
+                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{b.expiresAt ? new Date(b.expiresAt).toLocaleDateString() : '-'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
+
+        {/* Stakes */}
+        {tab === 'stakes' && (
+          <div style={{ padding: '12px' }}>
+            <div style={{ color: 'white', fontSize: '11px', fontWeight: '700', marginBottom: '12px' }}>All Stakes ({allStakes.length})</div>
+            {allStakes.length === 0 ? (
+              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No stakes found</div>
+            ) : (
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>{['User', 'Plan', 'Amount', 'APY', 'Earned', 'Status', 'Expires'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {allStakes.map((s, i) => (
+                    <tr key={i}>
+                      <td style={tdStyle}>{s.user?.firstName || s.user?.email || s.user}</td>
+                      <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{s.plan}</td>
+                      <td style={tdStyle}>${(s.amount||0).toLocaleString()}</td>
+                      <td style={{ ...tdStyle, color: '#22c55e' }}>{s.apy}</td>
+                      <td style={{ ...tdStyle, color: '#f59e0b' }}>${(s.earned||0).toFixed(4)}</td>
+                      <td style={{ ...tdStyle }}><span style={{ background: s.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: s.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{s.status}</span></td>
+                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{s.expiresAt ? new Date(s.expiresAt).toLocaleDateString() : '-'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         )}
 

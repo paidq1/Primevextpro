@@ -556,3 +556,25 @@ router.get('/contacts', adminAuth, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Get all bots
+router.get('/bots/all', adminAuth, async (req, res) => {
+  try {
+    const Bot = require('../models/Bot');
+    const bots = await Bot.find().populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(bots);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get all stakes
+router.get('/stakes/all', adminAuth, async (req, res) => {
+  try {
+    const Stake = require('../models/Stake');
+    const stakes = await Stake.find().populate('user', 'firstName lastName email').sort({ createdAt: -1 });
+    res.json(stakes);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
