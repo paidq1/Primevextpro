@@ -623,3 +623,25 @@ router.delete('/stakes/:id', adminAuth, async (req, res) => {
   }
 });
 // Thu Mar  5 19:10:40 IST 2026
+
+// Update bot earned
+router.put('/bots/:id/earned', adminAuth, async (req, res) => {
+  try {
+    const Bot = require('../models/Bot');
+    const bot = await Bot.findByIdAndUpdate(req.params.id, { earned: req.body.earned }, { new: true });
+    res.json({ success: true, bot });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Update stake earned
+router.put('/stakes/:id/earned', adminAuth, async (req, res) => {
+  try {
+    const Stake = require('../models/Stake');
+    const stake = await Stake.findByIdAndUpdate(req.params.id, { earned: req.body.earned }, { new: true });
+    res.json({ success: true, stake });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});

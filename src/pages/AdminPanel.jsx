@@ -88,6 +88,10 @@ export default function AdminPanel() {
   const [contacts, setContacts] = useState([]);
   const [allBots, setAllBots] = useState([]);
   const [allStakes, setAllStakes] = useState([]);
+  const [botSearch, setBotSearch] = useState('');
+  const [botFilter, setBotFilter] = useState('all');
+  const [stakeSearch, setStakeSearch] = useState('');
+  const [stakeFilter, setStakeFilter] = useState('all');
   const [activityLog, setActivityLog] = useState(() => {
     try { return JSON.parse(localStorage.getItem('adminActivityLog') || '[]'); } catch { return []; }
   });
@@ -647,7 +651,12 @@ export default function AdminPanel() {
         {/* Bots */}
         {tab === 'bots' && (
           <div style={{ padding: '12px' }}>
-            <div style={{ color: 'white', fontSize: '11px', fontWeight: '700', marginBottom: '12px' }}>All Bots ({allBots.length})</div>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center' }}>
+              <input placeholder="Search user or bot..." onChange={e => setBotSearch(e.target.value)} style={{ flex: 1, background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none' }} />
+              {['all','active','completed','cancelled'].map(f => (
+                <button key={f} onClick={() => setBotFilter(f)} style={{ padding: '5px 10px', background: botFilter===f?'#6366f1':'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+              ))}
+            </div>
             {allBots.length === 0 ? (
               <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No bots found</div>
             ) : (
@@ -656,23 +665,35 @@ export default function AdminPanel() {
                   <tr>{['User', 'Bot', 'Amount', 'Daily Rate', 'Earned', 'Status', 'Expires', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
                 </thead>
                 <tbody>
-                  {allBots.map((b, i) => (
+                  {allBots.filter(b => {
+                    const matchFilter = botFilter === 'all' || b.status === botFilter;
+                    const matchSearch = !botSearch || (b.user?.firstName + ' ' + b.user?.lastName + ' ' + b.user?.email + ' ' + b.botName).toLowerCase().includes(botSearch.toLowerCase());
+                    return matchFilter && matchSearch;
+                  }).map((b, i) => (
                     <tr key={i}>
-                      <td style={tdStyle}>{b.user?.firstName || b.user?.email || b.user}</td>
+                      <td style={tdStyle}>{b.user?.firstName} {b.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{b.user?.email}</span></td>
                       <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{b.botName}</td>
                       <td style={tdStyle}>${(b.amount||0).toLocaleString()}</td>
                       <td style={{ ...tdStyle, color: '#22c55e' }}>{b.dailyRate}</td>
-                      <td style={{ ...tdStyle, color: '#f59e0b' }}>${(b.earned||0).toFixed(2)}</td>
+                      <td style={tdStyle}>
+                        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                          <input defaultValue={(b.earned||0).toFixed(2)} id={`bot-earned-${b._id}`} style={{ width: '65px', background: '#374151', border: 'none', color: '#f59e0b', fontSize: '8px', padding: '3px 5px' }} />
+                          <button onClick={() => {
+                            const val = document.getElementById(`bot-earned-${b._id}`).value;
+                            api(`/bots/${b._id}/earned`, 'PUT', { earned: parseFloat(val) }).then(() => api('/bots/all').then(d => setAllBots(Array.isArray(d)?d:[])));
+                          }} style={btnStyle('#f59e0b')}>Set</button>
+                        </div>
+                      </td>
                       <td style={{ ...tdStyle }}><span style={{ background: b.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: b.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{b.status}</span></td>
                       <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{b.expiresAt ? new Date(b.expiresAt).toLocaleDateString() : '-'}</td>
                       <td style={tdStyle}>
-                        <div style={{ display: 'flex', gap: '4px' }}>
+                        <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                           {b.status === 'active' && (
                             <button onClick={() => api(`/bots/${b._id}/cancel`, 'PUT').then(() => api('/bots/all').then(d => setAllBots(Array.isArray(d)?d:[])))}
-                              style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Cancel</button>
+                              style={btnStyle('#ef4444')}>Cancel</button>
                           )}
                           <button onClick={() => api(`/bots/${b._id}`, 'DELETE').then(() => setAllBots(prev => prev.filter(x => x._id !== b._id)))}
-                            style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Delete</button>
+                            style={btnStyle('#6b7280')}>Delete</button>
                         </div>
                       </td>
                     </tr>
@@ -686,7 +707,12 @@ export default function AdminPanel() {
         {/* Stakes */}
         {tab === 'stakes' && (
           <div style={{ padding: '12px' }}>
-            <div style={{ color: 'white', fontSize: '11px', fontWeight: '700', marginBottom: '12px' }}>All Stakes ({allStakes.length})</div>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center' }}>
+              <input placeholder="Search user or plan..." onChange={e => setStakeSearch(e.target.value)} style={{ flex: 1, background: '#2a3347', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 10px', outline: 'none' }} />
+              {['all','active','completed','cancelled'].map(f => (
+                <button key={f} onClick={() => setStakeFilter(f)} style={{ padding: '5px 10px', background: stakeFilter===f?'#6366f1':'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer', textTransform: 'capitalize' }}>{f}</button>
+              ))}
+            </div>
             {allStakes.length === 0 ? (
               <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No stakes found</div>
             ) : (
@@ -695,23 +721,35 @@ export default function AdminPanel() {
                   <tr>{['User', 'Plan', 'Amount', 'APY', 'Earned', 'Status', 'Expires', 'Actions'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
                 </thead>
                 <tbody>
-                  {allStakes.map((s, i) => (
+                  {allStakes.filter(s => {
+                    const matchFilter = stakeFilter === 'all' || s.status === stakeFilter;
+                    const matchSearch = !stakeSearch || (s.user?.firstName + ' ' + s.user?.lastName + ' ' + s.user?.email + ' ' + s.plan).toLowerCase().includes(stakeSearch.toLowerCase());
+                    return matchFilter && matchSearch;
+                  }).map((s, i) => (
                     <tr key={i}>
-                      <td style={tdStyle}>{s.user?.firstName || s.user?.email || s.user}</td>
+                      <td style={tdStyle}>{s.user?.firstName} {s.user?.lastName}<br/><span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{s.user?.email}</span></td>
                       <td style={{ ...tdStyle, color: '#6366f1', fontWeight: '700' }}>{s.plan}</td>
                       <td style={tdStyle}>${(s.amount||0).toLocaleString()}</td>
                       <td style={{ ...tdStyle, color: '#22c55e' }}>{s.apy}</td>
-                      <td style={{ ...tdStyle, color: '#f59e0b' }}>${(s.earned||0).toFixed(4)}</td>
+                      <td style={tdStyle}>
+                        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                          <input defaultValue={(s.earned||0).toFixed(4)} id={`stake-earned-${s._id}`} style={{ width: '70px', background: '#374151', border: 'none', color: '#f59e0b', fontSize: '8px', padding: '3px 5px' }} />
+                          <button onClick={() => {
+                            const val = document.getElementById(`stake-earned-${s._id}`).value;
+                            api(`/stakes/${s._id}/earned`, 'PUT', { earned: parseFloat(val) }).then(() => api('/stakes/all').then(d => setAllStakes(Array.isArray(d)?d:[])));
+                          }} style={btnStyle('#f59e0b')}>Set</button>
+                        </div>
+                      </td>
                       <td style={{ ...tdStyle }}><span style={{ background: s.status==='active'?'rgba(34,197,94,0.1)':'rgba(99,102,241,0.1)', color: s.status==='active'?'#22c55e':'#6366f1', padding: '2px 6px', fontSize: '7px' }}>{s.status}</span></td>
                       <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{s.expiresAt ? new Date(s.expiresAt).toLocaleDateString() : '-'}</td>
                       <td style={tdStyle}>
-                        <div style={{ display: 'flex', gap: '4px' }}>
+                        <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                           {s.status === 'active' && (
                             <button onClick={() => api(`/stakes/${s._id}/cancel`, 'PUT').then(() => api('/stakes/all').then(d => setAllStakes(Array.isArray(d)?d:[])))}
-                              style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Cancel</button>
+                              style={btnStyle('#ef4444')}>Cancel</button>
                           )}
                           <button onClick={() => api(`/stakes/${s._id}`, 'DELETE').then(() => setAllStakes(prev => prev.filter(x => x._id !== s._id)))}
-                            style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer' }}>Delete</button>
+                            style={btnStyle('#6b7280')}>Delete</button>
                         </div>
                       </td>
                     </tr>
