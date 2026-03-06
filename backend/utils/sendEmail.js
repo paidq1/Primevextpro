@@ -1,33 +1,39 @@
-const emailjs = require('@emailjs/nodejs');
+const nodemailer = require('nodemailer');
 
-const sendEmail = async ({ to, subject, html, resetUrl, name }) => {
-  console.log('Sending email to:', to);
-  console.log('Service ID:', process.env.EMAILJS_SERVICE_ID);
-  console.log('Template ID:', process.env.EMAILJS_TEMPLATE_ID);
-  console.log('Public Key:', process.env.EMAILJS_PUBLIC_KEY ? 'set' : 'NOT SET');
-  console.log('Private Key:', process.env.EMAILJS_PRIVATE_KEY ? 'set' : 'NOT SET');
+const sendEmail = async ({ to, subject, resetUrl, name }) => {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
 
-  try {
-    const result = await emailjs.send(
-      process.env.EMAILJS_SERVICE_ID,
-      process.env.EMAILJS_TEMPLATE_ID,
-      {
-        email: to,
-        to_name: name || to,
-        reset_link: resetUrl || '',
-        subject: subject || 'Reset your password',
-      },
-      {
-        publicKey: process.env.EMAILJS_PUBLIC_KEY,
-        privateKey: process.env.EMAILJS_PRIVATE_KEY,
-      }
-    );
-    console.log('Email sent successfully:', result);
-    return { success: true };
-  } catch (err) {
-    console.error('EmailJS error:', err);
-    throw new Error('Email sending failed: ' + err.message);
-  }
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0e1628; color: white; padding: 30px; border-radius: 8px;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="color: #6366f1;">Vertex Trade Pro</h2>
+      </div>
+      <h3 style="color: white;">You have requested a password change</h3>
+      <p style="color: #94a3b8;">Hi ${name || to},</p>
+      <p style="color: #94a3b8;">We received a request to reset the password for your account. To proceed, please click the link below:</p>
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${resetUrl}" style="background: #6366f1; color: white; padding: 12px 28px; border-radius: 4px; text-decoration: none; font-weight: bold;">Reset Password</a>
+      </div>
+      <p style="color: #94a3b8; font-size: 12px;">This link will expire in 24 hours.</p>
+      <p style="color: #94a3b8; font-size: 12px;">If you didn't request this, please ignore this email.</p>
+      <p style="color: #94a3b8;">Best regards,<br/>Vertex Trade Pro Team</p>
+    </div>
+  `;
+
+  await transporter.sendMail({
+    from: `"Vertex Trade Pro" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: subject || 'Reset your password',
+    html,
+  });
+
+  return { success: true };
 };
 
 module.exports = sendEmail;
