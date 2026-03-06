@@ -19,7 +19,7 @@ export default function ResetPassword() {
     if (password !== confirm) { setError('Passwords do not match'); return; }
     setLoading(true); setError('');
     try {
-      const res = await fetch(`${BASE_URL}/auth/reset-password`, {
+      const res = await fetch(`${BASE_URL}/auth/reset-password/${token}`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, email, password })
       }).then(r => r.json());
