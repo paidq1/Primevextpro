@@ -208,10 +208,10 @@ export default function LiveTrading() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginBottom: '14px' }}>
             {/* Total Trades */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: '1px solid rgba(99,102,241,0.2)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: '1px solid rgba(99,102,241,0.2)', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: 'rgba(99,102,241,0.08)', borderRadius: '0 8px 0 60px' }} />
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Total Trades</span>
@@ -221,10 +221,10 @@ export default function LiveTrading() {
             </div>
 
             {/* Win / Loss */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: '1px solid rgba(34,197,94,0.2)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: '1px solid rgba(34,197,94,0.2)', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: 'rgba(34,197,94,0.06)', borderRadius: '0 8px 0 60px' }} />
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(34,197,94,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: 'rgba(34,197,94,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Win / Loss</span>
@@ -238,10 +238,10 @@ export default function LiveTrading() {
             </div>
 
             {/* Net P&L */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.06)' : 'rgba(239,68,68,0.06)', borderRadius: '0 8px 0 60px' }} />
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444'} strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Net P&L</span>
@@ -253,10 +253,10 @@ export default function LiveTrading() {
             </div>
 
             {/* ROI */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.06)' : 'rgba(239,68,68,0.06)', borderRadius: '0 8px 0 60px' }} />
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444'} strokeWidth="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>ROI</span>
