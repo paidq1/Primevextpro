@@ -20,7 +20,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetToken = crypto.randomBytes(32).toString('hex');
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+    user.resetPasswordExpire = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
     await user.save({ validateBeforeSave: false });
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
