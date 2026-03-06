@@ -216,7 +216,7 @@ export default function LiveTrading() {
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Total Trades</span>
               </div>
-              <div style={{ color: 'white', fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>{stats ? stats.totalTrades : '—'}</div>
+              <div style={{ color: 'white', fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>{stats ? stats.totalTrades : '—'}</div>
               <div style={{ color: 'rgba(99,102,241,0.7)', fontSize: '7px', marginTop: '4px' }}>{stats ? `${stats.closedTrades} closed` : ''}</div>
             </div>
 
@@ -229,9 +229,9 @@ export default function LiveTrading() {
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Win / Loss</span>
               </div>
-              <div style={{ fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>
+              <div style={{ fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>
                 <span style={{ color: '#22c55e' }}>{stats ? stats.wins : '—'}</span>
-                <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '16px' }}> / </span>
+                <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '12px' }}> / </span>
                 <span style={{ color: '#ef4444' }}>{stats ? stats.losses : '—'}</span>
               </div>
               <div style={{ color: 'rgba(34,197,94,0.7)', fontSize: '7px', marginTop: '4px' }}>closed trades</div>
@@ -246,7 +246,7 @@ export default function LiveTrading() {
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Net P&L</span>
               </div>
-              <div style={{ color: stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444', fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>
+              <div style={{ color: stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444', fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>
                 {stats ? `${parseFloat(stats.netProfitLoss)>=0?'+':''}$${stats.netProfitLoss}` : '—'}
               </div>
               <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '4px' }}>{stats ? `profit: $${stats.totalProfit}` : ''}</div>
@@ -261,7 +261,7 @@ export default function LiveTrading() {
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>ROI</span>
               </div>
-              <div style={{ color: stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444', fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>
+              <div style={{ color: stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444', fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>
                 {stats ? `${parseFloat(stats.roi)>=0?'+':''}${stats.roi}%` : '—'}
               </div>
               <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '4px' }}>return on investment</div>
@@ -334,7 +334,7 @@ export default function LiveTrading() {
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '18px', width: '300px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Trade Assets</span>
-              <button onClick={() => { setShowModal(false); setError(''); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
+              <button onClick={() => { setShowModal(false); setError(''); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '12px' }}>×</button>
             </div>
 
             <div style={{ marginBottom: '12px' }}>
