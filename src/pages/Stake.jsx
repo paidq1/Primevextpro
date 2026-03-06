@@ -20,6 +20,7 @@ export default function Stake() {
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [show, setShow] = useState(10);
   const [page, setPage] = useState(1);
   const perPage = 10;
   const [stakes, setStakes] = useState([]);
