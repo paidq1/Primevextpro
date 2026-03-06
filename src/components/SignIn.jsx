@@ -142,10 +142,13 @@ const SignIn = () => {
               try {
                 const res = await forgotPassword(forgotEmail);
                 if (res.resetUrl) {
-                  setForgotMsg('Click here to reset your password');
+                  setForgotMsg('Click the link below to reset your password:');
                   setForgotLink(res.resetUrl);
+                } else if (res.success || res.message) {
+                  setForgotMsg(res.message || 'Reset link sent! Check your email.');
+                  setForgotLink('');
                 } else {
-                  setForgotMsg(res.message || 'Request submitted!');
+                  setForgotMsg('Request submitted! Check your email.');
                 }
               } catch(e) {
                 setForgotMsg('Server error. Please try again.');
