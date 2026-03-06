@@ -206,19 +206,66 @@ export default function LiveTrading() {
             <button onClick={() => { setShowModal(true); setError(''); }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer' }}>+ New Trade</button>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '14px' }}>
-            {[
-              { label: 'Total Trades', value: stats ? stats.totalTrades : '—', sub: stats ? `${stats.closedTrades} closed` : '', color: '#6366f1' },
-              { label: 'Win / Loss', value: stats ? <span><span style={{color:'#22c55e',fontWeight:'700'}}>{stats.wins}W</span><span style={{color:'rgba(255,255,255,0.4)'}}> / </span><span style={{color:'#ef4444',fontWeight:'700'}}>{stats.losses}L</span></span> : '—', sub: 'closed trades', color: '#22c55e' },
-              { label: 'Net P&L', value: stats ? `${parseFloat(stats.netProfitLoss)>=0?'+':''}$${stats.netProfitLoss}` : '—', sub: stats ? `profit: $${stats.totalProfit}` : '', color: stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444' },
-              { label: 'ROI', value: stats ? `${parseFloat(stats.roi)>=0?'+':''}${stats.roi}%` : '—', sub: 'return on investment', color: stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444' },
-            ].map((s, i) => (
-              <div key={i} style={{ background: '#1a2e4a', padding: '10px', borderLeft: `3px solid ${s.color}` }}>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{s.label}</div>
-                <div style={{ fontSize: '13px', fontWeight: '700' }}>{s.value}</div>
-                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{s.sub}</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginBottom: '14px' }}>
+            {/* Total Trades */}
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: '1px solid rgba(99,102,241,0.2)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: 'rgba(99,102,241,0.08)', borderRadius: '0 8px 0 60px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
+                </div>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Total Trades</span>
               </div>
-            ))}
+              <div style={{ color: 'white', fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>{stats ? stats.totalTrades : '—'}</div>
+              <div style={{ color: 'rgba(99,102,241,0.7)', fontSize: '7px', marginTop: '4px' }}>{stats ? `${stats.closedTrades} closed` : ''}</div>
+            </div>
+
+            {/* Win / Loss */}
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: '1px solid rgba(34,197,94,0.2)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: 'rgba(34,197,94,0.06)', borderRadius: '0 8px 0 60px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(34,197,94,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Win / Loss</span>
+              </div>
+              <div style={{ fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>
+                <span style={{ color: '#22c55e' }}>{stats ? stats.wins : '—'}</span>
+                <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '16px' }}> / </span>
+                <span style={{ color: '#ef4444' }}>{stats ? stats.losses : '—'}</span>
+              </div>
+              <div style={{ color: 'rgba(34,197,94,0.7)', fontSize: '7px', marginTop: '4px' }}>closed trades</div>
+            </div>
+
+            {/* Net P&L */}
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.06)' : 'rgba(239,68,68,0.06)', borderRadius: '0 8px 0 60px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444'} strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </div>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Net P&L</span>
+              </div>
+              <div style={{ color: stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444', fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>
+                {stats ? `${parseFloat(stats.netProfitLoss)>=0?'+':''}$${stats.netProfitLoss}` : '—'}
+              </div>
+              <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '4px' }}>{stats ? `profit: $${stats.totalProfit}` : ''}</div>
+            </div>
+
+            {/* ROI */}
+            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '8px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '60px', height: '60px', background: stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.06)' : 'rgba(239,68,68,0.06)', borderRadius: '0 8px 0 60px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444'} strokeWidth="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                </div>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>ROI</span>
+              </div>
+              <div style={{ color: stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444', fontSize: '22px', fontWeight: '800', lineHeight: 1 }}>
+                {stats ? `${parseFloat(stats.roi)>=0?'+':''}${stats.roi}%` : '—'}
+              </div>
+              <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '4px' }}>return on investment</div>
+            </div>
           </div>
 
           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
