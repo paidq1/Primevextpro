@@ -1,20 +1,7 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
 const sendEmail = async ({ to, subject, resetUrl, name }) => {
-  console.log('Creating transporter for:', to);
-  
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
-  });
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0e1628; color: white; padding: 30px; border-radius: 8px;">
@@ -33,15 +20,20 @@ const sendEmail = async ({ to, subject, resetUrl, name }) => {
     </div>
   `;
 
-  console.log('Sending mail...');
-  const info = await transporter.sendMail({
-    from: `"Vertex Trade Pro" <${process.env.EMAIL_USER}>`,
+  console.log('Sending via Resend to:', to);
+  const { data, error } = await resend.emails.send({
+    from: 'Vertex Trade Pro <onboarding@resend.dev>',
     to,
     subject: subject || 'Reset your password',
     html,
   });
 
-  console.log('Email sent:', info.messageId);
+  if (error) {
+    console.error('Resend error:', error);
+    throw new Error(error.message);
+  }
+
+  console.log('Email sent via Resend:', data);
   return { success: true };
 };
 
