@@ -25,7 +25,14 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-    res.json({ message: 'Password reset link generated. Please contact support to receive your reset link.', resetUrl });
+    await sendEmail({
+      to: user.email,
+      name: user.firstName || user.email,
+      subject: 'Reset your password',
+      resetUrl,
+    });
+
+    res.json({ success: true, message: 'Password reset link sent to your email.' });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

@@ -1,16 +1,25 @@
-const { Resend } = require('resend');
-const resend = new Resend(process.env.RESEND_API_KEY);
+const emailjs = require('@emailjs/nodejs');
 
-const sendEmail = async ({ to, subject, html }) => {
-  // Send to verified email with recipient info in subject until domain verified
-  const { data, error } = await resend.emails.send({
-    from: 'VertexTrade Pro <onboarding@resend.dev>',
-    to: 'primevextpro@gmail.com', // Only verified email works on free plan
-    subject: `[FOR: ${to}] ${subject}`,
-    html: `<div style="background:#f59e0b;padding:8px;margin-bottom:16px;font-size:12px;"><strong>⚠️ Forward this email to: ${to}</strong></div>` + html,
-  });
-  if (error) throw new Error(error.message);
-  return data;
+const sendEmail = async ({ to, subject, html, resetUrl, name }) => {
+  try {
+    await emailjs.send(
+      process.env.EMAILJS_SERVICE_ID,
+      process.env.EMAILJS_TEMPLATE_ID,
+      {
+        email: to,
+        to_name: name || to,
+        reset_link: resetUrl || '',
+        subject: subject || 'Reset your password',
+      },
+      {
+        publicKey: process.env.EMAILJS_PUBLIC_KEY,
+        privateKey: process.env.EMAILJS_PRIVATE_KEY,
+      }
+    );
+    return { success: true };
+  } catch (err) {
+    throw new Error('Email sending failed: ' + err.message);
+  }
 };
 
 module.exports = sendEmail;
