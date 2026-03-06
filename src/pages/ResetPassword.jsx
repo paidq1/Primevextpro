@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BASE_URL = 'https://vertextrades.onrender.com/api';
 
 export default function ResetPassword() {
   const navigate = useNavigate();
-  const [params] = useSearchParams();
-  const token = params.get('token');
-  const email = params.get('email');
+  // token comes from URL path param
+  const pathToken = window.location.pathname.split('/reset-password/')[1];
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
@@ -19,11 +18,11 @@ export default function ResetPassword() {
     if (password !== confirm) { setError('Passwords do not match'); return; }
     setLoading(true); setError('');
     try {
-      const res = await fetch(`${BASE_URL}/auth/reset-password/${token}`, {
+      const res = await fetch(`${BASE_URL}/auth/reset-password/${pathToken}`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, email, password })
+        body: JSON.stringify({ password })
       }).then(r => r.json());
-      if (res.success) { setSuccess(true); setTimeout(() => navigate('/'), 3000); }
+      if (res.message === 'Password reset successful') { setSuccess(true); setTimeout(() => navigate('/signin'), 3000); }
       else setError(res.message || 'Reset failed');
     } catch { setError('Network error'); }
     setLoading(false);
@@ -52,7 +51,7 @@ export default function ResetPassword() {
           </div>
         ) : (
           <>
-            {!token || !email ? (
+            {!pathToken ? (
               <div style={{ color: '#ef4444', fontSize: '9px', textAlign: 'center' }}>Invalid reset link. Please contact admin.</div>
             ) : (
               <>
