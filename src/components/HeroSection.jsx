@@ -78,163 +78,144 @@ function ParticleNetwork() {
 }
 
 function Navbar({ onGetStarted }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <nav style={{ position: "relative", zIndex: 9999 }} className="relative z-20 w-full pl-2 pr-1 pt-2 pb-2">
-      <div className="flex items-center w-full whitespace-nowrap">
+    <nav style={{ position: "relative", zIndex: 9999, background: "transparent" }} className="w-full px-4 py-3">
+      <div className="flex items-center justify-between w-full">
+        {/* Logo */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          <div className="w-5 h-5 mt-1">
-            <svg viewBox="0 0 40 40" fill="none" className="w-full h-full">
+          <div style={{ width: 24, height: 24 }}>
+            <svg viewBox="0 0 40 40" fill="none" style={{ width: "100%", height: "100%" }}>
               <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
               <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
           </div>
-          <span className="text-white font-bold text-[7px] tracking-wider whitespace-nowrap mt-1">
-            VERTEXTRADE <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">PRO</span>
+          <span style={{ color: "white", fontWeight: 700, fontSize: 11, letterSpacing: 1, whiteSpace: "nowrap" }}>
+            VERTEXTRADE <span style={{ color: "#6366F1" }}>PRO</span>
           </span>
         </div>
-        <div className="flex items-center gap-1.5 ml-auto flex-shrink-0 flex-nowrap">
-          <a href="#home" className="text-white text-[9px] font-normal relative whitespace-nowrap">
-            Home
-            <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-purple-500 rounded-full"></span>
-          </a>
-          <a href="/trading-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Trading</a>
-          <a href="/staking-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Staking</a>
-          <a href="/investing-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Investing</a>
-          <div style={{ position: 'relative' }} className="group">
-            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
-              Links<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
+
+        {/* Desktop nav links - hidden on small screens */}
+        <div className="hidden sm:flex items-center gap-3 ml-auto mr-3">
+          {[['Home','#home'],['Trading','/trading-info'],['Staking','/staking-info'],['Investing','/investing-info']].map(([l,h])=>(
+            <a key={l} href={h} style={{ color: "rgba(255,255,255,0.75)", fontSize: 12, textDecoration: "none", whiteSpace: "nowrap" }}>{l}</a>
+          ))}
+          <div style={{ position: "relative" }} className="group">
+            <button style={{ background: "none", border: "none", color: "rgba(255,255,255,0.75)", fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 2 }}>
+              Company <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
-              {[['Market','#market'],['How It Works','#how'],['Benefits','#why'],['Investment Plans','/investing-info'],["FAQ's",'#faq']].map(([l,h])=>(
-                <a key={l} href={h} className="block px-3 py-1.5 text-[9px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
+            <div style={{ position: "absolute", top: 24, right: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: 160, zIndex: 9999 }} className="hidden group-hover:block">
+              {[['About Us','#why'],['Contact Us','#contact'],['Support','#contact'],['Terms','/terms']].map(([l,h])=>(
+                <a key={l} href={h} style={{ display: "block", padding: "6px 14px", fontSize: 12, color: "#ccc", textDecoration: "none" }}>{l}</a>
               ))}
             </div>
           </div>
-          <div style={{ position: 'relative' }} className="group">
-            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
-              Company<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
-              {[['About Us','#why'],['Contact Us','#contact'],['Support','#contact'],['Terms & Conditions','/terms']].map(([l,h])=>(
-                <a key={l} href={h} className="block px-3 py-1.5 text-[9px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
-              ))}
-            </div>
-          </div>
-          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap ml-1 mr-2" onClick={onGetStarted}>
-            Get Started
-          </button>
         </div>
+
+        {/* Get Started - always visible */}
+        <button
+          onClick={onGetStarted}
+          style={{ background: "#6366F1", color: "white", border: "none", padding: "8px 14px", fontWeight: 700, fontSize: 12, cursor: "pointer", whiteSpace: "nowrap", borderRadius: 3, flexShrink: 0 }}>
+          Get Started
+        </button>
+
+        {/* Hamburger - only on small screens */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="sm:hidden"
+          style={{ background: "none", border: "none", color: "white", marginLeft: 10, cursor: "pointer", flexShrink: 0 }}>
+          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div style={{ background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", marginTop: 8, padding: "12px 0", borderRadius: 4 }}>
+          {[['Home','#home'],['Trading','/trading-info'],['Staking','/staking-info'],['Investing','/investing-info'],['About Us','#why'],['Contact','#contact'],['Support','#contact'],['Terms','/terms']].map(([l,h])=>(
+            <a key={l} href={h} onClick={() => setMenuOpen(false)} style={{ display: "block", padding: "10px 18px", fontSize: 14, color: "#ccc", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>{l}</a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
 
 export default function HeroSection({ onGetStarted }) {
   return (
-    <section id="home" className="relative pt-0 pb-4 bg-[#151c27] overflow-hidden">
+    <section id="home" style={{ position: "relative", paddingBottom: 16, background: "#151c27", overflow: "hidden" }}>
       <ParticleNetwork />
-      {/* Purple glow - bottom left */}
-      <div style={{ position: "absolute", bottom: "0px", left: "0px", width: "250px", height: "250px", background: "radial-gradient(circle at 30% 70%, rgba(120,60,255,0.45) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", zIndex: 1 }}></div>
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: 250, height: 250, background: "radial-gradient(circle at 30% 70%, rgba(120,60,255,0.45) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", zIndex: 1 }}></div>
       <div className="absolute inset-0 bg-gradient-to-b from-[#151c27]/20 via-transparent to-[#151c27]" />
 
       <Navbar onGetStarted={onGetStarted} />
       <MarketTicker />
 
-      {/* Hero: text left, image right */}
-      <div className="relative z-10 flex flex-row items-start gap-2 pt-3 pl-2">
+      {/* Hero content */}
+      <div style={{ position: "relative", zIndex: 10, display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 10, paddingTop: 12, paddingLeft: 16, paddingRight: 8 }}>
 
-        {/* Left: text content */}
-        <div className="flex-1 space-y-2 min-w-0 pt-1">
+        {/* Left */}
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 10 }}>
 
-          <div data-aos="fade-up" data-aos-delay="100" className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500 text-[8px]">
-            <span className="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></span>
-            Trading, Crypto, Staking & Investing
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "3px 10px", borderRadius: 999, background: "rgba(59,130,246,0.1)", border: "1px solid #3b82f6" }}>
+            <span style={{ width: 6, height: 6, background: "#3b82f6", borderRadius: "50%", display: "inline-block" }}></span>
+            <span style={{ color: "#93c5fd", fontSize: 11 }}>Trading, Crypto, Staking & Investing</span>
           </div>
 
-          <h1 data-aos="fade-up" data-aos-delay="200" className="text-base font-bold leading-tight text-white">
-            Empower Your <span className="text-blue-500">Financial</span> Future with Cryptocurrency and Forex Trading
+          <h1 style={{ color: "white", fontWeight: 800, fontSize: "clamp(16px, 4.5vw, 28px)", lineHeight: 1.25, margin: 0 }}>
+            Empower Your <span style={{ color: "#6366F1" }}>Financial</span> Future with Cryptocurrency and Forex Trading
           </h1>
 
-          <p data-aos="fade-up" data-aos-delay="300" className="text-gray-400 text-[9px] leading-relaxed">
+          <p style={{ color: "#9ca3af", fontSize: "clamp(11px, 2.5vw, 14px)", lineHeight: 1.6, margin: 0 }}>
             Experience seamless cryptocurrency and forex trading, high-yield staking, and secure investment opportunities with cutting-edge tools.
           </p>
 
-          {/* Buttons FIRST - before stats, sharp corners */}
-          <div className="flex gap-2 pt-1">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-none font-bold text-[9px] transition-colors" onClick={onGetStarted}>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button onClick={onGetStarted} style={{ background: "#3b82f6", color: "white", border: "none", padding: "10px 18px", fontWeight: 700, fontSize: "clamp(11px, 2.5vw, 14px)", cursor: "pointer", borderRadius: 2 }}>
               Get Started
             </button>
-            <button className="group bg-white/5 hover:bg-white/10 border border-white/20 px-4 py-2 rounded-none font-bold text-[9px] flex items-center gap-1 transition-all" onClick={() => window.location.href="/signin"}>
-              Learn More
-              <span className="inline-block transform -rotate-45 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">→</span>
+            <button onClick={() => window.location.href="/signin"} style={{ background: "rgba(255,255,255,0.05)", color: "white", border: "1px solid rgba(255,255,255,0.2)", padding: "10px 18px", fontWeight: 700, fontSize: "clamp(11px, 2.5vw, 14px)", cursor: "pointer", borderRadius: 2 }}>
+              Learn More →
             </button>
           </div>
 
-          {/* Stats row - horizontal, number big + small labels beside */}
-          <div className="flex items-center gap-3 flex-nowrap pt-1">
-            <div className="flex items-center gap-1">
-              <span className="text-sm font-bold text-white">400K+</span>
-              <div className="flex flex-col">
-                <span className="text-gray-400 text-[8px] leading-tight">Users</span>
-                <span className="text-gray-500 text-[8px] leading-tight">Trust Us</span>
+          {/* Stats */}
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            {[['400K+','Users','Trust Us'],['24/7','Customer','Supports'],['800k+','Transactions','']].map(([num,l1,l2])=>(
+              <div key={num} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <span style={{ color: "white", fontWeight: 800, fontSize: "clamp(14px, 3.5vw, 20px)" }}>{num}</span>
+                <div>
+                  <div style={{ color: "#9ca3af", fontSize: "clamp(9px, 2vw, 12px)", lineHeight: 1.3 }}>{l1}</div>
+                  {l2 && <div style={{ color: "#6b7280", fontSize: "clamp(9px, 2vw, 12px)", lineHeight: 1.3 }}>{l2}</div>}
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="text-sm font-bold text-white">24/7</span>
-              <div className="flex flex-col">
-                <span className="text-gray-400 text-[8px] leading-tight">Customer</span>
-                <span className="text-gray-500 text-[8px] leading-tight">Supports</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="text-sm font-bold text-white">800k+</span>
-              <div className="flex flex-col">
-                <span className="text-gray-400 text-[8px] leading-tight">Transactions</span>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Feature bullets */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-1 text-gray-300 text-[7px]">
-              <div className="w-3 h-3 rounded-sm bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <svg className="w-2 h-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          {/* Bullets */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            {['Low transaction fees and high liquidity markets','24/7 support from experienced trading professionals','Top-tier security for data and transactions'].map(t=>(
+              <div key={t} style={{ display: "flex", alignItems: "center", gap: 6, color: "#d1d5db", fontSize: "clamp(10px, 2.2vw, 13px)" }}>
+                <div style={{ width: 14, height: 14, background: "rgba(59,130,246,0.2)", borderRadius: 3, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <svg width="9" height="9" fill="none" stroke="#60a5fa" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                </div>
+                {t}
               </div>
-              Low transaction fees and high liquidity markets
-            </div>
-            <div className="flex items-center gap-1 text-gray-300 text-[7px]">
-              <div className="w-3 h-3 rounded-sm bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <svg className="w-2 h-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-              </div>
-              24/7 support from experienced trading professionals
-            </div>
-            <div className="flex items-center gap-1 text-gray-300 text-[7px]">
-              <div className="w-3 h-3 rounded-sm bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <svg className="w-2 h-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-              </div>
-              Top-tier security for data and transactions
-            </div>
+            ))}
           </div>
-
         </div>
 
-        {/* Right: image */}
-        <div className="flex-shrink-0 w-[42%] flex justify-end items-start pt-2">
-          <img
-            src="/bg1.png"
-            alt="Trading App"
-            className="w-full h-auto object-contain drop-shadow-2xl"
-          />
+        {/* Right image */}
+        <div style={{ flexShrink: 0, width: "40%", maxWidth: 200, display: "flex", justifyContent: "flex-end", paddingTop: 8 }}>
+          <img src="/bg1.png" alt="Trading App" style={{ width: "100%", height: "auto", objectFit: "contain" }} />
         </div>
       </div>
 
-      
-      {/* Forex Pairs Ticker */}
-      <div className="relative z-10 mt-3" style={{ overflow: "hidden", width: "100%", paddingLeft: "12px" }}>
+      {/* Forex Ticker */}
+      <div style={{ position: "relative", zIndex: 10, marginTop: 12, paddingLeft: 16 }}>
         <ForexTicker />
       </div>
-      <div className="relative z-10 mt-2">
+      <div style={{ position: "relative", zIndex: 10, marginTop: 8 }}>
         <PartnersMarquee logoSize="w-6 h-6" />
       </div>
     </section>
