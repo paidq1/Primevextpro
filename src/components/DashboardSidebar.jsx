@@ -55,7 +55,7 @@ const sidebarSections = [
       { icon: <Package size={13}/>, label: 'Packages', route: '/dashboard/packages' },
       { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
       { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
-      { icon: <Bell size={13}/>, label: 'Support', route: null, external: 'mailto:support@vertextradeprox.cc' },
+      { icon: <Bell size={13}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
     ]
   }
 ];
@@ -110,7 +110,8 @@ export default function DashboardSidebar({ open, onClose }) {
               {section.items.map((item, ii) => (
                 <div key={ii}>
                   <button onClick={() => {
-                    if (item.external) { window.open(item.external, '_blank'); onClose(); }
+                    if (item.action === 'smartsupp') { if(window.smartsupp) window.smartsupp('chat:open'); onClose(); }
+                    else if (item.external) { window.open(item.external, '_blank'); onClose(); }
                     else if (item.submenu) {
                       setOpenSubmenu(openSubmenu === si+'-'+ii ? null : si+'-'+ii);
                     } else {
