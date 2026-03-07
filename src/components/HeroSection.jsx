@@ -121,7 +121,7 @@ function Navbar({ onGetStarted }) {
               ))}
             </div>
           </div>
-          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap ml-1" onClick={onGetStarted}>
+          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap ml-1 mr-2" onClick={onGetStarted}>
             Get Started
           </button>
         </div>
