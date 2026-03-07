@@ -89,39 +89,39 @@ function Navbar({ onGetStarted }) {
               <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
             </svg>
           </div>
-          <span className="text-white font-bold text-[7px] tracking-wider whitespace-nowrap mt-1">
+          <span className="text-white font-bold text-[11px] tracking-wider whitespace-nowrap mt-1">
             VERTEXTRADE <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">PRO</span>
           </span>
         </div>
         <div className="flex items-center gap-1.5 ml-auto flex-shrink-0 flex-nowrap">
-          <a href="#home" className="text-white text-[9px] font-normal relative whitespace-nowrap">
+          <a href="#home" className="text-white text-[11px] font-normal relative whitespace-nowrap">
             Home
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-purple-500 rounded-full"></span>
           </a>
-          <a href="/trading-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Trading</a>
-          <a href="/staking-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Staking</a>
-          <a href="/investing-info" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Investing</a>
+          <a href="/trading-info" className="text-gray-400 hover:text-white text-[11px] font-normal transition-colors whitespace-nowrap">Trading</a>
+          <a href="/staking-info" className="text-gray-400 hover:text-white text-[11px] font-normal transition-colors whitespace-nowrap">Staking</a>
+          <a href="/investing-info" className="text-gray-400 hover:text-white text-[11px] font-normal transition-colors whitespace-nowrap">Investing</a>
           <div style={{ position: 'relative' }} className="group">
-            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
+            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[11px] font-normal transition-colors whitespace-nowrap">
               Links<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
             </button>
             <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
               {[['Market','#market'],['How It Works','#how'],['Benefits','#why'],['Investment Plans','/investing-info'],["FAQ's",'#faq']].map(([l,h])=>(
-                <a key={l} href={h} className="block px-3 py-1.5 text-[9px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
+                <a key={l} href={h} className="block px-3 py-1.5 text-[11px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
               ))}
             </div>
           </div>
           <div style={{ position: 'relative' }} className="group">
-            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">
+            <button className="flex items-center gap-0.5 text-gray-400 hover:text-white text-[11px] font-normal transition-colors whitespace-nowrap">
               Company<svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
             </button>
             <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
               {[['About Us','#why'],['Contact Us','#contact'],['Support','#contact'],['Terms & Conditions','/terms']].map(([l,h])=>(
-                <a key={l} href={h} className="block px-3 py-1.5 text-[9px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
+                <a key={l} href={h} className="block px-3 py-1.5 text-[11px] text-gray-300 hover:text-white hover:bg-white/5">{l}</a>
               ))}
             </div>
           </div>
-          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap ml-1 mr-2" onClick={onGetStarted}>
+          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-3 py-1.5 rounded-sm font-semibold text-[11px] transition-colors whitespace-nowrap ml-2 mr-2" onClick={onGetStarted}>
             Get Started
           </button>
         </div>
@@ -147,25 +147,25 @@ export default function HeroSection({ onGetStarted }) {
         {/* Left: text content */}
         <div className="flex-1 space-y-2 min-w-0 pt-1">
 
-          <div data-aos="fade-up" data-aos-delay="100" className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500 text-[8px]">
+          <div data-aos="fade-up" data-aos-delay="100" className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500 text-[11px]">
             <span className="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></span>
             Trading, Crypto, Staking & Investing
           </div>
 
-          <h1 data-aos="fade-up" data-aos-delay="200" className="text-base font-bold leading-tight text-white">
+          <h1 data-aos="fade-up" data-aos-delay="200" style={{ fontSize: "clamp(18px, 4.5vw, 32px)", fontWeight: 800, lineHeight: 1.25, color: "white" }}>
             Empower Your <span className="text-blue-500">Financial</span> Future with Cryptocurrency and Forex Trading
           </h1>
 
-          <p data-aos="fade-up" data-aos-delay="300" className="text-gray-400 text-[9px] leading-relaxed">
+          <p data-aos="fade-up" data-aos-delay="300" style={{ color: "#9ca3af", fontSize: "clamp(12px, 2.8vw, 15px)", lineHeight: 1.6 }}>
             Experience seamless cryptocurrency and forex trading, high-yield staking, and secure investment opportunities with cutting-edge tools.
           </p>
 
           {/* Buttons FIRST - before stats, sharp corners */}
           <div className="flex gap-2 pt-1">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-none font-bold text-[9px] transition-colors" onClick={onGetStarted}>
+            <button style={{ background: "#3b82f6", color: "white", border: "none", padding: "10px 20px", fontWeight: 700, fontSize: "clamp(12px, 2.8vw, 15px)", cursor: "pointer" }} onClick={onGetStarted}>
               Get Started
             </button>
-            <button className="group bg-white/5 hover:bg-white/10 border border-white/20 px-4 py-2 rounded-none font-bold text-[9px] flex items-center gap-1 transition-all" onClick={() => window.location.href="/signin"}>
+            <button style={{ background: "rgba(255,255,255,0.05)", color: "white", border: "1px solid rgba(255,255,255,0.2)", padding: "10px 20px", fontWeight: 700, fontSize: "clamp(12px, 2.8vw, 15px)", cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }} onClick={() => window.location.href="/signin"}>
               Learn More
               <span className="inline-block transform -rotate-45 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">→</span>
             </button>
@@ -174,42 +174,42 @@ export default function HeroSection({ onGetStarted }) {
           {/* Stats row - horizontal, number big + small labels beside */}
           <div className="flex items-center gap-3 flex-nowrap pt-1">
             <div className="flex items-center gap-1">
-              <span className="text-sm font-bold text-white">400K+</span>
+              <span style={{ color: "white", fontWeight: 800, fontSize: "clamp(16px, 4vw, 22px)" }}>400K+</span>
               <div className="flex flex-col">
-                <span className="text-gray-400 text-[8px] leading-tight">Users</span>
-                <span className="text-gray-500 text-[8px] leading-tight">Trust Us</span>
+                <span style={{ color: "#9ca3af", fontSize: "clamp(10px, 2.2vw, 13px)", lineHeight: 1.3 }}>Users</span>
+                <span style={{ color: "#6b7280", fontSize: "clamp(10px, 2.2vw, 13px)", lineHeight: 1.3 }}>Trust Us</span>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <span className="text-sm font-bold text-white">24/7</span>
+              <span style={{ color: "white", fontWeight: 800, fontSize: "clamp(16px, 4vw, 22px)" }}>24/7</span>
               <div className="flex flex-col">
-                <span className="text-gray-400 text-[8px] leading-tight">Customer</span>
-                <span className="text-gray-500 text-[8px] leading-tight">Supports</span>
+                <span style={{ color: "#9ca3af", fontSize: "clamp(10px, 2.2vw, 13px)", lineHeight: 1.3 }}>Customer</span>
+                <span style={{ color: "#6b7280", fontSize: "clamp(10px, 2.2vw, 13px)", lineHeight: 1.3 }}>Supports</span>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <span className="text-sm font-bold text-white">800k+</span>
+              <span style={{ color: "white", fontWeight: 800, fontSize: "clamp(16px, 4vw, 22px)" }}>800k+</span>
               <div className="flex flex-col">
-                <span className="text-gray-400 text-[8px] leading-tight">Transactions</span>
+                <span style={{ color: "#9ca3af", fontSize: "clamp(10px, 2.2vw, 13px)", lineHeight: 1.3 }}>Transactions</span>
               </div>
             </div>
           </div>
 
           {/* Feature bullets */}
           <div className="space-y-1">
-            <div className="flex items-center gap-1 text-gray-300 text-[7px]">
+            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#d1d5db", fontSize: "clamp(11px, 2.5vw, 13px)" }}>
               <div className="w-3 h-3 rounded-sm bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                 <svg className="w-2 h-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
               </div>
               Low transaction fees and high liquidity markets
             </div>
-            <div className="flex items-center gap-1 text-gray-300 text-[7px]">
+            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#d1d5db", fontSize: "clamp(11px, 2.5vw, 13px)" }}>
               <div className="w-3 h-3 rounded-sm bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                 <svg className="w-2 h-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
               </div>
               24/7 support from experienced trading professionals
             </div>
-            <div className="flex items-center gap-1 text-gray-300 text-[7px]">
+            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#d1d5db", fontSize: "clamp(11px, 2.5vw, 13px)" }}>
               <div className="w-3 h-3 rounded-sm bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                 <svg className="w-2 h-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
               </div>
