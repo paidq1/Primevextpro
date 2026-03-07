@@ -80,7 +80,7 @@ function ParticleNetwork() {
 function Navbar({ onGetStarted }) {
   return (
     <nav style={{ position: "relative", zIndex: 9999 }} className="relative z-20 w-full pl-2 pr-1 pt-2 pb-2">
-      <div className="flex items-center justify-between w-full whitespace-nowrap">
+      <div className="flex items-center w-full whitespace-nowrap">
         <div className="flex items-center gap-2 flex-shrink-0">
           <div className="w-5 h-5 mt-1">
             <svg viewBox="0 0 40 40" fill="none" className="w-full h-full">
@@ -93,7 +93,7 @@ function Navbar({ onGetStarted }) {
             VERTEXTRADE <span className="bg-gradient-to-r from-[#6366F1] to-[#6366F1] bg-clip-text text-transparent">PRO</span>
           </span>
         </div>
-        <div className="flex items-center gap-1.5 flex-shrink-0 flex-nowrap">
+        <div className="flex items-center gap-1.5 ml-auto flex-shrink-0 flex-nowrap">
           <a href="#home" className="text-white text-[9px] font-normal relative whitespace-nowrap">
             Home
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-purple-500 rounded-full"></span>
@@ -121,9 +121,7 @@ function Navbar({ onGetStarted }) {
               ))}
             </div>
           </div>
-        </div>
-        <div className="pl-1 pr-2">
-          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap" onClick={onGetStarted}>
+          <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap ml-1" onClick={onGetStarted}>
             Get Started
           </button>
         </div>
