@@ -231,7 +231,7 @@ export default function HeroSection({ onGetStarted }) {
 
       
       {/* Forex Pairs Ticker */}
-      <div className="relative z-10 mt-3" style={{ overflow: "hidden", width: "100%" }}>
+      <div className="relative z-10 mt-3" style={{ overflow: "hidden", width: "100%", paddingLeft: "12px" }}>
         <ForexTicker />
       </div>
       <div className="relative z-10 mt-2">
