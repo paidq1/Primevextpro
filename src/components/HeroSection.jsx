@@ -122,6 +122,9 @@ function Navbar({ onGetStarted }) {
             </div>
           </div>
         </div>
+        <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+          <a href="#contact" className="text-gray-400 hover:text-white text-[9px] font-normal transition-colors whitespace-nowrap">Support</a>
+        </div>
         <div className="ml-auto pl-1 pr-2">
           <button className="bg-[#6366F1] hover:bg-[#5558E0] text-white px-1.5 py-1 rounded-sm font-semibold text-[9px] transition-colors whitespace-nowrap" onClick={onGetStarted}>
             Get Started
