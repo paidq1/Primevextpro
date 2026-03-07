@@ -101,6 +101,7 @@ function HomePage() {
 
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -134,7 +135,8 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-      <Smartsupp />
+    <Smartsupp />
+    </>
   );
 }
 
