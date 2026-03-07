@@ -93,17 +93,17 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'visible', minWidth: 0, maxWidth: '100%' }}>
 
         {/* Top Nav */}
-        <div style={{ background: '#132035', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ background: '#132035', padding: '6px 8px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)', flexWrap: 'nowrap', overflow: 'hidden' }}>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
-          <div style={{ display: 'flex', gap: '4px' }}>
+          <div style={{ display: 'flex', gap: '3px', flexShrink: 0 }}>
             <button onClick={() => navigate('/dashboard/packages')} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{u.plan?.toUpperCase() || 'STARTER'}</button>
             <button style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{u.currency || 'USD'}</button>
             <button onClick={() => navigate("/dashboard/kyc")} style={{ padding: "4px 10px", background: u.kycStatus === "approved" ? "rgba(34,197,94,0.2)" : u.kycStatus === "rejected" ? "rgba(239,68,68,0.2)" : u.kycStatus === "submitted" ? "rgba(245,158,11,0.2)" : "rgba(239,68,68,0.15)", border: u.kycStatus === "approved" ? "1px solid #22c55e" : u.kycStatus === "rejected" ? "1px solid #ef4444" : "1px solid #f59e0b", color: u.kycStatus === "approved" ? "#22c55e" : u.kycStatus === "rejected" ? "#ef4444" : "#f59e0b", fontSize: "8px", fontWeight: "700", cursor: "pointer", animation: (!u.kycStatus || u.kycStatus === "pending") ? "pulse 2s infinite" : "none" }}>KYC {u.kycStatus === "approved" ? "✓" : u.kycStatus === "rejected" ? "✗" : u.kycStatus === "submitted" ? "⏳" : "!"}</button>
           </div>
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: '3px', alignItems: 'center', flexShrink: 0 }}>
+            <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', display: window.innerWidth < 380 ? 'none' : 'flex' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
             <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
             <div onClick={() => navigate('/dashboard/profile')} style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {u.avatar ? <img src={u.avatar} style={{ width: '32px', height: '32px', objectFit: 'cover', display: 'block' }} /> : <User size={13} color="white" />}
