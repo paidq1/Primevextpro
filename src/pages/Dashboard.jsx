@@ -122,7 +122,7 @@ export default function Dashboard() {
         )}
 
         {/* Body */}
-        <div style={{ flex: 1, display: 'flex', overflow: 'visible', flexDirection: 'column' }}>
+        <div style={{ flex: 1, display: 'flex', overflow: 'visible' }}>
 
           <div style={{ flex: 1, display: 'flex', overflow: 'visible' }}>
 
