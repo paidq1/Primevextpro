@@ -1,3 +1,4 @@
+import CryptoMarketOverview from './CryptoMarketOverview';
 import { useRef } from 'react';
 
 // @section trading
@@ -45,7 +46,7 @@ export default function TradingAnalysis() {
         <polygon points="350,600 380,480 400,600" fill="#29465b"/>
       </svg>
 
-      <div style={{ display: 'flex', gap: '16px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'stretch', position: 'relative', zIndex: 1 }}>
         <div style={{ flex: 1 }}>
           <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '600', letterSpacing: '0.05em', marginBottom: '4px' }}>
             Trading Analysis
@@ -76,14 +77,8 @@ export default function TradingAnalysis() {
           </button>
         </div>
 
-        <div style={{ width: '45%', flexShrink: 0, border: '1px solid rgba(255,255,255,0.08)', overflow: 'hidden', background: '#131722' }}>
-          <iframe
-            src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_widget&symbol=BINANCE%3ABTCUSDT&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=131722&studies=%5B%5D&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=0&showpopupbutton=0&hide_top_toolbar=1&locale=en&scale=1"
-            style={{ width: '200%', height: '360px', border: 'none', display: 'block', transform: 'scale(0.5)', transformOrigin: 'top left', marginBottom: '-180px' }}
-            allowTransparency={true}
-            scrolling="no"
-            title="BTC/USD Chart"
-          />
+        <div style={{ width: '45%', flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+          <CryptoMarketOverview style={{ flex: 1, height: '100%' }} />
         </div>
       </div>
     </section>

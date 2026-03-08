@@ -1,72 +1,55 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 const logos = [
-  { name: "AWS", bg: "#ff9900", content: "AWS" },
-  { name: "Binance", bg: "#f0b90b", content: "BNB" },
-  { name: "Coinbase", bg: "#0052ff", content: "C" },
-  { name: "IBM", bg: "#054ada", content: "IBM" },
-  { name: "TRON", bg: "#ff060a", content: "TRX" },
-  { name: "Ripple", bg: "#23292f", content: "XRP" },
-  { name: "Google", bg: "#4285f4", content: "G" },
-  { name: "MetaMask", bg: "#f6851b", content: "Meta" },
-  { name: "Chainlink", bg: "#375bd2", content: "LINK" },
-  { name: "Solana", bg: "#9945ff", content: "SOL" },
-  { name: "Polygon", bg: "#8247e5", content: "MATIC" },
-  { name: "Ethereum", bg: "#627eea", content: "ETH" },
-  { name: "Bitcoin", bg: "#f7931a", content: "₿" },
-  { name: "Oracle", bg: "#c74634", content: "ORA" },
-  { name: "Stripe", bg: "#635bff", content: "STR" },
-  { name: "Microsoft", bg: "#00a4ef", content: "MS" },
+  { name: "Binance", img: "https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png" },
+  { name: "Coinbase", img: "https://assets.coingecko.com/markets/images/23/small/coinbase.png" },
+  { name: "Ethereum", img: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" },
+  { name: "Bitcoin", img: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
+  { name: "Solana", img: "https://assets.coingecko.com/coins/images/4128/small/solana.png" },
+  { name: "Ripple", img: "https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png" },
+  { name: "Chainlink", img: "https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png" },
+  { name: "Polygon", img: "https://assets.coingecko.com/coins/images/4713/small/polygon.png" },
+  { name: "MetaMask", img: "https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" },
+  { name: "TRON", img: "https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" },
+  { name: "AWS", img: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
+  { name: "Google", img: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
+  { name: "Microsoft", img: "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" },
+  { name: "Stripe", img: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" },
 ];
-
-const ITEM_WIDTH = 68;
 
 const LogoItem = ({ logo }) => (
   <div style={{
-    width: "28px", height: "28px", borderRadius: "50%",
-    background: logo.bg, border: logo.bg === "white" ? "1px solid #ccc" : "none",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    flexShrink: 0, overflow: "hidden", marginRight: "40px"
+    width: '32px', height: '32px', borderRadius: '50%',
+    background: 'rgba(255,255,255,0.08)',
+    border: '1px solid rgba(255,255,255,0.12)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    flexShrink: 0, overflow: 'hidden', marginRight: '32px'
   }}>
-    <span style={{ color: "white", fontWeight: "bold", fontSize: "6px" }}>{logo.content}</span>
+    <img
+      src={logo.img}
+      alt={logo.name}
+      style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+      onError={e => { e.target.style.display = 'none'; }}
+    />
   </div>
 );
 
 const PartnersMarquee = () => {
-  const posRef = useRef(0);
-  const trackRef = useRef(null);
-  const totalWidth = logos.length * ITEM_WIDTH;
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const step = () => {
-      posRef.current -= ITEM_WIDTH;
-      if (Math.abs(posRef.current) >= totalWidth) {
-        track.style.transition = "none";
-        track.style.transform = `translateX(0px)`;
-        posRef.current = 0;
-        track.getBoundingClientRect();
-        track.style.transition = "transform 0.4s ease";
-      } else {
-        track.style.transition = "transform 0.4s ease";
-        track.style.transform = `translateX(${posRef.current}px)`;
-      }
-    };
-
-    const interval = setInterval(step, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div style={{ overflow: "hidden", width: "100%", paddingTop: "6px", paddingBottom: "6px" }}>
-      <div ref={trackRef} style={{
-        display: "flex", alignItems: "center", whiteSpace: "nowrap",
-        willChange: "transform"
+    <div style={{ overflow: 'hidden', width: '100%', paddingTop: '6px', paddingBottom: '6px' }}>
+      <div style={{
+        display: 'flex', alignItems: 'center',
+        animation: 'marquee 20s linear infinite',
+        width: 'max-content'
       }}>
         {[...logos, ...logos].map((logo, i) => <LogoItem key={i} logo={logo} />)}
       </div>
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </div>
   );
 };
