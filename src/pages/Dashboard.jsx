@@ -159,17 +159,16 @@ export default function Dashboard() {
             </div>
 
             {/* Chart */}
-            <div style={{ marginBottom: '12px', border: '1px solid rgba(99,102,241,0.5)', overflow: 'visible', background: '#1a2e4a', height: '220px' }}>
+            <div style={{ marginBottom: '12px', border: '1px solid rgba(99,102,241,0.5)', overflow: 'hidden', background: '#1a2e4a', height: '200px', position: 'relative' }}>
               <iframe
-                src="https://s.tradingview.com/widgetembed/?symbol=BINANCE%3ABTCUSDT&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=252d3d&studies=%5B%5D&theme=dark&style=3&timezone=Etc%2FUTC&withdateranges=1&showpopupbutton=0&locale=en&hide_top_toolbar=0&hide_legend=0&hide_volume=1&scale=1&bgcolor=%23252d3d&gridcolor=rgba(255%2C255%2C255%2C0.04)"
-                style={{ width: '238%', height: '530px', border: 'none', display: 'block', transform: 'scale(0.42)', transformOrigin: 'top left', marginBottom: '-145px' }}
+                src="https://s.tradingview.com/widgetembed/?symbol=BINANCE%3ABTCUSDT&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=1e222d&studies=%5B%5D&theme=dark&style=3&timezone=Etc%2FUTC&withdateranges=1&showpopupbutton=0&locale=en&hide_top_toolbar=0&hide_legend=0&hide_volume=0&scale=1&bgcolor=%231e222d"
+                style={{ width: '100%', height: '120%', border: 'none', position: 'absolute', top: 0, left: 0 }}
                 allowTransparency={true}
                 scrolling="no"
                 title="BTC/USD Chart"
               />
             </div>
-
-            {/* Transaction List */}
+                        {/* Transaction List */}
             <div style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.5)', padding: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
