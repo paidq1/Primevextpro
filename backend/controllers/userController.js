@@ -4,7 +4,7 @@ const Transaction = require('../models/Transaction');
 const Trade = require('../models/Trade');
 const Investment = require('../models/Investment');
 
-exports.getDashboard = async (req, res) => {
+const getDashboard = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
     const recentTransactions = await Transaction.find({ user: req.user._id }).sort({ createdAt: -1 }).limit(10);
@@ -17,7 +17,7 @@ exports.getDashboard = async (req, res) => {
   }
 };
 
-exports.updateProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   try {
     console.log('--- UPDATE PROFILE HIT ---');
     console.log('Body:', req.body);
@@ -55,3 +55,18 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
+const deleteAvatar = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { avatar: '' },
+      { new: true }
+    ).select('-password');
+    res.json({ message: 'Avatar removed', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { updateProfile, getDashboard, deleteAvatar };

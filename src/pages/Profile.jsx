@@ -66,6 +66,26 @@ export default function Profile() {
   const [fileName, setFileName] = useState('No file chosen');
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
+
+  const handleRemoveAvatar = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('https://vertextrades.onrender.com/api/user/avatar', {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.user) {
+        setAvatarPreview(null);
+        setAvatarFile(null);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        setMsg('Profile picture removed.');
+      }
+    } catch (e) {
+      setError('Failed to remove avatar.');
+    }
+  };
+
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -304,9 +324,10 @@ export default function Profile() {
             {/* Profile Picture */}
             <div style={{ marginBottom: '14px' }}>
               <label style={labelStyle}>Profile Picture</label>
-              {avatarPreview && (
+              {(avatarPreview || (user?.avatar && user.avatar !== '')) && (
                 <div style={{ marginBottom: '8px' }}>
-                  <img src={avatarPreview} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1' }}/>
+                  <img src={avatarPreview || user?.avatar} alt="Preview" style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #6366f1' }}/>
+                <button onClick={handleRemoveAvatar} style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid #ef4444', color: '#ef4444', fontSize: '7px', padding: '3px 8px', cursor: 'pointer', marginLeft: '8px' }}>Remove Photo</button>
                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '3px' }}>Preview — saved when you click Update Profile</div>
                 </div>
               )}

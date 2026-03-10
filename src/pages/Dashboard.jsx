@@ -151,7 +151,7 @@ export default function Dashboard() {
               ))}
             </div>
             {/* Chart */}
-            <div style={{ height: '220px', marginBottom: '12px' }}><CryptoMarketOverview /></div>
+            <div style={{ height: '220px', marginBottom: '12px', width: '100%' }}><CryptoMarketOverview /></div>
             {/* Transaction List */}
             <div style={{ background: '#252d3d', border: '1px solid rgba(99,102,241,0.5)', padding: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>

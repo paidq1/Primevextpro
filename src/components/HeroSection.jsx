@@ -96,17 +96,17 @@ function Navbar({ onGetStarted }) {
         </div>
 
         {/* Nav links */}
-        <div className="flex items-center ml-auto flex-shrink-0 flex-nowrap" style={{ gap: "clamp(3px, 1.3vw, 8px)" }}>
-          <a href="#home" style={{ fontSize: "clamp(8px, 2vw, 11px)" }} className="text-white font-medium relative whitespace-nowrap">
+        <div className="flex items-center ml-auto flex-shrink-0 flex-nowrap" style={{ gap: "clamp(2px, 1vw, 6px)" }}>
+          <a href="#home" style={{ fontSize: "clamp(7px, 1.8vw, 9px)" }} className="text-white font-medium relative whitespace-nowrap">
             Home
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-purple-500 rounded-full"></span>
           </a>
-          <a href="/trading-info" style={{ fontSize: "clamp(8px, 2vw, 11px)" }} className="text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">Trading</a>
-          <a href="/staking-info" style={{ fontSize: "clamp(8px, 2vw, 11px)" }} className="text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">Staking</a>
-          <a href="/investing-info" style={{ fontSize: "clamp(8px, 2vw, 11px)" }} className="text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">Investing</a>
+          <a href="/trading-info" style={{ fontSize: "clamp(7px, 1.8vw, 9px)" }} className="text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">Trading</a>
+          <a href="/staking-info" style={{ fontSize: "clamp(7px, 1.8vw, 9px)" }} className="text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">Staking</a>
+          <a href="/investing-info" style={{ fontSize: "clamp(7px, 1.8vw, 9px)" }} className="text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">Investing</a>
 
           <div style={{ position: 'relative' }} className="group">
-            <button style={{ fontSize: "clamp(8px, 2vw, 11px)" }} className="flex items-center gap-0.5 text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">
+            <button style={{ fontSize: "clamp(7px, 1.8vw, 9px)" }} className="flex items-center gap-0.5 text-gray-300 hover:text-white font-medium transition-colors whitespace-nowrap">
               Links<svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
             </button>
             <div style={{ position: "absolute", top: "24px", left: 0, background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.1)", padding: "8px 0", width: "144px", zIndex: 9999 }} className="hidden group-hover:block">
@@ -128,7 +128,7 @@ function Navbar({ onGetStarted }) {
           </div>
 
           <button
-            style={{ fontSize: "clamp(7px, 1.8vw, 10px)", padding: "clamp(3px, 0.8vw, 5px) clamp(5px, 1.2vw, 8px)" }}
+            style={{ fontSize: "clamp(6px, 1.6vw, 9px)", padding: "clamp(2px, 0.6vw, 4px) clamp(4px, 1vw, 7px)" }}
             className="bg-[#6366F1] hover:bg-[#5558E0] text-white rounded-sm font-semibold transition-colors whitespace-nowrap"
             onClick={onGetStarted}
           >
@@ -181,23 +181,23 @@ export default function HeroSection({ onGetStarted }) {
           </div>
 
           {/* Stats row */}
-          <div className="flex items-center gap-3 flex-nowrap pt-1">
+          <div className="flex items-center flex-nowrap pt-1" style={{ gap: "clamp(4px, 2vw, 12px)" }}>
             <div className="flex items-center gap-1">
-              <span style={{ fontSize: "clamp(10px, 2.8vw, 14px)" }} className="font-bold text-white">400K+</span>
+              <span style={{ fontSize: "clamp(9px, 2.4vw, 13px)" }} className="font-bold text-white">400K+</span>
               <div className="flex flex-col">
                 <span className="text-gray-400 leading-tight" style={{ fontSize: "clamp(8px, 2vw, 10px)" }}>Users</span>
                 <span className="text-gray-500 leading-tight" style={{ fontSize: "clamp(8px, 2vw, 10px)" }}>Trust Us</span>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <span style={{ fontSize: "clamp(10px, 2.8vw, 14px)" }} className="font-bold text-white">24/7</span>
+              <span style={{ fontSize: "clamp(9px, 2.4vw, 13px)" }} className="font-bold text-white">24/7</span>
               <div className="flex flex-col">
                 <span className="text-gray-400 leading-tight" style={{ fontSize: "clamp(8px, 2vw, 10px)" }}>Customer</span>
                 <span className="text-gray-500 leading-tight" style={{ fontSize: "clamp(8px, 2vw, 10px)" }}>Supports</span>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <span style={{ fontSize: "clamp(10px, 2.8vw, 14px)" }} className="font-bold text-white">800k+</span>
+              <span style={{ fontSize: "clamp(9px, 2.4vw, 13px)" }} className="font-bold text-white">800k+</span>
               <div className="flex flex-col">
                 <span className="text-gray-400 leading-tight" style={{ fontSize: "clamp(8px, 2vw, 10px)" }}>Transactions</span>
               </div>
