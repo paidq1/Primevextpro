@@ -32,19 +32,21 @@ const FAQ = () => {
     <><section id="faq" className="scroll-anim" ref={faqRef} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '32px 16px', position: 'relative', overflow: 'hidden' }}>
 
       {/* Network graph top left */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '130px', height: '130px', opacity: 0.7 }}>
+      <div style={{ position: 'absolute', top: '-20px', left: '-20px', width: '150px', height: '150px', background: 'radial-gradient(circle at 40% 40%, rgba(80,60,220,0.3) 0%, rgba(60,40,180,0.12) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(25px)', zIndex: 0 }}></div>
+      <div style={{ position: 'absolute', top: '-8px', left: '0px', width: '90px', height: '90px', opacity: 0.9 }}>
         <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'relative', zIndex: 1 }} />
       </div>
 
       {/* Network graph bottom right */}
-      <div style={{ position: 'absolute', bottom: 0, right: 0, width: '130px', height: '130px', opacity: 0.7, transform: 'rotate(180deg)' }}>
+      <div style={{ position: 'absolute', bottom: '-20px', right: '-20px', width: '150px', height: '150px', background: 'radial-gradient(circle at 60% 60%, rgba(80,60,220,0.3) 0%, rgba(60,40,180,0.12) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(25px)', zIndex: 0 }}></div>
+      <div style={{ position: 'absolute', bottom: '-8px', right: '0px', width: '90px', height: '90px', opacity: 0.9, transform: 'rotate(180deg)' }}>
         <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'relative', zIndex: 1 }} />
       </div>
 
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
-        <h2 style={{ color: 'white', fontWeight: '700', fontSize: '18px', marginBottom: '8px' }}>Frequently Asked Questions</h2>
-        <p style={{ color: '#94a3b8', fontSize: '12px', lineHeight: '1.6', maxWidth: '320px', margin: '0 auto' }}>
+        <h2 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(14px, 4vw, 20px)', marginBottom: '8px' }}>Frequently Asked Questions</h2>
+        <p style={{ color: '#94a3b8', fontSize: 'clamp(9px, 2.5vw, 12px)', lineHeight: '1.6', maxWidth: '320px', margin: '0 auto' }}>
           Find answers to the most common questions about trading, staking, account management, and more.
         </p>
       </div>
@@ -68,7 +70,7 @@ const FAQ = () => {
                   padding: '10px', gap: '6px',
                 }}
               >
-                <span style={{ color: 'white', fontSize: '10px', fontWeight: '600', textAlign: 'left' }}>{faq.question}</span>
+                <span style={{ color: 'white', fontSize: 'clamp(9px, 2.2vw, 11px)', fontWeight: '600', textAlign: 'left' }}>{faq.question}</span>
                 <div style={{
                   width: '24px', height: '24px', borderRadius: '50%', flexShrink: 0,
                   background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -77,7 +79,7 @@ const FAQ = () => {
                 </div>
               </button>
               {openIndex === index && (
-                <p style={{ color: '#94a3b8', fontSize: '9px', lineHeight: '1.6', padding: '0 10px 10px 10px', margin: 0 }}>
+                <p style={{ color: '#94a3b8', fontSize: 'clamp(8px, 2vw, 10px)', lineHeight: '1.6', padding: '0 10px 10px 10px', margin: 0 }}>
                   {faq.answer}
                 </p>
               )}
@@ -97,19 +99,19 @@ const FAQ = () => {
         position: 'relative', zIndex: 1,
       }}>
         {/* Illustration */}
-        <div style={{ flexShrink: 0, width: '130px', height: '130px', position: 'relative' }}><div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '150px', height: '160px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.7) 0%, transparent 70%)', zIndex: 0 }} />
-          <img src='/faq-illustration.png' style={{ width: '130px', height: '130px', objectFit: 'contain', position: 'relative', zIndex: 1 }} />
+        <div style={{ flexShrink: 0, width: 'clamp(80px, 20vw, 130px)', height: 'clamp(80px, 20vw, 130px)', position: 'relative' }}><div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '150px', height: '160px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.7) 0%, transparent 70%)', zIndex: 0 }} />
+          <img src='/faq-illustration.png' style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'relative', zIndex: 1 }} />
         </div>
 
         <div style={{ flex: 1 }}>
-          <h3 style={{ color: 'white', fontWeight: '700', fontSize: '14px', marginBottom: '8px' }}>Need More Help? Contact Us</h3>
-          <p style={{ color: '#94a3b8', fontSize: '8px', lineHeight: '1.6', marginBottom: '12px' }}>
+          <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(11px, 3vw, 15px)', marginBottom: '8px' }}>Need More Help? Contact Us</h3>
+          <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', marginBottom: '12px' }}>
             If you didn't find the answer you were looking for, our support team is here to help. Reach out to us directly for more assistance or explore our detailed support resources.
           </p>
           <button onClick={() => window.location.href='/signup'} style={{
             display: 'flex', alignItems: 'center', gap: '6px',
             background: '#6366f1', border: 'none', borderRadius: '4px',
-            color: 'white', fontSize: '9px', fontWeight: '600',
+            color: 'white', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '600',
             padding: '8px 14px', cursor: 'pointer',
           }}>
             Reach Out Now

@@ -208,50 +208,26 @@ export default function LiveTrading() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginBottom: '14px' }}>
             {/* Total Trades */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: '1px solid rgba(99,102,241,0.2)', position: 'relative', overflow: 'hidden' }}>
-              <svg style={{ position: 'absolute', bottom: 0, right: 0, opacity: 0.08 }} width="70" height="50" viewBox="0 0 70 50">
-                <line x1="10" y1="5" x2="10" y2="45" stroke="#6366f1" strokeWidth="1"/>
-                <rect x="7" y="12" width="6" height="20" fill="#6366f1"/>
-                <line x1="22" y1="8" x2="22" y2="42" stroke="#6366f1" strokeWidth="1"/>
-                <rect x="19" y="15" width="6" height="18" fill="#6366f1"/>
-                <line x1="34" y1="3" x2="34" y2="38" stroke="#6366f1" strokeWidth="1"/>
-                <rect x="31" y="10" width="6" height="22" fill="#6366f1"/>
-                <line x1="46" y1="10" x2="46" y2="44" stroke="#6366f1" strokeWidth="1"/>
-                <rect x="43" y="18" width="6" height="16" fill="#6366f1"/>
-                <line x1="58" y1="6" x2="58" y2="40" stroke="#6366f1" strokeWidth="1"/>
-                <rect x="55" y="12" width="6" height="20" fill="#6366f1"/>
-              </svg>
+            <div style={{ background: '#1a2e4a', padding: '12px', border: '1px solid rgba(255,255,255,0.06)', position: 'relative' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                 <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Total Trades</span>
               </div>
-              <div style={{ color: 'white', fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>{stats ? stats.totalTrades : '—'}</div>
+              <div style={{ color: 'white', fontSize: '12px', fontWeight: '700', lineHeight: 1 }}>{stats ? stats.totalTrades : '—'}</div>
               <div style={{ color: 'rgba(99,102,241,0.7)', fontSize: '7px', marginTop: '4px' }}>{stats ? `${stats.closedTrades} closed` : ''}</div>
             </div>
 
             {/* Win / Loss */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: '1px solid rgba(34,197,94,0.2)', position: 'relative', overflow: 'hidden' }}>
-              <svg style={{ position: 'absolute', bottom: 0, right: 0, opacity: 0.1 }} width="70" height="50" viewBox="0 0 70 50">
-                <line x1="10" y1="8" x2="10" y2="42" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="7" y="18" width="6" height="14" fill="#22c55e"/>
-                <line x1="22" y1="5" x2="22" y2="38" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="19" y="10" width="6" height="20" fill="#22c55e"/>
-                <line x1="34" y1="10" x2="34" y2="45" stroke="#ef4444" strokeWidth="1"/>
-                <rect x="31" y="18" width="6" height="18" fill="#ef4444"/>
-                <line x1="46" y1="4" x2="46" y2="36" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="43" y="8" width="6" height="22" fill="#22c55e"/>
-                <line x1="58" y1="7" x2="58" y2="40" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="55" y="14" width="6" height="16" fill="#22c55e"/>
-              </svg>
+            <div style={{ background: '#1a2e4a', padding: '12px', border: '1px solid rgba(255,255,255,0.06)', position: 'relative' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                 <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: 'rgba(34,197,94,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Win / Loss</span>
               </div>
-              <div style={{ fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>
+              <div style={{ fontSize: '12px', fontWeight: '700', lineHeight: 1 }}>
                 <span style={{ color: '#22c55e' }}>{stats ? stats.wins : '—'}</span>
                 <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '12px' }}> / </span>
                 <span style={{ color: '#ef4444' }}>{stats ? stats.losses : '—'}</span>
@@ -260,52 +236,28 @@ export default function LiveTrading() {
             </div>
 
             {/* Net P&L */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
-              <svg style={{ position: 'absolute', bottom: 0, right: 0, opacity: 0.1 }} width="70" height="50" viewBox="0 0 70 50">
-                <line x1="10" y1="30" x2="10" y2="45" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="7" y="32" width="6" height="10" fill="#22c55e"/>
-                <line x1="22" y1="20" x2="22" y2="42" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="19" y="22" width="6" height="14" fill="#22c55e"/>
-                <line x1="34" y1="12" x2="34" y2="38" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="31" y="14" width="6" height="18" fill="#22c55e"/>
-                <line x1="46" y1="6" x2="46" y2="32" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="43" y="8" width="6" height="18" fill="#22c55e"/>
-                <line x1="58" y1="2" x2="58" y2="28" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="55" y="4" width="6" height="18" fill="#22c55e"/>
-              </svg>
+            <div style={{ background: '#1a2e4a', padding: '12px', border: '1px solid rgba(255,255,255,0.06)', position: 'relative' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                 <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: stats && parseFloat(stats.netProfitLoss)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444'} strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>Net P&L</span>
               </div>
-              <div style={{ color: stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444', fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>
+              <div style={{ color: stats && parseFloat(stats.netProfitLoss)>=0 ? '#22c55e' : '#ef4444', fontSize: '12px', fontWeight: '700', lineHeight: 1 }}>
                 {stats ? `${parseFloat(stats.netProfitLoss)>=0?'+':''}$${stats.netProfitLoss}` : '—'}
               </div>
               <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '4px' }}>{stats ? `profit: $${stats.totalProfit}` : ''}</div>
             </div>
 
             {/* ROI */}
-            <div style={{ background: 'linear-gradient(135deg, #1a1f3a 0%, #1e2d4a 100%)', borderRadius: '0px', padding: '12px', border: `1px solid ${stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`, position: 'relative', overflow: 'hidden' }}>
-              <svg style={{ position: 'absolute', bottom: 0, right: 0, opacity: 0.1 }} width="70" height="50" viewBox="0 0 70 50">
-                <line x1="10" y1="5" x2="10" y2="45" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="7" y="8" width="6" height="28" fill="#ef4444"/>
-                <line x1="22" y1="10" x2="22" y2="44" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="19" y="14" width="6" height="20" fill="#22c55e"/>
-                <line x1="34" y1="8" x2="34" y2="40" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="31" y="12" width="6" height="16" fill="#22c55e"/>
-                <line x1="46" y1="4" x2="46" y2="38" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="43" y="6" width="6" height="24" fill="#ef4444"/>
-                <line x1="58" y1="2" x2="58" y2="36" stroke="#22c55e" strokeWidth="1"/>
-                <rect x="55" y="4" width="6" height="22" fill="#22c55e"/>
-              </svg>
+            <div style={{ background: '#1a2e4a', padding: '12px', border: '1px solid rgba(255,255,255,0.06)', position: 'relative' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                 <div style={{ width: '24px', height: '24px', borderRadius: '0px', background: stats && parseFloat(stats.roi)>=0 ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444'} strokeWidth="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                 </div>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '500' }}>ROI</span>
               </div>
-              <div style={{ color: stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444', fontSize: '16px', fontWeight: '800', lineHeight: 1 }}>
+              <div style={{ color: stats && parseFloat(stats.roi)>=0 ? '#22c55e' : '#ef4444', fontSize: '12px', fontWeight: '700', lineHeight: 1 }}>
                 {stats ? `${parseFloat(stats.roi)>=0?'+':''}${stats.roi}%` : '—'}
               </div>
               <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '4px' }}>return on investment</div>

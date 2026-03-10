@@ -14,14 +14,14 @@ const OurMission = () => {
   return (
     <section style={{ background: "#1e2235", position: "relative", width: "100%", boxSizing: 'border-box', overflow: 'hidden', paddingTop: '30px', paddingBottom: '30px' }}>
       <div style={{ position: 'absolute', top: '0px', left: '0px', width: '150px', height: '150px', background: 'radial-gradient(circle at 40% 40%, rgba(120,60,255,0.5) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(35px)', zIndex: 0 }}></div>
-      <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1, width: '120px', height: '120px' }}>
+      <div style={{ position: 'absolute', top: '-8px', left: '0px', zIndex: 1, width: '90px', height: '90px' }}>
         <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', gap: '20px', paddingRight: '12px', minHeight: 'unset' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', gap: 'clamp(10px, 3vw, 20px)', paddingRight: '12px', minHeight: 'unset' }}>
 
         {/* Left: Phone */}
-        <div className="scroll-anim" style={{ flex: '0 0 36%', minWidth: 0, position: 'relative', maxHeight: '400px', overflow: 'hidden', marginTop: '50px' }}>
+        <div className="scroll-anim" style={{ flex: '0 0 38%', minWidth: 0, position: 'relative', maxHeight: 'clamp(260px, 65vw, 340px)', overflow: 'hidden', marginTop: '40px' }}>
           <img src="/mission-phone.png" alt="App mockup"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </div>
@@ -29,8 +29,8 @@ const OurMission = () => {
         {/* Right: Card - full height */}
         <div className="scroll-anim delay-2" style={{ flex: '0 0 48%', display: 'flex', alignItems: 'stretch', padding: '0px 12px 0px 0px', marginLeft: 'auto' }}>
           <div style={{
-            background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', minHeight: '340px',
-            padding: '16px',
+            background: 'linear-gradient(135deg, #1f3b4d 0%, #29465b 100%)', minHeight: 'unset',
+            padding: 'clamp(10px, 2.5vw, 16px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -40,9 +40,9 @@ const OurMission = () => {
             border: '1px solid rgba(255,255,255,0.08)'
           }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-              <h2 style={{ color: 'white', fontWeight: '700', fontSize: '12px', margin: 0 }}>Our Mission</h2>
+              <h2 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(10px, 2.5vw, 13px)', margin: 0 }}>Our Mission</h2>
               <div style={{ width: '24px', height: '2px', background: '#6366f1' }} />
-              <p style={{ color: 'white', fontSize: '7px', lineHeight: '1.6', margin: 0 }}>
+              <p style={{ color: 'white', fontSize: 'clamp(6px, 1.6vw, 8px)', lineHeight: '1.5', margin: 0 }}>
                 Founded in 2020, VertexTrade Pro is dedicated to providing secure and innovative financial solutions. Our mission is to empower our clients with the tools and knowledge to succeed in the dynamic world of crypto and forex trading. We are committed to transparency, integrity, and the highest standards of security. Our vision is to be the leading platform for crypto and forex trading worldwide, trusted by our clients for our expertise, reliability, and commitment to their success.
               </p>
               <div style={{ width: '24px', height: '1px', background: 'rgba(99,102,241,0.4)' }} />
@@ -56,12 +56,12 @@ const OurMission = () => {
                           <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
                           <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
                         </svg>
-                        <span style={{ color: 'white', fontSize: '7px', fontWeight: '600', textAlign: 'left' }}>{item.title}</span>
+                        <span style={{ color: 'white', fontSize: 'clamp(6px, 1.5vw, 8px)', fontWeight: '600', textAlign: 'left' }}>{item.title}</span>
                       </div>
                       <span style={{ color: '#6366f1', fontSize: '9px', flexShrink: 0 }}>{openIndex === index ? '∧' : '∨'}</span>
                     </button>
                     {openIndex === index && (
-                      <p style={{ color: 'white', fontSize: '6.5px', lineHeight: '1.5', padding: '0 0 4px 13px', margin: 0 }}>
+                      <p style={{ color: 'white', fontSize: 'clamp(6px, 1.4vw, 7.5px)', lineHeight: '1.4', padding: '0 0 4px 13px', margin: 0 }}>
                         {item.content}
                       </p>
                     )}
@@ -73,7 +73,7 @@ const OurMission = () => {
               <button onClick={() => window.location.href="/signup"} style={{ flex: 1, padding: '7px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started
               </button>
-              <button style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }} onClick={() => window.location.href="/signin"}>
+              <button style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }} onClick={() => window.location.href="/signin"}>
                 Learn More <ArrowUpRight size={8} />
               </button>
             </div>

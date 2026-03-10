@@ -42,34 +42,35 @@ export default function Testimonials() {
     <>
       
       <section id="reviews" ref={ref} style={{ background: '#151c27', width: '100%', boxSizing: 'border-box', padding: '24px 16px 20px 16px', overflow: 'hidden', position: 'relative' }}>
-        <div style={{ position: 'absolute', top: '-10px', left: '0px', zIndex: 1, width: '120px', height: '120px' }}>
-          <img src='/network-graph.png' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        <div style={{ position: 'absolute', top: '-10px', left: '-10px', width: '100px', height: '100px', background: 'radial-gradient(circle at 40% 40%, rgba(80,60,220,0.3) 0%, rgba(60,40,180,0.12) 40%, transparent 70%)', borderRadius: '50%', filter: 'blur(25px)', zIndex: 0 }}></div>
+        <div style={{ position: 'absolute', top: '-8px', left: '0px', zIndex: 1, width: '90px', height: '90px' }}>
+          <img src='/network-graph.png' style={{ width: '90px', height: '90px', objectFit: 'contain' }} />
         </div>
         <div className='scroll-anim' style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <h2 style={{ color: 'white', fontWeight: '700', fontSize: '16px', marginBottom: '8px' }}>Trusted by Traders Worldwide</h2>
-          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', lineHeight: '1.6', maxWidth: '280px', margin: '0 auto' }}>
+          <h2 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(13px, 3.5vw, 18px)', marginBottom: '8px' }}>Trusted by Traders Worldwide</h2>
+          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(7px, 1.8vw, 10px)', lineHeight: '1.6', maxWidth: '280px', margin: '0 auto' }}>
             See how our platform has helped traders, investors, and crypto enthusiasts achieve their financial goals and experience secure, seamless trading.
           </p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', marginBottom: '16px', alignItems: 'flex-start' }}>
           {uniqueVisible.map((t, i) => (
             <div key={i} className={`scroll-anim delay-${i+1}`}
-              style={{ background: 'rgba(44,62,80,0.75)', borderRadius: '0px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, animationDelay: i * 0.1 + 's' }}>
+              style={{ background: 'rgba(44,62,80,0.75)', borderRadius: '0px', padding: 'clamp(6px, 2vw, 10px)', display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, animationDelay: i * 0.1 + 's' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', gap: '2px' }}>
                   {[...Array(t.stars)].map((_, j) => (
-                    <span key={j} style={{ color: '#f59e0b', fontSize: '10px' }}>&#9733;</span>
+                    <span key={j} style={{ color: '#f59e0b', fontSize: 'clamp(8px, 2vw, 11px)' }}>&#9733;</span>
                   ))}
                 </div>
-                <span style={{ color: '#6366f1', fontSize: '14px', opacity: 0.7 }}>"</span>
+                <span style={{ color: '#6366f1', fontSize: 'clamp(12px, 3vw, 16px)', opacity: 0.7 }}>"</span>
               </div>
-              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', lineHeight: '1.6', fontStyle: 'italic', margin: 0 }}>{t.review}</p>
+              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', fontStyle: 'italic', margin: 0 }}>{t.review}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
                 <img src={t.avatar + '?v=' + t.name.replace(/s/g, '')} alt={t.name} style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'center center', minWidth: '24px', minHeight: '24px', maxWidth: '24px', maxHeight: '24px', overflow: 'hidden', flexShrink: 0 }} />
                 <div style={{ width: '2px', height: '28px', background: '#6366f1', borderRadius: '2px' }} />
                 <div>
-                  <div style={{ color: 'white', fontSize: '8px', fontWeight: '700' }}>{t.name}</div>
-                  <div style={{ color: '#6366f1', fontSize: '7px' }}>{t.role}</div>
+                  <div style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '700' }}>{t.name}</div>
+                  <div style={{ color: '#6366f1', fontSize: 'clamp(6px, 1.6vw, 8px)' }}>{t.role}</div>
                 </div>
               </div>
             </div>

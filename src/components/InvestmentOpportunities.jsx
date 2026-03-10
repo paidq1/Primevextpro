@@ -69,11 +69,11 @@ export default function InvestmentOpportunities() {
 
           {/* Left Panel */}
           <div className="scroll-anim" style={{ flex: '0 0 40%', minWidth: 0 }}>
-            <p style={{ color: '#6366f1', fontSize: '7px', fontWeight: '600', margin: '0 0 6px 0' }}>Investment Opportunities</p>
-            <h2 style={{ color: 'white', fontSize: '14px', fontWeight: '800', margin: '0 0 8px 0', lineHeight: 1.3 }}>
+            <p style={{ color: '#6366f1', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', margin: '0 0 6px 0' }}>Investment Opportunities</p>
+            <h2 style={{ color: 'white', fontSize: 'clamp(12px, 3.2vw, 16px)', fontWeight: '800', margin: '0 0 8px 0', lineHeight: 1.3 }}>
               Discover Profitable Investment <span style={{ color: '#6366f1' }}>Opportunities</span>
             </h2>
-            <p style={{ color: 'white', fontSize: '7px', lineHeight: '1.6', margin: '0 0 10px 0' }}>
+            <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', margin: '0 0 10px 0' }}>
               Identify potential investments with our live screener tool. Filter by performance, trading volume, and market trends to find the best options for your portfolio.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '14px' }}>
@@ -82,11 +82,11 @@ export default function InvestmentOpportunities() {
                   <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <svg width="8" height="8" fill="none" stroke="white" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" strokeWidth="3"/></svg>
                   </div>
-                  <span style={{ color: 'white', fontSize: '7px' }}>{item}</span>
+                  <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)' }}>{item}</span>
                 </div>
               ))}
             </div>
-            <button style={{ display: "flex", alignItems: "center", gap: "4px", background: "transparent", border: "1px solid #6366f1", color: "white", padding: "7px 12px", fontSize: "8px", fontWeight: "600", cursor: "pointer" }} onClick={() => window.location.href="/signup"}>
+            <button style={{ display: "flex", alignItems: "center", gap: "4px", background: "transparent", border: "1px solid #6366f1", color: "white", padding: "7px 12px", fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer' }} onClick={() => window.location.href="/signup"}>
               View Investment Options
               <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10"/>
@@ -98,11 +98,11 @@ export default function InvestmentOpportunities() {
           <div className="scroll-anim delay-2" style={{ flex: 1, minWidth: 0, background: '#0d1117', borderRadius: '0px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '8px 10px', borderBottom: '2px solid #6366f1' }}>
               <div>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '6px', fontWeight: '600' }}>NAME</div>
-                <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '5.5px' }}>{cryptos.length} MATCHES</div>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(6px, 1.5vw, 7px)', fontWeight: '600' }}>NAME</div>
+                <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: 'clamp(5px, 1.3vw, 6px)' }}>{cryptos.length} MATCHES</div>
               </div>
               {['MKT CAP', 'FD MKT CAP', 'PRICE', '24H %'].map((h, i) => (
-                <div key={i} style={{ color: 'rgba(255,255,255,0.5)', fontSize: '6px', fontWeight: '600', textAlign: 'right' }}>{h}</div>
+                <div key={i} style={{ color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(6px, 1.5vw, 7px)', fontWeight: '600', textAlign: 'right' }}>{h}</div>
               ))}
             </div>
             <div style={{ overflowY: 'auto', maxHeight: '160px' }}>{loading ? (
@@ -112,12 +112,12 @@ export default function InvestmentOpportunities() {
                 <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '5px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <img src={c.image} alt={c.name} style={{ width: '14px', height: '14px', borderRadius: '50%' }} />
-                    <span style={{ color: '#6366f1', fontSize: '6.5px', fontWeight: '500' }}>{c.name}</span>
+                    <span style={{ color: '#6366f1', fontSize: 'clamp(6px, 1.5vw, 7px)', fontWeight: '500' }}>{c.name}</span>
                   </div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '6.5px', textAlign: 'right' }}>{fmt(c.market_cap)}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '6.5px', textAlign: 'right' }}>{fmt(c.fully_diluted_valuation)}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '6.5px', textAlign: 'right' }}>${c.current_price?.toLocaleString()}</div>
-                  <div style={{ color: c.price_change_percentage_24h >= 0 ? '#22c55e' : '#ef4444', fontSize: '6.5px', textAlign: 'right', fontWeight: '600' }}>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(6px, 1.5vw, 7px)', textAlign: 'right' }}>{fmt(c.market_cap)}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(6px, 1.5vw, 7px)', textAlign: 'right' }}>{fmt(c.fully_diluted_valuation)}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(6px, 1.5vw, 7px)', textAlign: 'right' }}>${c.current_price?.toLocaleString()}</div>
+                  <div style={{ color: c.price_change_percentage_24h >= 0 ? '#22c55e' : '#ef4444', fontSize: 'clamp(6px, 1.5vw, 7px)', textAlign: 'right', fontWeight: '600' }}>
                     {c.price_change_percentage_24h?.toFixed(2)}%
                   </div>
                 </div>

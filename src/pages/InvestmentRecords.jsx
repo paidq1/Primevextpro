@@ -31,6 +31,7 @@ export default function InvestmentRecords() {
   const activeCount = investments.filter(i => i.status === 'active').length;
   const completedCount = investments.filter(i => i.status === 'completed').length;
 
+  const totalPages = Math.ceil(filtered.length / perPage);
   const statusColor = s => s === 'active' ? '#22c55e' : s === 'completed' ? '#6366f1' : s === 'cancelled' ? '#ef4444' : '#f59e0b';
 
   const statCard = (icon, label, value, color) => (

@@ -94,6 +94,7 @@ export default function ManageBots() {
         </button>
         <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', marginLeft: '4px' }}>/ Trading Bots</span>
+        <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px', alignItems: 'center' }}>
           <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>Balance: ${user?.balance?.toFixed(2) || '0.00'}</span>
         </div>
@@ -111,9 +112,9 @@ export default function ManageBots() {
             ['Total Bots', activeBots.length, '#6366f1'],
             ['Total Earned', `$${totalEarned.toFixed(2)}`, '#f59e0b'],
           ].map(([l,v,c]) => (
-            <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: `1px solid ${c}30` }}>
+            <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
-              <div style={{ color: c, fontSize: '16px', fontWeight: '700' }}>{v}</div>
+              <div style={{ color: c, fontSize: '12px', fontWeight: '700' }}>{v}</div>
             </div>
           ))}
         </div>

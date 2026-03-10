@@ -23,11 +23,11 @@ export default function MarketTicker() {
   const tickerCoins = [...coins, ...coins, ...coins];
 
   return (
-    <div style={{ overflow: "hidden", width: "100%", height: "18px" }} className="relative z-20">
+    <div style={{ overflow: "hidden", width: "calc(100% - 24px)", height: "17px", marginLeft: "12px", marginRight: "12px", borderRadius: "4px" }} className="relative z-20">
       <div style={{
         display: "inline-flex",
         alignItems: "center",
-        height: "18px",
+        height: "17px",
         animation: "tickerScroll 40s linear infinite",
         whiteSpace: "nowrap"
       }}>
@@ -43,7 +43,7 @@ export default function MarketTicker() {
                 paddingRight: "8px",
                 flexShrink: 0
               }}>
-                <img src={coin.image} alt={coin.name} style={{ width: "9px", height: "9px", borderRadius: "50%" }} />
+                <img src={coin.image} alt={coin.name} style={{ width: "10px", height: "10px", borderRadius: "50%" }} />
                 <span style={{ color: "white", fontWeight: 600, fontSize: "8px" }}>{coin.name}</span>
                 <span style={{ color: "#848e9c", fontSize: "7px" }}>{coin.symbol.toUpperCase()}</span>
                 <span style={{ color: "white", fontSize: "8px" }}>${coin.current_price.toLocaleString()}</span>

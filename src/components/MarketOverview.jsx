@@ -134,7 +134,7 @@ const MarketOverview = () => {
               <div style={{ display: 'flex', gap: '2px', marginBottom: '6px' }}>
                 {tabs.map(tab => (
                   <button key={tab} onClick={() => setActiveTab(tab)} style={{
-                    padding: '4px 8px', fontSize: '10px', fontWeight: '500',
+                    padding: '4px 8px', fontSize: 'clamp(9px, 2.2vw, 11px)', fontWeight: '500',
                     borderRadius: '5px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
                     background: activeTab === tab ? '#3b5bdb' : 'transparent',
                     color: activeTab === tab ? 'white' : '#64748b',
@@ -165,7 +165,7 @@ const MarketOverview = () => {
               <div style={{ display: 'flex', gap: '2px', marginBottom: '6px' }}>
                 {timeRanges.map(range => (
                   <button key={range} onClick={() => setTimeRange(range)} style={{
-                    padding: '3px 6px', fontSize: '9px', fontWeight: '500',
+                    padding: '3px 6px', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '500',
                     borderRadius: '4px', border: 'none', cursor: 'pointer',
                     background: timeRange === range ? '#3b5bdb' : 'transparent',
                     color: timeRange === range ? 'white' : '#64748b',
@@ -186,16 +186,16 @@ const MarketOverview = () => {
                         width: '22px', height: '22px', borderRadius: '50%', flexShrink: 0,
                         background: item.badgeColor, display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
-                        <span style={{ color: 'white', fontWeight: '700', fontSize: '6px' }}>{item.badge}</span>
+                        <span style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(5px, 1.4vw, 7px)' }}>{item.badge}</span>
                       </div>
                       <div style={{ minWidth: 0 }}>
-                        <div style={{ color: 'white', fontWeight: '600', fontSize: '9px' }}>{item.symbol}</div>
-                        <div style={{ color: '#64748b', fontSize: '7px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '90px' }}>{item.name}</div>
+                        <div style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(8px, 2vw, 10px)' }}>{item.symbol}</div>
+                        <div style={{ color: '#64748b', fontSize: 'clamp(6px, 1.6vw, 8px)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '90px' }}>{item.name}</div>
                       </div>
                     </div>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <div style={{ color: 'white', fontWeight: '600', fontSize: '9px' }}>{item.price}</div>
-                      <div style={{ fontSize: '7px', color: item.up ? '#48bb78' : '#fc8181', whiteSpace: 'nowrap' }}>
+                      <div style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(8px, 2vw, 10px)' }}>{item.price}</div>
+                      <div style={{ fontSize: 'clamp(6px, 1.6vw, 8px)', color: item.up ? '#48bb78' : '#fc8181', whiteSpace: 'nowrap' }}>
                         {item.change} {item.percent}
                       </div>
                     </div>
@@ -205,13 +205,13 @@ const MarketOverview = () => {
             </div>
             {/* Right: Content */}
             <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', gap: '6px' }}>
-              <div style={{ color: '#2dd4bf', fontSize: '8px', fontWeight: '600', letterSpacing: '0.06em' }}>
+              <div style={{ color: '#2dd4bf', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '600', letterSpacing: '0.06em' }}>
                 Market Overview
               </div>
-              <h2 style={{ color: 'white', fontWeight: '700', fontSize: '13px', lineHeight: '1.25', margin: 0 }}>
+              <h2 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(11px, 3vw, 15px)', lineHeight: '1.25', margin: 0 }}>
                 Stay Ahead with <span style={{ color: '#818cf8' }}>Real-Time</span> Market Data
               </h2>
-              <p style={{ color: '#94a3b8', fontSize: '8px', lineHeight: '1.6', margin: 0 }}>
+              <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 10px)', lineHeight: '1.6', margin: 0 }}>
                 Get an overview of the cryptocurrency market with live updates on major coins. Monitor price trends, trading volumes, and market capitalization, all in one place.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -225,7 +225,7 @@ const MarketOverview = () => {
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <span style={{ color: '#cbd5e1', fontSize: '8px', lineHeight: '1.4' }}>{feature}</span>
+                    <span style={{ color: '#cbd5e1', fontSize: 'clamp(7px, 1.8vw, 10px)', lineHeight: '1.4' }}>{feature}</span>
                   </div>
                 ))}
               </div>
@@ -233,7 +233,7 @@ const MarketOverview = () => {
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   background: 'transparent', border: '1px solid #6366f1', color: 'white',
-                  padding: '10px 12px', borderRadius: '0px', fontSize: '8px',
+                  padding: '10px 12px', borderRadius: '0px', fontSize: 'clamp(8px, 2vw, 10px)',
                   fontWeight: '500', cursor: 'pointer', width: '100%', boxSizing: 'border-box',
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.1)'}

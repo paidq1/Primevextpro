@@ -21,14 +21,14 @@ export default function ForexTicker() {
   }, []);
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingLeft: "4px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "8px", paddingLeft: "4px" }}>
       {coins.map((coin, i) => {
         const isUp = coin.price_change_percentage_24h >= 0;
         return (
           <div key={i} style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}>
-            <img src={coin.image} alt={coin.name} style={{ width: "10px", height: "10px", borderRadius: "50%" }} />
-            <span style={{ color: "white", fontSize: "8px", fontWeight: 500 }}>{coin.symbol.toUpperCase()} to USD</span>
-            <span style={{ fontSize: "8px", color: isUp ? "#00c896" : "#ff3b69" }}>
+            <img src={coin.image} alt={coin.name} style={{ width: "8px", height: "8px", borderRadius: "50%" }} />
+            <span style={{ color: "white", fontSize: "7px", fontWeight: 500 }}>{coin.symbol.toUpperCase()} to USD</span>
+            <span style={{ fontSize: "7px", color: isUp ? "#00c896" : "#ff3b69" }}>
               {isUp ? "+" : ""}{coin.price_change_24h?.toFixed(2)} ({isUp ? "+" : ""}{coin.price_change_percentage_24h?.toFixed(2)}%)
             </span>
           </div>

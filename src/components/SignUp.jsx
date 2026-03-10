@@ -150,11 +150,11 @@ const SignUp = () => {
   const inputStyle = (field) => ({
     width: '100%', background: '#374151',
     border: '1px solid ' + (errors[field] ? '#ef4444' : 'transparent'),
-    borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px',
+    borderRadius: '4px', padding: '8px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)',
     boxSizing: 'border-box', outline: 'none'
   });
 
-  const errStyle = { color: '#ef4444', fontSize: '7px', marginTop: '2px' };
+  const errStyle = { color: '#ef4444', fontSize: 'clamp(6px, 1.6vw, 8px)', marginTop: '2px' };
 
   if (checkEmail) return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0e1628' }}>
@@ -186,14 +186,14 @@ const SignUp = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa', padding: '20px', boxSizing: 'border-box', position: 'relative' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa', padding: '8px', boxSizing: 'border-box', position: 'relative' }}>
       <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
         <div style={{ width: '600px', height: '600px', borderRadius: '50%', background: 'rgba(180,190,205,0.25)', position: 'absolute' }} />
         <div style={{ width: '420px', height: '420px', borderRadius: '50%', background: 'rgba(180,190,205,0.25)', position: 'absolute' }} />
         <div style={{ width: '260px', height: '260px', borderRadius: '50%', background: 'rgba(180,190,205,0.2)', position: 'absolute' }} />
       </div>
 
-      <div style={{ background: '#2d3748', width: '340px', position: 'relative', zIndex: 1 }}>
+      <div style={{ background: '#2d3748', width: '92vw', maxWidth: '360px', position: 'relative', zIndex: 1 }}>
         <div style={{ background: '#374151', padding: '16px', textAlign: 'center' }}>
           <svg viewBox="0 0 40 40" fill="none" width="32" height="32" style={{ margin: '0 auto 8px' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -201,8 +201,8 @@ const SignUp = () => {
             <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
           <div style={{ width: '100%', height: '1px', background: 'rgba(99,102,241,0.4)', marginBottom: '12px' }} />
-          <h2 style={{ color: 'white', fontWeight: '600', fontSize: '14px', marginBottom: '4px' }}>Account Sign Up</h2>
-          <p style={{ color: '#94a3b8', fontSize: '8px' }}>Don't have an account? Create your account, it takes less than a minute</p>
+          <h2 style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(12px, 3.5vw, 16px)', marginBottom: '4px' }}>Account Sign Up</h2>
+          <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)' }}>Don't have an account? Create your account, it takes less than a minute</p>
         </div>
 
         <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -223,12 +223,12 @@ const SignUp = () => {
 
           <div style={{ display: 'flex', gap: '8px' }}>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>First Name *</label>
+              <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>First Name *</label>
               <input name="firstName" value={form.firstName} onChange={handleChange} placeholder="Firstname" style={inputStyle('firstName')} />
               {errors.firstName && <div style={errStyle}>{errors.firstName}</div>}
             </div>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Last Name *</label>
+              <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Last Name *</label>
               <input name="lastName" value={form.lastName} onChange={handleChange} placeholder="Lastname" style={inputStyle('lastName')} />
               {errors.lastName && <div style={errStyle}>{errors.lastName}</div>}
             </div>
@@ -236,19 +236,19 @@ const SignUp = () => {
 
           <div style={{ display: 'flex', gap: '8px' }}>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Username *</label>
+              <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Username *</label>
               <input name="username" value={form.username} onChange={handleChange} placeholder="Username" style={inputStyle('username')} />
               {errors.username && <div style={errStyle}>{errors.username}</div>}
             </div>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Email *</label>
+              <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Email *</label>
               <input name="email" value={form.email} onChange={handleChange} placeholder="example@gmail.com" style={inputStyle('email')} />
               {errors.email && <div style={errStyle}>{errors.email}</div>}
             </div>
           </div>
 
           <div>
-            <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Phone Number *</label>
+            <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Phone Number *</label>
             <div style={{ display: 'flex', alignItems: 'center', background: '#374151', borderRadius: '4px', overflow: 'hidden', border: '1px solid ' + (errors.phone ? '#ef4444' : 'transparent') }}>
               <select value={selectedCountry.code + selectedCountry.name} onChange={e => setSelectedCountry(countryCodes.find(c => c.code + c.name === e.target.value))} style={{ background: '#4b5563', border: 'none', color: 'white', fontSize: '8px', padding: '6px 2px', outline: 'none', cursor: 'pointer', maxWidth: '140px' }}>
                 {countryCodes.map((c, i) => <option key={i} value={c.code + c.name}>{c.flag} {c.name} {c.code}</option>)}
@@ -260,7 +260,7 @@ const SignUp = () => {
 
           <div style={{ display: 'flex', gap: '8px' }}>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Currency</label>
+              <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Currency</label>
               <select name="currency" value={form.currency} onChange={handleChange} style={{ width: '100%', background: '#374151', border: 'none', borderRadius: '4px', padding: '8px', color: 'white', fontSize: '8px', boxSizing: 'border-box', outline: 'none' }}>
                 {countries.map((c, i) => <option key={i} value={c}>{c}</option>)}
               </select>
@@ -273,7 +273,7 @@ const SignUp = () => {
 
           <div style={{ display: 'flex', gap: '8px' }}>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Password *</label>
+              <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Password *</label>
               <div style={{ position: 'relative' }}>
                 <input name="password" type={showPass ? 'text' : 'password'} value={form.password} onChange={handleChange} placeholder="Enter password" style={{ ...inputStyle('password'), paddingRight: '28px' }} />
                 <button onClick={() => setShowPass(!showPass)} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
@@ -286,7 +286,7 @@ const SignUp = () => {
               {errors.password && <div style={errStyle}>{errors.password}</div>}
             </div>
             <div style={{ flex: 1 }}>
-              <label style={{ color: 'white', fontSize: '8px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Confirm Password *</label>
+              <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Confirm Password *</label>
               <div style={{ position: 'relative' }}>
                 <input name="confirmPassword" type={showConfirm ? 'text' : 'password'} value={form.confirmPassword} onChange={handleChange} placeholder="Confirm Password" style={{ ...inputStyle('confirmPassword'), paddingRight: '28px' }} />
                 <button onClick={() => setShowConfirm(!showConfirm)} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
@@ -310,7 +310,7 @@ const SignUp = () => {
             {errors.agree && <div style={errStyle}>{errors.agree}</div>}
           </div>
 
-          <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '9px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+          <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
             {loading ? (
               <>
                 <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' strokeWidth='2' style={{ animation: 'spin 1s linear infinite' }}><path d='M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83'/></svg>
@@ -320,7 +320,7 @@ const SignUp = () => {
           </button>
           <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
 
-          <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '8px', margin: 0 }}>
+          <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)', margin: 0 }}>
             Already have account? <span onClick={() => window.location.href='/signin'} style={{ color: 'white', fontWeight: '600', cursor: 'pointer' }}>Log In</span>
           </p>
         </div>

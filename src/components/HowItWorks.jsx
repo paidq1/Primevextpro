@@ -36,11 +36,11 @@ const steps = [
 
 const CoinIcon = ({ highlight }) => (
   <div style={{
-    width: '32px', height: '32px', borderRadius: '50%',
+    width: 'clamp(24px, 6vw, 32px)', height: 'clamp(24px, 6vw, 32px)', borderRadius: '50%',
     background: highlight ? 'rgba(255,255,255,0.22)' : 'rgba(99,102,241,0.25)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   }}>
-    <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
       <ellipse cx="12" cy="5" rx="8" ry="3"/>
       <path d="M4 5v4c0 1.657 3.582 3 8 3s8-1.343 8-3V5"/>
       <path d="M4 9v4c0 1.657 3.582 3 8 3s8-1.343 8-3V9"/>
@@ -49,38 +49,30 @@ const CoinIcon = ({ highlight }) => (
   </div>
 );
 
-const PolyBg = ({ highlight }) => (
-  <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
-    <polygon points="0,0 120,60 60,160" fill={highlight ? 'rgba(255,255,255,0.08)' : 'rgba(60,120,130,0.35)'} stroke="rgba(255,255,255,0.12)" strokeWidth="0.5"/>
-    <polygon points="120,60 250,0 200,120" fill={highlight ? 'rgba(255,255,255,0.05)' : 'rgba(40,100,120,0.3)'} stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
-    <polygon points="0,0 250,0 120,60" fill={highlight ? 'rgba(255,255,255,0.03)' : 'rgba(80,140,150,0.25)'} stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
-    <polygon points="60,160 200,120 180,250" fill={highlight ? 'rgba(255,255,255,0.07)' : 'rgba(50,110,130,0.35)'} stroke="rgba(255,255,255,0.12)" strokeWidth="0.5"/>
-    <polygon points="0,160 60,160 0,280" fill={highlight ? 'rgba(255,255,255,0.04)' : 'rgba(70,130,140,0.28)'} stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
-    <polygon points="200,120 300,80 280,220" fill={highlight ? 'rgba(255,255,255,0.06)' : 'rgba(90,150,160,0.3)'} stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
-    <polygon points="60,160 180,250 80,320" fill={highlight ? 'rgba(255,255,255,0.05)' : 'rgba(45,105,125,0.32)'} stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
-    <polygon points="180,250 280,220 260,340" fill={highlight ? 'rgba(255,255,255,0.04)' : 'rgba(65,125,145,0.28)'} stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
-  </svg>
-);
-
 export default function HowItWorks() {
   return (
     <section id="how" className="relative w-full py-8 bg-[#0b0e14] overflow-hidden">
 
       {/* Top right crypto */}
-      <div style={{ position: 'absolute', top: '0px', right: '0px', zIndex: 5, width: '120px', height: '100px' }}>
-        <div style={{ position: 'absolute', top: '-10px', right: '5px', width: '100px', height: '100px', background: 'radial-gradient(circle at 50% 50%, rgba(220,220,255,0.6) 0%, rgba(180,180,220,0.3) 35%, transparent 70%)', borderRadius: '50%', filter: 'blur(22px)' }}></div>
-        <svg width="120" height="100" viewBox="0 0 120 100" style={{ position: 'absolute', top: 0, left: 0 }}>
-          <line x1="27" y1="27" x2="98" y2="67" stroke="rgba(150,120,255,0.8)" strokeWidth="1.8" strokeDasharray="3,2"/>
+      <div style={{ position: 'absolute', top: '0px', right: '0px', zIndex: 5, width: '80px', height: '80px' }}>
+        <div style={{ position: 'absolute', top: '-10px', right: '5px', width: '80px', height: '80px', background: 'radial-gradient(circle at 50% 50%, rgba(220,220,255,0.4) 0%, rgba(180,180,220,0.2) 35%, transparent 70%)', borderRadius: '50%', filter: 'blur(18px)' }}></div>
+        <svg width="80" height="80" viewBox="0 0 80 80" style={{ position: 'absolute', top: 0, left: 0 }}>
+          <line x1="20" y1="20" x2="60" y2="60" stroke="rgba(150,120,255,0.8)" strokeWidth="1.2" strokeDasharray="2,2"/>
         </svg>
-        <img src="https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" alt="TRX" style={{ position: 'absolute', top: '20px', left: '20px', width: '14px', height: '14px', borderRadius: '50%' }} />
-        <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC" style={{ position: 'absolute', top: '60px', right: '15px', width: '14px', height: '14px', borderRadius: '50%' }} />
+        <img src="https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" alt="TRX" style={{ position: 'absolute', top: '14px', left: '14px', width: '12px', height: '12px', borderRadius: '50%' }} />
+        <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC" style={{ position: 'absolute', top: '54px', left: '54px', width: '12px', height: '12px', borderRadius: '50%' }} />
       </div>
+
+      {/* Background glow clouds */}
+      <div style={{ position: 'absolute', top: '10%', left: '-10%', width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(99,102,241,0.35) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(40px)', zIndex: 0 }}></div>
+      <div style={{ position: 'absolute', top: '40%', right: '-10%', width: '220px', height: '220px', background: 'radial-gradient(circle, rgba(79,70,229,0.3) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(45px)', zIndex: 0 }}></div>
+      <div style={{ position: 'absolute', bottom: '10%', left: '30%', width: '180px', height: '180px', background: 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(35px)', zIndex: 0 }}></div>
 
       <div className="relative z-10 px-3">
         {/* Header */}
         <div className="text-center mb-6 scroll-anim">
-          <h2 className="text-lg font-bold text-white mb-2">How It Works</h2>
-          <p className="text-gray-400 text-[10px] max-w-xs mx-auto leading-relaxed">
+          <h2 style={{ fontSize: 'clamp(15px, 4.5vw, 22px)' }} className="font-bold text-white mb-2">How It Works</h2>
+          <p style={{ fontSize: 'clamp(9px, 2.5vw, 13px)' }} className="text-gray-400 max-w-xs mx-auto leading-relaxed">
             Explore the advanced Start trading, staking, and investing with our user-friendly platform. Follow these simple steps to begin your financial journey.
           </p>
         </div>
@@ -92,8 +84,6 @@ export default function HowItWorks() {
             {steps.slice(0, 3).map((step, idx) => (
               <div
                 key={idx}
-                data-aos="fade-up"
-                data-aos-delay={idx * 100}
                 style={{
                   position: 'relative',
                   flex: 1,
@@ -101,23 +91,23 @@ export default function HowItWorks() {
                   overflow: 'hidden',
                   background: step.highlight ? '#4f46e5' : '#1e2d35',
                   border: '1px solid rgba(255,255,255,0.1)',
-                  padding: '12px',
+                  padding: 'clamp(8px, 2vw, 12px)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  minHeight: step.highlight ? '180px' : '150px', marginTop: step.highlight ? '25px' : '55px',
+                  minHeight: step.highlight ? 'clamp(150px, 38vw, 180px)' : 'clamp(120px, 32vw, 150px)',
+                  marginTop: step.highlight ? '25px' : '55px',
                 }}
               >
-                
                 <div style={{ position: 'relative', zIndex: 10 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px' }}>
-                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: '10px' }}>{step.id}</span>
-                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: '11px' }}>{step.title}</span>
+                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: 'clamp(8px, 2vw, 10px)' }}>{step.id}</span>
+                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(9px, 2.5vw, 12px)' }}>{step.title}</span>
                   </div>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', lineHeight: '1.5', marginBottom: '6px' }}>{step.description}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.5', marginBottom: '6px' }}>{step.description}</p>
                   {step.learnMore && (
-                    <button style={{ color: 'rgba(255,255,255,0.8)', fontSize: '9px', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }} onClick={() => window.location.href="/signin"}>
-                      Learn More <ArrowUpRight size={10} />
+                    <button style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 9px)', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }} onClick={() => window.location.href="/signin"}>
+                      Learn More <ArrowUpRight size={9} />
                     </button>
                   )}
                 </div>
@@ -133,8 +123,6 @@ export default function HowItWorks() {
             {steps.slice(3, 5).map((step, idx) => (
               <div
                 key={idx}
-                data-aos="fade-up"
-                data-aos-delay={idx * 100}
                 style={{
                   position: 'relative',
                   flex: 1,
@@ -142,20 +130,19 @@ export default function HowItWorks() {
                   overflow: 'hidden',
                   background: '#1e2d35',
                   border: '1px solid rgba(255,255,255,0.1)',
-                  padding: '12px',
+                  padding: 'clamp(8px, 2vw, 12px)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  minHeight: '150px',
+                  minHeight: 'clamp(120px, 32vw, 150px)',
                 }}
               >
-                
                 <div style={{ position: 'relative', zIndex: 10 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px' }}>
-                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: '10px' }}>{step.id}</span>
-                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: '11px' }}>{step.title}</span>
+                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: 'clamp(8px, 2vw, 10px)' }}>{step.id}</span>
+                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(9px, 2.5vw, 12px)' }}>{step.title}</span>
                   </div>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', lineHeight: '1.5' }}>{step.description}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.5' }}>{step.description}</p>
                 </div>
                 <div style={{ position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'flex-start', marginTop: '8px' }}>
                   <CoinIcon highlight={false} />
@@ -165,31 +152,30 @@ export default function HowItWorks() {
 
             {/* Explore box */}
             <div
-              data-aos="fade-up"
-              data-aos-delay="200"
               style={{
                 flex: 1,
                 borderRadius: '0px',
                 background: 'transparent',
                 border: '1px solid rgba(255,255,255,0.1)',
-                padding: '12px',
+                padding: 'clamp(8px, 2vw, 12px)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '150px',
+                minHeight: 'clamp(120px, 32vw, 150px)',
               }}
             >
               <div>
-                <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: '11px', marginBottom: '6px' }}>Explore Our Advanced Features</h3>
-                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', lineHeight: '1.5' }}>Unlock more tools and features designed to enhance your trading experience.</p>
+                <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(9px, 2.5vw, 12px)', marginBottom: '6px' }}>Explore Our Advanced Features</h3>
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.5' }}>Unlock more tools and features designed to enhance your trading experience.</p>
               </div>
               <button onClick={() => window.location.href='/signup'} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 background: 'transparent', border: '1px solid rgba(255,255,255,0.3)',
-                color: 'white', padding: '8px 10px', borderRadius: '4px',
-                fontSize: '8px', fontWeight: '600', cursor: 'pointer', width: '100%',
+                color: 'white', padding: 'clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 10px)',
+                borderRadius: '4px', fontSize: 'clamp(7px, 1.8vw, 9px)',
+                fontWeight: '600', cursor: 'pointer', width: '100%',
               }}>
-                Discover More <ArrowUpRight size={10} />
+                Discover More <ArrowUpRight size={9} />
               </button>
             </div>
           </div>

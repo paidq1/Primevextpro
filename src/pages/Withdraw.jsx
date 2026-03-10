@@ -95,6 +95,7 @@ export default function Withdraw() {
   };
 
   const statusColor = s => s === 'approved' ? '#22c55e' : s === 'pending' ? '#f59e0b' : '#ef4444';
+  const totalPages = Math.ceil(withdrawals.length / perPage);
   const filtered = withdrawals.filter(w =>
     w.method?.toLowerCase().includes(search.toLowerCase()) ||
     w.status?.toLowerCase().includes(search.toLowerCase())

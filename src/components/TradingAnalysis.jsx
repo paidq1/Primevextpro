@@ -46,15 +46,15 @@ export default function TradingAnalysis() {
         <polygon points="350,600 380,480 400,600" fill="#29465b"/>
       </svg>
 
-      <div style={{ display: 'flex', gap: '16px', alignItems: 'stretch', position: 'relative', zIndex: 1 }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '600', letterSpacing: '0.05em', marginBottom: '4px' }}>
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'stretch', minHeight: '200px', position: 'relative', zIndex: 1 }}>
+        <div style={{ flex: '0 0 40%', minWidth: 0 }}>
+          <div style={{ color: '#6366f1', fontSize: 'clamp(9px, 2.2vw, 11px)', fontWeight: '600', letterSpacing: '0.05em', marginBottom: '4px' }}>
             Trading Analysis
           </div>
-          <h2 style={{ color: 'white', fontWeight: 'bold', fontSize: '12px', margin: '0 0 8px 0', lineHeight: '1.3' }}>
+          <h2 style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(11px, 3vw, 15px)', margin: '0 0 8px 0', lineHeight: '1.3' }}>
             Advanced Technical <span style={{ color: '#6366f1' }}>Analysis</span> Tools
           </h2>
-          <p style={{ color: 'white', fontSize: '7px', lineHeight: '1.6', margin: '0 0 10px 0' }}>
+          <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 10px)', lineHeight: '1.6', margin: '0 0 10px 0' }}>
             Leverage advanced tools to analyze trading patterns and price movements with customizable indicators.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '12px' }}>
@@ -65,11 +65,11 @@ export default function TradingAnalysis() {
                     <path d="M2 6l3 3 5-5" stroke="#6366f1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span style={{ color: 'white', fontSize: '7px', lineHeight: '1.4' }}>{item}</span>
+                <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 10px)', lineHeight: '1.4' }}>{item}</span>
               </div>
             ))}
           </div>
-          <button onClick={() => window.location.href='/signup'} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 12px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: '7px', fontWeight: '700', cursor: 'pointer' }}>
+          <button onClick={() => window.location.href='/signup'} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 12px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: 'clamp(7px, 1.8vw, 10px)', fontWeight: '700', cursor: 'pointer' }}>
             Start Analyzing Now
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M7 17L17 7M17 7H7M17 7v10"/>
@@ -77,7 +77,7 @@ export default function TradingAnalysis() {
           </button>
         </div>
 
-        <div style={{ width: '45%', flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '55%', flexShrink: 0, alignSelf: 'stretch', position: 'relative', display: 'flex', flexDirection: 'column' }}>
           <CryptoMarketOverview style={{ flex: 1, height: '100%' }} />
         </div>
       </div>
