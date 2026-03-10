@@ -79,7 +79,7 @@ export default function Profile() {
         setAvatarPreview(null);
         setAvatarFile(null);
         localStorage.setItem('user', JSON.stringify(data.user));
-        setMsg('Profile picture removed.');
+        setSuccess(true);
       }
     } catch (e) {
       setError('Failed to remove avatar.');
