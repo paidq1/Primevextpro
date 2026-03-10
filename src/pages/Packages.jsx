@@ -236,6 +236,8 @@ export default function Packages() {
           ))}
         </div>
       </div>
+      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; VertexTrade Pro</div>
+
     </div>
   );
 }
