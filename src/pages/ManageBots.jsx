@@ -114,7 +114,7 @@ export default function ManageBots() {
           ].map(([l,v,c]) => (
             <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
-              <div style={{ color: c, fontSize: '12px', fontWeight: '700' }}>{v}</div>
+              <div style={{ color: c, fontSize: '10px', fontWeight: '700' }}>{v}</div>
             </div>
           ))}
         </div>

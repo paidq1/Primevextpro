@@ -41,7 +41,7 @@ export default function InvestmentRecords() {
       </div>
       <div>
         <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '3px' }}>{label}</div>
-        <div style={{ color: 'white', fontSize: '12px', fontWeight: '700' }}>{value}</div>
+        <div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>{value}</div>
       </div>
     </div>
   );
