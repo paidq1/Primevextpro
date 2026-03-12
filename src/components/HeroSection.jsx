@@ -142,7 +142,7 @@ function Navbar({ onGetStarted }) {
 
 export default function HeroSection({ onGetStarted }) {
   return (
-    <section id="home" className="relative pt-0 pb-4 bg-[#151c27] overflow-hidden">
+    <section id="home" className="relative pt-0 pb-4 bg-[#151c27] overflow-x-hidden">
       <ParticleNetwork />
       <div style={{ position: "absolute", bottom: "0px", left: "0px", width: "250px", height: "250px", background: "radial-gradient(circle at 30% 70%, rgba(120,60,255,0.45) 0%, rgba(100,40,220,0.2) 40%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", zIndex: 1 }}></div>
       <div className="absolute inset-0 bg-gradient-to-b from-[#151c27]/20 via-transparent to-[#151c27]" />
@@ -229,11 +229,11 @@ export default function HeroSection({ onGetStarted }) {
         </div>
 
         {/* Right: image */}
-        <div className="flex-shrink-0 w-[42%] flex justify-end items-start pt-2" style={{ marginRight: "0px" }}>
+        <div className="flex-shrink-0 w-[42%] flex justify-end items-start pt-2 overflow-hidden">
           <img
             src="/bg1.png"
             alt="Trading App"
-            className="w-full h-auto object-contain drop-shadow-2xl"
+            className="w-full h-auto object-contain drop-shadow-2xl max-w-full"
           />
         </div>
       </div>
