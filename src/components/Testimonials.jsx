@@ -59,17 +59,17 @@ export default function Testimonials() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', gap: '2px' }}>
                   {[...Array(t.stars)].map((_, j) => (
-                    <span key={j} style={{ color: '#f59e0b', fontSize: 'clamp(8px, 2vw, 11px)' }}>&#9733;</span>
+                    <span key={j} style={{ color: '#f59e0b', fontSize: 'clamp(8px, 2vw, 15px)' }}>&#9733;</span>
                   ))}
                 </div>
-                <span style={{ color: '#6366f1', fontSize: 'clamp(12px, 3vw, 16px)', opacity: 0.7 }}>"</span>
+                <span style={{ color: '#6366f1', fontSize: 'clamp(12px, 3vw, 24px)', opacity: 0.7 }}>"</span>
               </div>
-              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', fontStyle: 'italic', margin: 0 }}>{t.review}</p>
+              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.6', fontStyle: 'italic', margin: 0 }}>{t.review}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
                 <img src={t.avatar + '?v=' + t.name.replace(/s/g, '')} alt={t.name} style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'center center', minWidth: '24px', minHeight: '24px', maxWidth: '24px', maxHeight: '24px', overflow: 'hidden', flexShrink: 0 }} />
                 <div style={{ width: '2px', height: '28px', background: '#6366f1', borderRadius: '2px' }} />
                 <div>
-                  <div style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '700' }}>{t.name}</div>
+                  <div style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '700' }}>{t.name}</div>
                   <div style={{ color: '#6366f1', fontSize: 'clamp(6px, 1.6vw, 8px)' }}>{t.role}</div>
                 </div>
               </div>

@@ -165,7 +165,7 @@ const MarketOverview = () => {
               <div style={{ display: 'flex', gap: '2px', marginBottom: '6px' }}>
                 {timeRanges.map(range => (
                   <button key={range} onClick={() => setTimeRange(range)} style={{
-                    padding: '3px 6px', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '500',
+                    padding: '3px 6px', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '500',
                     borderRadius: '4px', border: 'none', cursor: 'pointer',
                     background: timeRange === range ? '#3b5bdb' : 'transparent',
                     color: timeRange === range ? 'white' : '#64748b',
@@ -189,12 +189,12 @@ const MarketOverview = () => {
                         <span style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(5px, 1.4vw, 7px)' }}>{item.badge}</span>
                       </div>
                       <div style={{ minWidth: 0 }}>
-                        <div style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(8px, 2vw, 10px)' }}>{item.symbol}</div>
+                        <div style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(8px, 2vw, 15px)' }}>{item.symbol}</div>
                         <div style={{ color: '#64748b', fontSize: 'clamp(6px, 1.6vw, 8px)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '90px' }}>{item.name}</div>
                       </div>
                     </div>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <div style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(8px, 2vw, 10px)' }}>{item.price}</div>
+                      <div style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(8px, 2vw, 15px)' }}>{item.price}</div>
                       <div style={{ fontSize: 'clamp(6px, 1.6vw, 8px)', color: item.up ? '#48bb78' : '#fc8181', whiteSpace: 'nowrap' }}>
                         {item.change} {item.percent}
                       </div>
@@ -205,7 +205,7 @@ const MarketOverview = () => {
             </div>
             {/* Right: Content */}
             <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', gap: '6px' }}>
-              <div style={{ color: '#2dd4bf', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '600', letterSpacing: '0.06em' }}>
+              <div style={{ color: '#2dd4bf', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600', letterSpacing: '0.06em' }}>
                 Market Overview
               </div>
               <h2 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(11px, 3vw, 15px)', lineHeight: '1.25', margin: 0 }}>
@@ -233,7 +233,7 @@ const MarketOverview = () => {
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   background: 'transparent', border: '1px solid #6366f1', color: 'white',
-                  padding: '10px 12px', borderRadius: '0px', fontSize: 'clamp(8px, 2vw, 10px)',
+                  padding: '10px 12px', borderRadius: '0px', fontSize: 'clamp(8px, 2vw, 15px)',
                   fontWeight: '500', cursor: 'pointer', width: '100%', boxSizing: 'border-box',
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.1)'}

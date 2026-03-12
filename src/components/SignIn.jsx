@@ -53,7 +53,7 @@ const SignIn = () => {
   const inputStyle = (field) => ({
     width: '100%', background: '#374151',
     border: '1px solid ' + (errors[field] ? '#ef4444' : 'transparent'),
-    borderRadius: '4px', padding: '8px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)',
+    borderRadius: '4px', padding: '8px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)',
     boxSizing: 'border-box', outline: 'none'
   });
 
@@ -76,7 +76,7 @@ const SignIn = () => {
               <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
             </svg>
             <h2 style={{ color: 'white', fontSize: 'clamp(13px, 3.5vw, 17px)', fontWeight: '700', margin: '0 0 4px' }}>Welcome Back</h2>
-            <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)' }}>Enter your email or username and password to access your dashboard.</p>
+            <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>Enter your email or username and password to access your dashboard.</p>
           </div>
 
           {success && (
@@ -92,13 +92,13 @@ const SignIn = () => {
             </>
           )}
               <div style={{ marginBottom: '12px' }}>
-                <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)', display: 'block', marginBottom: '4px' }}>Email or Username</label>
+                <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Email or Username</label>
                 <input name='username' value={form.username} onChange={handleChange} placeholder='Enter email or username' style={inputStyle('username')} />
                 {errors.username && <div style={errStyle}>{errors.username}</div>}
               </div>
 
               <div style={{ marginBottom: '12px' }}>
-                <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)', display: 'block', marginBottom: '4px' }}>Password</label>
+                <label style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', display: 'block', marginBottom: '4px' }}>Password</label>
                 <div style={{ position: 'relative' }}>
                   <input name='password' type={showPass ? 'text' : 'password'} value={form.password} onChange={handleChange} placeholder='Enter password'
                     style={{ ...inputStyle('password'), paddingRight: '28px' }} />
@@ -112,16 +112,16 @@ const SignIn = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
                   <input type='checkbox' name='remember' checked={form.remember} onChange={handleChange} style={{ accentColor: '#6366f1' }} />
-                  <span style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)' }}>Remember me</span>
+                  <span style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>Remember me</span>
                 </label>
-                <span onClick={() => setShowForgot(true)} style={{ color: '#6366f1', fontSize: 'clamp(7px, 1.8vw, 9px)', cursor: 'pointer' }}>Forgot Password?</span>
+                <span onClick={() => setShowForgot(true)} style={{ color: '#6366f1', fontSize: 'clamp(7px, 1.8vw, 15px)', cursor: 'pointer' }}>Forgot Password?</span>
               </div>
 
-              <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
+              <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '10px', background: loading ? '#4b4f9e' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
                 {loading ? 'Logging in...' : 'Log in'}
               </button>
 
-              <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)', margin: 0 }}>
+              <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', margin: 0 }}>
                 Don't have an account? <span onClick={() => window.location.href='/signup'} style={{ color: 'white', fontWeight: '600', cursor: 'pointer' }}>Sign Up</span>
               </p>
         </div>

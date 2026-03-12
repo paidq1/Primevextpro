@@ -36,9 +36,9 @@ export default function WhyChooseUs() {
 
           {/* Left: Title + phone */}
           <div style={{ flex: '0 0 36%', minWidth: 0, marginLeft: '-16px' }}>
-            <div style={{ paddingLeft: '16px' }}><p style={{ color: '#6366f1', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '600', margin: '0 0 4px 0', textTransform: 'uppercase' }}>Benefits</p>
+            <div style={{ paddingLeft: '16px' }}><p style={{ color: '#6366f1', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600', margin: '0 0 4px 0', textTransform: 'uppercase' }}>Benefits</p>
             <h2 style={{ color: 'white', fontSize: 'clamp(13px, 3.5vw, 18px)', fontWeight: '800', margin: '0 0 8px 0', lineHeight: 1.3 }}>Why Choose Us?</h2>
-            <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', margin: '0 0 12px 0' }}>
+            <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.6', margin: '0 0 12px 0' }}>
               Explore the unique advantages that set us apart from other platforms, ensuring you maximize your investment potential.
             </p>
             </div><img src="/mission-phone.png" alt="App" style={{ width: '100%', objectFit: 'cover', display: 'block' }} />
@@ -50,8 +50,8 @@ export default function WhyChooseUs() {
               {benefits.map((b, i) => (
                 <div key={i} className={`scroll-anim delay-${i + 1}`} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <Icon />
-                  <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: 1.3 }}>{b.title}</div>
-                  <div style={{ color: 'white', fontSize: 'clamp(6px, 1.5vw, 8px)', lineHeight: '1.4' }}>{b.desc}</div>
+                  <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: 1.3 }}>{b.title}</div>
+                  <div style={{ color: 'white', fontSize: 'clamp(6px, 1.5vw, 13px)', lineHeight: '1.4' }}>{b.desc}</div>
                 </div>
               ))}
             </div>
@@ -64,7 +64,7 @@ export default function WhyChooseUs() {
               <button onClick={() => window.location.href="/signup"} style={{ padding: 'clamp(5px, 1.5vw, 7px) clamp(8px, 2vw, 12px)', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started Today
               </button>
-              <button onClick={() => window.location.href='/signup'} style={{ padding: 'clamp(5px, 1.5vw, 7px) clamp(8px, 2vw, 12px)', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <button onClick={() => window.location.href='/signup'} style={{ padding: 'clamp(5px, 1.5vw, 7px) clamp(8px, 2vw, 12px)', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 Explore Our Features
                 <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10"/>

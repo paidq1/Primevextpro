@@ -56,7 +56,7 @@ const OurMission = () => {
                           <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
                           <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
                         </svg>
-                        <span style={{ color: 'white', fontSize: 'clamp(6px, 1.5vw, 8px)', fontWeight: '600', textAlign: 'left' }}>{item.title}</span>
+                        <span style={{ color: 'white', fontSize: 'clamp(6px, 1.5vw, 13px)', fontWeight: '600', textAlign: 'left' }}>{item.title}</span>
                       </div>
                       <span style={{ color: '#6366f1', fontSize: '9px', flexShrink: 0 }}>{openIndex === index ? '∧' : '∨'}</span>
                     </button>
@@ -73,7 +73,7 @@ const OurMission = () => {
               <button onClick={() => window.location.href="/signup"} style={{ flex: 1, padding: '7px', background: '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '7px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started
               </button>
-              <button style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }} onClick={() => window.location.href="/signin"}>
+              <button style={{ flex: 1, padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }} onClick={() => window.location.href="/signin"}>
                 Learn More <ArrowUpRight size={8} />
               </button>
             </div>

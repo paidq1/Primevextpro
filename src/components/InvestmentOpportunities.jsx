@@ -69,11 +69,11 @@ export default function InvestmentOpportunities() {
 
           {/* Left Panel */}
           <div className="scroll-anim" style={{ flex: '0 0 40%', minWidth: 0 }}>
-            <p style={{ color: '#6366f1', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', margin: '0 0 6px 0' }}>Investment Opportunities</p>
+            <p style={{ color: '#6366f1', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', margin: '0 0 6px 0' }}>Investment Opportunities</p>
             <h2 style={{ color: 'white', fontSize: 'clamp(12px, 3.2vw, 16px)', fontWeight: '800', margin: '0 0 8px 0', lineHeight: 1.3 }}>
               Discover Profitable Investment <span style={{ color: '#6366f1' }}>Opportunities</span>
             </h2>
-            <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', margin: '0 0 10px 0' }}>
+            <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.6', margin: '0 0 10px 0' }}>
               Identify potential investments with our live screener tool. Filter by performance, trading volume, and market trends to find the best options for your portfolio.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '14px' }}>
@@ -82,11 +82,11 @@ export default function InvestmentOpportunities() {
                   <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <svg width="8" height="8" fill="none" stroke="white" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" strokeWidth="3"/></svg>
                   </div>
-                  <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)' }}>{item}</span>
+                  <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>{item}</span>
                 </div>
               ))}
             </div>
-            <button style={{ display: "flex", alignItems: "center", gap: "4px", background: "transparent", border: "1px solid #6366f1", color: "white", padding: "7px 12px", fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer' }} onClick={() => window.location.href="/signup"}>
+            <button style={{ display: "flex", alignItems: "center", gap: "4px", background: "transparent", border: "1px solid #6366f1", color: "white", padding: "7px 12px", fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer' }} onClick={() => window.location.href="/signup"}>
               View Investment Options
               <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10"/>

@@ -96,12 +96,12 @@ export default function Dashboard() {
           </button>
           <div style={{ display: 'flex', gap: '3px' }}>
             <button onClick={() => navigate('/dashboard/packages')} style={{ padding: 'clamp(2px,1vw,4px) clamp(4px,2vw,10px)', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: 'clamp(7px,1.8vw,9px)', fontWeight: '700', cursor: 'pointer' }}>{u.plan?.toUpperCase() || 'STARTER'}</button>
-            <button style={{ padding: '3px 6px', background: '#6366f1', border: 'none', color: 'white', fontSize: 'clamp(6px, 1.5vw, 8px)', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}>{u.currency || 'USD'}</button>
-            <button onClick={() => navigate('/dashboard/kyc')} style={{ padding: '3px 6px', background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.15)', border: u.kycStatus === 'approved' ? '1px solid #22c55e' : '1px solid #f59e0b', color: u.kycStatus === 'approved' ? '#22c55e' : '#f59e0b', fontSize: 'clamp(6px, 1.5vw, 8px)', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}>KYC {u.kycStatus === 'approved' ? '✓' : '!'}</button>
+            <button style={{ padding: '3px 6px', background: '#6366f1', border: 'none', color: 'white', fontSize: 'clamp(6px, 1.5vw, 13px)', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}>{u.currency || 'USD'}</button>
+            <button onClick={() => navigate('/dashboard/kyc')} style={{ padding: '3px 6px', background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.15)', border: u.kycStatus === 'approved' ? '1px solid #22c55e' : '1px solid #f59e0b', color: u.kycStatus === 'approved' ? '#22c55e' : '#f59e0b', fontSize: 'clamp(6px, 1.5vw, 13px)', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}>KYC {u.kycStatus === 'approved' ? '✓' : '!'}</button>
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '3px', alignItems: 'center' }}>
-            <button style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: 'clamp(6px, 1.5vw, 8px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
-            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: 'clamp(6px, 1.5vw, 8px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
+            <button style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: 'clamp(6px, 1.5vw, 13px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
+            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: 'clamp(6px, 1.5vw, 13px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
             <div onClick={() => navigate('/dashboard/profile')} style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {u.avatar ? <img src={u.avatar} style={{ width: '24px', height: '24px', objectFit: 'cover' }} /> : <User size={13} color="white" />}
             </div>
@@ -136,10 +136,10 @@ export default function Dashboard() {
               {stats.map((s, i) => (
                 <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '8px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(7px, 1.8vw, 9px)' }}>{s.label}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>{s.label}</span>
                     <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
                   </div>
-                  <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(8px, 2vw, 11px)', marginBottom: '6px' }}>{s.value}</div>
+                  <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(8px, 2vw, 15px)', marginBottom: '6px' }}>{s.value}</div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div style={{ display: 'flex', gap: '4px' }}>
                       <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-$0.00' : '$0.00'}</span>
@@ -176,7 +176,7 @@ export default function Dashboard() {
               <div style={{ border: '1px solid rgba(255,255,255,0.15)' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', padding: '7px 10px' }}>
                   {['Amount','Txn Date','Method','Txn Type','Status'].map((h, i) => (
-                    <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600' }}>{h}</span>
+                    <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600' }}>{h}</span>
                   ))}
                 </div>
                 {transactions.length === 0 ? (

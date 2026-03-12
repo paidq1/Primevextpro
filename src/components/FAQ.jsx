@@ -79,7 +79,7 @@ const FAQ = () => {
                 </div>
               </button>
               {openIndex === index && (
-                <p style={{ color: '#94a3b8', fontSize: 'clamp(8px, 2vw, 10px)', lineHeight: '1.6', padding: '0 10px 10px 10px', margin: 0 }}>
+                <p style={{ color: '#94a3b8', fontSize: 'clamp(8px, 2vw, 15px)', lineHeight: '1.6', padding: '0 10px 10px 10px', margin: 0 }}>
                   {faq.answer}
                 </p>
               )}
@@ -105,13 +105,13 @@ const FAQ = () => {
 
         <div style={{ flex: 1 }}>
           <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(11px, 3vw, 15px)', marginBottom: '8px' }}>Need More Help? Contact Us</h3>
-          <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', marginBottom: '12px' }}>
+          <p style={{ color: '#94a3b8', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.6', marginBottom: '12px' }}>
             If you didn't find the answer you were looking for, our support team is here to help. Reach out to us directly for more assistance or explore our detailed support resources.
           </p>
           <button onClick={() => window.location.href='/signup'} style={{
             display: 'flex', alignItems: 'center', gap: '6px',
             background: '#6366f1', border: 'none', borderRadius: '4px',
-            color: 'white', fontSize: 'clamp(8px, 2vw, 10px)', fontWeight: '600',
+            color: 'white', fontSize: 'clamp(8px, 2vw, 15px)', fontWeight: '600',
             padding: '8px 14px', cursor: 'pointer',
           }}>
             Reach Out Now

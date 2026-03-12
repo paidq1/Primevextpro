@@ -15,7 +15,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(9px, 2.2vw, 12px)', marginBottom: '6px' }}>Contact</h3>
+            <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(9px, 2.2vw, 17px)', marginBottom: '6px' }}>Contact</h3>
             <div style={{ width: '28px', height: '2px', background: '#6366f1', marginBottom: '12px' }} />
             {[
               { icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'Email', value: 'support@vertextradeprox.cc' },
@@ -29,8 +29,8 @@ const Footer = () => {
                   </svg>
                 </div>
                 <div>
-                  <div style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600' }}>{item.label}</div>
-                  <div style={{ color: '#94a3b8', fontSize: 'clamp(6px, 1.5vw, 8px)' }}>{item.value}</div>
+                  <div style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600' }}>{item.label}</div>
+                  <div style={{ color: '#94a3b8', fontSize: 'clamp(6px, 1.5vw, 13px)' }}>{item.value}</div>
                 </div>
               </div>
             ))}
@@ -53,17 +53,17 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(9px, 2.2vw, 12px)', marginBottom: '6px' }}>Quick Links</h3>
+            <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(9px, 2.2vw, 17px)', marginBottom: '6px' }}>Quick Links</h3>
             <div style={{ width: '28px', height: '2px', background: '#6366f1', marginBottom: '12px' }} />
             <div style={{ display: 'flex', gap: '16px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {[['Home','#home'],['About Us','#why'],['Trading','/trading-info'],['Staking','/staking-info'],['Investing','/investing-info'],['Investment Plans','#plans'],['Terms & Conditions','/terms']].map(([link,href], i) => (
-                  <a key={i} href={href} style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', textDecoration: 'none' }}>{link}</a>
+                  <a key={i} href={href} style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', textDecoration: 'none' }}>{link}</a>
                 ))}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {[['Market','#market'],['How It Works','#how'],['Benefits of Trading','#why'],['Customer Reviews','#reviews'],['Contact Us','#contact'],["FAQ's",'#faq']].map(([link,href], i) => (
-                  <a key={i} href={href} style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', textDecoration: 'none' }}>{link}</a>
+                  <a key={i} href={href} style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', textDecoration: 'none' }}>{link}</a>
                 ))}
               </div>
             </div>
@@ -73,19 +73,19 @@ const Footer = () => {
 
         {/* Newsletter - full width */}
         <div style={{ width: '100%' }}>
-          <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(9px, 2.2vw, 12px)', marginBottom: '6px' }}>Newsletter</h3>
+          <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(9px, 2.2vw, 17px)', marginBottom: '6px' }}>Newsletter</h3>
           <div style={{ width: '28px', height: '2px', background: '#6366f1', marginBottom: '12px' }} />
-          <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', marginBottom: '12px' }}>
+          <p style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.6', marginBottom: '12px' }}>
             Subscribe to our newsletter to receive the latest updates, exclusive content, and special offers directly in your inbox.
           </p>
-          <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Your Email <span style={{ color: '#ef4444' }}>*</span></label>
+          <label style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Your Email <span style={{ color: '#ef4444' }}>*</span></label>
           <div style={{ display: 'flex', maxWidth: '300px' }}>
             <input
               value={email} onChange={e => setEmail(e.target.value)}
               placeholder="Enter Your Email"
-              style={{ flex: 1, background: '#1a2535', border: '1px solid rgba(255,255,255,0.1)', borderRight: 'none', padding: '6px 8px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', outline: 'none', minWidth: 0 }}
+              style={{ flex: 1, background: '#1a2535', border: '1px solid rgba(255,255,255,0.1)', borderRight: 'none', padding: '6px 8px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', outline: 'none', minWidth: 0 }}
             />
-            <button onClick={() => window.location.href='/signup'} style={{ background: '#6366f1', border: 'none', padding: '6px 10px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            <button onClick={() => window.location.href='/signup'} style={{ background: '#6366f1', border: 'none', padding: '6px 10px', color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>
               Subscribe
             </button>
           </div>
@@ -101,8 +101,8 @@ const Footer = () => {
             <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
             <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
-          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '700', letterSpacing: '2px' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
-          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 9px)' }}>© 2025 VertexTrade Pro All rights reserved</span>
+          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '700', letterSpacing: '2px' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
+          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>© 2025 VertexTrade Pro All rights reserved</span>
         </div>
       </div>
 

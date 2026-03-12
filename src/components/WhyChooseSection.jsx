@@ -114,13 +114,13 @@ export default function WhyChooseSection() {
             >
               <PolyBg highlight={feature.highlight} />
               <div style={{ position: "relative", zIndex: 10, flex: 1, display: "flex", flexDirection: "column" }}>
-                <span style={{ color: "#60a5fa", fontWeight: "bold", fontSize: "clamp(8px, 2vw, 10px)", display: "block", marginBottom: "2px" }}>{feature.id}</span>
+                <span style={{ color: "#60a5fa", fontWeight: "bold", fontSize: "clamp(8px, 2vw, 15px)", display: "block", marginBottom: "2px" }}>{feature.id}</span>
                 <h3 style={{ color: "white", fontWeight: "bold", fontSize: "clamp(10px, 2.8vw, 13px)", marginBottom: "4px" }}>{feature.title}</h3>
-                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(7px, 1.8vw, 9px)", lineHeight: "1.4", flex: 1 }}>{feature.description}</p>
+                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(7px, 1.8vw, 15px)", lineHeight: "1.4", flex: 1 }}>{feature.description}</p>
               </div>
               <div style={{ position: "relative", zIndex: 10, display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: "8px" }}>
                 <button
-                  style={{ color: "rgba(255,255,255,0.8)", fontSize: "clamp(7px, 1.8vw, 9px)", textDecoration: "underline", display: "flex", alignItems: "center", gap: "2px" }}
+                  style={{ color: "rgba(255,255,255,0.8)", fontSize: "clamp(7px, 1.8vw, 15px)", textDecoration: "underline", display: "flex", alignItems: "center", gap: "2px" }}
                   onClick={() => window.location.href="/signin"}
                 >
                   Learn More <ArrowUpRight size={9} />

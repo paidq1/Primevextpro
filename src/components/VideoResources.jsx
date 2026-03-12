@@ -91,7 +91,7 @@ export default function VideoResources() {
                   </div>
                   <div>
                     <div style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(7px, 1.8vw, 10px)', marginBottom: '1px' }}>{f.title}</div>
-                    <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(6px, 1.6vw, 9px)', lineHeight: '1.4' }}>{f.description}</div>
+                    <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(6px, 1.6vw, 14px)', lineHeight: '1.4' }}>{f.description}</div>
                   </div>
                 </div>
               ))}
@@ -100,7 +100,7 @@ export default function VideoResources() {
             <button style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
               background: 'transparent', border: '1px solid #6366f1', color: 'white',
-              padding: '10px 12px', borderRadius: '0px', fontSize: 'clamp(8px, 2vw, 10px)',
+              padding: '10px 12px', borderRadius: '0px', fontSize: 'clamp(8px, 2vw, 15px)',
               fontWeight: '600', cursor: 'pointer', width: '100%', marginTop: 'auto',
             }}
               onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.1)'}
@@ -126,7 +126,7 @@ export default function VideoResources() {
             {/* Suggested Links */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px' }}>
-                <span style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(9px, 2.2vw, 12px)' }}>Suggested Links</span>
+                <span style={{ color: 'white', fontWeight: '600', fontSize: 'clamp(9px, 2.2vw, 17px)' }}>Suggested Links</span>
                 <svg width="10" height="10" fill="none" stroke="white" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>
@@ -145,8 +145,8 @@ export default function VideoResources() {
                       <svg width="8" height="8" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
                     </div>
                     <div>
-                      <div style={{ color: '#818cf8', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', marginBottom: '1px' }}>{link.title}</div>
-                      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 'clamp(6px, 1.5vw, 8px)' }}>{link.duration} ~ {link.channel}</div>
+                      <div style={{ color: '#818cf8', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', marginBottom: '1px' }}>{link.title}</div>
+                      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 'clamp(6px, 1.5vw, 13px)' }}>{link.duration} ~ {link.channel}</div>
                     </div>
                   </a>
                 ))}
@@ -163,10 +163,10 @@ export default function VideoResources() {
                 style={{ width: 'clamp(36px, 9vw, 46px)', height: 'clamp(36px, 9vw, 46px)', flexShrink: 0, borderRadius: '50%', objectFit: 'cover', objectPosition: '50% 5%', background: 'white', border: '2px solid #3b82f6' }}
               />
               <div>
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.6', margin: '0 0 4px 0', fontStyle: 'normal' }}>
+                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.6', margin: '0 0 4px 0', fontStyle: 'normal' }}>
                   We envision a world where financial independence is within reach for everyone. Our mission is to build a platform that empowers you to take control of your financial future.
                 </p>
-                <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: 'clamp(6px, 1.5vw, 8px)' }}>~ James Clark</span>
+                <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: 'clamp(6px, 1.5vw, 13px)' }}>~ James Clark</span>
               </div>
             </div>
 

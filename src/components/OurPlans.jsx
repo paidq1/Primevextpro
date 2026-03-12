@@ -21,14 +21,14 @@ export default function OurPlans() {
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <h2 style={{ color: 'white', fontSize: 'clamp(13px, 3.5vw, 18px)', fontWeight: '800', margin: '0 0 8px 0' }}>Our Plans</h2>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(8px, 2vw, 10px)', lineHeight: '1.6', margin: '0 0 14px 0', maxWidth: '260px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(8px, 2vw, 15px)', lineHeight: '1.6', margin: '0 0 14px 0', maxWidth: '260px', marginLeft: 'auto', marginRight: 'auto' }}>
               Select from our tailored plans designed to meet the needs of every trader, investor, and crypto enthusiast.
             </p>
             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
               <button onClick={() => window.location.href="/signup"} style={{ background: '#6366f1', border: 'none', color: 'white', padding: '6px 12px', borderRadius: '0px', fontSize: '8px', fontWeight: '600', cursor: 'pointer' }}>
                 Get Started Today
               </button>
-              <button onClick={() => window.location.href='/investing-info'} style={{ background: 'transparent', border: '1px solid #6366f1', color: 'white', padding: '6px 12px', borderRadius: '0px', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <button onClick={() => window.location.href='/investing-info'} style={{ background: 'transparent', border: '1px solid #6366f1', color: 'white', padding: '6px 12px', borderRadius: '0px', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 Explore More Plans
                 <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10"/>
@@ -75,7 +75,7 @@ export default function OurPlans() {
                 ))}
 
                 {/* Button */}
-                <button onClick={() => window.location.href='/signup'} style={{ width: '100%', background: '#6366f1', border: 'none', color: 'white', padding: '8px', borderRadius: '0px', fontSize: 'clamp(7px, 1.8vw, 9px)', fontWeight: '600', cursor: 'pointer', marginTop: '4px' }}>
+                <button onClick={() => window.location.href='/signup'} style={{ width: '100%', background: '#6366f1', border: 'none', color: 'white', padding: '8px', borderRadius: '0px', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '600', cursor: 'pointer', marginTop: '4px' }}>
                   Join Plan
                 </button>
               </div>

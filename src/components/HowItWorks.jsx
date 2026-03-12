@@ -101,12 +101,12 @@ export default function HowItWorks() {
               >
                 <div style={{ position: 'relative', zIndex: 10 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px' }}>
-                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: 'clamp(8px, 2vw, 10px)' }}>{step.id}</span>
+                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: 'clamp(8px, 2vw, 15px)' }}>{step.id}</span>
                     <span style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(9px, 2.5vw, 12px)' }}>{step.title}</span>
                   </div>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.5', marginBottom: '6px' }}>{step.description}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.5', marginBottom: '6px' }}>{step.description}</p>
                   {step.learnMore && (
-                    <button style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 9px)', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }} onClick={() => window.location.href="/signin"}>
+                    <button style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(7px, 1.8vw, 15px)', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '2px' }} onClick={() => window.location.href="/signin"}>
                       Learn More <ArrowUpRight size={9} />
                     </button>
                   )}
@@ -139,10 +139,10 @@ export default function HowItWorks() {
               >
                 <div style={{ position: 'relative', zIndex: 10 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px' }}>
-                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: 'clamp(8px, 2vw, 10px)' }}>{step.id}</span>
+                    <span style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: 'clamp(8px, 2vw, 15px)' }}>{step.id}</span>
                     <span style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(9px, 2.5vw, 12px)' }}>{step.title}</span>
                   </div>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.5' }}>{step.description}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.5' }}>{step.description}</p>
                 </div>
                 <div style={{ position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'flex-start', marginTop: '8px' }}>
                   <CoinIcon highlight={false} />
@@ -166,13 +166,13 @@ export default function HowItWorks() {
             >
               <div>
                 <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: 'clamp(9px, 2.5vw, 12px)', marginBottom: '6px' }}>Explore Our Advanced Features</h3>
-                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(7px, 1.8vw, 9px)', lineHeight: '1.5' }}>Unlock more tools and features designed to enhance your trading experience.</p>
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(7px, 1.8vw, 15px)', lineHeight: '1.5' }}>Unlock more tools and features designed to enhance your trading experience.</p>
               </div>
               <button onClick={() => window.location.href='/signup'} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 background: 'transparent', border: '1px solid rgba(255,255,255,0.3)',
-                color: 'white', padding: 'clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 10px)',
-                borderRadius: '4px', fontSize: 'clamp(7px, 1.8vw, 9px)',
+                color: 'white', padding: 'clamp(6px, 1.5vw, 13px) clamp(8px, 2vw, 15px)',
+                borderRadius: '4px', fontSize: 'clamp(7px, 1.8vw, 15px)',
                 fontWeight: '600', cursor: 'pointer', width: '100%',
               }}>
                 Discover More <ArrowUpRight size={9} />
