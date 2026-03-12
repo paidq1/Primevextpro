@@ -1,0 +1,198 @@
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DashboardSidebar from '../components/DashboardSidebar';
+import { getTrades, createTrade } from '../services/api';
+
+const SYMBOLS = [
+  { label: 'BTC/USD', tv: 'BINANCE:BTCUSDT' },
+  { label: 'ETH/USD', tv: 'BINANCE:ETHUSDT' },
+  { label: 'XRP/USD', tv: 'BINANCE:XRPUSDT' },
+  { label: 'SOL/USD', tv: 'BINANCE:SOLUSDT' },
+  { label: 'BNB/USD', tv: 'BINANCE:BNBUSDT' },
+  { label: 'ADA/USD', tv: 'BINANCE:ADAUSDT' },
+];
+
+const DURATIONS = ['1 min','5 min','15 min','30 min','1 hour','4 hours','1 day'];
+
+export default function LiveTrading() {
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [balance, setBalance] = useState(null);
+  const [trades, setTrades] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [symbol, setSymbol] = useState(SYMBOLS[0]);
+  const [direction, setDirection] = useState('buy');
+  const [amount, setAmount] = useState('');
+  const [duration, setDuration] = useState('5 min');
+  const [leverage, setLeverage] = useState('1x');
+  const [submitting, setSubmitting] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [error, setError] = useState('');
+  const [tab, setTab] = useState('open');
+  const [showTradeSheet, setShowTradeSheet] = useState(false);
+  const [tradeDir, setTradeDir] = useState('buy');
+  const chartRef = useRef(null);
+  const chartLoaded = useRef(false);
+
+  useEffect(() => { fetchAll(); }, []);
+
+  useEffect(() => {
+    if (!chartRef.current) return;
+    chartRef.current.innerHTML = '';
+    const script = document.createElement('script');
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      autosize: true,
+      symbol: symbol.tv,
+      interval: '15',
+      timezone: 'Etc/UTC',
+      theme: 'dark',
+      style: '1',
+      locale: 'en',
+      backgroundColor: '#0a0f1e',
+      hide_top_toolbar: false,
+      save_image: false,
+    });
+    chartRef.current.appendChild(script);
+  }, [symbol]);
+
+  const fetchAll = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('https://vertextrades.onrender.com/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } });
+      const data = await res.json();
+      setBalance(data.balance ?? 0);
+    } catch {}
+    try {
+      const data = await getTrades();
+      setTrades(data.trades || []);
+      setStats(data.stats || null);
+    } catch {}
+  };
+
+  const handleTrade = async () => {
+    if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); return; }
+    setSubmitting(true); setError(''); setMsg('');
+    try {
+      await createTrade({ symbol: symbol.label, direction, amount: parseFloat(amount), duration, leverage });
+      setMsg('Trade placed!');
+      setAmount('');
+      fetchAll();
+    } catch (e) { setError(e.message || 'Failed'); }
+    setSubmitting(false);
+  };
+
+  const openTrades = trades.filter(t => t.status === 'open');
+  const closedTrades = trades.filter(t => t.status !== 'open');
+
+  return (
+    <>
+      <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column' }}>
+        <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <div style={{ background: '#0d1426', borderBottom: '1px solid rgba(99,102,241,0.2)', padding: '0 12px', display: 'flex', alignItems: 'center', height: '44px', gap: '10px', flexShrink: 0 }}>
+          <div style={{ width: '16px', height: '16px', flexShrink: 0 }}>
+            <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
+              <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
+              <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
+            </svg>
+          </div>
+          <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', padding: 0 }}>
+            <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='18' x2='21' y2='18'/></svg>
+          </button>
+          <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
+          <div style={{ display: 'flex', gap: '2px', marginLeft: '8px', overflowX: 'auto', flex: 1 }}>
+            {SYMBOLS.map(s => (
+              <button key={s.label} onClick={() => setSymbol(s)} style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : '1px solid transparent', color: symbol.label === s.label ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '700', padding: '4px 8px', cursor: 'pointer', whiteSpace: 'nowrap' }}>{s.label}</button>
+            ))}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Balance:</span>
+            <span style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>${balance !== null ? parseFloat(balance).toFixed(2) : '...'}</span>
+            <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+          <div style={{ flex: 1, background: '#0a0f1e', position: 'relative', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ background: '#0d1426', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+              <span style={{ color: 'white', fontSize: '11px', fontWeight: '800' }}>{symbol.label}</span>
+              <span style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontSize: '7px', padding: '2px 6px', fontWeight: '700' }}>LIVE</span>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e', animation: 'pulse 1.5s infinite' }} />
+            </div>
+            <div className='tradingview-widget-container' ref={chartRef} style={{ flex: 1, width: '100%' }} />
+          </div>
+
+        </div>
+
+        {/* Orders Table - scrollable */}
+        <div style={{ background: '#0d1426', borderTop: '1px solid rgba(99,102,241,0.15)', maxHeight: '220px', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+          <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            {[['open', `Open (${openTrades.length})`], ['closed', `Closed (${closedTrades.length})`]].map(([key, label]) => (
+              <button key={key} onClick={() => setTab(key)} style={{ padding: '7px 14px', background: 'transparent', border: 'none', borderBottom: tab === key ? '2px solid #6366f1' : '2px solid transparent', color: tab === key ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>{label}</button>
+            ))}
+          </div>
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '7px' }}>
+              <thead>
+                <tr style={{ background: 'rgba(255,255,255,0.03)' }}>
+                  {['Symbol','Direction','Amount','Duration','Leverage','Status', tab === 'open' ? 'Action' : 'Result'].map(h => (
+                    <th key={h} style={{ padding: '6px 8px', color: 'rgba(255,255,255,0.4)', fontWeight: '700', textAlign: 'left', borderBottom: '1px solid rgba(255,255,255,0.04)', whiteSpace: 'nowrap' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(tab === 'open' ? openTrades : closedTrades).length === 0 ? (
+                  <tr><td colSpan={7} style={{ textAlign: 'center', padding: '20px', color: 'rgba(255,255,255,0.2)' }}>No {tab} trades</td></tr>
+                ) : (tab === 'open' ? openTrades : closedTrades).map((t, i) => (
+                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.01)' }}>
+                    <td style={{ padding: '6px 8px', color: 'white', fontWeight: '700' }}>{t.symbol}</td>
+                    <td style={{ padding: '6px 8px', color: t.direction === 'buy' ? '#22c55e' : '#ef4444', fontWeight: '700', textTransform: 'uppercase' }}>{t.direction}</td>
+                    <td style={{ padding: '6px 8px', color: 'white' }}>${parseFloat(t.amount).toLocaleString()}</td>
+                    <td style={{ padding: '6px 8px', color: 'rgba(255,255,255,0.6)' }}>{t.duration}</td>
+                    <td style={{ padding: '6px 8px', color: 'rgba(255,255,255,0.6)' }}>{t.leverage}</td>
+                    <td style={{ padding: '6px 8px' }}>
+                      <span style={{ background: t.status === 'open' ? 'rgba(34,197,94,0.1)' : 'rgba(107,114,128,0.1)', color: t.status === 'open' ? '#22c55e' : '#9ca3af', padding: '2px 6px', fontWeight: '700', fontSize: '6px', textTransform: 'uppercase' }}>{t.status}</span>
+                    </td>
+                    <td style={{ padding: '6px 8px' }}>
+                      {tab === 'open' ? (
+                        <button onClick={() => fetchAll()} style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '6px', padding: '3px 8px', cursor: 'pointer', fontWeight: '700' }}>Close</button>
+                      ) : (
+                        <span style={{ color: t.profit > 0 ? '#22c55e' : '#ef4444', fontWeight: '700' }}>{t.profit != null ? `$${parseFloat(t.profit).toFixed(2)}` : '—'}</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </div>
+          </div>
+
+          {/* Right: Trade Panel */}
+          <div style={{ width: '160px', background: '#0d1426', borderLeft: '1px solid rgba(99,102,241,0.15)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+
+            <div style={{ padding: '8px', display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, overflowY: 'auto' }}>
+              <div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
+                <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='0.00' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: 'white', fontSize: '10px', fontWeight: '700', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
+              </div>
+              <div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Duration</div>
+                <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 8px', outline: 'none', boxSizing: 'border-box' }}>
+                  {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
+              <div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Leverage</div>
+                <select value={leverage} onChange={e => setLeverage(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 8px', outline: 'none', boxSizing: 'border-box' }}>
+                  {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
+                </select>
+              </div>
+              {msg && <div style={{ color: '#22c55e', fontSize: '7px', textAlign: 'center' }}>{msg}</div>}
+              {error && <div style={{ color: '#ef4444', fontSize: '7px', textAlign: 'center' }}>{error}</div>}
+        <div style={{ textAlign: 'center', padding: '66px 16px 16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>2020-2026 &copy; VertexTrade Pro</div>
+      </div>
+      <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }`}</style>
+    </>
+  );
+}

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { CheckCircle, X, AlertCircle, Zap, TrendingUp, Award, Crown, Rocket, Star } from 'lucide-react';
@@ -16,8 +16,11 @@ const plans = [
 
 export default function Packages() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const urlTab = new URLSearchParams(location.search).get('tab');
   const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(urlTab || 'available');
   const [amounts, setAmounts] = useState(plans.map(p => p.defaultAmt));
   const [confirmPlan, setConfirmPlan] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -27,6 +30,9 @@ export default function Packages() {
 
   const userBalance = user?.balance || 0;
   const [investments, setInvestments] = useState([]);
+  const [search, setSearch] = useState('');
+  const [show, setShow] = useState(10);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getInvestments().then(res => {
@@ -178,63 +184,114 @@ export default function Packages() {
           <span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${userBalance.toFixed(2)}</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px' }}>
-          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em' }}>PACKAGES</span>
-        </div>
 
-        {/* Active Investments */}
-        {activeInvestments.length > 0 && (
-          <div style={{ marginBottom: '16px' }}>
-            <div style={{ fontSize: '9px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '8px' }}>ACTIVE INVESTMENTS</div>
-            {activeInvestments.map((inv, i) => (
-              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(34,197,94,0.3)', padding: '10px 12px', marginBottom: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <div style={{ fontSize: '9px', fontWeight: '700', color: '#22c55e' }}>{inv.plan}</div>
-                  <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)' }}>{inv.roi} · {inv.duration} days</div>
+        {activeTab === 'my' && (
+          <div>
+            {/* Summary Stats */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '14px' }}>
+              {[
+                ['Total Invested', '$' + investments.reduce((s,i) => s + parseFloat(i.amount||0), 0).toLocaleString(), '#6366f1'],
+                ['Active', investments.filter(i => i.status==='active').length, '#22c55e'],
+                ['Completed', investments.filter(i => i.status==='completed').length, '#f59e0b'],
+              ].map(([l,v,c]) => (
+                <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' }}>
+                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
+                  <div style={{ color: c, fontSize: '11px', fontWeight: '700' }}>{v}</div>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '9px', fontWeight: '700' }}>${parseFloat(inv.amount).toLocaleString()}</div>
-                  <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>Expires {new Date(inv.expiresAt).toLocaleDateString()}</div>
+              ))}
+            </div>
+
+            {/* Records Table */}
+            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', marginTop: '14px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
+                  <select value={show} onChange={e => setShow(Number(e.target.value))} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
+                    <option>10</option><option>25</option><option>50</option>
+                  </select>
+                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
                 </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
+                  <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
+                </div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                {['Plan','Amount','ROI','Start Date','End Date','Status'].map((h,i) => (
+                  <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '600', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '7px 6px', display: 'block' }}>{h}</span>
+                ))}
+              </div>
+              {(() => {
+                const filtered = investments.filter(inv => !search || inv.plan?.toLowerCase().includes(search.toLowerCase()) || inv.status?.toLowerCase().includes(search.toLowerCase()));
+                const totalPages = Math.max(1, Math.ceil(filtered.length / show));
+                const paged = filtered.slice((page-1)*show, page*show);
+                return (
+                  <>
+                    {paged.length === 0 ? (
+                      <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No investment records found</div>
+                    ) : paged.map((inv, i) => (
+                      <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 6px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
+                        <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
+                        <span style={{ color: 'white', fontSize: '8px' }}>${parseFloat(inv.amount).toLocaleString()}</span>
+                        <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
+                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
+                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{inv.expiresAt ? new Date(inv.expiresAt).toLocaleDateString() : '—'}</span>
+                        <span style={{ background: inv.status==='active'?'rgba(34,197,94,0.15)':inv.status==='completed'?'rgba(99,102,241,0.15)':'rgba(239,68,68,0.15)', color: inv.status==='active'?'#22c55e':inv.status==='completed'?'#818cf8':'#ef4444', fontSize: '6px', padding: '2px 5px', fontWeight: '600', textTransform: 'uppercase', display: 'inline-block' }}>{inv.status}</span>
+                      </div>
+                    ))}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*show+1} to {Math.min(page*show, filtered.length)} of {filtered.length} entries</span>
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        <button onClick={() => setPage(1)} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+                        <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+                        <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page} of {totalPages}</span>
+                        <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
+                        <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'available' && (
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+            {plans.map((plan, i) => (
+              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                  <span style={{ color: '#818cf8', fontSize: '7px', fontWeight: '600' }}>{plan.roi}</span>
+                  <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {i === 0 && <Zap size={11} color='#818cf8'/>}
+                    {i === 1 && <TrendingUp size={11} color='#818cf8'/>}
+                    {i === 2 && <Award size={11} color='#818cf8'/>}
+                    {i === 3 && <Crown size={11} color='#818cf8'/>}
+                    {i === 4 && <Rocket size={11} color='#818cf8'/>}
+                    {i === 5 && <Star size={11} color='#818cf8'/>}
+                  </div>
+                </div>
+                <div style={{ color: 'white', fontSize: '11px', fontWeight: '800', marginBottom: '4px' }}>{plan.name}</div>
+                <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>{plan.price}</div>
+                <div style={{ marginBottom: '10px' }}>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>Minimum: ${plan.min.toLocaleString()}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>Maximum: ${plan.max ? plan.max.toLocaleString() : 'Unlimited'}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>ROI: {plan.rate}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Duration: {plan.duration} days</div>
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px' }}>Amount to invest:</div>
+                <input
+                  value={amounts[i]}
+                  onChange={e => { const a = [...amounts]; a[i] = e.target.value; setAmounts(a); }}
+                  style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '10px' }}
+                />
+                <button onClick={() => handleJoin(plan, i)} style={{ width: '100%', padding: '7px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>
+                  Join Plan
+                </button>
               </div>
             ))}
           </div>
         )}
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          {plans.map((plan, i) => (
-            <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                <span style={{ color: '#818cf8', fontSize: '7px', fontWeight: '600' }}>{plan.roi}</span>
-                <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {i === 0 && <Zap size={11} color='#818cf8'/>}
-                  {i === 1 && <TrendingUp size={11} color='#818cf8'/>}
-                  {i === 2 && <Award size={11} color='#818cf8'/>}
-                  {i === 3 && <Crown size={11} color='#818cf8'/>}
-                  {i === 4 && <Rocket size={11} color='#818cf8'/>}
-                  {i === 5 && <Star size={11} color='#818cf8'/>}
-                </div>
-              </div>
-              <div style={{ color: 'white', fontSize: '11px', fontWeight: '800', marginBottom: '4px' }}>{plan.name}</div>
-              <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>{plan.price}</div>
-              <div style={{ marginBottom: '10px' }}>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>Minimum: ${plan.min.toLocaleString()}</div>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>Maximum: ${plan.max.toLocaleString()}</div>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '2px' }}>ROI: {plan.rate}</div>
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Duration: {plan.duration} days</div>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px' }}>Amount to invest:</div>
-              <input
-                value={amounts[i]}
-                onChange={e => { const a = [...amounts]; a[i] = e.target.value; setAmounts(a); }}
-                style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '10px' }}
-              />
-              <button onClick={() => handleJoin(plan, i)} style={{ width: '100%', padding: '7px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>
-                Join Plan
-              </button>
-            </div>
-          ))}
-        </div>
       </div>
       <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; VertexTrade Pro</div>
 

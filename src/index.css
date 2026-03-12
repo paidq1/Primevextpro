@@ -128,3 +128,42 @@ img {
   pointer-events: none;
 }
 
+
+/* ── Desktop Responsive ── */
+@media (min-width: 1024px) {
+  /* Global font scaling */
+  body { font-size: 14px; }
+
+  /* Dashboard stat cards */
+  .stat-label { font-size: 12px !important; }
+  .stat-value { font-size: 16px !important; }
+
+  /* All inline small fonts scale up */
+  [style*="font-size: 'clamp(7px"] { font-size: 12px !important; }
+  [style*="font-size: 'clamp(8px"] { font-size: 13px !important; }
+  [style*="font-size: 'clamp(9px"] { font-size: 14px !important; }
+
+  /* Buttons and nav items */
+  button { font-size: 12px !important; min-height: 32px; }
+
+  /* Table headers and rows */
+  th, td { font-size: 12px !important; padding: 10px !important; }
+
+  /* Input fields */
+  input, select { font-size: 12px !important; padding: 8px !important; }
+
+  /* Right panel wider */
+  .trade-panel { width: 220px !important; }
+
+  /* Sidebar icons bigger */
+  .sidebar-icon { width: 44px !important; height: 44px !important; }
+
+  /* Cards padding */
+  .stat-card { padding: 16px !important; }
+}
+
+@media (min-width: 1440px) {
+  body { font-size: 15px; }
+  button { font-size: 13px !important; }
+  input, select { font-size: 13px !important; }
+}

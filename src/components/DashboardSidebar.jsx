@@ -47,12 +47,16 @@ const sidebarSections = [
     items: [
       { icon: <BarChart2 size={13}/>, label: 'Investment records', route: '/dashboard/investment-records' },
       { icon: <Clock size={13}/>, label: 'Transaction history', route: '/dashboard/transaction-history' },
+      { icon: <Package size={13}/>, label: 'Packages', route: null, submenu: [
+        { label: 'Available Packages', route: '/dashboard/packages' },
+        { label: 'My Packages', route: '/dashboard/packages?tab=my' },
+      ]},
       { icon: <ArrowDownCircle size={13}/>, label: 'Withdraw / Deposit', route: null, submenu: [
         { label: 'Deposit', route: '/dashboard/deposit' },
         { label: 'Withdraw', route: '/dashboard/withdraw' },
       ]},
       { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
-      { icon: <Package size={13}/>, label: 'Packages', route: '/dashboard/packages' },
+      
       { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
       { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
       { icon: <Bell size={13}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
