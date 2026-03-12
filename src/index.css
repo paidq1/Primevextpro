@@ -175,3 +175,11 @@ img {
     margin: 0 auto;
   }
 }
+
+/* ── Remove max-width restriction ── */
+@media (min-width: 768px) {
+  #root {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
