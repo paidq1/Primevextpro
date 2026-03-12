@@ -183,3 +183,15 @@ img {
     margin: 0 !important;
   }
 }
+
+/* ── Force mobile layout on desktop ── */
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  #root {
+    width: 100%;
+    max-width: 100%;
+    transform-origin: top left;
+  }
+}
