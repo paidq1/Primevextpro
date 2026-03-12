@@ -130,8 +130,3 @@ img {
 
 
 
-/* ── Desktop: scale to mobile size ── */
-@media (min-width: 768px) {
-  html { zoom: 0.5; }
-}
-
