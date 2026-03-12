@@ -134,3 +134,31 @@ img {
 @media (min-width: 768px) {
   html { zoom: 0.5; }
 }
+
+/* ── Desktop Responsive Fix ── */
+@media (min-width: 1024px) {
+  /* Navbar */
+  nav a, nav button { font-size: 14px !important; }
+  nav span { font-size: 16px !important; }
+
+  /* Hero section */
+  h1 { font-size: 42px !important; }
+  h2 { font-size: 32px !important; }
+  h3 { font-size: 22px !important; }
+  p { font-size: 15px !important; }
+
+  /* Buttons */
+  button { font-size: 14px !important; padding: 10px 20px !important; }
+
+  /* Stats */
+  .font-bold { font-size: 16px !important; }
+
+  /* General text */
+  span, a, li, label { font-size: 13px !important; }
+
+  /* Inputs & selects */
+  input, select, textarea { font-size: 14px !important; padding: 10px !important; }
+
+  /* Stat cards in dashboard */
+  [style*="fontSize: 'clamp"] { font-size: 14px !important; }
+}
