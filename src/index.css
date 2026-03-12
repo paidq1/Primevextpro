@@ -129,69 +129,8 @@ img {
 }
 
 
-/* ── Desktop Responsive ── */
-@media (min-width: 1024px) {
-  /* Global font scaling */
-  body { font-size: 14px; }
 
-  /* Dashboard stat cards */
-  .stat-label { font-size: 12px !important; }
-  .stat-value { font-size: 16px !important; }
-
-  /* All inline small fonts scale up */
-  [style*="font-size: 'clamp(7px"] { font-size: 12px !important; }
-  [style*="font-size: 'clamp(8px"] { font-size: 13px !important; }
-  [style*="font-size: 'clamp(9px"] { font-size: 14px !important; }
-
-  /* Buttons and nav items */
-  button { font-size: 12px !important; min-height: 32px; }
-
-  /* Table headers and rows */
-  th, td { font-size: 12px !important; padding: 10px !important; }
-
-  /* Input fields */
-  input, select { font-size: 12px !important; padding: 8px !important; }
-
-  /* Right panel wider */
-  .trade-panel { width: 220px !important; }
-
-  /* Sidebar icons bigger */
-  .sidebar-icon { width: 44px !important; height: 44px !important; }
-
-  /* Cards padding */
-  .stat-card { padding: 16px !important; }
-}
-
-@media (min-width: 1440px) {
-  body { font-size: 15px; }
-  button { font-size: 13px !important; }
-  input, select { font-size: 13px !important; }
-}
-
-/* ── Desktop: Lock to mobile width ── */
+/* ── Desktop: scale to mobile size ── */
 @media (min-width: 768px) {
-  #root {
-    max-width: 480px;
-    margin: 0 auto;
-  }
-}
-
-/* ── Remove max-width restriction ── */
-@media (min-width: 768px) {
-  #root {
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-}
-
-/* ── Force mobile layout on desktop ── */
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-  #root {
-    width: 100%;
-    max-width: 100%;
-    transform-origin: top left;
-  }
+  html { zoom: 0.5; }
 }
