@@ -6,11 +6,17 @@ const baseTemplate = (content) => `
   <!-- Header Banner -->
   <div style="background: linear-gradient(135deg, #0f1729 0%, #1a1f3a 50%, #0f1729 100%); padding: 0; text-align: center; border-bottom: 2px solid #6366f1;">
     <div style="padding: 28px 30px;">
-      <div style="display: inline-flex; align-items: center; gap: 10px;">
-        <div style="width: 38px; height: 38px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 8px; display: inline-block; vertical-align: middle; line-height: 38px; text-align: center; font-weight: 900; color: white; font-size: 18px;">V</div>
-        <div style="display: inline-block; vertical-align: middle; margin-left: 10px; text-align: left;">
-          <div style="color: white; font-size: 20px; font-weight: 700; letter-spacing: 0.5px; line-height: 1.2;">VertexTrade <span style="color: #6366f1;">Pro</span></div>
-          <div style="color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">Smart Investment Brokers</div>
+      <div style="display: inline-block; text-align: center;">
+        <div style="display: inline-flex; align-items: center; gap: 10px;">
+          <svg viewBox="0 0 40 40" fill="none" width="36" height="36" style="display:inline-block;vertical-align:middle">
+            <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" stroke-width="1.5"/>
+            <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" stroke-width="1.2"/>
+            <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" stroke-width="1"/>
+          </svg>
+          <div style="display: inline-block; vertical-align: middle; text-align: left;">
+            <div style="color: white; font-size: 20px; font-weight: 700; letter-spacing: 0.5px; line-height: 1.2;">VERTEXTRADE <span style="color: #6366f1;">PRO</span></div>
+            <div style="color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">Smart Investment Brokers</div>
+          </div>
         </div>
       </div>
     </div>
