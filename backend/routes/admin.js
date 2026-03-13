@@ -149,8 +149,12 @@ router.put('/kyc/:id', adminAuth, async (req, res) => {
 // Delete user
 router.delete('/users/:id', adminAuth, async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
-    res.json({ message: 'User deleted' });
+    const userId = req.params.id;
+    // Delete all related data
+    await Transaction.deleteMany({ user: userId });
+    await Notification.deleteMany({ user: userId });
+    await User.findByIdAndDelete(userId);
+    res.json({ message: 'User and all related data deleted' });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
