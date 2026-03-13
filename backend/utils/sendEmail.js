@@ -58,7 +58,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
   let subject, html;
 
   if (type === 'welcome') {
-    subject = '🎉 Welcome to VertexTrade Pro!';
+    subject = 'Welcome to VertexTrade Pro!';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Welcome aboard, ${name}! 🚀</h2>
       <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your account is ready</p>
@@ -77,7 +77,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'depositApproved') {
-    subject = '✅ Deposit Approved — Funds Credited';
+    subject = 'Deposit Approved - Funds Credited';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Deposit Approved! 🎉</h2>
       <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Funds have been credited to your account</p>
@@ -92,7 +92,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'depositRejected') {
-    subject = '❌ Deposit Could Not Be Processed';
+    subject = 'Deposit Could Not Be Processed';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Deposit Update</h2>
       <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Action required</p>
@@ -104,7 +104,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'withdrawalApproved') {
-    subject = '✅ Withdrawal Approved — Being Processed';
+    subject = 'Withdrawal Approved - Being Processed';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Withdrawal Approved! 💸</h2>
       <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your funds are on the way</p>
@@ -119,7 +119,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'withdrawalRejected') {
-    subject = '❌ Withdrawal Could Not Be Processed';
+    subject = 'Withdrawal Could Not Be Processed';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Withdrawal Update</h2>
       <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Action required</p>
@@ -131,7 +131,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'kycApproved') {
-    subject = '✅ Identity Verified — KYC Approved';
+    subject = 'Identity Verified - KYC Approved';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">KYC Verified! 🎉</h2>
       <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your identity has been confirmed</p>
@@ -146,7 +146,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'kycRejected') {
-    subject = '❌ KYC Verification — Action Required';
+    subject = 'KYC Verification - Action Required';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">KYC Update</h2>
       <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Verification unsuccessful — please resubmit</p>
@@ -157,7 +157,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'adminMessage') {
-    subject = '📢 Message from VertexTrade Pro';
+    subject = 'Message from VertexTrade Pro';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Message from Support</h2>
       <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">VertexTrade Pro Support Team</p>
@@ -169,7 +169,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'verifyEmail') {
-    subject = '✅ Verify Your Email — VertexTrade Pro';
+    subject = 'Verify Your Email - VertexTrade Pro';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Verify Your Email</h2>
       <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">One last step to get started</p>
@@ -179,10 +179,10 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin:24px 0">
         <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;line-height:1.6">⏱ This link expires in <strong style="color:rgba(255,255,255,0.6)">24 hours</strong><br/>🔒 If you did not create this account, please ignore this email.</p>
       </div>
-      \${regards}\`);
+      ${regards}`);
 
   } else {
-    subject = '🔐 Password Reset Request';
+    subject = 'Password Reset - VertexTrade Pro';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Reset Your Password</h2>
       <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Security notification</p>
