@@ -1,17 +1,50 @@
 const { Resend } = require('resend');
 
 const baseTemplate = (content) => `
-<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0e1628; border-radius: 12px; overflow: hidden;">
-  <div style="background: linear-gradient(135deg, #1e2a45 0%, #0e1628 100%); padding: 30px; text-align: center; border-bottom: 1px solid rgba(99,102,241,0.3);">
-    <h1 style="color: #6366f1; margin: 0; font-size: 24px; letter-spacing: 1px;">VertexTrade Pro</h1>
-    <p style="color: rgba(255,255,255,0.4); margin: 4px 0 0; font-size: 12px;">Smart Investment Brokers</p>
+<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0f1e;">
+  
+  <!-- Header Banner -->
+  <div style="background: linear-gradient(135deg, #0f1729 0%, #1a1f3a 50%, #0f1729 100%); padding: 0; text-align: center; border-bottom: 2px solid #6366f1;">
+    <div style="padding: 28px 30px;">
+      <div style="display: inline-flex; align-items: center; gap: 10px;">
+        <div style="width: 38px; height: 38px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 8px; display: inline-block; vertical-align: middle; line-height: 38px; text-align: center; font-weight: 900; color: white; font-size: 18px;">V</div>
+        <div style="display: inline-block; vertical-align: middle; margin-left: 10px; text-align: left;">
+          <div style="color: white; font-size: 20px; font-weight: 700; letter-spacing: 0.5px; line-height: 1.2;">VertexTrade <span style="color: #6366f1;">Pro</span></div>
+          <div style="color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">Smart Investment Brokers</div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 3px; background: linear-gradient(90deg, transparent, #6366f1, #8b5cf6, #6366f1, transparent);"></div>
   </div>
-  <div style="padding: 30px;">${content}</div>
-  <div style="background: #080f1e; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
-    <p style="color: rgba(255,255,255,0.3); font-size: 11px; margin: 0;">© 2025 VertexTrade Pro. All rights reserved.</p>
-    <p style="color: rgba(255,255,255,0.2); font-size: 10px; margin: 6px 0 0;">vertextradepro.com</p>
+
+  <!-- Body -->
+  <div style="padding: 36px 32px; background: #0e1628;">
+    ${content}
+  </div>
+
+  <!-- Divider -->
+  <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent); margin: 0 32px;"></div>
+
+  <!-- Footer -->
+  <div style="background: #080d1a; padding: 24px 32px; text-align: center;">
+    <p style="color: rgba(255,255,255,0.5); font-size: 12px; margin: 0 0 8px; font-weight: 500;">VertexTrade Pro — Smart Investment Brokers</p>
+    <p style="color: rgba(255,255,255,0.25); font-size: 11px; margin: 0 0 12px;">
+      <a href="https://vertextradepro.com" style="color: #6366f1; text-decoration: none;">vertextradepro.com</a>
+      &nbsp;•&nbsp;
+      <a href="mailto:support@vertextradepro.com" style="color: rgba(255,255,255,0.3); text-decoration: none;">support@vertextradepro.com</a>
+    </p>
+    <p style="color: rgba(255,255,255,0.15); font-size: 10px; margin: 0;">© 2025 VertexTrade Pro. All rights reserved.</p>
   </div>
 </div>`;
+
+const btn = (url, text, color = '#6366f1') =>
+  `<div style="text-align:center;margin:32px 0"><a href="${url}" style="background:${color};color:white;padding:14px 36px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;letter-spacing:0.3px;display:inline-block">${text}</a></div>`;
+
+const greeting = (name) =>
+  `<p style="color:rgba(255,255,255,0.7);font-size:15px;margin:0 0 20px;line-height:1.6">Hi <strong style="color:white">${name}</strong>,</p>`;
+
+const regards =
+  `<p style="color:rgba(255,255,255,0.5);font-size:13px;margin:28px 0 0;line-height:1.6">Best regards,<br/><strong style="color:rgba(255,255,255,0.7)">VertexTrade Pro Support Team</strong></p>`;
 
 const sendEmail = async ({ to, type, name, resetUrl, amount, currency, reason, message, package: pkg }) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -21,128 +54,126 @@ const sendEmail = async ({ to, type, name, resetUrl, amount, currency, reason, m
   if (type === 'welcome') {
     subject = '🎉 Welcome to VertexTrade Pro!';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">Welcome aboard, ${name}! 🚀</h2>
-      <p style="color:#94a3b8">Your account has been successfully created. You are now part of the VertexTrade Pro community!</p>
-      <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:8px;padding:20px;margin:20px 0">
-        <p style="color:white;margin:0 0 10px;font-weight:bold">Get started:</p>
-        <p style="color:#94a3b8;margin:4px 0">✅ Complete your KYC verification</p>
-        <p style="color:#94a3b8;margin:4px 0">✅ Make your first deposit</p>
-        <p style="color:#94a3b8;margin:4px 0">✅ Choose an investment package</p>
-        <p style="color:#94a3b8;margin:4px 0">✅ Start earning profits</p>
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Welcome aboard, ${name}! 🚀</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your account is ready</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">You have successfully joined VertexTrade Pro. We are excited to have you as part of our growing community of smart investors.</p>
+      <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:24px;margin:24px 0">
+        <p style="color:white;margin:0 0 16px;font-size:14px;font-weight:600;letter-spacing:0.3px">GET STARTED IN 4 STEPS</p>
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.7);font-size:13px"><span style="color:#6366f1;font-weight:700;margin-right:10px">01</span>Complete your KYC verification</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">02</span>Make your first deposit</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">03</span>Choose an investment package</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">04</span>Start earning daily profits</td></tr>
+        </table>
       </div>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">Go to Dashboard</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
+      ${regards}`);
 
   } else if (type === 'depositApproved') {
-    subject = '✅ Deposit Approved!';
+    subject = '✅ Deposit Approved — Funds Credited';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">Your Deposit Has Been Approved! 🎉</h2>
-      <p style="color:#94a3b8">Hi ${name},</p>
-      <p style="color:#94a3b8">Your deposit has been approved and credited to your account.</p>
-      <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:20px;margin:20px 0;text-align:center">
-        <p style="color:rgba(255,255,255,0.5);margin:0 0 6px;font-size:12px">AMOUNT CREDITED</p>
-        <p style="color:#22c55e;font-size:32px;font-weight:bold;margin:0">${currency || '$'}${amount}</p>
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Deposit Approved! 🎉</h2>
+      <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Funds have been credited to your account</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Great news! Your deposit has been reviewed and approved. The funds are now available in your account.</p>
+      <div style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(16,185,129,0.08));border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
+        <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Amount Credited</p>
+        <p style="color:#22c55e;font-size:38px;font-weight:800;margin:0;letter-spacing:-0.5px">${currency || '$'}${amount}</p>
+        <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">Available in your wallet</p>
       </div>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">View Dashboard</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      ${btn(`${FRONTEND}/dashboard`, 'View My Balance')}
+      ${regards}`);
 
   } else if (type === 'depositRejected') {
-    subject = '❌ Deposit Not Approved';
+    subject = '❌ Deposit Could Not Be Processed';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">Deposit Update</h2>
-      <p style="color:#94a3b8">Hi ${name},</p>
-      <p style="color:#94a3b8">Unfortunately your deposit of <strong style="color:white">${currency || '$'}${amount}</strong> could not be approved.</p>
-      ${reason ? `<div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:16px;margin:20px 0"><p style="color:#f87171;margin:0"><strong>Reason:</strong> ${reason}</p></div>` : ''}
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard/deposit" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">Try Again</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Deposit Update</h2>
+      <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Action required</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Unfortunately, we were unable to process your deposit of <strong style="color:white">${currency || '$'}${amount}</strong> at this time.</p>
+      ${reason ? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:20px;margin:24px 0"><p style="color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 8px">Reason</p><p style="color:#fca5a5;margin:0;font-size:14px;line-height:1.6">${reason}</p></div>` : ''}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Please try again or contact our support team if you need assistance.</p>
+      ${btn(`${FRONTEND}/dashboard/deposit`, 'Try Again')}
+      ${regards}`);
 
   } else if (type === 'withdrawalApproved') {
-    subject = '✅ Withdrawal Approved!';
+    subject = '✅ Withdrawal Approved — Being Processed';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">Withdrawal Approved! 💸</h2>
-      <p style="color:#94a3b8">Hi ${name},</p>
-      <p style="color:#94a3b8">Your withdrawal request has been approved and is being processed.</p>
-      <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:20px;margin:20px 0;text-align:center">
-        <p style="color:rgba(255,255,255,0.5);margin:0 0 6px;font-size:12px">AMOUNT WITHDRAWN</p>
-        <p style="color:#22c55e;font-size:32px;font-weight:bold;margin:0">${currency || '$'}${amount}</p>
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Withdrawal Approved! 💸</h2>
+      <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your funds are on the way</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Your withdrawal request has been approved and is now being processed. Funds will be sent to your wallet shortly.</p>
+      <div style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(16,185,129,0.08));border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
+        <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Amount Withdrawn</p>
+        <p style="color:#22c55e;font-size:38px;font-weight:800;margin:0;letter-spacing:-0.5px">${currency || '$'}${amount}</p>
+        <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">Expected delivery: within 24 hours</p>
       </div>
-      <p style="color:#94a3b8">Funds will be sent to your wallet within 24 hours.</p>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">View Dashboard</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      ${btn(`${FRONTEND}/dashboard`, 'View Dashboard')}
+      ${regards}`);
 
   } else if (type === 'withdrawalRejected') {
-    subject = '❌ Withdrawal Not Approved';
+    subject = '❌ Withdrawal Could Not Be Processed';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">Withdrawal Update</h2>
-      <p style="color:#94a3b8">Hi ${name},</p>
-      <p style="color:#94a3b8">Your withdrawal of <strong style="color:white">${currency || '$'}${amount}</strong> could not be approved.</p>
-      ${reason ? `<div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:16px;margin:20px 0"><p style="color:#f87171;margin:0"><strong>Reason:</strong> ${reason}</p></div>` : ''}
-      <p style="color:#94a3b8">Your balance has been refunded.</p>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">View Dashboard</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Withdrawal Update</h2>
+      <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Action required</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Unfortunately, your withdrawal of <strong style="color:white">${currency || '$'}${amount}</strong> could not be processed at this time.</p>
+      ${reason ? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:20px;margin:24px 0"><p style="color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 8px">Reason</p><p style="color:#fca5a5;margin:0;font-size:14px;line-height:1.6">${reason}</p></div>` : ''}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Your funds have been returned to your account balance. Please contact support if you have any questions.</p>
+      ${btn(`${FRONTEND}/dashboard`, 'View Dashboard')}
+      ${regards}`);
 
   } else if (type === 'kycApproved') {
-    subject = '✅ KYC Verification Approved!';
+    subject = '✅ Identity Verified — KYC Approved';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">KYC Verified! 🎉</h2>
-      <p style="color:#94a3b8">Hi ${name},</p>
-      <p style="color:#94a3b8">Your identity has been successfully verified. You now have full access to all features.</p>
-      <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:20px;margin:20px 0;text-align:center">
-        <p style="color:#22c55e;font-size:18px;font-weight:bold;margin:0">✅ Identity Verified</p>
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">KYC Verified! 🎉</h2>
+      <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your identity has been confirmed</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Congratulations! Your identity verification has been successfully completed. You now have full access to all VertexTrade Pro features.</p>
+      <div style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(16,185,129,0.08));border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:24px;margin:24px 0;text-align:center">
+        <div style="width:56px;height:56px;background:rgba(34,197,94,0.15);border-radius:50%;margin:0 auto 12px;line-height:56px;font-size:24px">✅</div>
+        <p style="color:#22c55e;font-size:16px;font-weight:700;margin:0">Identity Verified</p>
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:6px 0 0">Full account access granted</p>
       </div>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">Start Investing</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      ${btn(`${FRONTEND}/dashboard`, 'Start Investing Now')}
+      ${regards}`);
 
   } else if (type === 'kycRejected') {
-    subject = '❌ KYC Verification Failed';
+    subject = '❌ KYC Verification — Action Required';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">KYC Verification Update</h2>
-      <p style="color:#94a3b8">Hi ${name},</p>
-      <p style="color:#94a3b8">We were unable to verify your identity at this time.</p>
-      ${reason ? `<div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:16px;margin:20px 0"><p style="color:#f87171;margin:0"><strong>Reason:</strong> ${reason}</p></div>` : ''}
-      <p style="color:#94a3b8">Please resubmit your documents with clearer images.</p>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard/kyc" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">Resubmit KYC</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">KYC Update</h2>
+      <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Verification unsuccessful — please resubmit</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">We were unable to verify your identity with the documents provided. Please resubmit with clearer images.</p>
+      ${reason ? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:20px;margin:24px 0"><p style="color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 8px">Reason</p><p style="color:#fca5a5;margin:0;font-size:14px;line-height:1.6">${reason}</p></div>` : ''}
+      ${btn(`${FRONTEND}/dashboard/kyc`, 'Resubmit Documents')}
+      ${regards}`);
 
   } else if (type === 'adminMessage') {
     subject = '📢 Message from VertexTrade Pro';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">Message from Support</h2>
-      <p style="color:#94a3b8">Hi ${name},</p>
-      <div style="background:rgba(99,102,241,0.1);border-left:4px solid #6366f1;padding:16px;margin:20px 0;border-radius:0 8px 8px 0">
-        <p style="color:white;margin:0;line-height:1.6">${message}</p>
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Message from Support</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">VertexTrade Pro Support Team</p>
+      ${greeting(name)}
+      <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border-left:3px solid #6366f1;border-radius:0 10px 10px 0;padding:20px 24px;margin:24px 0">
+        <p style="color:rgba(255,255,255,0.8);margin:0;font-size:14px;line-height:1.8">${message}</p>
       </div>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${FRONTEND}/dashboard" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">Go to Dashboard</a>
-      </div>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
+      ${regards}`);
 
   } else {
-    subject = '🔐 Reset Your Password';
+    subject = '🔐 Password Reset Request';
     html = baseTemplate(`
-      <h2 style="color:white;margin-top:0">Password Reset Request</h2>
-      <p style="color:#94a3b8">Hi ${name || to},</p>
-      <p style="color:#94a3b8">Click the button below to reset your password:</p>
-      <div style="text-align:center;margin:30px 0">
-        <a href="${resetUrl}" style="background:#6366f1;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold">Reset Password</a>
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Reset Your Password</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Security notification</p>
+      ${greeting(name || 'User')}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">We received a request to reset the password for your account. Click the button below to create a new password.</p>
+      ${btn(resetUrl, 'Reset My Password')}
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin:24px 0">
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;line-height:1.6">⏱ This link expires in <strong style="color:rgba(255,255,255,0.6)">24 hours</strong><br/>🔒 If you did not request this, please ignore this email. Your account remains secure.</p>
       </div>
-      <p style="color:#94a3b8;font-size:12px">This link expires in 24 hours.</p>
-      <p style="color:#94a3b8;font-size:12px">If you did not request this, ignore this email.</p>
-      <p style="color:#94a3b8">Best regards,<br/>VertexTrade Pro Team</p>`);
+      ${regards}`);
   }
 
   console.log('Sending email type:', type || 'passwordReset', 'to:', to);
