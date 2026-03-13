@@ -82,21 +82,7 @@ router.get('/deposits', adminAuth, async (req, res) => {
 });
 
 // Approve/reject deposit
-router.put('/deposits/:id', adminAuth, async (req, res) => {
-  try {
-    const { status } = req.body;
-    const deposit = await Transaction.findById(req.params.id);
-    if (!deposit) return res.status(404).json({ message: 'Deposit not found' });
-    deposit.status = status;
-    await deposit.save();
-    if (status === 'approved') {
-      await User.findByIdAndUpdate(deposit.user, { $inc: { balance: deposit.amount, totalDeposits: deposit.amount } });
-    }
-    res.json({ message: `Deposit ${status}`, deposit });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+
 
 // Get all withdrawals
 router.get('/withdrawals', adminAuth, async (req, res) => {
@@ -109,42 +95,10 @@ router.get('/withdrawals', adminAuth, async (req, res) => {
 });
 
 // Approve/reject withdrawal
-router.put('/withdrawals/:id', adminAuth, async (req, res) => {
-  try {
-    const { status } = req.body;
-    const withdrawal = await Transaction.findById(req.params.id);
-    if (!withdrawal) return res.status(404).json({ message: 'Withdrawal not found' });
-    withdrawal.status = status;
-    await withdrawal.save();
-    if (status === 'rejected') {
-      await User.findByIdAndUpdate(withdrawal.user, { $inc: { balance: withdrawal.amount } });
-    }
-    res.json({ message: `Withdrawal ${status}`, withdrawal });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+
 
 // Get all KYC
-router.get('/kyc', adminAuth, async (req, res) => {
-  try {
-    const users = await User.find({ kycStatus: { $in: ['pending', 'approved', 'rejected'] } }).select('firstName lastName email kycStatus kycData createdAt').sort({ createdAt: -1 });
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
 
-// Approve/reject KYC
-router.put('/kyc/:id', adminAuth, async (req, res) => {
-  try {
-    const { status } = req.body;
-    const user = await User.findByIdAndUpdate(req.params.id, { kycStatus: status }, { new: true }).select('-password');
-    res.json({ message: `KYC ${status}`, user });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
 
 // Delete user
 router.delete('/users/:id', adminAuth, async (req, res) => {
