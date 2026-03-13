@@ -40,6 +40,8 @@ const SignIn = () => {
         login(res.token, res.user);
         setSuccess(true);
         setTimeout(() => { window.location.replace('/dashboard'); }, 1500);
+      } else if (res.emailNotVerified) {
+        setErrors({ username: '⚠️ Please verify your email first. Check your inbox for the verification link.' });
       } else {
         setErrors({ username: res.message || 'Invalid credentials' });
       }

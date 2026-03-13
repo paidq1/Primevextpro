@@ -64,4 +64,31 @@ router.post('/reset-password/:token', async (req, res) => {
   }
 });
 
+// Verify email
+router.get('/verify-email/:token', async (req, res) => {
+  try {
+    const user = await User.findOne({
+      emailVerifyToken: req.params.token,
+      emailVerifyExpire: { $gt: Date.now() }
+    });
+
+    if (!user) return res.status(400).json({ message: 'Invalid or expired verification link' });
+
+    user.emailVerified = true;
+    user.emailVerifyToken = undefined;
+    user.emailVerifyExpire = undefined;
+    await user.save();
+
+    // Send welcome email after verification
+    try {
+      const sendEmail = require('../utils/sendEmail');
+      await sendEmail({ to: user.email, type: 'welcome', name: user.firstName });
+    } catch(e) {}
+
+    res.json({ success: true, message: 'Email verified successfully! You can now login.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;

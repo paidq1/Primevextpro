@@ -46,7 +46,7 @@ const greeting = (name) =>
 const regards =
   `<p style="color:rgba(255,255,255,0.5);font-size:13px;margin:28px 0 0;line-height:1.6">Best regards,<br/><strong style="color:rgba(255,255,255,0.7)">VertexTrade Pro Support Team</strong></p>`;
 
-const sendEmail = async ({ to, type, name, resetUrl, amount, currency, reason, message, package: pkg }) => {
+const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg }) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const FRONTEND = process.env.FRONTEND_URL;
   let subject, html;
@@ -161,6 +161,19 @@ const sendEmail = async ({ to, type, name, resetUrl, amount, currency, reason, m
       </div>
       ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
       ${regards}`);
+
+  } else if (type === 'verifyEmail') {
+    subject = '✅ Verify Your Email — VertexTrade Pro';
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Verify Your Email</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">One last step to get started</p>
+      ${greeting(name || 'User')}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Thank you for registering with VertexTrade Pro! Please verify your email address to activate your account.</p>
+      ${btn(verifyUrl, 'Verify My Email')}
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin:24px 0">
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;line-height:1.6">⏱ This link expires in <strong style="color:rgba(255,255,255,0.6)">24 hours</strong><br/>🔒 If you did not create this account, please ignore this email.</p>
+      </div>
+      \${regards}\`);
 
   } else {
     subject = '🔐 Password Reset Request';

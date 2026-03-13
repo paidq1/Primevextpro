@@ -136,7 +136,7 @@ const SignUp = () => {
       if (res.token) {
         login(res.token, res.user);
         setSuccess(true);
-        setTimeout(() => { window.location.replace('/dashboard'); }, 1500);
+        setTimeout(() => { window.location.replace('/signin'); }, 2000);
       } else {
         setErrors({ email: res.message || "Registration failed" });
       }
@@ -210,12 +210,12 @@ const SignUp = () => {
           {success && (
             <>
               <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }} />
-              <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', padding: '28px 20px', width: '260px', textAlign: 'center' }}>
+              <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
                 <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
                   <svg width='22' height='22' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg>
                 </div>
-                <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Account Created!</div>
-                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your account has been created. Please check your email to verify your account.</div>
+                <div style={{ color: '#111827', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Account Created!</div>
+                <div style={{ color: '#6b7280', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Welcome to VertexTrade Pro! Your account has been successfully created.</div>
                 <button onClick={() => window.location.replace('/signin')} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Login</button>
               </div>
             </>

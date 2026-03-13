@@ -1,44 +1,69 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 export default function VerifyEmail() {
   const { token } = useParams();
   const navigate = useNavigate();
-  const [status, setStatus] = useState('verifying');
+  const [status, setStatus] = useState('verifying'); // verifying, success, error
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (!token) { setStatus('invalid'); return; }
-    fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify-email/${token}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.message && data.message.includes('verified')) setStatus('success');
-        else setStatus('invalid');
-      })
-      .catch(() => setStatus('invalid'));
+    const verify = async () => {
+      try {
+        const res = await fetch(`https://vertextrades.onrender.com/api/auth/verify-email/${token}`);
+        const data = await res.json();
+        if (data.success) {
+          setStatus('success');
+          setMessage(data.message);
+          setTimeout(() => navigate('/signin'), 3000);
+        } else {
+          setStatus('error');
+          setMessage(data.message || 'Verification failed');
+        }
+      } catch (err) {
+        setStatus('error');
+        setMessage('Server error. Please try again.');
+      }
+    };
+    verify();
   }, [token]);
 
-  const icons = {
-    verifying: { color: '#6366f1', icon: <svg width='28' height='28' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M12 6v6l4 2'/><circle cx='12' cy='12' r='10'/></svg>, title: 'Verifying...', text: 'Please wait while we verify your email.' },
-    success: { color: '#22c55e', icon: <svg width='28' height='28' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg>, title: 'Email Verified!', text: 'Your account is now active. You can log in.' },
-    invalid: { color: '#ef4444', icon: <svg width='28' height='28' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12'/></svg>, title: 'Invalid Link', text: 'This verification link is invalid or has expired.' },
-  };
-
-  const s = icons[status];
-
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa' }}>
-      <div style={{ background: '#2d3748', width: '320px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
-        <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: `2px solid ${s.color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-          {s.icon}
-        </div>
-        <h2 style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>{s.title}</h2>
-        <p style={{ color: '#94a3b8', fontSize: '9px', marginBottom: '24px', lineHeight: '1.6' }}>{s.text}</p>
+    <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <div style={{ background: 'white', borderRadius: '8px', padding: '40px 32px', width: '100%', maxWidth: '400px', textAlign: 'center' }}>
+        
+        {status === 'verifying' && (
+          <>
+            <div style={{ width: '52px', height: '52px', border: '3px solid #6366f1', borderTopColor: 'transparent', borderRadius: '50%', margin: '0 auto 20px', animation: 'spin 1s linear infinite' }} />
+            <h2 style={{ color: '#111827', fontSize: '18px', fontWeight: '700', margin: '0 0 8px' }}>Verifying your email...</h2>
+            <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>Please wait a moment</p>
+          </>
+        )}
+
         {status === 'success' && (
-          <button onClick={() => navigate('/signin')} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Go to Login</button>
+          <>
+            <div style={{ width: '56px', height: '56px', background: '#dcfce7', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+              <svg width='24' height='24' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2.5'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg>
+            </div>
+            <h2 style={{ color: '#111827', fontSize: '18px', fontWeight: '700', margin: '0 0 8px' }}>Email Verified! 🎉</h2>
+            <p style={{ color: '#6b7280', fontSize: '13px', margin: '0 0 20px', lineHeight: '1.6' }}>{message}</p>
+            <p style={{ color: '#9ca3af', fontSize: '12px', margin: '0 0 20px' }}>Redirecting to login...</p>
+            <button onClick={() => navigate('/signin')} style={{ background: '#6366f1', color: 'white', border: 'none', borderRadius: '6px', padding: '10px 28px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>Login Now</button>
+          </>
         )}
-        {status === 'invalid' && (
-          <button onClick={() => navigate('/signup')} style={{ padding: '10px 28px', background: '#ef4444', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Register Again</button>
+
+        {status === 'error' && (
+          <>
+            <div style={{ width: '56px', height: '56px', background: '#fee2e2', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+              <svg width='24' height='24' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2.5'><path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12'/></svg>
+            </div>
+            <h2 style={{ color: '#111827', fontSize: '18px', fontWeight: '700', margin: '0 0 8px' }}>Verification Failed</h2>
+            <p style={{ color: '#6b7280', fontSize: '13px', margin: '0 0 20px', lineHeight: '1.6' }}>{message}</p>
+            <button onClick={() => navigate('/signin')} style={{ background: '#6366f1', color: 'white', border: 'none', borderRadius: '6px', padding: '10px 28px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>Go to Login</button>
+          </>
         )}
+
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     </div>
   );

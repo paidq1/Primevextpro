@@ -33,6 +33,8 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   avatar: { type: String, default: '' },
   emailVerified: { type: Boolean, default: false },
+  emailVerifyToken: { type: String },
+  emailVerifyExpire: { type: Date },
   emailToken: { type: String },
   emailTokenExpire: { type: Date },
   createdAt: { type: Date, default: Date.now },

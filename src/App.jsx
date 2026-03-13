@@ -42,6 +42,7 @@ import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
 import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
 import TradingInfo from "./pages/TradingInfo";
 import StakingInfo from "./pages/StakingInfo";
 import InvestingInfo from "./pages/InvestingInfo";
@@ -110,6 +111,7 @@ function App() {
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/dashboard/deposit" element={<PrivateRoute><Deposit /></PrivateRoute>} />
         <Route path="/dashboard/withdraw" element={<PrivateRoute><Withdraw /></PrivateRoute>} />

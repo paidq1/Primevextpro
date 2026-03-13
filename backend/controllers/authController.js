@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
 
     const userData = {
       firstName, lastName, email, phone, country, password,
-      emailVerified: true, // Auto-verify until custom domain is set up
+      emailVerified: false,
     };
 
     if (referralCode) {
@@ -31,14 +31,20 @@ exports.register = async (req, res) => {
     const user = await User.create(userData);
     const token = generateToken(user._id);
 
-    // Send welcome email
+    // Send verification email
     try {
+      const crypto = require('crypto');
+      const verifyToken = crypto.randomBytes(32).toString('hex');
+      user.emailVerifyToken = verifyToken;
+      user.emailVerifyExpire = Date.now() + 24 * 60 * 60 * 1000;
+      await user.save();
       await sendEmail({
         to: user.email,
-        type: 'welcome',
-        name: user.firstName
+        type: 'verifyEmail',
+        name: user.firstName,
+        verifyUrl: process.env.FRONTEND_URL + '/verify-email/' + verifyToken
       });
-    } catch(emailErr) { console.log('Welcome email error:', emailErr.message); }
+    } catch(emailErr) { console.log('Verification email error:', emailErr.message); }
 
     res.status(201).json({
       token,
@@ -71,6 +77,10 @@ exports.login = async (req, res) => {
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+
+    if (!user.emailVerified) {
+      return res.status(400).json({ message: 'Please verify your email before logging in. Check your inbox.', emailNotVerified: true });
+    }
 
     const token = generateToken(user._id);
 
