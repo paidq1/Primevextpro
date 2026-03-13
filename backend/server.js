@@ -32,7 +32,7 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || origin.includes('vercel.app') || origin.includes('localhost') || origin.includes('vertextradepro.website')) {
+    if (!origin || origin.includes('vercel.app') || origin.includes('localhost') || origin.includes('vertextradepro.website') || origin.includes('vertextradepro.com')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
