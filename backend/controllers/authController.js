@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const sendEmail = require('../utils/sendEmail');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
@@ -109,6 +110,15 @@ exports.changePassword = async (req, res) => {
 
     user.password = newPassword;
     await user.save();
+
+    // Send welcome email
+    try {
+      await sendEmail({
+        to: user.email,
+        type: 'welcome',
+        name: user.firstName
+      });
+    } catch(emailErr) { console.log('Welcome email error:', emailErr.message); }
 
     res.json({ message: 'Password changed successfully' });
   } catch (err) {

@@ -252,31 +252,11 @@ router.put('/deposits/:id', adminAuth, async (req, res) => {
       if (user) {
         const isApproved = status === 'approved';
         await sendEmail({
+          type: isApproved ? 'depositApproved' : 'depositRejected',
           to: user.email,
-          subject: isApproved ? '✅ Deposit Approved - VertexTrade Pro' : '❌ Deposit Rejected - VertexTrade Pro',
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
-              <div style="text-align: center; margin-bottom: 24px;">
-                <h1 style="color: #6366f1; font-size: 24px; margin: 0;">VertexTrade Pro</h1>
-              </div>
-              <div style="background: #252d3d; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-                <h2 style="color: ${isApproved ? '#22c55e' : '#ef4444'}; font-size: 18px; margin: 0 0 16px;">
-                  ${isApproved ? '✅ Deposit Approved' : '❌ Deposit Rejected'}
-                </h2>
-                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Dear ${user.firstName} ${user.lastName},</p>
-                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">
-                  Your deposit of <strong style="color: #22c55e;">$${transaction.amount.toFixed(2)}</strong> via <strong>${transaction.method}</strong> has been <strong style="color: ${isApproved ? '#22c55e' : '#ef4444'};">${status}</strong>.
-                </p>
-                ${isApproved ? `<p style="color: #e2e8f0; font-size: 14px;">Your account balance has been updated. You can now use your funds to invest and trade.</p>` : `<p style="color: #e2e8f0; font-size: 14px;">Unfortunately your deposit was not approved. Please contact support if you have any questions.</p>`}
-              </div>
-              <div style="background: #2d3748; padding: 12px; border-radius: 4px; margin-bottom: 20px;">
-                <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 0;">Amount: <strong style="color: white;">$${transaction.amount.toFixed(2)}</strong></p>
-                <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 4px 0 0;">Method: <strong style="color: white;">${transaction.method}</strong></p>
-                <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 4px 0 0;">Status: <strong style="color: ${isApproved ? '#22c55e' : '#ef4444'};">${status.toUpperCase()}</strong></p>
-              </div>
-              <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">VertexTrade Pro - Your trusted investment platform</p>
-            </div>
-          `
+          name: user.firstName,
+          amount: transaction.amount.toFixed(2),
+          currency: '$'
         });
       }
     } catch(emailErr) { console.log('Email error:', emailErr.message); }
@@ -333,31 +313,11 @@ router.put('/withdrawals/:id', adminAuth, async (req, res) => {
       if (user) {
         const isApproved = status === 'approved';
         await sendEmail({
+          type: isApproved ? 'withdrawalApproved' : 'withdrawalRejected',
           to: user.email,
-          subject: isApproved ? '✅ Withdrawal Approved - VertexTrade Pro' : '❌ Withdrawal Rejected - VertexTrade Pro',
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1e2538; color: white; padding: 30px; border-radius: 8px;">
-              <div style="text-align: center; margin-bottom: 24px;">
-                <h1 style="color: #6366f1; font-size: 24px; margin: 0;">VertexTrade Pro</h1>
-              </div>
-              <div style="background: #252d3d; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-                <h2 style="color: ${isApproved ? '#22c55e' : '#ef4444'}; font-size: 18px; margin: 0 0 16px;">
-                  ${isApproved ? '✅ Withdrawal Approved' : '❌ Withdrawal Rejected'}
-                </h2>
-                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Dear ${user.firstName} ${user.lastName},</p>
-                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">
-                  Your withdrawal of <strong style="color: #ec4899;">$${transaction.amount.toFixed(2)}</strong> via <strong>${transaction.method}</strong> has been <strong style="color: ${isApproved ? '#22c55e' : '#ef4444'};">${status}</strong>.
-                </p>
-                ${isApproved ? `<p style="color: #e2e8f0; font-size: 14px;">Your withdrawal is being processed and will be sent to your account shortly.</p>` : `<p style="color: #e2e8f0; font-size: 14px;">Your withdrawal was rejected and your funds have been returned to your account balance. Please contact support if you have any questions.</p>`}
-              </div>
-              <div style="background: #2d3748; padding: 12px; border-radius: 4px; margin-bottom: 20px;">
-                <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 0;">Amount: <strong style="color: white;">$${transaction.amount.toFixed(2)}</strong></p>
-                <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 4px 0 0;">Method: <strong style="color: white;">${transaction.method}</strong></p>
-                <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 4px 0 0;">Status: <strong style="color: ${isApproved ? '#22c55e' : '#ef4444'};">${status.toUpperCase()}</strong></p>
-              </div>
-              <p style="color: rgba(255,255,255,0.4); font-size: 11px; text-align: center;">VertexTrade Pro - Your trusted investment platform</p>
-            </div>
-          `
+          name: user.firstName,
+          amount: transaction.amount.toFixed(2),
+          currency: '$'
         });
       }
     } catch(emailErr) { console.log('Email error:', emailErr.message); }
@@ -383,6 +343,13 @@ router.put('/kyc/:id', adminAuth, async (req, res) => {
   try {
     const { status } = req.body;
     const user = await User.findByIdAndUpdate(req.params.id, { kycStatus: status }, { new: true }).select('-password');
+    try {
+      await sendEmail({
+        type: status === 'approved' ? 'kycApproved' : 'kycRejected',
+        to: user.email,
+        name: user.firstName
+      });
+    } catch(emailErr) { console.log('KYC email error:', emailErr.message); }
     res.json({ message: 'KYC ' + status, user });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
