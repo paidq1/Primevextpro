@@ -22,7 +22,7 @@ const sendEmail = async ({ to, subject, resetUrl, name }) => {
 
   console.log('Sending via Resend to:', to);
   const { data, error } = await resend.emails.send({
-    from: 'Vertex Trade Pro <onboarding@resend.dev>',
+    from: 'Vertex Trade Pro <support@vertextradepro.com>',
     to,
     subject: subject || 'Reset your password',
     html,
