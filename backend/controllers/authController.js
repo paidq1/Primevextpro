@@ -31,6 +31,15 @@ exports.register = async (req, res) => {
     const user = await User.create(userData);
     const token = generateToken(user._id);
 
+    // Send welcome email
+    try {
+      await sendEmail({
+        to: user.email,
+        type: 'welcome',
+        name: user.firstName
+      });
+    } catch(emailErr) { console.log('Welcome email error:', emailErr.message); }
+
     res.status(201).json({
       token,
       user: {
@@ -110,15 +119,6 @@ exports.changePassword = async (req, res) => {
 
     user.password = newPassword;
     await user.save();
-
-    // Send welcome email
-    try {
-      await sendEmail({
-        to: user.email,
-        type: 'welcome',
-        name: user.firstName
-      });
-    } catch(emailErr) { console.log('Welcome email error:', emailErr.message); }
 
     res.json({ message: 'Password changed successfully' });
   } catch (err) {
