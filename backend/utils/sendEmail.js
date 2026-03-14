@@ -41,7 +41,30 @@ const greeting = (name) =>
 const regards =
   `<p style="color:rgba(255,255,255,0.5);font-size:13px;margin:28px 0 0;line-height:1.6">Best regards,<br/><strong style="color:rgba(255,255,255,0.7)">VertexTrade Pro Support Team</strong></p>`;
 
+const currencyMap = {
+  'US Dollar (USD)': '$', 'Euro (EUR)': '€', 'British Pound (GBP)': '£',
+  'Indian Rupee (INR)': '₹', 'Nigerian Naira (NGN)': '₦', 'Canadian Dollar (CAD)': 'C$',
+  'Australian Dollar (AUD)': 'A$', 'Japanese Yen (JPY)': '¥', 'Swiss Franc (CHF)': 'Fr',
+  'Chinese Yuan (CNY)': '¥',
+};
+
+const getRates = () => ({
+  'US Dollar (USD)': 1, 'Euro (EUR)': 0.92, 'British Pound (GBP)': 0.79,
+  'Indian Rupee (INR)': 83.5, 'Nigerian Naira (NGN)': 1580, 'Canadian Dollar (CAD)': 1.36,
+  'Australian Dollar (AUD)': 1.53, 'Japanese Yen (JPY)': 149.5, 'Swiss Franc (CHF)': 0.90,
+  'Chinese Yuan (CNY)': 7.24,
+});
+
+const formatCurrency = (amountUSD, userCurrency) => {
+  const symbol = currencyMap[userCurrency] || '$';
+  const rate = getRates()[userCurrency] || 1;
+  const converted = (amountUSD * rate).toFixed(2);
+  return `${symbol}${Number(converted).toLocaleString()}`;
+};
+
 const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code }) => {
+  const userCurrency = currency || 'US Dollar (USD)';
+  const currSymbol = currencyMap[userCurrency] || '$';
   const resend = new Resend(process.env.RESEND_API_KEY);
   const FRONTEND = process.env.FRONTEND_URL;
   let subject, html;
@@ -185,13 +208,13 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">One-time registration fee required</p>
       ${greeting(name)}
       <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Welcome to VertexTrade Pro! We're excited to have you join our trading community.</p>
-      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">To activate your account and gain full access to all trading features, a one-time registration fee of <strong style="color:#f59e0b;font-size:16px">$${amount}</strong> is required. This ensures your account is fully verified and ready for trading.</p>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">To activate your account and gain full access to all trading features, a one-time registration fee of <strong style="color:#f59e0b;font-size:16px">${currSymbol}${amount}</strong> is required. This ensures your account is fully verified and ready for trading.</p>
       
       <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:24px;margin:24px 0">
         <p style="color:white;font-size:14px;font-weight:700;margin:0 0 16px">How to Proceed</p>
         <table style="width:100%;border-collapse:collapse">
           <tr><td style="padding:10px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">01</span>Contact our Support Team for payment instructions</td></tr>
-          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">02</span>Complete the payment of <strong style="color:#f59e0b">$${amount}</strong> using the method provided</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">02</span>Complete the payment of <strong style="color:#f59e0b">${currSymbol}${amount}</strong> using the method provided</td></tr>
           <tr><td style="padding:10px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">03</span>Your account will be activated immediately after confirmation</td></tr>
         </table>
       </div>

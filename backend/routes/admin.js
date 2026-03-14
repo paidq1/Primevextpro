@@ -129,7 +129,7 @@ router.post('/users/:id/send-registration-fee', adminAuth, async (req, res) => {
     const { amount } = req.body;
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
-    await sendEmail({ to: user.email, type: 'registrationFee', name: user.firstName, amount });
+    await sendEmail({ to: user.email, type: 'registrationFee', name: user.firstName, amount, currency: user.currency || '$' });
     res.json({ message: 'Registration fee email sent' });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -331,7 +331,7 @@ router.put('/deposits/:id', adminAuth, async (req, res) => {
           to: user.email,
           name: user.firstName,
           amount: transaction.amount.toFixed(2),
-          currency: '$'
+          currency: user.currency || '$'
         });
       }
     } catch(emailErr) { console.log('Email error:', emailErr.message); }
@@ -392,7 +392,7 @@ router.put('/withdrawals/:id', adminAuth, async (req, res) => {
           to: user.email,
           name: user.firstName,
           amount: transaction.amount.toFixed(2),
-          currency: '$'
+          currency: user.currency || '$'
         });
       }
     } catch(emailErr) { console.log('Email error:', emailErr.message); }
