@@ -64,7 +64,13 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
           <tr><td style="padding:8px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">04</span>Start earning daily profits</td></tr>
         </table>
       </div>
-      ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
+      <div style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(234,179,8,0.08));border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:20px;margin:24px 0">
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;margin:0 0 10px">Payment Required to Activate Plan</p>
+        <p style="color:rgba(255,255,255,0.7);font-size:12px;margin:0 0 10px;line-height:1.7">To activate your <strong style="color:white">${pkg}</strong> plan and unlock full trading access, a one-time upgrade fee of <strong style="color:#f59e0b">$${pd.upgradeFee?.toLocaleString() || 'N/A'}</strong> is required.</p>
+        <p style="color:rgba(255,255,255,0.7);font-size:12px;margin:0 0 10px;line-height:1.7">Please proceed to your dashboard and make a deposit of <strong style="color:white">$${pd.upgradeFee?.toLocaleString() || 'N/A'}</strong> to complete your account upgrade.</p>
+        <p style="color:rgba(255,255,255,0.5);font-size:11px;margin:0;line-height:1.7">Once your payment is confirmed, your account will be fully activated and you can start trading immediately. If you need assistance, please contact our support team.</p>
+      </div>
+      ${btn(`${FRONTEND}/dashboard/deposit`, 'Make Payment Now')}
       ${regards}`);
 
   } else if (type === 'depositApproved') {
