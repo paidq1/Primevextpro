@@ -92,3 +92,32 @@ router.get('/verify-email/:token', async (req, res) => {
 });
 
 module.exports = router;
+// Resend verification email
+router.post('/resend-verification', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const User = require('../models/User');
+    const crypto = require('crypto');
+    const sendEmail = require('../utils/sendEmail');
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (user.emailVerified) return res.status(400).json({ message: 'Email already verified' });
+
+    const verifyToken = crypto.randomBytes(32).toString('hex');
+    user.emailVerifyToken = verifyToken;
+    user.emailVerifyExpire = Date.now() + 24 * 60 * 60 * 1000;
+    await user.save();
+
+    await sendEmail({
+      to: user.email,
+      type: 'verifyEmail',
+      name: user.firstName,
+      verifyUrl: process.env.FRONTEND_URL + '/verify-email/' + verifyToken
+    });
+
+    res.json({ success: true, message: 'Verification email sent' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
