@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
 import { getStakes } from '../services/api';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,7 @@ const stakePlans = [
 ];
 
 export default function Stake() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);

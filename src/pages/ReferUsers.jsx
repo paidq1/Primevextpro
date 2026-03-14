@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
 import { useNavigate } from 'react-router-dom';
 import { Copy, Users, DollarSign, Gift } from 'lucide-react';
@@ -6,6 +7,7 @@ import DashboardSidebar from '../components/DashboardSidebar';
 import { getReferrals } from '../services/api';
 
 export default function ReferUsers() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [copied, setCopied] = useState(false);
