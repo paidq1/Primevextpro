@@ -470,7 +470,7 @@ export default function AdminPanel() {
                     <td style={tdStyle}>{u.email}</td>
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                        <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ width: '70px', background: '#374151', border: 'none', color: 'white', fontSize: '8px', padding: '3px 5px' }} />
+                        <input value={editBalance[u._id] ?? u.balance?.toFixed(2) ?? '0'} onChange={e => setEditBalance(b => ({ ...b, [u._id]: e.target.value }))} style={{ width: '100px', background: '#374151', border: 'none', color: 'white', fontSize: '12px', padding: '5px 8px' }} />
                         <button onClick={() => updateBalance(u._id)} style={btnStyle('#6366f1')}>Set</button>
                       </div>
                     </td>
