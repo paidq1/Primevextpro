@@ -184,7 +184,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
         <p style="color:#6366f1;font-size:32px;font-weight:800;margin:0;letter-spacing:2px">${pkg}</p>
         <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">VertexTrade Pro Premium Member</p>
       </div>
-      ${btn(\`\${FRONTEND}/dashboard\`, 'Go to Dashboard')}
+      ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
       ${regards}`);
 
   } else if (type === 'withdrawalCode') {
