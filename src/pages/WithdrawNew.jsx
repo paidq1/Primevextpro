@@ -264,32 +264,20 @@ export default function WithdrawNew() {
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Method: <strong>{methodLabel}</strong></div>
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
               <button onClick={() => setShowConfirm(false)} style={{ padding: '8px 20px', background: '#f1f5f9', border: 'none', color: '#555', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Cancel</button>
-              <button onClick={async () => {
+              <button onClick={() => {
                 setShowConfirm(false);
-                setSubmitting(true);
-                try {
-                  const payload = {
-                    amount: Number(amount),
-                    method: selectedMethod,
-                    ...(selectedMethod === 'crypto' && { coin, network, walletAddress }),
-                    ...(selectedMethod === 'cashapp' && { accountEmail }),
-                    ...(selectedMethod === 'paypal' && { accountEmail }),
-                    ...((selectedMethod === 'western_union' || selectedMethod === 'moneygram') && { receiverName, receiverAddress, receiverPhone }),
-                    ...(selectedMethod === 'bank' && { bankName, accountName, accountNumber, routingNumber }),
-                  };
-                  const res = await createWithdrawal(payload);
-                  if (res.transaction || res.success || res._id) {
-                    setShowSuccess(true);
-                  } else {
-                    setError(res.message || 'Withdrawal failed. Please try again.');
-                  }
-                } catch (err) {
-                  setError('Network error. Please check your connection.'); setTimeout(() => setError(''), 3000);
-                } finally {
-                  setSubmitting(false);
-                }
+                const payload = {
+                  amount: Number(amount),
+                  method: selectedMethod,
+                  ...(selectedMethod === 'crypto' && { coin, network, walletAddress }),
+                  ...(selectedMethod === 'cashapp' && { accountEmail }),
+                  ...(selectedMethod === 'paypal' && { accountEmail }),
+                  ...((selectedMethod === 'western_union' || selectedMethod === 'moneygram') && { receiverName, receiverAddress, receiverPhone }),
+                  ...(selectedMethod === 'bank' && { bankName, accountName, accountNumber, routingNumber }),
+                };
+                navigate('/dashboard/withdraw/verify-code', { state: payload });
               }} style={{ padding: '8px 20px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>
-                {submitting ? 'Processing...' : 'Confirm'}
+                Confirm
               </button>
             </div>
           </div>
