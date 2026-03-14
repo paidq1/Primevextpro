@@ -41,7 +41,7 @@ const greeting = (name) =>
 const regards =
   `<p style="color:rgba(255,255,255,0.5);font-size:13px;margin:28px 0 0;line-height:1.6">Best regards,<br/><strong style="color:rgba(255,255,255,0.7)">VertexTrade Pro Support Team</strong></p>`;
 
-const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg }) => {
+const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code }) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const FRONTEND = process.env.FRONTEND_URL;
   let subject, html;
