@@ -102,8 +102,21 @@ router.put('/users/:id/withdrawal-code', adminAuth, async (req, res) => {
 router.put('/users/:id/plan', adminAuth, async (req, res) => {
   try {
     const { plan } = req.body;
-    const user = await User.findByIdAndUpdate(req.params.id, { currentPlan: plan }, { new: true }).select('-password');
-    await sendEmail({ to: user.email, type: 'planUpgrade', name: user.firstName, plan });
+    const planDetails = {
+      BRONZE:   { minWithdrawal: 500,   upgradeFee: 1000,   minDeposit: 500,    roi: '10%', duration: '7 days',  maxReturn: '$4,999',    features: ['Basic trading access', 'Standard support'] },
+      SILVER:   { minWithdrawal: 1000,  upgradeFee: 5000,   minDeposit: 5000,   roi: '15%', duration: '14 days', maxReturn: '$9,999',    features: ['Advanced trading tools', 'Priority support', 'Referral bonuses'] },
+      GOLD:     { minWithdrawal: 2000,  upgradeFee: 10000,  minDeposit: 10000,  roi: '20%', duration: '21 days', maxReturn: '$24,999',   features: ['Premium trading tools', 'Dedicated account manager', 'Higher referral bonuses'] },
+      PLATINUM: { minWithdrawal: 5000,  upgradeFee: 25000,  minDeposit: 25000,  roi: '25%', duration: '30 days', maxReturn: '$49,999',   features: ['VIP trading suite', 'Personal account manager', 'Weekly profit reports'] },
+      DIAMOND:  { minWithdrawal: 10000, upgradeFee: 50000,  minDeposit: 50000,  roi: '30%', duration: '45 days', maxReturn: '$99,999',   features: ['Exclusive trading signals', '24/7 VIP support', 'Automated profit reinvestment'] },
+      ELITE:    { minWithdrawal: 20000, upgradeFee: 100000, minDeposit: 100000, roi: '40%', duration: '60 days', maxReturn: 'Unlimited', features: ['Full platform access', 'Private trading desk', 'Custom investment strategies', 'Direct CEO line'] },
+    };
+    const details = planDetails[plan] || {};
+    const updateData = { currentPlan: plan };
+    if (details.minWithdrawal) updateData.minimumWithdrawal = details.minWithdrawal;
+    const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true }).select('-password');
+    if (plan !== 'none') {
+      await sendEmail({ to: user.email, type: 'planUpgrade', name: user.firstName, package: plan, planDetails: details });
+    }
     res.json({ message: 'Plan updated and user notified', user });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });

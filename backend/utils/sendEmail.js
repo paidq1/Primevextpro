@@ -173,17 +173,33 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'planUpgrade') {
+    const pd = planDetails || {};
     subject = `Your Account Has Been Upgraded to ${pkg} - VertexTrade Pro`;
     html = baseTemplate(`
-      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Plan Upgrade Successful! 🎉</h2>
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Plan Upgrade Successful!</h2>
       <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your account has been upgraded</p>
       ${greeting(name)}
-      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Congratulations! Your account has been successfully upgraded to the <strong style="color:white">${pkg}</strong> plan. You now have access to all the benefits of your new plan.</p>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Congratulations! Your account has been successfully upgraded to the <strong style="color:white">${pkg}</strong> plan. Below are your plan details.</p>
       <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
         <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Current Plan</p>
         <p style="color:#6366f1;font-size:32px;font-weight:800;margin:0;letter-spacing:2px">${pkg}</p>
         <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">VertexTrade Pro Premium Member</p>
       </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:20px;margin:24px 0">
+        <p style="color:white;font-size:13px;font-weight:700;margin:0 0 14px;letter-spacing:0.3px">Plan Details</p>
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Upgrade Fee</td><td style="padding:8px 0;color:white;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${pd.upgradeFee?.toLocaleString() || 'N/A'}</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Minimum Deposit</td><td style="padding:8px 0;color:white;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${pd.minDeposit?.toLocaleString() || 'N/A'}</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Minimum Withdrawal</td><td style="padding:8px 0;color:white;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${pd.minWithdrawal?.toLocaleString() || 'N/A'}</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Daily ROI</td><td style="padding:8px 0;color:#22c55e;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">${pd.roi || 'N/A'}</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Duration</td><td style="padding:8px 0;color:white;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">${pd.duration || 'N/A'}</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Max Return</td><td style="padding:8px 0;color:#f59e0b;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">${pd.maxReturn || 'N/A'}</td></tr>
+        </table>
+      </div>
+      ${pd.features ? `<div style="background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.15);border-radius:10px;padding:20px;margin:24px 0">
+        <p style="color:white;font-size:13px;font-weight:700;margin:0 0 12px">Plan Features</p>
+        ${pd.features.map(f => `<p style="color:rgba(255,255,255,0.7);font-size:12px;margin:0 0 8px;padding-left:12px">✅ ${f}</p>`).join('')}
+      </div>` : ''}
       ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
       ${regards}`);
 
