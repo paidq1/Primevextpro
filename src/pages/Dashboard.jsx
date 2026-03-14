@@ -44,12 +44,12 @@ export default function Dashboard() {
 
   const u = dashData?.user || user || {};
   const stats = [
-    { label: 'Total Deposits', value: '+ USD ' + (u.totalDeposits || 0).toFixed(2), btc: 'BTC: 0.00', iconBg: '#6366f1', borderColor: '#6366f1', icon: <CreditCard size={14} color="#6366f1" /> },
-    { label: 'Account Balance', value: 'USD ' + (u.balance || 0).toFixed(2), btc: 'BTC: 0.00', iconBg: '#6366f1', borderColor: '#818cf8', icon: <Wallet size={14} color="#6366f1" /> },
-    { label: 'Total Profit', value: '+ USD ' + (u.totalProfit || 0).toFixed(2), btc: 'BTC: 0.00', iconBg: '#f59e0b', borderColor: '#f59e0b', icon: <TrendingUp size={14} color="#f59e0b" /> },
-    { label: 'Total Referrals', value: '+ USD ' + (u.totalReferrals || 0).toFixed(2), btc: 'BTC: 0.00', iconBg: '#22c55e', borderColor: '#22c55e', icon: <Users size={14} color="#22c55e" /> },
-    { label: 'Total Withdrawals', value: 'USD ' + (u.totalWithdrawals || 0).toFixed(2), btc: 'BTC: 0.00', iconBg: '#ec4899', borderColor: '#ec4899', icon: <ArrowDownCircle size={14} color="#ec4899" /> },
-    { label: 'Total Packages', value: '+ USD 0.00', btc: '0.0', iconBg: '#6366f1', borderColor: '#a78bfa', icon: <Package size={14} color="#6366f1" />, hasViewTrade: true },
+    { label: 'Total Deposits', value: '+ ' + formatAmount(u.totalDeposits || 0, u.currency), btc: 'BTC: 0.00', iconBg: '#6366f1', borderColor: '#6366f1', icon: <CreditCard size={14} color="#6366f1" /> },
+    { label: 'Account Balance', value: formatAmount(u.balance || 0, u.currency), btc: 'BTC: 0.00', iconBg: '#6366f1', borderColor: '#818cf8', icon: <Wallet size={14} color="#6366f1" /> },
+    { label: 'Total Profit', value: '+ ' + formatAmount(u.totalProfit || 0, u.currency), btc: 'BTC: 0.00', iconBg: '#f59e0b', borderColor: '#f59e0b', icon: <TrendingUp size={14} color="#f59e0b" /> },
+    { label: 'Total Referrals', value: '+ ' + formatAmount(u.totalReferrals || 0, u.currency), btc: 'BTC: 0.00', iconBg: '#22c55e', borderColor: '#22c55e', icon: <Users size={14} color="#22c55e" /> },
+    { label: 'Total Withdrawals', value: formatAmount(u.totalWithdrawals || 0, u.currency), btc: 'BTC: 0.00', iconBg: '#ec4899', borderColor: '#ec4899', icon: <ArrowDownCircle size={14} color="#ec4899" /> },
+    { label: 'Total Packages', value: '+ ' + formatAmount(u.totalPackages || 0, u.currency), btc: '0.0', iconBg: '#6366f1', borderColor: '#a78bfa', icon: <Package size={14} color="#6366f1" />, hasViewTrade: true },
   ];
 
   return (
@@ -143,7 +143,7 @@ export default function Dashboard() {
                   <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(8px, 2vw, 15px)', marginBottom: '6px' }}>{s.value}</div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div style={{ display: 'flex', gap: '4px' }}>
-                      <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-$0.00' : '$0.00'}</span>
+                      <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-' + getCurrencySymbol(u.currency) + '0.00' : getCurrencySymbol(u.currency) + '0.00'}</span>
                       <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '6px', padding: '1px 3px' }}>{s.btc}</span>
                     </div>
                     {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', cursor: 'pointer' }}>View Trade</button>}
