@@ -1013,6 +1013,12 @@ export default function AdminPanel() {
                       <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>
                         Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? '🔑 Active' : '🔑 Not Set'}</strong>
                       </div>
+                      {selectedUser.withdrawalCode && (
+                        <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(167,139,250,0.3)', borderRadius: '4px', padding: '8px', marginBottom: '8px', textAlign: 'center' }}>
+                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px', letterSpacing: '1px', textTransform: 'uppercase' }}>Current Code</div>
+                          <div style={{ color: '#a78bfa', fontSize: '16px', fontWeight: '800', letterSpacing: '4px' }}>{selectedUser.withdrawalCode}</div>
+                        </div>
+                      )}
                       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                         <button onClick={() => { setWithdrawalCode(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#a78bfa')}>{selectedUser.withdrawalCodeRequired ? 'Generate New Code' : 'Generate Code'}</button>
                         {selectedUser.withdrawalCodeRequired && <button onClick={() => { setWithdrawalCode(selectedUser._id, true); setSelectedUser(null); }} style={btnStyle('#64748b')}>Remove Code</button>}
