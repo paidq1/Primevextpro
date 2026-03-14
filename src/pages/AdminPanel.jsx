@@ -487,6 +487,24 @@ export default function AdminPanel() {
                       </div>
                     </td>
                     <td style={tdStyle}>
+                      {/* Status Indicators */}
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginBottom: '6px' }}>
+                        <span style={{ padding: '2px 6px', borderRadius: '10px', fontSize: '7px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.15)' : 'rgba(34,197,94,0.15)', color: u.isBlocked ? '#ef4444' : '#22c55e', border: `1px solid ${u.isBlocked ? '#ef4444' : '#22c55e'}` }}>
+                          {u.isBlocked ? '🔒 Blocked' : '✅ Active'}
+                        </span>
+                        <span style={{ padding: '2px 6px', borderRadius: '10px', fontSize: '7px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: u.accountUpgraded ? '#22c55e' : '#ef4444', border: `1px solid ${u.accountUpgraded ? '#22c55e' : '#ef4444'}` }}>
+                          {u.accountUpgraded ? '⬆ Upgraded' : '⬆ Not Upgraded'}
+                        </span>
+                        <span style={{ padding: '2px 6px', borderRadius: '10px', fontSize: '7px', fontWeight: '700', background: u.withdrawalBlocked ? 'rgba(239,68,68,0.15)' : 'rgba(34,197,94,0.15)', color: u.withdrawalBlocked ? '#ef4444' : '#22c55e', border: `1px solid ${u.withdrawalBlocked ? '#ef4444' : '#22c55e'}` }}>
+                          {u.withdrawalBlocked ? '💸 W. Blocked' : '💸 W. Allowed'}
+                        </span>
+                        <span style={{ padding: '2px 6px', borderRadius: '10px', fontSize: '7px', fontWeight: '700', background: u.withdrawalCodeRequired ? 'rgba(167,139,250,0.15)' : 'rgba(100,116,139,0.15)', color: u.withdrawalCodeRequired ? '#a78bfa' : '#64748b', border: `1px solid ${u.withdrawalCodeRequired ? '#a78bfa' : '#64748b'}` }}>
+                          {u.withdrawalCodeRequired ? '🔑 Code Required' : '🔑 No Code'}
+                        </span>
+                        <span style={{ padding: '2px 6px', borderRadius: '10px', fontSize: '7px', fontWeight: '700', background: 'rgba(14,165,233,0.15)', color: '#0ea5e9', border: '1px solid #0ea5e9' }}>
+                          Min W: ${u.minimumWithdrawal || 100}
+                        </span>
+                      </div>
                       <button onClick={() => loadUserDetails(u)} style={btnStyle('#818cf8')}>View</button>
                       <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={btnStyle('#6366f1')}>Email</button>
                       <button onClick={() => generateResetLink(u._id, u.firstName + ' ' + u.lastName)} style={btnStyle('#f59e0b')}>Reset PW</button>
