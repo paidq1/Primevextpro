@@ -11,6 +11,17 @@ const currencyMap = {
   'Chinese Yuan (CNY)':     { symbol: '¥',  code: 'CNY', rate: 7.24 },
 };
 
+export const getCurrencyCode = (currency) => {
+  return currencyMap[currency]?.code || 'USD';
+};
+
+export const formatAmountWithCode = (amountUSD, currency) => {
+  const code = currencyMap[currency]?.code || 'USD';
+  const rate = currencyMap[currency]?.rate || 1;
+  const converted = (amountUSD * rate).toFixed(2);
+  return `${code} ${Number(converted).toLocaleString()}`;
+};
+
 export const getCurrencySymbol = (currency) => {
   return currencyMap[currency]?.symbol || '$';
 };
