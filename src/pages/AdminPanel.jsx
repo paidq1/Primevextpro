@@ -503,6 +503,9 @@ export default function AdminPanel() {
                         <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9' }}>
                           Min: ${u.minimumWithdrawal || 100}
                         </span>
+                        <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', background: 'rgba(99,102,241,0.2)', color: '#6366f1' }}>
+                          Plan: {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : 'None'}
+                        </span>
                       </div>
                     </td>
                     <td style={{ ...tdStyle, color: u.isBlocked ? '#ef4444' : '#22c55e' }}>{u.isBlocked ? 'Blocked' : 'Active'}</td>
@@ -985,7 +988,7 @@ export default function AdminPanel() {
                     {/* Plan Upgrade */}
                     <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '8px' }}>
-                        Current Plan: <strong style={{ color: '#6366f1' }}>{selectedUser.currentPlan || 'None'}</strong>
+                        Current Plan: <strong style={{ color: selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? '#22c55e' : '#64748b' }}>{selectedUser.currentPlan && selectedUser.currentPlan !== 'none' ? selectedUser.currentPlan : 'No Plan'}</strong>
                       </div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                         {['BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND', 'ELITE'].map(plan => (
@@ -993,7 +996,7 @@ export default function AdminPanel() {
                             await api(`/users/${selectedUser._id}/plan`, 'PUT', { plan });
                             setSelectedUser({ ...selectedUser, currentPlan: plan });
                             showMsg(`User upgraded to ${plan} — email sent!`);
-                          }} style={{ ...btnStyle(selectedUser.currentPlan === plan ? '#22c55e' : '#6366f1'), fontSize: '7px', opacity: selectedUser.currentPlan === plan ? 1 : 0.7 }}>
+                          }} style={{ ...btnStyle(selectedUser.currentPlan === plan ? '#22c55e' : '#4b5563'), fontSize: '7px', opacity: selectedUser.currentPlan === plan ? 1 : 0.7 }}>
                             {selectedUser.currentPlan === plan ? '✓ ' : ''}{plan}
                           </button>
                         ))}
