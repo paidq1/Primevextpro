@@ -142,7 +142,7 @@ export default function LiveTrading() {
               { label: 'Total Trades', value: stats.totalTrades ?? 0, color: 'white' },
               { label: 'Wins', value: stats.wins ?? 0, color: '#22c55e' },
               { label: 'Losses', value: stats.losses ?? 0, color: '#ef4444' },
-              { label: 'Net P&L', value: `$${parseFloat(stats.netProfitLoss ?? 0).toFixed(2)}`, color: parseFloat(stats.netProfitLoss) >= 0 ? '#22c55e' : '#ef4444' },
+              { label: 'Net P&L', value: formatAmount(parseFloat(stats.netProfitLoss ?? 0), user?.currency), color: parseFloat(stats.netProfitLoss) >= 0 ? '#22c55e' : '#ef4444' },
               { label: 'ROI', value: `${parseFloat(stats.roi ?? 0).toFixed(1)}%`, color: parseFloat(stats.roi) >= 0 ? '#22c55e' : '#ef4444' },
             ].map(s => (
               <div key={s.label} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '6px 10px', textAlign: 'center' }}>

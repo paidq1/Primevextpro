@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getBots } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import DashboardSidebar from '../components/DashboardSidebar';
 
 const botColors = {
@@ -75,7 +76,7 @@ export default function BotTransactionHistory() {
           {[
             ['Active Bots', activeBots.length, '#22c55e'],
             ['Total Bots', bots.length, '#6366f1'],
-            ['Total Earned', `$${totalEarned.toFixed(2)}`, '#f59e0b'],
+            ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
             ['Total Invested', `$${totalInvested.toLocaleString()}`, '#ec4899'],
           ].map(([l,v,c]) => (
             <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: `1px solid ${c}30` }}>
@@ -107,7 +108,7 @@ export default function BotTransactionHistory() {
                     {[
                       ['Invested', `$${b.amount?.toLocaleString()}`, 'white'],
                       ['Daily Rate', b.dailyRate, '#22c55e'],
-                      ['Earned', `$${(b.earned||0).toFixed(2)}`, '#f59e0b'],
+                      ['Earned', formatAmount((b.earned||0), user?.currency), '#f59e0b'],
                       ['Days Left', daysLeft, 'white'],
                     ].map(([l,v,c]) => (
                       <div key={l} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.04)', padding: '6px' }}>

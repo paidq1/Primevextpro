@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import { getDashboard, getTransactions } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -101,7 +102,7 @@ export default function Dashboard() {
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '3px', alignItems: 'center' }}>
             <button style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: 'clamp(6px, 1.5vw, 13px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
-            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: 'clamp(6px, 1.5vw, 13px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><RefreshCw size={9}/> ${(u.balance || 0).toFixed(2)}</button>
+            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: 'clamp(6px, 1.5vw, 13px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><RefreshCw size={9}/> {formatAmount(u.balance || 0, u.currency)}</button>
             <div onClick={() => navigate('/dashboard/profile')} style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {u.avatar ? <img src={u.avatar} style={{ width: '24px', height: '24px', objectFit: 'cover' }} /> : <User size={13} color="white" />}
             </div>
@@ -183,7 +184,7 @@ export default function Dashboard() {
                   <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No data available in table</div>
                 ) : transactions.slice(0, 10).map((t, i) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <span style={{ color: t.type === 'withdrawal' ? '#ef4444' : '#22c55e', fontSize: '8px', fontWeight: '700' }}>{t.type === 'withdrawal' ? '-' : '+'}${t.amount?.toFixed(2)}</span>
+                    <span style={{ color: t.type === 'withdrawal' ? '#ef4444' : '#22c55e', fontSize: '8px', fontWeight: '700' }}>{t.type === 'withdrawal' ? '-' : '+'}{formatAmount(t.amount || 0, u.currency)}</span>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>{new Date(t.createdAt).toLocaleDateString()}</span>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px', textTransform: 'capitalize' }}>{t.method || '---'}</span>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px', textTransform: 'capitalize' }}>{t.type}</span>

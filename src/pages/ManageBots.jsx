@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import DashboardSidebar from '../components/DashboardSidebar';
 
 const BASE_URL = 'https://vertextrades.onrender.com/api';
@@ -110,7 +111,7 @@ export default function ManageBots() {
           {[
             ['Active Bots', activeCount, '#22c55e'],
             ['Total Bots', activeBots.length, '#6366f1'],
-            ['Total Earned', `$${totalEarned.toFixed(2)}`, '#f59e0b'],
+            ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
           ].map(([l,v,c]) => (
             <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
@@ -142,7 +143,7 @@ export default function ManageBots() {
                     {[
                       ['Invested', `$${(b.amount||0).toLocaleString()}`, 'white'],
                       ['Daily Rate', b.dailyRate, '#22c55e'],
-                      ['Earned', `$${earned.toFixed(2)}`, '#f59e0b'],
+                      ['Earned', formatAmount(earned, user?.currency), '#f59e0b'],
                       ['ROI', `${roi}%`, parseFloat(roi) >= 0 ? '#22c55e' : '#ef4444'],
                     ].map(([l,v,col]) => (
                       <div key={l} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.04)', padding: '6px' }}>
@@ -189,8 +190,8 @@ export default function ManageBots() {
                 {[
                   ['Daily Return', bot.dailyRate, '#22c55e'],
                   ['Duration', bot.duration, 'white'],
-                  ['Daily Profit', `+$${dailyProfit}`, '#22c55e'],
-                  ['Total Profit', `+$${totalProfit}`, '#f59e0b'],
+                  ['Daily Profit', `+${getCurrencySymbol(user?.currency)}dailyProfit`, '#22c55e'],
+                  ['Total Profit', `+${getCurrencySymbol(user?.currency)}totalProfit`, '#f59e0b'],
                 ].map(([l,v,c]) => (
                   <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '3px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{l}</span>
@@ -224,7 +225,7 @@ export default function ManageBots() {
               ['Daily Return', confirmBot.dailyRate],
               ['Duration', confirmBot.duration],
               ['Your Balance', `$${user?.balance?.toFixed(2) || '0.00'}`],
-              ['Balance After', `$${((user?.balance || 0) - confirmBot.amount).toFixed(2)}`],
+              ['Balance After', formatAmount(((user?.balance || 0) - confirmBot.amount), user?.currency)],
             ].map(([l,v]) => (
               <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                 <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{l}</span>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { createDeposit, getDeposits, createWithdrawal, getWithdrawals } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 
 export default function WithdrawDeposit() {
   const navigate = useNavigate();

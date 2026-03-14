@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Copy } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { useAuth } from '../context/AuthContext';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 
 export default function Deposit() {
   const navigate = useNavigate();

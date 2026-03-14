@@ -51,8 +51,8 @@ export default function Stake() {
   const handleSubmit = async () => {
     if (!selectedPlan) { setError('Please select a staking plan.'); return; }
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
-    if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} plan is $${selectedPlan.min}.`); return; }
-    if (selectedPlan.max && Number(amount) > selectedPlan.max) { setError(`Maximum stake for ${selectedPlan.name} plan is $${selectedPlan.max}.`); return; }
+    if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} plan is ${getCurrencySymbol(user?.currency)}selectedPlan.min.`); return; }
+    if (selectedPlan.max && Number(amount) > selectedPlan.max) { setError(`Maximum stake for ${selectedPlan.name} plan is ${getCurrencySymbol(user?.currency)}selectedPlan.max.`); return; }
     setError('');
     setSubmitting(true);
     try {
@@ -125,8 +125,8 @@ export default function Stake() {
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-          {statCard(<Lock size={16} color='#6366f1'/>, 'Total Staked', `$${totalStaked.toFixed(2)}`, '#6366f1')}
-          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Earned', `$${totalEarned.toFixed(2)}`, '#22c55e')}
+          {statCard(<Lock size={16} color='#6366f1'/>, 'Total Staked', formatAmount(totalStaked, user?.currency), '#6366f1')}
+          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Earned', formatAmount(totalEarned, user?.currency), '#22c55e')}
         </div>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
           {statCard(<TrendingUp size={16} color='#f59e0b'/>, 'Active Stakes', String(stakes.filter(s=>s.status==='active').length), '#f59e0b')}
@@ -170,7 +170,7 @@ export default function Stake() {
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>Amount to Stake (USD)</label>
               <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '4px' }}>Available Balance: <span style={{ color: '#22c55e', fontWeight: '700' }}>${balance.toFixed(2)}</span></div>
-              <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={selectedPlan ? `Min $${selectedPlan.min}` : '0.00'} style={inputStyle} />
+              <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={selectedPlan ? `Min ${getCurrencySymbol(user?.currency)}selectedPlan.min` : '0.00'} style={inputStyle} />
             </div>
 
             <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>

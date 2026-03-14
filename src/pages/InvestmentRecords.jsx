@@ -75,8 +75,8 @@ export default function InvestmentRecords() {
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-          {statCard(<TrendingUp size={16} color='#6366f1'/>, 'Total Invested', `$${totalInvested.toFixed(2)}`, '#6366f1')}
-          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Returns', `$${totalReturns.toFixed(2)}`, '#22c55e')}
+          {statCard(<TrendingUp size={16} color='#6366f1'/>, 'Total Invested', formatAmount(totalInvested, user?.currency), '#6366f1')}
+          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Returns', formatAmount(totalReturns, user?.currency), '#22c55e')}
         </div>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
           {statCard(<Clock size={16} color='#f59e0b'/>, 'Active Investments', String(activeCount), '#f59e0b')}
