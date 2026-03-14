@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
 import { useNavigate } from 'react-router-dom';
 import { Copy, Users, DollarSign, Gift } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';

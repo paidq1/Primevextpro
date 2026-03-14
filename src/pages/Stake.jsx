@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
 import { getStakes } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';

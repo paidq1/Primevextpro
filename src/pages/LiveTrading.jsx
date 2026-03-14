@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { getTrades, createTrade } from '../services/api';
