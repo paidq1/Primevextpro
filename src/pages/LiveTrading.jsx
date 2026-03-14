@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { getTrades, createTrade } from '../services/api';
@@ -16,6 +17,7 @@ const SYMBOLS = [
 const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes','15 minutes','30 minutes','1 hour'];
 
 export default function LiveTrading() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [balance, setBalance] = useState(null);
