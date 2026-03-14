@@ -123,6 +123,19 @@ router.put('/users/:id/plan', adminAuth, async (req, res) => {
   }
 });
 
+// Send registration fee email
+router.post('/users/:id/send-registration-fee', adminAuth, async (req, res) => {
+  try {
+    const { amount } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    await sendEmail({ to: user.email, type: 'registrationFee', name: user.firstName, amount });
+    res.json({ message: 'Registration fee email sent' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Send upgrade promo email
 router.post('/users/:id/send-upgrade-promo', adminAuth, async (req, res) => {
   try {

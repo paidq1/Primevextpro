@@ -178,6 +178,33 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       </div>
       ${regards}`);
 
+  } else if (type === 'registrationFee') {
+    subject = 'Complete Your Account Setup at VertexTrade Pro';
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Complete Your Account Setup</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">One-time registration fee required</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Welcome to VertexTrade Pro! We're excited to have you join our trading community.</p>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">To activate your account and gain full access to all trading features, a one-time registration fee of <strong style="color:#f59e0b;font-size:16px">$${amount}</strong> is required. This ensures your account is fully verified and ready for trading.</p>
+      
+      <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:24px;margin:24px 0">
+        <p style="color:white;font-size:14px;font-weight:700;margin:0 0 16px">How to Proceed</p>
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">01</span>Contact our Support Team for payment instructions</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">02</span>Complete the payment of <strong style="color:#f59e0b">$${amount}</strong> using the method provided</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.7);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)"><span style="color:#6366f1;font-weight:700;margin-right:10px">03</span>Your account will be activated immediately after confirmation</td></tr>
+        </table>
+      </div>
+
+      <div style="background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.15);border-radius:10px;padding:16px;margin:24px 0">
+        <p style="color:rgba(255,255,255,0.6);font-size:12px;margin:0;line-height:1.7">🔒 Please rest assured that the registration process is secure and standard for all new users. Our team is here to guide you step by step to ensure a smooth experience.</p>
+      </div>
+
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">If you have any questions or need assistance, don't hesitate to reach out to Support.</p>
+      ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
+      <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:16px 0 0;text-align:center;line-height:1.7">Thank you for choosing VertexTrade Pro — we look forward to supporting your trading journey!</p>
+      ${regards}`);
+
   } else if (type === 'upgradePromo') {
     subject = 'Upgrade Your Account & Unlock Exclusive Benefits at VertexTrade Pro';
     html = baseTemplate(`

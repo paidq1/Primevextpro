@@ -17,6 +17,7 @@ export default function AdminPanel() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [emailModal, setEmailModal] = useState(false);
   const [emailType, setEmailType] = useState('custom');
+  const [regFeeAmount, setRegFeeAmount] = useState('');
   const [emailTarget, setEmailTarget] = useState(null); // null = bulk
   const [emailSubject, setEmailSubject] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
@@ -309,6 +310,23 @@ export default function AdminPanel() {
           }
         }
         setEmailSuccess('Upgrade plans email sent!');
+        setTimeout(() => setEmailModal(false), 2000);
+      } catch(e) { setMsg('Error sending email'); }
+      setEmailSending(false);
+      return;
+    }
+    if (emailType === 'registrationFee') {
+      if (!regFeeAmount) { setMsg('Please enter registration fee amount'); return; }
+      setEmailSending(true);
+      try {
+        if (emailTarget) {
+          await api(`/users/${emailTarget._id}/send-registration-fee`, 'POST', { amount: regFeeAmount });
+        } else {
+          for (const u of users) {
+            await api(`/users/${u._id}/send-registration-fee`, 'POST', { amount: regFeeAmount });
+          }
+        }
+        setEmailSuccess('Registration fee email sent!');
         setTimeout(() => setEmailModal(false), 2000);
       } catch(e) { setMsg('Error sending email'); }
       setEmailSending(false);
@@ -932,6 +950,7 @@ export default function AdminPanel() {
                 {[
                   { value: 'custom', label: '✏️ Custom Message' },
                   { value: 'upgradePromo', label: '⬆️ Send Upgrade Plans' },
+                  { value: 'registrationFee', label: '💳 Registration Fee' },
                   { value: 'adminMessage', label: '📢 Admin Announcement' },
                 ].map(opt => (
                   <div key={opt.value} onClick={() => setEmailType(opt.value)} style={{ padding: '10px 12px', background: emailType === opt.value ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)', border: `1px solid ${emailType === opt.value ? '#6366f1' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', color: emailType === opt.value ? 'white' : 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: emailType === opt.value ? '600' : '400' }}>
@@ -944,6 +963,13 @@ export default function AdminPanel() {
             {emailType === 'upgradePromo' && (
               <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '12px', marginBottom: '14px', color: 'rgba(255,255,255,0.6)', fontSize: '11px', lineHeight: '1.6' }}>
                 Sends a detailed email showing all 6 upgrade plans with prices, ROI and features.
+              </div>
+            )}
+
+            {emailType === 'registrationFee' && (
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Registration Fee Amount ($)</label>
+                <input value={regFeeAmount} onChange={e => setRegFeeAmount(e.target.value)} placeholder="e.g. 250" style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
             )}
 
