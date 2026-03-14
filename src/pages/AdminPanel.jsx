@@ -488,22 +488,22 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: u.kycStatus === 'approved' ? '#22c55e' : u.kycStatus === 'submitted' ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}>{u.kycStatus || 'none'}</td>
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                        <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>
                           {u.isBlocked ? '🔒 Blocked' : '✅ Active'}
                         </span>
-                        <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)', color: u.accountUpgraded ? '#22c55e' : '#ef4444' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)', color: u.accountUpgraded ? '#22c55e' : '#ef4444' }}>
                           {u.accountUpgraded ? '⬆ Upgraded' : '⬆ Not Upgraded'}
                         </span>
-                        <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', fontWeight: '700', background: u.withdrawalBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.withdrawalBlocked ? '#ef4444' : '#22c55e' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.withdrawalBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.withdrawalBlocked ? '#ef4444' : '#22c55e' }}>
                           {u.withdrawalBlocked ? '💸 W.Blocked' : '💸 W.Allowed'}
                         </span>
-                        <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', fontWeight: '700', background: u.withdrawalCodeRequired ? 'rgba(167,139,250,0.2)' : 'rgba(100,116,139,0.2)', color: u.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.withdrawalCodeRequired ? 'rgba(167,139,250,0.2)' : 'rgba(100,116,139,0.2)', color: u.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>
                           {u.withdrawalCodeRequired ? '🔑 Code On' : '🔑 Code Off'}
                         </span>
-                        <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', background: 'rgba(14,165,233,0.2)', color: '#0ea5e9' }}>
                           Min: ${u.minimumWithdrawal || 100}
                         </span>
-                        <span style={{ padding: '2px 5px', borderRadius: '4px', fontSize: '7px', background: 'rgba(99,102,241,0.2)', color: '#6366f1' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', background: 'rgba(99,102,241,0.2)', color: '#6366f1' }}>
                           Plan: {u.currentPlan && u.currentPlan !== 'none' ? u.currentPlan : 'None'}
                         </span>
                       </div>
