@@ -57,7 +57,7 @@ export default function Deposit() {
   };
 
   const handleSubmit = async () => {
-    if (!amount || isNaN(amount) || Number(amount) < 10) { setError('Minimum deposit is $10.'); return; }
+    if (!amount || isNaN(amount) || Number(amount) < 10) { setError(`Minimum deposit is ${getCurrencySymbol(user?.currency)}10.`); return; }
     if (!fileData) { setError('Please upload payment proof.'); return; }
     setError('');
     setSubmitting(true);
@@ -143,7 +143,7 @@ export default function Deposit() {
                 </div>
                 <div style={{ marginBottom: '12px' }}>
                   <label style={labelStyle}>Amount (USD)</label>
-                  <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min. $10.00' style={inputStyle}/>
+                  <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={`Min. ${getCurrencySymbol(user?.currency)}10.00`} style={inputStyle}/>
                 </div>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={labelStyle}>Payment Proof</label>
@@ -198,7 +198,7 @@ export default function Deposit() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
           <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '8px 14px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Available Balance</div>
-            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${(user?.balance || 0).toFixed(2)}</div>
+            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(user?.balance || 0, user?.currency)}</div>
           </div>
           <button onClick={() => navigate('/dashboard/deposit-funds')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Deposit</button>
         </div>
@@ -234,7 +234,7 @@ export default function Deposit() {
                 <tr><td colSpan={4} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No deposits found</td></tr>
               ) : filtered.map((d, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
-                  <td style={{ padding: '8px 10px', color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>+${d.amount?.toFixed(2)}</td>
+                  <td style={{ padding: '8px 10px', color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(d.amount || 0, user?.currency)}</td>
                   <td style={{ padding: '8px 10px', color: 'rgba(255,255,255,0.6)', fontSize: '8px', textTransform: 'capitalize' }}>{d.method || 'crypto'}</td>
                   <td style={{ padding: '8px 10px' }}>
                     <span style={{ background: statusColor(d.status) + '20', color: statusColor(d.status), fontSize: '7px', padding: '2px 6px', display: 'inline-block' }}>{statusLabel(d.status)}</span>
