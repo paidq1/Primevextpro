@@ -105,7 +105,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Great news! Your deposit has been reviewed and approved. The funds are now available in your account.</p>
       <div style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(16,185,129,0.08));border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
         <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Amount Credited</p>
-        <p style="color:#22c55e;font-size:38px;font-weight:800;margin:0;letter-spacing:-0.5px">${currency || '$'}${amount}</p>
+        <p style="color:#22c55e;font-size:38px;font-weight:800;margin:0;letter-spacing:-0.5px">${currSymbol}${amount}</p>
         <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">Available in your wallet</p>
       </div>
       ${btn(`${FRONTEND}/dashboard`, 'View My Balance')}
@@ -117,7 +117,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Deposit Update</h2>
       <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Action required</p>
       ${greeting(name)}
-      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Unfortunately, we were unable to process your deposit of <strong style="color:white">${currency || '$'}${amount}</strong> at this time.</p>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Unfortunately, we were unable to process your deposit of <strong style="color:white">${currSymbol}${amount}</strong> at this time.</p>
       ${reason ? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:20px;margin:24px 0"><p style="color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 8px">Reason</p><p style="color:#fca5a5;margin:0;font-size:14px;line-height:1.6">${reason}</p></div>` : ''}
       <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Please try again or contact our support team if you need assistance.</p>
       ${btn(`${FRONTEND}/dashboard/deposit`, 'Try Again')}
@@ -132,7 +132,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Your withdrawal request has been approved and is now being processed. Funds will be sent to your wallet shortly.</p>
       <div style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(16,185,129,0.08));border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
         <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Amount Withdrawn</p>
-        <p style="color:#22c55e;font-size:38px;font-weight:800;margin:0;letter-spacing:-0.5px">${currency || '$'}${amount}</p>
+        <p style="color:#22c55e;font-size:38px;font-weight:800;margin:0;letter-spacing:-0.5px">${currSymbol}${amount}</p>
         <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">Expected delivery: within 24 hours</p>
       </div>
       ${btn(`${FRONTEND}/dashboard`, 'View Dashboard')}
@@ -144,7 +144,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Withdrawal Update</h2>
       <p style="color:#ef4444;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Action required</p>
       ${greeting(name)}
-      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Unfortunately, your withdrawal of <strong style="color:white">${currency || '$'}${amount}</strong> could not be processed at this time.</p>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Unfortunately, your withdrawal of <strong style="color:white">${currSymbol}${amount}</strong> could not be processed at this time.</p>
       ${reason ? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:20px;margin:24px 0"><p style="color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 8px">Reason</p><p style="color:#fca5a5;margin:0;font-size:14px;line-height:1.6">${reason}</p></div>` : ''}
       <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Your funds have been returned to your account balance. Please contact support if you have any questions.</p>
       ${btn(`${FRONTEND}/dashboard`, 'View Dashboard')}
