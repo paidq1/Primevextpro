@@ -478,8 +478,8 @@ export default function AdminPanel() {
                       <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
                         {[["totalDeposits","Deposits"],["totalWithdrawals","Withdrawals"],["totalProfit","Profit"],["totalReferrals","Referrals"],["totalPackages","Packages"]].map(([field, label]) => (
                           <div key={field} style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "6px", width: "55px" }}>{label}:</span>
-                            <input type="number" placeholder={u[field]?.toFixed(2) ?? "0"} value={editStats[u._id]?.[field] ?? ""} onChange={e => setEditStats(p => ({ ...p, [u._id]: { ...p[u._id], [field]: e.target.value } }))} style={{ width: "55px", background: "#374151", border: "none", color: "white", fontSize: "6px", padding: "2px 4px" }} />
+                            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "10px", width: "70px" }}>{label}:</span>
+                            <input type="number" placeholder={u[field]?.toFixed(2) ?? "0"} value={editStats[u._id]?.[field] ?? ""} onChange={e => setEditStats(p => ({ ...p, [u._id]: { ...p[u._id], [field]: e.target.value } }))} style={{ width: "80px", background: "#374151", border: "none", color: "white", fontSize: "10px", padding: "4px 6px" }} />
                           </div>
                         ))}
                         <button onClick={() => updateUserStats(u._id)} style={{ ...btnStyle("#22c55e"), marginTop: "3px" }}>Update</button>
