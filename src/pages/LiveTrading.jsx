@@ -201,7 +201,7 @@ export default function LiveTrading() {
                       <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr', padding: '7px 6px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
                         <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{t.symbol}</span>
                         <span style={{ color: t.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{t.type || '—'}</span>
-                        <span style={{ color: 'white', fontSize: '8px' }}>${parseFloat(t.amount).toLocaleString()}</span>
+                        <span style={{ color: 'white', fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</span>
                         <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{t.duration}</span>
                         <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{t.leverage}</span>
                         <span style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontSize: '7px', padding: '2px 6px', textTransform: 'uppercase', display: 'inline-block' }}>{t.status}</span>
@@ -211,8 +211,8 @@ export default function LiveTrading() {
                       <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', padding: '7px 6px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
                         <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{t.symbol}</span>
                         <span style={{ color: t.type === 'buy' ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700', textTransform: 'uppercase' }}>{t.type || '—'}</span>
-                        <span style={{ color: 'white', fontSize: '8px' }}>${parseFloat(t.amount).toLocaleString()}</span>
-                        <span style={{ color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.result != null ? `${t.result > 0 ? '+' : ''}$${parseFloat(t.result).toFixed(2)}` : '—'}</span>
+                        <span style={{ color: 'white', fontSize: '8px' }}>{formatAmount(parseFloat(t.amount), user?.currency)}</span>
+                        <span style={{ color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.result != null ? formatAmount(parseFloat(t.result), user?.currency) : '—'}</span>
                         <span style={{ color: t.result > 0 ? '#22c55e' : '#ef4444', fontSize: '8px', fontWeight: '700' }}>{t.amount ? `${((t.result / t.amount) * 100).toFixed(1)}%` : '—'}</span>
                         <span style={{ background: 'rgba(107,114,128,0.1)', color: '#9ca3af', fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize', display: 'inline-block' }}>{t.status}</span>
                       </div>

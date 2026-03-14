@@ -114,7 +114,7 @@ export default function InvestmentRecords() {
           ) : filtered.slice(0, show).map((inv, i) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
               <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
-              <span style={{ color: 'white', fontSize: '8px' }}>${inv.amount?.toFixed(2)}</span>
+              <span style={{ color: 'white', fontSize: '8px' }}>{formatAmount(inv.amount || 0, user?.currency)}</span>
               <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
               <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
               <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{inv.expiresAt ? new Date(inv.expiresAt).toLocaleDateString() : '—'}</span>
