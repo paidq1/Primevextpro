@@ -92,8 +92,20 @@ router.put('/users/:id/withdrawal-code', adminAuth, async (req, res) => {
       { withdrawalCode, withdrawalCodeRequired },
       { new: true }
     ).select('-password');
-    await sendEmail({ to: user.email, type: 'withdrawalCode', name: user.firstName, code: withdrawalCode });
-    res.json({ message: 'Withdrawal code set and emailed to user', user });
+    res.json({ message: 'Withdrawal code set successfully', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Send withdrawal code email
+router.post('/users/:id/send-withdrawal-code', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user.withdrawalCode) return res.status(400).json({ message: 'No withdrawal code set for this user' });
+    await sendEmail({ to: user.email, type: 'withdrawalCode', name: user.firstName, code: user.withdrawalCode });
+    res.json({ message: 'Withdrawal code sent successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }

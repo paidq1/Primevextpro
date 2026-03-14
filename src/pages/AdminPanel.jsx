@@ -250,6 +250,11 @@ export default function AdminPanel() {
     showMsg('Withdrawal code generated and emailed: ' + code);
   };
 
+  const sendWithdrawalCode = async (id, email, name) => {
+    await api(`/users/${id}/send-withdrawal-code`, 'POST');
+    showMsg('Withdrawal code sent to ' + email);
+  };
+
   const setMinWithdrawal = async (id) => {
     const amount = window.prompt('Set minimum withdrawal amount:');
     if (!amount || isNaN(amount)) return;
@@ -516,10 +521,6 @@ export default function AdminPanel() {
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
                       <button onClick={() => toggleWithdrawalBlock(u._id)} style={btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316')}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
                       <button onClick={() => toggleAccountUpgrade(u._id)} style={btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e')}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
-                      <button onClick={() => setWithdrawalCode(u._id)} style={btnStyle('#a78bfa')}>{u.withdrawalCodeRequired ? '🔑 New Code' : '🔑 Gen Code'}</button>
-                      {u.withdrawalCodeRequired && <button onClick={() => setWithdrawalCode(u._id, true)} style={btnStyle('#64748b')}>Remove Code</button>}
-                      <button onClick={() => setMinWithdrawal(u._id)} style={btnStyle('#0ea5e9')}>Min W.</button>
-                      <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
                   </tr>
                 ))}
@@ -976,6 +977,45 @@ export default function AdminPanel() {
                     </div>
                   ))}
                 </div>
+                {/* Advanced Controls */}
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Advanced Controls</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    
+                    {/* Withdrawal Code */}
+                    <div style={{ background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: '6px', padding: '10px' }}>
+                      <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>
+                        Withdrawal Code: <strong style={{ color: selectedUser.withdrawalCodeRequired ? '#a78bfa' : '#64748b' }}>{selectedUser.withdrawalCodeRequired ? '🔑 Active' : '🔑 Not Set'}</strong>
+                      </div>
+                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                        <button onClick={() => { setWithdrawalCode(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#a78bfa')}>{selectedUser.withdrawalCodeRequired ? 'Generate New Code' : 'Generate Code'}</button>
+                        {selectedUser.withdrawalCodeRequired && <button onClick={() => { setWithdrawalCode(selectedUser._id, true); setSelectedUser(null); }} style={btnStyle('#64748b')}>Remove Code</button>}
+                      </div>
+                      <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '6px' }}>Code will be emailed to user when you click Send Code below</div>
+                    </div>
+
+                    {/* Send Code Button */}
+                    {selectedUser.withdrawalCodeRequired && (
+                      <button onClick={() => { sendWithdrawalCode(selectedUser._id, selectedUser.email, selectedUser.firstName); setSelectedUser(null); }} style={{ ...btnStyle('#6366f1'), width: '100%', padding: '8px' }}>
+                        📧 Send Code to {selectedUser.email}
+                      </button>
+                    )}
+
+                    {/* Min Withdrawal */}
+                    <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: '6px', padding: '10px' }}>
+                      <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>
+                        Min Withdrawal: <strong style={{ color: '#0ea5e9' }}>${selectedUser.minimumWithdrawal || 100}</strong>
+                      </div>
+                      <button onClick={() => { setMinWithdrawal(selectedUser._id); setSelectedUser(null); }} style={btnStyle('#0ea5e9')}>Change Min Withdrawal</button>
+                    </div>
+
+                    {/* Delete */}
+                    <button onClick={() => deleteUser(selectedUser._id)} style={{ ...btnStyle('#ef4444'), width: '100%', padding: '8px' }}>
+                      🗑 Delete User Account
+                    </button>
+                  </div>
+                </div>
+
                 <div style={{ marginBottom: '14px' }}>
                   <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Financials</div>
                   {[
