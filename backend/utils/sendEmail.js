@@ -184,7 +184,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
         <p style="color:white;font-size:36px;font-weight:800;margin:0;letter-spacing:8px">${code}</p>
         <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">Keep this code safe and do not share it with anyone</p>
       </div>
-      ${btn(\`\${FRONTEND}/dashboard/withdraw\`, 'Withdraw Now')}
+      ${btn(`${FRONTEND}/dashboard/withdraw`, 'Withdraw Now')}
       <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin:24px 0">
         <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;line-height:1.6">🔒 Never share this code with anyone including VertexTrade Pro staff.<br/>⚠️ If you did not request this, please contact support immediately.</p>
       </div>
