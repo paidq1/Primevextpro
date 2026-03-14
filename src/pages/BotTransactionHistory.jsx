@@ -77,7 +77,7 @@ export default function BotTransactionHistory() {
             ['Active Bots', activeBots.length, '#22c55e'],
             ['Total Bots', bots.length, '#6366f1'],
             ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
-            ['Total Invested', `$${totalInvested.toLocaleString()}`, '#ec4899'],
+            ['Total Invested', formatAmount(totalInvested, user?.currency), '#ec4899'],
           ].map(([l,v,c]) => (
             <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: `1px solid ${c}30` }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
@@ -106,7 +106,7 @@ export default function BotTransactionHistory() {
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '8px', marginBottom: '10px' }}>
                     {[
-                      ['Invested', `$${b.amount?.toLocaleString()}`, 'white'],
+                      ['Invested', formatAmount(b.amount || 0, user?.currency), 'white'],
                       ['Daily Rate', b.dailyRate, '#22c55e'],
                       ['Earned', formatAmount((b.earned||0), user?.currency), '#f59e0b'],
                       ['Days Left', daysLeft, 'white'],

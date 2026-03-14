@@ -141,7 +141,7 @@ export default function ManageBots() {
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '6px', marginBottom: '10px' }}>
                     {[
-                      ['Invested', `$${(b.amount||0).toLocaleString()}`, 'white'],
+                      ['Invested', formatAmount(b.amount || 0, user?.currency), 'white'],
                       ['Daily Rate', b.dailyRate, '#22c55e'],
                       ['Earned', formatAmount(earned, user?.currency), '#f59e0b'],
                       ['ROI', `${roi}%`, parseFloat(roi) >= 0 ? '#22c55e' : '#ef4444'],
