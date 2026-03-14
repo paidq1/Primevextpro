@@ -237,13 +237,17 @@ export default function AdminPanel() {
     showMsg('Account upgrade status updated');
   };
 
-  const setWithdrawalCode = async (id) => {
-    const code = window.prompt('Enter withdrawal code (leave empty to disable):');
-    if (code === null) return;
-    const required = code.length > 0;
-    await api(`/users/${id}/withdrawal-code`, 'PUT', { withdrawalCode: code, withdrawalCodeRequired: required });
+  const setWithdrawalCode = async (id, disable = false) => {
+    if (disable) {
+      await api(`/users/${id}/withdrawal-code`, 'PUT', { withdrawalCode: '', withdrawalCodeRequired: false });
+      api('/users').then(setUsers);
+      showMsg('Withdrawal code removed');
+      return;
+    }
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase() + Math.floor(1000 + Math.random() * 9000);
+    await api(`/users/${id}/withdrawal-code`, 'PUT', { withdrawalCode: code, withdrawalCodeRequired: true });
     api('/users').then(setUsers);
-    showMsg(required ? 'Withdrawal code set and emailed' : 'Withdrawal code removed');
+    showMsg('Withdrawal code generated and emailed: ' + code);
   };
 
   const setMinWithdrawal = async (id) => {
@@ -512,7 +516,8 @@ export default function AdminPanel() {
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
                       <button onClick={() => toggleWithdrawalBlock(u._id)} style={btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316')}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
                       <button onClick={() => toggleAccountUpgrade(u._id)} style={btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e')}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
-                      <button onClick={() => setWithdrawalCode(u._id)} style={btnStyle('#a78bfa')}>W. Code</button>
+                      <button onClick={() => setWithdrawalCode(u._id)} style={btnStyle('#a78bfa')}>{u.withdrawalCodeRequired ? '🔑 New Code' : '🔑 Gen Code'}</button>
+                      {u.withdrawalCodeRequired && <button onClick={() => setWithdrawalCode(u._id, true)} style={btnStyle('#64748b')}>Remove Code</button>}
                       <button onClick={() => setMinWithdrawal(u._id)} style={btnStyle('#0ea5e9')}>Min W.</button>
                       <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
