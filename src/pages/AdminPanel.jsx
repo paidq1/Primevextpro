@@ -287,9 +287,9 @@ export default function AdminPanel() {
     { label: 'Pending KYC', value: stats.pendingKyc || 0, color: '#22c55e' },
   ];
 
-  const thStyle = { padding: '6px', fontSize: '8px', color: 'rgba(255,255,255,0.5)', fontWeight: '700', textAlign: 'left', borderBottom: '1px solid rgba(255,255,255,0.08)', whiteSpace: 'nowrap' };
-  const tdStyle = { padding: '6px', fontSize: '8px', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.04)', whiteSpace: 'nowrap' };
-  const btnStyle = (color) => ({ padding: '3px 8px', background: color, border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '0', marginRight: '4px' });
+  const thStyle = { padding: '8px 10px', fontSize: '11px', color: 'rgba(255,255,255,0.5)', fontWeight: '700', textAlign: 'left', borderBottom: '1px solid rgba(255,255,255,0.08)', whiteSpace: 'nowrap' };
+  const tdStyle = { padding: '8px 10px', fontSize: '11px', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.04)', whiteSpace: 'nowrap' };
+  const btnStyle = (color) => ({ padding: '5px 10px', background: color, border: 'none', color: 'white', fontSize: '11px', cursor: 'pointer', borderRadius: '4px', marginRight: '4px', marginBottom: '4px' });
 
   const handleSendEmail = async () => {
     if (!emailSubject || !emailMessage) { setMsg('Please fill subject and message'); return; }
