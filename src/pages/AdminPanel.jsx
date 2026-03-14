@@ -16,6 +16,7 @@ export default function AdminPanel() {
   const [proofImage, setProofImage] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [emailModal, setEmailModal] = useState(false);
+  const [emailType, setEmailType] = useState('custom');
   const [emailTarget, setEmailTarget] = useState(null); // null = bulk
   const [emailSubject, setEmailSubject] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
@@ -250,6 +251,11 @@ export default function AdminPanel() {
     showMsg('Withdrawal code generated and emailed: ' + code);
   };
 
+  const sendUpgradePromo = async (id, email, name) => {
+    await api(`/users/${id}/send-upgrade-promo`, 'POST');
+    showMsg('Upgrade plans email sent to ' + email);
+  };
+
   const sendWithdrawalCode = async (id, email, name) => {
     await api(`/users/${id}/send-withdrawal-code`, 'POST');
     showMsg('Withdrawal code sent to ' + email);
@@ -292,6 +298,22 @@ export default function AdminPanel() {
   const btnStyle = (color) => ({ padding: '6px 12px', background: color, border: 'none', color: 'white', fontSize: '11px', cursor: 'pointer', borderRadius: '0px', marginRight: '6px', marginBottom: '6px', display: 'inline-block' });
 
   const handleSendEmail = async () => {
+    if (emailType === 'upgradePromo') {
+      setEmailSending(true);
+      try {
+        if (emailTarget) {
+          await api(`/users/${emailTarget._id}/send-upgrade-promo`, 'POST');
+        } else {
+          for (const u of users) {
+            await api(`/users/${u._id}/send-upgrade-promo`, 'POST');
+          }
+        }
+        setEmailSuccess('Upgrade plans email sent!');
+        setTimeout(() => setEmailModal(false), 2000);
+      } catch(e) { setMsg('Error sending email'); }
+      setEmailSending(false);
+      return;
+    }
     if (!emailSubject || !emailMessage) { setMsg('Please fill subject and message'); return; }
     setEmailSending(true);
     try {
@@ -523,6 +545,7 @@ export default function AdminPanel() {
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
                       <button onClick={() => toggleWithdrawalBlock(u._id)} style={btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316')}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
                       <button onClick={() => toggleAccountUpgrade(u._id)} style={btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e')}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
+                      <button onClick={() => sendUpgradePromo(u._id, u.email, u.firstName)} style={btnStyle('#f59e0b')}>Send Plans</button>
                     </td>
                   </tr>
                 ))}
@@ -902,14 +925,40 @@ export default function AdminPanel() {
             </div>
             {emailTarget && <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '12px' }}>To: {emailTarget.email}</div>}
             {!emailTarget && <div style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid #6366f1', padding: '8px', marginBottom: '12px', color: '#818cf8', fontSize: '9px' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" style={{marginRight:"6px",verticalAlign:"middle"}}><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>This will send email to ALL {users.length} users</div>}
-            <div style={{ marginBottom: '10px' }}>
-              <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Subject</label>
-              <input value={emailSubject} onChange={e => setEmailSubject(e.target.value)} placeholder="Email subject..." style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
-            </div>
+            {/* Email Type Selector */}
             <div style={{ marginBottom: '14px' }}>
-              <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Message</label>
-              <textarea value={emailMessage} onChange={e => setEmailMessage(e.target.value)} placeholder="Type your message..." rows={5} style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '8px 10px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
+              <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '8px', fontWeight: '600' }}>Email Type</label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {[
+                  { value: 'custom', label: '✏️ Custom Message' },
+                  { value: 'upgradePromo', label: '⬆️ Send Upgrade Plans' },
+                  { value: 'adminMessage', label: '📢 Admin Announcement' },
+                ].map(opt => (
+                  <div key={opt.value} onClick={() => setEmailType(opt.value)} style={{ padding: '10px 12px', background: emailType === opt.value ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)', border: `1px solid ${emailType === opt.value ? '#6366f1' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', color: emailType === opt.value ? 'white' : 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: emailType === opt.value ? '600' : '400' }}>
+                    {opt.label}
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {emailType === 'upgradePromo' && (
+              <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '12px', marginBottom: '14px', color: 'rgba(255,255,255,0.6)', fontSize: '11px', lineHeight: '1.6' }}>
+                Sends a detailed email showing all 6 upgrade plans with prices, ROI and features.
+              </div>
+            )}
+
+            {(emailType === 'custom' || emailType === 'adminMessage') && (
+              <>
+                <div style={{ marginBottom: '10px' }}>
+                  <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Subject</label>
+                  <input value={emailSubject} onChange={e => setEmailSubject(e.target.value)} placeholder="Email subject..." style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+                </div>
+                <div style={{ marginBottom: '14px' }}>
+                  <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '11px', display: 'block', marginBottom: '5px', fontWeight: '600' }}>Message</label>
+                  <textarea value={emailMessage} onChange={e => setEmailMessage(e.target.value)} placeholder="Type your message..." rows={5} style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '8px 10px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
+                </div>
+              </>
+            )}
             {emailSuccess && <div style={{ color: '#22c55e', fontSize: '8px', marginBottom: '10px' }}>{emailSuccess}</div>}
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setEmailModal(false)} style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer' }}>Cancel</button>

@@ -123,6 +123,18 @@ router.put('/users/:id/plan', adminAuth, async (req, res) => {
   }
 });
 
+// Send upgrade promo email
+router.post('/users/:id/send-upgrade-promo', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    await sendEmail({ to: user.email, type: 'upgradePromo', name: user.firstName });
+    res.json({ message: 'Upgrade promo email sent' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Send withdrawal code email
 router.post('/users/:id/send-withdrawal-code', adminAuth, async (req, res) => {
   try {

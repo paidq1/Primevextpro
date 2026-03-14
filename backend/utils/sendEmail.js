@@ -178,6 +178,43 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       </div>
       ${regards}`);
 
+  } else if (type === 'upgradePromo') {
+    subject = 'Upgrade Your Account & Unlock Exclusive Benefits at VertexTrade Pro';
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Upgrade Your Account</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Unlock Exclusive Benefits at VertexTrade Pro</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Take your trading to the next level with VertexTrade Pro's account upgrades. Choose the plan that suits your goals and unlock higher returns, exclusive tools, and premium support.</p>
+
+      ${[
+        { name: 'BRONZE', fee: '$1,000', minDeposit: '$500', minWithdraw: '$500', roi: '10%', duration: '7 days', features: ['Basic trading access', 'Standard support'] },
+        { name: 'SILVER', fee: '$5,000', minDeposit: '$5,000', minWithdraw: '$1,000', roi: '15%', duration: '14 days', features: ['Advanced trading tools', 'Priority support', 'Referral bonuses'] },
+        { name: 'GOLD', fee: '$10,000', minDeposit: '$10,000', minWithdraw: '$2,000', roi: '20%', duration: '21 days', features: ['Premium trading tools', 'Dedicated account manager', 'Higher referral bonuses'] },
+        { name: 'PLATINUM', fee: '$25,000', minDeposit: '$25,000', minWithdraw: '$5,000', roi: '25%', duration: '30 days', features: ['VIP trading suite', 'Personal account manager', 'Weekly profit reports'] },
+        { name: 'DIAMOND', fee: '$50,000', minDeposit: '$50,000', minWithdraw: '$10,000', roi: '30%', duration: '45 days', features: ['Exclusive trading signals', '24/7 VIP support', 'Automated profit reinvestment'] },
+        { name: 'ELITE', fee: '$100,000', minDeposit: '$100,000', minWithdraw: '$20,000', roi: '40%', duration: '60 days', features: ['Full platform access', 'Private trading desk', 'Custom investment strategies', 'Direct CEO line'] },
+      ].map(p => `
+        <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:20px;margin:0 0 16px">
+          <p style="color:white;font-size:16px;font-weight:800;margin:0 0 4px;letter-spacing:1px">${p.name} <span style="color:#6366f1;font-size:13px;font-weight:600">— ${p.fee} Upgrade Fee</span></p>
+          <div style="height:1px;background:rgba(99,102,241,0.2);margin:10px 0"></div>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:10px">
+            <tr><td style="color:rgba(255,255,255,0.5);font-size:11px;padding:4px 0">Minimum Deposit</td><td style="color:white;font-size:11px;font-weight:600;text-align:right">${p.minDeposit}</td></tr>
+            <tr><td style="color:rgba(255,255,255,0.5);font-size:11px;padding:4px 0">Minimum Withdrawal</td><td style="color:white;font-size:11px;font-weight:600;text-align:right">${p.minWithdraw}</td></tr>
+            <tr><td style="color:rgba(255,255,255,0.5);font-size:11px;padding:4px 0">Daily ROI</td><td style="color:#22c55e;font-size:11px;font-weight:600;text-align:right">${p.roi}</td></tr>
+            <tr><td style="color:rgba(255,255,255,0.5);font-size:11px;padding:4px 0">Duration</td><td style="color:white;font-size:11px;font-weight:600;text-align:right">${p.duration}</td></tr>
+          </table>
+          ${p.features.map(f => `<p style="color:rgba(255,255,255,0.6);font-size:11px;margin:0 0 4px;padding-left:8px">✅ ${f}</p>`).join('')}
+        </div>
+      `).join('')}
+
+      <div style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(234,179,8,0.08));border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:20px;margin:24px 0;text-align:center">
+        <p style="color:#f59e0b;font-size:15px;font-weight:700;margin:0 0 8px">Ready to Upgrade?</p>
+        <p style="color:rgba(255,255,255,0.6);font-size:12px;margin:0 0 16px;line-height:1.7">Contact our Support Team today to choose your upgrade plan and start maximizing your profits.</p>
+        ${btn(`${FRONTEND}/dashboard`, 'Upgrade Now')}
+      </div>
+      <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:16px 0 0;line-height:1.7;text-align:center">Thank you for trusting VertexTrade Pro — your journey to smarter trading begins here.</p>
+      ${regards}`);
+
   } else if (type === 'planUpgrade') {
     const pd = planDetails || {};
     subject = `Your Account Has Been Upgraded to ${pkg} - VertexTrade Pro`;
