@@ -37,8 +37,15 @@ export default function WithdrawVerifyCode() {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#0d0d0d' }}>
       <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div style={{ flex: 1, padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '32px 24px', width: '100%', maxWidth: '360px', textAlign: 'center' }}>
+      <div style={{ flex: 1, padding: '24px', maxWidth: '600px' }}>
+        <div style={{ marginBottom: '20px' }}>
+          <button onClick={() => navigate('/dashboard/withdraw')} style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            ← Back to Withdraw
+          </button>
+        </div>
+        <h2 style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: '0 0 4px' }}>Withdrawal Verification</h2>
+        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', margin: '0 0 24px' }}>Enter your withdrawal code to complete this transaction</p>
+        <div style={{ background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '32px 24px', width: '100%', textAlign: 'center' }}>
           
           {/* Icon */}
           <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
