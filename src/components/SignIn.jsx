@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loginUser, forgotPassword } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', password: '', remember: false });
   const [showPass, setShowPass] = useState(false);
   const [errors, setErrors] = useState({});
@@ -41,7 +43,7 @@ const SignIn = () => {
         setSuccess(true);
         setTimeout(() => { window.location.replace('/dashboard'); }, 1500);
       } else if (res.emailNotVerified) {
-        setErrors({ username: '⚠️ Please verify your email first. Check your inbox for the verification link.' });
+        navigate('/check-email', { state: { email: form.username, name: '' } });
       } else {
         setErrors({ username: res.message || 'Invalid credentials' });
       }
