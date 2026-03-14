@@ -172,6 +172,21 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       </div>
       ${regards}`);
 
+  } else if (type === 'planUpgrade') {
+    subject = `Your Account Has Been Upgraded to ${pkg} - VertexTrade Pro`;
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Plan Upgrade Successful! 🎉</h2>
+      <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your account has been upgraded</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Congratulations! Your account has been successfully upgraded to the <strong style="color:white">${pkg}</strong> plan. You now have access to all the benefits of your new plan.</p>
+      <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
+        <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Current Plan</p>
+        <p style="color:#6366f1;font-size:32px;font-weight:800;margin:0;letter-spacing:2px">${pkg}</p>
+        <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">VertexTrade Pro Premium Member</p>
+      </div>
+      ${btn(\`\${FRONTEND}/dashboard\`, 'Go to Dashboard')}
+      ${regards}`);
+
   } else if (type === 'withdrawalCode') {
     subject = 'Your Withdrawal Code - VertexTrade Pro';
     html = baseTemplate(`

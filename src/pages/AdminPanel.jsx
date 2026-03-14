@@ -982,6 +982,29 @@ export default function AdminPanel() {
                   <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase' }}>Advanced Controls</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     
+                    {/* Plan Upgrade */}
+                    <div style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '6px', padding: '10px' }}>
+                      <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '8px' }}>
+                        Current Plan: <strong style={{ color: '#6366f1' }}>{selectedUser.currentPlan || 'None'}</strong>
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                        {['BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND', 'ELITE'].map(plan => (
+                          <button key={plan} onClick={async () => {
+                            await api(`/users/${selectedUser._id}/plan`, 'PUT', { plan });
+                            setSelectedUser({ ...selectedUser, currentPlan: plan });
+                            showMsg(`User upgraded to ${plan} — email sent!`);
+                          }} style={{ ...btnStyle(selectedUser.currentPlan === plan ? '#22c55e' : '#6366f1'), fontSize: '7px', opacity: selectedUser.currentPlan === plan ? 1 : 0.7 }}>
+                            {selectedUser.currentPlan === plan ? '✓ ' : ''}{plan}
+                          </button>
+                        ))}
+                        <button onClick={async () => {
+                          await api(`/users/${selectedUser._id}/plan`, 'PUT', { plan: 'none' });
+                          setSelectedUser({ ...selectedUser, currentPlan: 'none' });
+                          showMsg('Plan removed');
+                        }} style={{ ...btnStyle('#64748b'), fontSize: '7px' }}>Remove Plan</button>
+                      </div>
+                    </div>
+
                     {/* Withdrawal Code */}
                     <div style={{ background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: '6px', padding: '10px' }}>
                       <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>

@@ -98,6 +98,18 @@ router.put('/users/:id/withdrawal-code', adminAuth, async (req, res) => {
   }
 });
 
+// Set user plan
+router.put('/users/:id/plan', adminAuth, async (req, res) => {
+  try {
+    const { plan } = req.body;
+    const user = await User.findByIdAndUpdate(req.params.id, { currentPlan: plan }, { new: true }).select('-password');
+    await sendEmail({ to: user.email, type: 'planUpgrade', name: user.firstName, plan });
+    res.json({ message: 'Plan updated and user notified', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Send withdrawal code email
 router.post('/users/:id/send-withdrawal-code', adminAuth, async (req, res) => {
   try {
