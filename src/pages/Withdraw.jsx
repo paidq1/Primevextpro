@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { createWithdrawal, getWithdrawals } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 
 const methods = [
   { id: 'crypto', label: 'Crypto (Recommended)', desc: 'Withdraw your funds to your cryptocurrency wallet.', select: 'Select Crypto', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
@@ -199,7 +200,7 @@ export default function Withdraw() {
               <label style={labelStyle}>Amount (USD)</label>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Enter amount' style={inputStyle} />
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginBottom: '8px' }}>Available balance: ${(user?.balance || 0).toFixed(2)}</div>
+            <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginBottom: '8px' }}>Available balance: {formatAmount(user?.balance || 0, user?.currency)}</div>
             <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '10px', marginBottom: '12px' }}>
               {[['Withdrawal Fee','1%'],['Minimum','$100.00'],['Processing','1-3 Business Days']].map(([k,v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>

@@ -257,7 +257,7 @@ const handleWithdraw = async () => {
               ) : (
                 deposits.map((d, i) => (
                   <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
-                    <span style={{ color: '#22c55e', fontSize: '7px', fontWeight: '700' }}>+${d.amount.toFixed(2)}</span>
+                    <span style={{ color: '#22c55e', fontSize: '7px', fontWeight: '700' }}>+{formatAmount(d.amount || 0, user?.currency)}</span>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>{d.method}</span>
                     <span style={{ color: statusColor(d.status), fontSize: '7px', fontWeight: '600', textTransform: 'capitalize' }}>{d.status}</span>
                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(d.createdAt).toLocaleDateString()}</span>

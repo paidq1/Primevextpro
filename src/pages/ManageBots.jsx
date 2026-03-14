@@ -97,7 +97,7 @@ export default function ManageBots() {
         <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', marginLeft: '4px' }}>/ Trading Bots</span>
         <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>Balance: ${user?.balance?.toFixed(2) || '0.00'}</span>
+          <span style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>Balance: {formatAmount(user?.balance || 0, user?.currency)}</span>
         </div>
       </div>
 
@@ -218,13 +218,13 @@ export default function ManageBots() {
           <div onClick={e => e.stopPropagation()} style={{ background: '#0e1628', border: `1px solid ${confirmBot.color}40`, width: '100%', maxWidth: '320px', padding: '20px', borderRadius: '4px' }}>
             <div style={{ color: confirmBot.color, fontSize: '12px', fontWeight: '800', marginBottom: '12px' }}>{confirmBot.name}</div>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
-              You are about to subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>${confirmBot.amount.toLocaleString()}</strong>. This amount will be deducted from your balance immediately.
+              You are about to subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>{formatAmount(confirmBot.amount, user?.currency)}</strong>. This amount will be deducted from your balance immediately.
             </p>
             {[
-              ['Investment', `$${confirmBot.amount.toLocaleString()}`],
+              ['Investment', `${formatAmount(confirmBot.amount, user?.currency)}`],
               ['Daily Return', confirmBot.dailyRate],
               ['Duration', confirmBot.duration],
-              ['Your Balance', `$${user?.balance?.toFixed(2) || '0.00'}`],
+              ['Your Balance', formatAmount(user?.balance || 0, user?.currency)],
               ['Balance After', formatAmount(((user?.balance || 0) - confirmBot.amount), user?.currency)],
             ].map(([l,v]) => (
               <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>

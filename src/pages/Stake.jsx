@@ -169,7 +169,7 @@ export default function Stake() {
 
             <div style={{ marginBottom: '12px' }}>
               <label style={labelStyle}>Amount to Stake (USD)</label>
-              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '4px' }}>Available Balance: <span style={{ color: '#22c55e', fontWeight: '700' }}>${balance.toFixed(2)}</span></div>
+              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '4px' }}>Available Balance: <span style={{ color: '#22c55e', fontWeight: '700' }}>{formatAmount(balance || 0, user?.currency)}</span></div>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={selectedPlan ? `Min ${getCurrencySymbol(user?.currency)}selectedPlan.min` : '0.00'} style={inputStyle} />
             </div>
 

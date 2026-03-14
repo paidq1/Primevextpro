@@ -74,7 +74,7 @@ export default function LiveTrading() {
   const handleTrade = async () => {
     if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); return; }
     if (parseFloat(amount) < 10) { setError('Minimum trade amount is $10'); return; }
-    if (balance !== null && parseFloat(amount) > parseFloat(balance)) { setError(`Insufficient balance. Your balance is $${parseFloat(balance).toFixed(2)}`); return; }
+    if (balance !== null && parseFloat(amount) > parseFloat(balance)) { setError(`Insufficient balance. Your balance is ${formatAmount(parseFloat(balance), user?.currency)}`); return; }
     setSubmitting(true); setError(''); setMsg('');
     try {
       const res = await createTrade({ symbol: symbol.label, type: sheetDir, direction: sheetDir, account: 'real', amount: parseFloat(amount), duration, leverage });
@@ -115,7 +115,7 @@ export default function LiveTrading() {
           <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
           <div style={{ flex: 1 }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-            <span style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>${balance !== null ? parseFloat(balance).toFixed(2) : '...'}</span>
+            <span style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>{balance !== null ? formatAmount(parseFloat(balance), user?.currency) : '...'}</span>
             <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
           </div>
         </div>

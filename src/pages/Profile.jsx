@@ -3,6 +3,7 @@ import DashboardSidebar from '../components/DashboardSidebar';
 import { User, Edit2, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import { updateProfile } from '../services/api';
 
 const COUNTRIES = [
@@ -253,7 +254,7 @@ export default function Profile() {
           <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
           <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#f59e0b', fontSize: '8px', cursor: 'pointer' }}>&#8383; {((user?.balance || 0) * 0.000015).toFixed(6)}</button>
           <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> Trade</button>
-          <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> ${(user?.balance || 0).toFixed(2)}</button>
+          <button style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}><RefreshCw size={9}/> {formatAmount(user?.balance || 0, user?.currency)}</button>
           <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
             {avatarSrc ? <img src={avatarSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="avatar" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}/> : null}<User size={14} color='rgba(255,255,255,0.6)' style={{ display: avatarSrc ? 'none' : 'block' }}/>
           </div>
