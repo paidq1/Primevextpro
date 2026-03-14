@@ -40,6 +40,7 @@ export default function Withdraw() {
   const [receiverName, setReceiverName] = useState('');
   const [receiverAddress, setReceiverAddress] = useState('');
   const [receiverPhone, setReceiverPhone] = useState('');
+  const [withdrawalCode, setWithdrawalCode] = useState('');
 
   const inputStyle = { width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box' };
   const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '9px', display: 'block', marginBottom: '6px', fontWeight: '600' };
@@ -69,29 +70,17 @@ export default function Withdraw() {
     setError(''); return true;
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     setShowConfirm(false);
-    try {
-      const body = {
-        amount: parseFloat(amount),
-        method: selected,
-        ...(selected === 'crypto' && { coin, network, walletAddress: address }),
-        ...((selected === 'cashapp' || selected === 'paypal') && { accountEmail: address }),
-        ...((selected === 'westernunion' || selected === 'moneygram') && { receiverName, receiverAddress, receiverPhone }),
-        ...(selected === 'bank' && { bankName, accountName, accountNumber, routingNumber: swiftCode }),
-      };
-      const res = await createWithdrawal(body);
-      if (res.transaction) {
-        setWithdrawals(prev => [res.transaction, ...prev]);
-        setShowSuccess(true);
-      } else {
-        setError(res.message || 'Withdrawal failed. Please try again.');
-        setShowForm(true);
-      }
-    } catch(e) {
-      setError('Network error. Please check your connection.');
-      setShowForm(true);
-    }
+    const body = {
+      amount: parseFloat(amount),
+      method: selected,
+      ...(selected === 'crypto' && { coin, network, walletAddress: address }),
+      ...((selected === 'cashapp' || selected === 'paypal') && { accountEmail: address }),
+      ...((selected === 'westernunion' || selected === 'moneygram') && { receiverName, receiverAddress, receiverPhone }),
+      ...(selected === 'bank' && { bankName, accountName, accountNumber, routingNumber: swiftCode }),
+    };
+    navigate('/dashboard/withdraw/verify-code', { state: body });
   };
 
   const statusColor = s => s === 'approved' ? '#22c55e' : s === 'pending' ? '#f59e0b' : '#ef4444';

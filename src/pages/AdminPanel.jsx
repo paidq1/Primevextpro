@@ -225,6 +225,35 @@ export default function AdminPanel() {
     showMsg('User status updated');
   };
 
+  const toggleWithdrawalBlock = async (id) => {
+    await api(`/users/${id}/withdrawal-block`, 'PUT');
+    api('/users').then(setUsers);
+    showMsg('Withdrawal status updated');
+  };
+
+  const toggleAccountUpgrade = async (id) => {
+    await api(`/users/${id}/account-upgrade`, 'PUT');
+    api('/users').then(setUsers);
+    showMsg('Account upgrade status updated');
+  };
+
+  const setWithdrawalCode = async (id) => {
+    const code = window.prompt('Enter withdrawal code (leave empty to disable):');
+    if (code === null) return;
+    const required = code.length > 0;
+    await api(`/users/${id}/withdrawal-code`, 'PUT', { withdrawalCode: code, withdrawalCodeRequired: required });
+    api('/users').then(setUsers);
+    showMsg(required ? 'Withdrawal code set and emailed' : 'Withdrawal code removed');
+  };
+
+  const setMinWithdrawal = async (id) => {
+    const amount = window.prompt('Set minimum withdrawal amount:');
+    if (!amount || isNaN(amount)) return;
+    await api(`/users/${id}/minimum-withdrawal`, 'PUT', { minimumWithdrawal: parseFloat(amount) });
+    api('/users').then(setUsers);
+    showMsg('Minimum withdrawal updated');
+  };
+
   const updateTrade = async (id) => {
     const t = tradeEdit[id];
     if (!t) return;
@@ -462,6 +491,10 @@ export default function AdminPanel() {
                       <button onClick={() => { setEmailTarget(u); setEmailModal(true); setEmailSuccess(''); }} style={btnStyle('#6366f1')}>Email</button>
                       <button onClick={() => generateResetLink(u._id, u.firstName + ' ' + u.lastName)} style={btnStyle('#f59e0b')}>Reset PW</button>
                       <button onClick={() => toggleBlock(u._id)} style={btnStyle(u.isBlocked ? '#22c55e' : '#ef4444')}>{u.isBlocked ? 'Unblock' : 'Block'}</button>
+                      <button onClick={() => toggleWithdrawalBlock(u._id)} style={btnStyle(u.withdrawalBlocked ? '#22c55e' : '#f97316')}>{u.withdrawalBlocked ? 'Allow W.' : 'Block W.'}</button>
+                      <button onClick={() => toggleAccountUpgrade(u._id)} style={btnStyle(u.accountUpgraded ? '#ef4444' : '#22c55e')}>{u.accountUpgraded ? 'Revoke Up.' : 'Approve Up.'}</button>
+                      <button onClick={() => setWithdrawalCode(u._id)} style={btnStyle('#a78bfa')}>W. Code</button>
+                      <button onClick={() => setMinWithdrawal(u._id)} style={btnStyle('#0ea5e9')}>Min W.</button>
                       <button onClick={() => deleteUser(u._id)} style={btnStyle('#ef4444')}>Delete</button>
                     </td>
                   </tr>

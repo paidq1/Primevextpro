@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0f1e"/>
+      <stop offset="100%" style="stop-color:#111827"/>
+    </linearGradient>
+    <linearGradient id="vGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a5b4fc"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <filter id="vGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="56" fill="url(#bg)"/>
+
+  <!-- Subtle border -->
+  <rect width="512" height="512" rx="56" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-opacity="0.25"/>
+
+  <!-- Hexagon mark - clean geometric -->
+  <polygon points="256,58 326,98 326,178 256,218 186,178 186,98" 
+    fill="none" stroke="#6366f1" stroke-width="2.5" stroke-opacity="0.9"/>
+  <polygon points="256,74 312,107 312,171 256,204 200,171 200,107" 
+    fill="#6366f1" fill-opacity="0.07"/>
+
+  <!-- V lettermark inside hex -->
+  <path d="M218,105 L256,185 L294,105" 
+    fill="none" stroke="url(#vGrad)" stroke-width="13" 
+    stroke-linecap="round" stroke-linejoin="round" filter="url(#vGlow)"/>
+
+  <!-- Thin gold bar accent -->
+  <rect x="236" y="190" width="40" height="3" rx="1.5" fill="#f59e0b" opacity="0.85"/>
+
+  <!-- Divider line with gradient -->
+  <line x1="64" y1="242" x2="448" y2="242" stroke="url(#lineGrad)" stroke-width="1" opacity="0.35"/>
+
+  <!-- VERTEXTRADES -->
+  <text x="256" y="300" 
+    font-family="'Trebuchet MS', 'Arial Narrow', Arial, sans-serif"
+    font-size="44" font-weight="700"
+    fill="white" text-anchor="middle" letter-spacing="2">
+    VERTEXTRADES
+  </text>
+
+  <!-- PRO -->
+  <text x="256" y="336"
+    font-family="'Trebuchet MS', Arial, sans-serif"
+    font-size="18" font-weight="400"
+    fill="#6366f1" text-anchor="middle" letter-spacing="14">
+    PRO
+  </text>
+
+  <!-- Thin separator -->
+  <line x1="156" y1="356" x2="356" y2="356" stroke="#6366f1" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- Tagline -->
+  <text x="256" y="378"
+    font-family="Arial, sans-serif"
+    font-size="11.5" font-weight="300"
+    fill="#64748b" text-anchor="middle" letter-spacing="4.5">
+    SMART INVESTMENT BROKERS
+  </text>
+
+  <!-- Bottom chart bars - minimal accent -->
+  <rect x="168" y="418" width="12" height="40" rx="2" fill="#6366f1" opacity="0.3"/>
+  <rect x="188" y="408" width="12" height="50" rx="2" fill="#6366f1" opacity="0.45"/>
+  <rect x="208" y="398" width="12" height="60" rx="2" fill="#6366f1" opacity="0.6"/>
+  <rect x="228" y="386" width="12" height="72" rx="2" fill="#6366f1" opacity="0.75"/>
+  <rect x="248" y="374" width="12" height="84" rx="2" fill="#6366f1" opacity="0.9"/>
+  <rect x="268" y="382" width="12" height="76" rx="2" fill="#f59e0b" opacity="0.5"/>
+  <rect x="288" y="370" width="12" height="88" rx="2" fill="#f59e0b" opacity="0.65"/>
+  <rect x="308" y="358" width="12" height="100" rx="2" fill="#f59e0b" opacity="0.8"/>
+  <rect x="328" y="348" width="12" height="110" rx="2" fill="#f59e0b" opacity="0.95"/>
+
+  <!-- Chart line over bars -->
+  <polyline points="174,418 194,405 214,392 234,378 254,364 274,370 294,355 314,342 334,330"
+    fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+
+  <!-- Dot at peak -->
+  <circle cx="334" cy="330" r="4" fill="#f59e0b" opacity="0.95"/>
+</svg>

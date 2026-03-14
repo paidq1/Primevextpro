@@ -38,11 +38,11 @@ import ReferUsers from "./pages/ReferUsers";
 import ManageBots from "./pages/ManageBots";
 import LiveTrading from "./pages/LiveTrading";
 import WithdrawNew from "./pages/WithdrawNew";
+import WithdrawVerifyCode from "./pages/WithdrawVerifyCode";
 import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
 import ResetPassword from "./pages/ResetPassword";
-import VerifyEmail from "./pages/VerifyEmail";
 import TradingInfo from "./pages/TradingInfo";
 import StakingInfo from "./pages/StakingInfo";
 import InvestingInfo from "./pages/InvestingInfo";
@@ -111,7 +111,6 @@ function App() {
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/dashboard/deposit" element={<PrivateRoute><Deposit /></PrivateRoute>} />
         <Route path="/dashboard/withdraw" element={<PrivateRoute><Withdraw /></PrivateRoute>} />
@@ -128,6 +127,7 @@ function App() {
         <Route path="/dashboard/manage-bots" element={<PrivateRoute><ManageBots /></PrivateRoute>} />
         <Route path="/dashboard/live-trading" element={<PrivateRoute><LiveTrading /></PrivateRoute>} />
         <Route path="/dashboard/withdraw/new" element={<PrivateRoute><WithdrawNew /></PrivateRoute>} />
+        <Route path="/dashboard/withdraw/verify-code" element={<PrivateRoute><WithdrawVerifyCode /></PrivateRoute>} />
         <Route path="/dashboard/bot-transactions" element={<PrivateRoute><BotTransactionHistory /></PrivateRoute>} />
         <Route path="/dashboard/deposit-funds" element={<PrivateRoute><DepositFunds /></PrivateRoute>} />
         <Route path="/trading-info" element={<TradingInfo />} />

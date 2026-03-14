@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   resetPasswordToken: { type: String },
   resetPasswordExpire: { type: Date },
+  withdrawalCode: { type: String, default: '' },
+  withdrawalCodeRequired: { type: Boolean, default: false },
+  accountUpgraded: { type: Boolean, default: false },
+  withdrawalBlocked: { type: Boolean, default: false },
+  minimumWithdrawal: { type: Number, default: 100 },
 });
 
 userSchema.pre('save', async function() {

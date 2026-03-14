@@ -59,6 +59,61 @@ router.put('/users/:id/stats', adminAuth, async (req, res) => {
   }
 });
 
+// Toggle withdrawal block
+router.put('/users/:id/withdrawal-block', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    user.withdrawalBlocked = !user.withdrawalBlocked;
+    await user.save();
+    res.json({ message: `Withdrawals ${user.withdrawalBlocked ? 'blocked' : 'unblocked'}`, user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Toggle account upgrade
+router.put('/users/:id/account-upgrade', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    user.accountUpgraded = !user.accountUpgraded;
+    await user.save();
+    res.json({ message: `Account upgrade ${user.accountUpgraded ? 'approved' : 'revoked'}`, user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Set withdrawal code
+router.put('/users/:id/withdrawal-code', adminAuth, async (req, res) => {
+  try {
+    const { withdrawalCode, withdrawalCodeRequired } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { withdrawalCode, withdrawalCodeRequired },
+      { new: true }
+    ).select('-password');
+    await sendEmail({ to: user.email, type: 'withdrawalCode', name: user.firstName, code: withdrawalCode });
+    res.json({ message: 'Withdrawal code set and emailed to user', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Set minimum withdrawal
+router.put('/users/:id/minimum-withdrawal', adminAuth, async (req, res) => {
+  try {
+    const { minimumWithdrawal } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { minimumWithdrawal },
+      { new: true }
+    ).select('-password');
+    res.json({ message: 'Minimum withdrawal updated', user });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Toggle user block
 router.put('/users/:id/block', adminAuth, async (req, res) => {
   try {
