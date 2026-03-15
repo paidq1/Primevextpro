@@ -44,12 +44,12 @@ export default function Packages() {
   const handleJoin = (plan, i) => {
     const amt = parseFloat(amounts[i]);
     if (!amt || amt < plan.min) {
-      setError(`Minimum amount for ${plan.name} is $${plan.min.toLocaleString()}`);
+      setError(`Minimum amount for ${plan.name} is ${getCurrencySymbol(user?.currency)}${plan.min.toLocaleString()}`);
       setTimeout(() => setError(''), 4000);
       return;
     }
     if (plan.max && amt > plan.max) {
-      setError(`Maximum amount for ${plan.name} is $${plan.max.toLocaleString()}`);
+      setError(`Maximum amount for ${plan.name} is ${getCurrencySymbol(user?.currency)}${plan.max.toLocaleString()}`);
       setTimeout(() => setError(''), 4000);
       return;
     }
@@ -120,10 +120,10 @@ export default function Packages() {
             </div>
             {[
               ['Plan', confirmPlan.name],
-              ['Amount', '$' + parseFloat(confirmPlan.amount).toLocaleString()],
+              ['Amount', formatAmount(parseFloat(confirmPlan.amount), user?.currency)],
               ['ROI', confirmPlan.roi],
               ['Duration', confirmPlan.duration + ' days'],
-              ['Your Balance', '$' + userBalance.toFixed(2)],
+              ['Your Balance', formatAmount(userBalance, user?.currency)],
             ].map(([k, v]) => (
               <div key={k} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{k}</span>
@@ -182,7 +182,7 @@ export default function Packages() {
         {/* Balance display */}
         <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 14px', marginBottom: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>Available Balance</span>
-          <span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${userBalance.toFixed(2)}</span>
+          <span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(userBalance, user?.currency)}</span>
         </div>
 
 
@@ -191,7 +191,7 @@ export default function Packages() {
             {/* Summary Stats */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '14px' }}>
               {[
-                ['Total Invested', '$' + investments.reduce((s,i) => s + parseFloat(i.amount||0), 0).toLocaleString(), '#6366f1'],
+                ['Total Invested', formatAmount(investments.reduce((s,i) => s + parseFloat(i.amount||0), 0), user?.currency), '#6366f1'],
                 ['Active', investments.filter(i => i.status==='active').length, '#22c55e'],
                 ['Completed', investments.filter(i => i.status==='completed').length, '#f59e0b'],
               ].map(([l,v,c]) => (
