@@ -624,8 +624,8 @@ export default function AdminPanel() {
                       {d.status === 'pending' && <>
                         <button onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
-                        <button onClick={() => deleteDeposit(d._id)} style={btnStyle('#64748b')}>Delete</button>
                       </>}
+                      <button onClick={() => deleteDeposit(d._id)} style={btnStyle('#64748b')}>Delete</button>
                       {d.proofImage && <button onClick={() => setProofImage(d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
                     </td>
                   </tr>
