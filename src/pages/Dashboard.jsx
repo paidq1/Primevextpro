@@ -5,6 +5,7 @@ import { getDashboard, getTransactions } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import BTCChart from '../components/BTCChart';
+import CryptoNews from '../components/CryptoNews';
 import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings } from 'lucide-react';
 
 const navItems = [
