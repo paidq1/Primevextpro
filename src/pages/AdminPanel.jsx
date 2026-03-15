@@ -168,6 +168,13 @@ export default function AdminPanel() {
     showMsg(`Deposit ${status}`);
   };
 
+  const deleteWithdrawal = async (id) => {
+    if (!window.confirm('Delete this withdrawal record?')) return;
+    await api(`/withdrawals/${id}`, 'DELETE');
+    setWithdrawals(prev => prev.filter(w => w._id !== id));
+    showMsg('Withdrawal deleted');
+  };
+
   const approveWithdrawal = async (id, status) => {
     if (!window.confirm(`Are you sure you want to ${status} this withdrawal?`)) return;
     await api(`/withdrawals/${id}`, 'PUT', { status });
@@ -666,6 +673,7 @@ export default function AdminPanel() {
                       {w.status === 'pending' && <>
                         <button onClick={() => approveWithdrawal(w._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveWithdrawal(w._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
+                        <button onClick={() => deleteWithdrawal(w._id)} style={btnStyle('#64748b')}>Delete</button>
                       </>}
                     </td>
                   </tr>

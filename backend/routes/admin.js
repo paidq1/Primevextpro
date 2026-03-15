@@ -188,6 +188,16 @@ router.put('/users/:id/block', adminAuth, async (req, res) => {
   }
 });
 
+// Delete withdrawal
+router.delete('/withdrawals/:id', adminAuth, async (req, res) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Withdrawal deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Get all deposits
 router.get('/deposits', adminAuth, async (req, res) => {
   try {
@@ -302,6 +312,16 @@ router.put('/trades/:id', adminAuth, async (req, res) => {
     res.json({ message: 'Trade updated', trade });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Delete withdrawal
+router.delete('/withdrawals/:id', adminAuth, async (req, res) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Withdrawal deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
