@@ -24,8 +24,9 @@ export default function Packages() {
   const [activeTab, setActiveTab] = useState(urlTab || 'available');
 
   useEffect(() => {
-    if (urlTab) setActiveTab(urlTab);
-  }, [urlTab]);
+    const tab = new URLSearchParams(location.search).get('tab');
+    setActiveTab(tab || 'available');
+  }, [location.search]);
   const [amounts, setAmounts] = useState(plans.map(p => p.defaultAmt));
   const [confirmPlan, setConfirmPlan] = useState(null);
   const [success, setSuccess] = useState(false);
