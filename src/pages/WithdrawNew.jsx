@@ -178,8 +178,8 @@ export default function WithdrawNew() {
       </>}
 
       <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-      <button onClick={handleSubmit} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
-        REQUEST WITHDRAWAL
+      <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+        {submitting ? 'Processing...' : 'REQUEST WITHDRAWAL'}
       </button>
     </div>
   );
@@ -243,7 +243,7 @@ export default function WithdrawNew() {
             ))}
           </div>
           <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-          <button onClick={handleProceed} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
+          <button onClick={handleProceed} disabled={submitting} style={{ padding: '10px 28px', background: submitting ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
             Continue
           </button>
         </>}
