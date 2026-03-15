@@ -184,14 +184,14 @@ export default function ManageBots() {
 
                 <div style={{ color: 'white', fontSize: '11px', fontWeight: '800', marginBottom: '4px' }}>{bot.name}</div>
                 <div style={{ marginBottom: '8px' }}>
-                  <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>${bot.amount.toLocaleString()}</div>
+                  <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>{formatAmount(bot.amount, user?.currency)}</div>
                   
                 </div>
                 {[
                   ['Daily Return', bot.dailyRate, '#22c55e'],
                   ['Duration', bot.duration, 'white'],
-                  ['Daily Profit', `+${getCurrencySymbol(user?.currency)}dailyProfit`, '#22c55e'],
-                  ['Total Profit', `+${getCurrencySymbol(user?.currency)}totalProfit`, '#f59e0b'],
+                  ['Daily Profit', `+${getCurrencySymbol(user?.currency)}${dailyProfit}`, '#22c55e'],
+                  ['Total Profit', `+${getCurrencySymbol(user?.currency)}${totalProfit}`, '#f59e0b'],
                 ].map(([l,v,c]) => (
                   <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '3px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{l}</span>
@@ -199,7 +199,7 @@ export default function ManageBots() {
                   </div>
                 ))}
                 <button
-                  onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`)}
+                  onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need ${getCurrencySymbol(user?.currency)}{formatAmount(bot.amount, user?.currency)}.`)}
                   disabled={isSubscribing}
                   style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? bot.color : 'rgba(255,255,255,0.06)', border: 'none', color: canAfford ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
                   {isSubscribing ? 'Activating...' : canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
