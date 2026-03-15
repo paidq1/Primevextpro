@@ -121,3 +121,56 @@ router.post('/resend-verification', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
+
+// Enable/Disable 2FA
+router.put('/2fa/toggle', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.twoFactorEnabled = !user.twoFactorEnabled;
+    await user.save();
+    res.json({ message: `2FA ${user.twoFactorEnabled ? 'enabled' : 'disabled'}`, twoFactorEnabled: user.twoFactorEnabled });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Send 2FA OTP
+router.post('/2fa/send', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user.twoFactorEnabled) return res.status(400).json({ message: '2FA not enabled' });
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.twoFactorOTP = otp;
+    user.twoFactorOTPExpire = Date.now() + 10 * 60 * 1000;
+    await user.save();
+
+    await sendEmail({ to: user.email, type: 'twoFactorOTP', name: user.firstName, otp });
+    res.json({ success: true, message: 'OTP sent to your email' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Verify 2FA OTP
+router.post('/2fa/verify', async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user.twoFactorOTP || user.twoFactorOTP !== otp) return res.status(400).json({ message: 'Invalid OTP' });
+    if (Date.now() > new Date(user.twoFactorOTPExpire)) return res.status(400).json({ message: 'OTP expired. Please request a new one.' });
+
+    user.twoFactorOTP = undefined;
+    user.twoFactorOTPExpire = undefined;
+    await user.save();
+
+    const jwt = require('jsonwebtoken');
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+    res.json({ success: true, token, user: { ...user.toObject(), password: undefined } });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});

@@ -82,6 +82,21 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Please verify your email before logging in. Check your inbox.', emailNotVerified: true });
     }
 
+    if (user.isBlocked) {
+      return res.status(400).json({ message: 'Your account has been suspended. Please contact support.' });
+    }
+
+    // Check 2FA
+    if (user.twoFactorEnabled) {
+      const sendEmail = require('../utils/sendEmail');
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      user.twoFactorOTP = otp;
+      user.twoFactorOTPExpire = Date.now() + 10 * 60 * 1000;
+      await user.save();
+      await sendEmail({ to: user.email, type: 'twoFactorOTP', name: user.firstName, code: otp });
+      return res.json({ twoFactorRequired: true, email: user.email, message: 'OTP sent to your email' });
+    }
+
     const token = generateToken(user._id);
 
     res.json({

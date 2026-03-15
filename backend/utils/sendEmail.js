@@ -189,6 +189,23 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${btn(`${FRONTEND}/dashboard`, 'Go to Dashboard')}
       ${regards}`);
 
+  } else if (type === 'twoFactorOTP') {
+    subject = 'Your Login Verification Code - VertexTrade Pro';
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Login Verification Code</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Two-Factor Authentication</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Your one-time login verification code is:</p>
+      <div style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
+        <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Verification Code</p>
+        <p style="color:white;font-size:42px;font-weight:800;margin:0;letter-spacing:12px">${code}</p>
+        <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">Valid for 10 minutes only</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin:24px 0">
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;line-height:1.6">🔒 Never share this code with anyone including VertexTrade Pro staff.<br/>⚠️ If you did not attempt to login, please secure your account immediately.</p>
+      </div>
+      ${regards}`);
+
   } else if (type === 'verifyEmail') {
     subject = 'Verify Your Email - VertexTrade Pro';
     html = baseTemplate(`
