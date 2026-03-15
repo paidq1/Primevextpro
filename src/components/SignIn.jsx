@@ -179,8 +179,8 @@ const SignIn = () => {
 
       {showOTP && (
         <div style={{ position: 'fixed', inset: 0, background: '#0d1117', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#1e2538', padding: '40px 32px', width: '100%', maxWidth: '420px', borderRadius: '12px', border: '1px solid rgba(99,102,241,0.3)', textAlign: 'center' }}>
-            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+          <div style={{ background: '#1e2538', padding: '40px 32px', width: '100%', maxWidth: '420px', borderRadius: '0px', border: '1px solid rgba(99,102,241,0.3)', textAlign: 'center' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '0px', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
               <svg width='22' height='22' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/></svg>
             </div>
             <div style={{ color: 'white', fontSize: '18px', fontWeight: '700', marginBottom: '8px' }}>Two-Factor Authentication</div>
