@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { formatAmount } from '../utils/currency';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { getDeposits, getWithdrawals } from '../services/api';
 
 export default function TransactionHistory() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -87,11 +90,11 @@ export default function TransactionHistory() {
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
           <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Total Deposits</div>
-            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>${totalDeposits.toFixed(2)}</div>
+            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(totalDeposits, user?.currency)}</div>
           </div>
           <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Total Withdrawals</div>
-            <div style={{ color: '#ec4899', fontSize: '11px', fontWeight: '700' }}>${totalWithdrawals.toFixed(2)}</div>
+            <div style={{ color: '#ec4899', fontSize: '11px', fontWeight: '700' }}>{formatAmount(totalWithdrawals, user?.currency)}</div>
           </div>
           <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Pending</div>
@@ -132,7 +135,7 @@ export default function TransactionHistory() {
               <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>{new Date(t.createdAt).toLocaleString()}</span>
               <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '7px' }}>{t.method || '—'}</span>
               <span style={{ color: typeColor(t.txnType), fontSize: '7px', fontWeight: '600' }}>{t.txnType}</span>
-              <span style={{ color: typeColor(t.txnType), fontSize: '7px', fontWeight: '700' }}>{t.txnType === 'Deposit' ? '+' : '-'}${t.amount?.toFixed(2)}</span>
+              <span style={{ color: typeColor(t.txnType), fontSize: '7px', fontWeight: '700' }}>{t.txnType === 'Deposit' ? '+' : '-'}{formatAmount(t.amount || 0, user?.currency)}</span>
               <span style={{ background: statusColor(t.status) + '20', color: statusColor(t.status), fontSize: '6px', fontWeight: '700', padding: '2px 5px', display: 'inline-block' }}>{statusLabel(t.status)}</span>
             </div>
           ))}
