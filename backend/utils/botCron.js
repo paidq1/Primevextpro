@@ -48,7 +48,7 @@ const processBotProfits = async () => {
       const user = await User.findByIdAndUpdate(
         bot.user,
         { $inc: { balance: finalProfit, totalProfit: finalProfit } },
-        { new: true }
+        { new: true, returnDocument: 'after' }
       );
       await Bot.findByIdAndUpdate(bot._id, {
         $inc: { earned: finalProfit },
