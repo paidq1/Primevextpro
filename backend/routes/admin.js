@@ -201,6 +201,16 @@ router.get('/deposits', adminAuth, async (req, res) => {
 // Approve/reject deposit
 
 
+// Delete deposit
+router.delete('/deposits/:id', adminAuth, async (req, res) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Deposit deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Get all withdrawals
 router.get('/withdrawals', adminAuth, async (req, res) => {
   try {
@@ -345,6 +355,16 @@ router.put('/deposits/:id', adminAuth, async (req, res) => {
     res.json({ message: 'Deposit ' + status, transaction });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Delete deposit
+router.delete('/deposits/:id', adminAuth, async (req, res) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Deposit deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
   }
 });
 

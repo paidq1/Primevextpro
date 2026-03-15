@@ -153,6 +153,13 @@ export default function AdminPanel() {
     }
   };
 
+  const deleteDeposit = async (id) => {
+    if (!window.confirm('Delete this deposit record?')) return;
+    await api(`/deposits/${id}`, 'DELETE');
+    setDeposits(prev => prev.filter(d => d._id !== id));
+    showMsg('Deposit deleted');
+  };
+
   const approveDeposit = async (id, status) => {
     if (!window.confirm(`Are you sure you want to ${status} this deposit?`)) return;
     await api(`/deposits/${id}`, 'PUT', { status });
@@ -617,6 +624,7 @@ export default function AdminPanel() {
                       {d.status === 'pending' && <>
                         <button onClick={() => approveDeposit(d._id, 'approved')} style={btnStyle('#22c55e')}>Approve</button>
                         <button onClick={() => approveDeposit(d._id, 'rejected')} style={btnStyle('#ef4444')}>Reject</button>
+                        <button onClick={() => deleteDeposit(d._id)} style={btnStyle('#64748b')}>Delete</button>
                       </>}
                       {d.proofImage && <button onClick={() => setProofImage(d.proofImage)} style={btnStyle('#6366f1')}>View Proof</button>}
                     </td>
