@@ -50,6 +50,7 @@ router.post('/', auth, async (req, res) => {
       paymentMethod: 'balance',
       dailyRate: details.dailyRate,
       duration: details.duration,
+      days: details.days,
       status: 'active',
       expiresAt,
     });

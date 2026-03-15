@@ -13,6 +13,7 @@ const botSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   expiresAt: { type: Date },
   lastProfitAt: { type: Date },
+  days: { type: Number, default: 7 },
 });
 
 module.exports = mongoose.model('Bot', botSchema);
