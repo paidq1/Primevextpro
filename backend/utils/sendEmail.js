@@ -62,7 +62,7 @@ const formatCurrency = (amountUSD, userCurrency) => {
   return `${symbol}${Number(converted).toLocaleString()}`;
 };
 
-const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code }) => {
+const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code, botName, totalEarned, newBalance }) => {
   const userCurrency = currency || 'US Dollar (USD)';
   const currSymbol = currencyMap[userCurrency] || '$';
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -199,6 +199,28 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin:24px 0">
         <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0;line-height:1.6">⏱ This link expires in <strong style="color:rgba(255,255,255,0.6)">24 hours</strong><br/>🔒 If you did not create this account, please ignore this email.</p>
       </div>
+      ${regards}`);
+
+  } else if (type === 'botProfit') {
+    subject = `Trading Bot Profit Credited - VertexTrade Pro`;
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Bot Profit Credited!</h2>
+      <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your trading bot has generated a profit</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Great news! Your <strong style="color:white">${botName || message || 'Trading Bot'}</strong> has generated a profit and the amount has been credited to your account.</p>
+      <div style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(16,185,129,0.08));border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:28px;margin:24px 0;text-align:center">
+        <p style="color:rgba(255,255,255,0.4);margin:0 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase">Profit Credited</p>
+        <p style="color:#22c55e;font-size:38px;font-weight:800;margin:0;letter-spacing:-0.5px">+$${amount}</p>
+        <p style="color:rgba(255,255,255,0.3);font-size:11px;margin:8px 0 0">Added to your account balance</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px;margin:24px 0">
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Bot Name</td><td style="padding:8px 0;color:white;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">${botName || message || 'Trading Bot'}</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">Total Earned</td><td style="padding:8px 0;color:#22c55e;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${totalEarned || reason || '0'}</td></tr>
+          <tr><td style="padding:8px 0;color:rgba(255,255,255,0.5);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)">New Balance</td><td style="padding:8px 0;color:white;font-size:12px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${newBalance || resetUrl || '0'}</td></tr>
+        </table>
+      </div>
+      ${btn(`${FRONTEND}/dashboard`, 'View Dashboard')}
       ${regards}`);
 
   } else if (type === 'registrationFee') {

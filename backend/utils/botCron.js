@@ -1,13 +1,12 @@
 const Bot = require('../models/Bot');
 const User = require('../models/User');
-
-const INTERVAL_MS = 30 * 60 * 1000; // 30 minutes
+const sendEmail = require('./sendEmail');
 
 const processBotProfits = async () => {
   try {
     const now = new Date();
     const activeBots = await Bot.find({ status: 'active' });
-    
+
     console.log(`Processing profits for ${activeBots.length} active bots...`);
 
     for (const bot of activeBots) {
@@ -18,24 +17,61 @@ const processBotProfits = async () => {
         continue;
       }
 
-      // Prevent double crediting - skip if credited less than 25 mins ago
-      if (bot.lastProfitAt && (now - new Date(bot.lastProfitAt)) < 25 * 60 * 1000) {
-        console.log(`Skipping bot ${bot._id} - credited recently`);
+      // Random interval between 15 mins and 3 hours
+      const randomIntervalMinutes = Math.floor(Math.random() * 165) + 15;
+      const randomIntervalMs = randomIntervalMinutes * 60 * 1000;
+
+      // Skip if credited too recently based on random interval
+      if (bot.lastProfitAt && (now - new Date(bot.lastProfitAt)) < randomIntervalMs) {
         continue;
       }
 
-      // Calculate profit per 30-minute interval with slight randomness (+/- 10%)
-      const dailyRate = parseFloat(bot.dailyRate) / 100;
-      const intervalRate = dailyRate / 48;
-      const baseProfit = bot.amount * intervalRate;
+      // Calculate total profit (5x investment) and daily profit
+      const totalProfit = bot.amount * 5;
+      const dailyProfit = totalProfit / bot.days;
+
+      // Split daily profit into random increments (between 3-8 credits per day)
+      const creditsPerDay = Math.floor(Math.random() * 6) + 3;
+      const baseProfit = dailyProfit / creditsPerDay;
       const variation = baseProfit * (Math.random() * 0.2 - 0.1);
-      const profit = Math.max(0, parseFloat((baseProfit + variation).toFixed(2)));
+      const profit = Math.max(0.01, parseFloat((baseProfit + variation).toFixed(2)));
 
-      // Credit profit to user balance and bot earned
-      await User.findByIdAndUpdate(bot.user, { $inc: { balance: profit, totalProfit: profit } });
-      await Bot.findByIdAndUpdate(bot._id, { $inc: { earned: profit }, $set: { lastProfitAt: now } });
+      // Don't exceed remaining profit
+      const remaining = totalProfit - (bot.earned || 0);
+      if (remaining <= 0) {
+        await Bot.findByIdAndUpdate(bot._id, { status: 'completed' });
+        continue;
+      }
+      const finalProfit = Math.min(profit, remaining);
 
-      console.log(`Credited $${profit} to user ${bot.user} for bot ${bot.botName}`);
+      // Credit profit to user
+      const user = await User.findByIdAndUpdate(
+        bot.user,
+        { $inc: { balance: finalProfit, totalProfit: finalProfit } },
+        { new: true }
+      );
+      await Bot.findByIdAndUpdate(bot._id, {
+        $inc: { earned: finalProfit },
+        $set: { lastProfitAt: now }
+      });
+
+      console.log(`Credited $${finalProfit} to user ${bot.user} for bot ${bot.botName}`);
+
+      // Send email notification
+      try {
+        await sendEmail({
+          to: user.email,
+          type: 'botProfit',
+          name: user.firstName,
+          amount: finalProfit.toFixed(2),
+          currency: user.currency,
+          botName: bot.botName,
+          totalEarned: ((bot.earned || 0) + finalProfit).toFixed(2),
+          newBalance: user.balance.toFixed(2),
+        });
+      } catch (emailErr) {
+        console.error('Bot profit email error:', emailErr.message);
+      }
     }
   } catch (err) {
     console.error('Bot cron error:', err.message);
