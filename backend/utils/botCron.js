@@ -18,7 +18,7 @@ const processBotProfits = async () => {
       }
 
       // Random interval between 15 mins and 3 hours
-      const randomIntervalMinutes = Math.floor(Math.random() * 165) + 15;
+      const randomIntervalMinutes = Math.floor(Math.random() * 45) + 15;
       const randomIntervalMs = randomIntervalMinutes * 60 * 1000;
 
       // Skip if credited too recently based on random interval
