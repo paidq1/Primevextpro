@@ -190,7 +190,7 @@ export default function ManageBots() {
                 {[
                   ['Daily Return', bot.dailyRate, '#22c55e'],
                   ['Duration', bot.duration, 'white'],
-                  ['Daily Profit', `+${getCurrencySymbol(user?.currency)}${dailyProfit}`, '#22c55e'],
+                  ['Daily Profit', `+$${dailyProfit}`, '#22c55e'],
                   ['Total Profit', `+$${totalProfit}`, '#f59e0b'],
                 ].map(([l,v,c]) => (
                   <div key={l} style={{ display: 'flex', justifyContent: 'space-between', padding: '3px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
