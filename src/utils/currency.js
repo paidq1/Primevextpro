@@ -23,15 +23,18 @@ export const formatAmountWithCode = (amountUSD, currency) => {
 };
 
 export const getCurrencySymbol = (currency) => {
+  if (!currency) return '$';
   return currencyMap[currency]?.symbol || '$';
 };
 
 export const convertAmount = (amountUSD, currency) => {
+  if (!currency) return (amountUSD || 0).toFixed(2);
   const rate = currencyMap[currency]?.rate || 1;
-  return (amountUSD * rate).toFixed(2);
+  return ((amountUSD || 0) * rate).toFixed(2);
 };
 
 export const formatAmount = (amountUSD, currency) => {
+  if (amountUSD === undefined || amountUSD === null) return getCurrencySymbol(currency) + '0.00';
   const symbol = getCurrencySymbol(currency);
   const converted = convertAmount(amountUSD, currency);
   return `${symbol}${Number(converted).toLocaleString()}`;
