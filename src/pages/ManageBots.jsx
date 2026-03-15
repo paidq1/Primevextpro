@@ -175,7 +175,7 @@ export default function ManageBots() {
         <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>Available Bot Plans</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
           {bots.map((bot, i) => {
-            const dailyProfit = (bot.amount * parseFloat(bot.dailyRate) / 100).toFixed(0);
+            const dailyProfit = ((bot.amount * 5) / bot.days).toFixed(0);
             const totalProfit = (bot.amount * 5).toFixed(0);
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
