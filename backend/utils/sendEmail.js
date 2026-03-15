@@ -62,7 +62,7 @@ const formatCurrency = (amountUSD, userCurrency) => {
   return `${symbol}${Number(converted).toLocaleString()}`;
 };
 
-const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code, botName, totalEarned, newBalance, stakePlan }) => {
+const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code, botName, totalEarned, newBalance, stakePlan, subject: customSubject }) => {
   const userCurrency = currency || 'US Dollar (USD)';
   const currSymbol = currencyMap[userCurrency] || '$';
   const formattedAmount = amount ? formatCurrency(parseFloat(amount), userCurrency) : '';
@@ -178,7 +178,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       ${regards}`);
 
   } else if (type === 'adminMessage') {
-    subject = 'Message from VertexTrade Pro';
+    subject = customSubject || resetUrl || 'Message from VertexTrade Pro';
     html = baseTemplate(`
       <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Message from Support</h2>
       <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">VertexTrade Pro Support Team</p>
