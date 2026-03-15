@@ -201,6 +201,9 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+
+            {/* Crypto News */}
+            <CryptoNews />
           </div>
 
           {/* Right Panel - Trade Assets */}
