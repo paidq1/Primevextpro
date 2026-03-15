@@ -333,6 +333,12 @@ router.put('/deposits/:id', adminAuth, async (req, res) => {
           amount: transaction.amount.toFixed(2),
           currency: user.currency || '$'
         });
+        await Notification.create({
+          user: user._id,
+          title: isApproved ? 'Deposit Approved' : 'Deposit Rejected',
+          message: isApproved ? `Your deposit of $${transaction.amount.toFixed(2)} has been approved and credited to your account.` : `Your deposit of $${transaction.amount.toFixed(2)} was rejected. Please contact support.`,
+          type: isApproved ? 'success' : 'error'
+        });
       }
     } catch(emailErr) { console.log('Email error:', emailErr.message); }
 
@@ -425,6 +431,14 @@ router.put('/kyc/:id', adminAuth, async (req, res) => {
         name: user.firstName
       });
     } catch(emailErr) { console.log('KYC email error:', emailErr.message); }
+    try {
+      await Notification.create({
+        user: user._id,
+        title: status === 'approved' ? 'KYC Verified' : 'KYC Rejected',
+        message: status === 'approved' ? 'Your identity has been verified. You now have full access.' : 'Your KYC was rejected. Please resubmit your documents.',
+        type: status === 'approved' ? 'success' : 'error'
+      });
+    } catch(e) {}
     res.json({ message: 'KYC ' + status, user });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });

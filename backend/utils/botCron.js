@@ -1,5 +1,6 @@
 const Bot = require('../models/Bot');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 const sendEmail = require('./sendEmail');
 
 const processBotProfits = async () => {
@@ -56,6 +57,16 @@ const processBotProfits = async () => {
       });
 
       console.log(`Credited $${finalProfit} to user ${bot.user} for bot ${bot.botName}`);
+
+      // Create notification
+      try {
+        await Notification.create({
+          user: bot.user,
+          title: 'Bot Profit Credited',
+          message: `$${finalProfit.toFixed(2)} has been credited to your account from your ${bot.botName}.`,
+          type: 'profit'
+        });
+      } catch(e) { console.error('Bot notification error:', e.message); }
 
       // Send email notification
       try {

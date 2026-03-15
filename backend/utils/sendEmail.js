@@ -62,7 +62,7 @@ const formatCurrency = (amountUSD, userCurrency) => {
   return `${symbol}${Number(converted).toLocaleString()}`;
 };
 
-const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code, botName, totalEarned, newBalance }) => {
+const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency, reason, message, package: pkg, planDetails, code, botName, totalEarned, newBalance, stakePlan }) => {
   const userCurrency = currency || 'US Dollar (USD)';
   const currSymbol = currencyMap[userCurrency] || '$';
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -220,6 +220,43 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 24px;line-height:1.7">You can log in to your account dashboard at any time to view your updated balance and monitor your trading activity.</p>
       ${btn(`${FRONTEND}/dashboard`, 'View Dashboard')}
       <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:16px 0 0;line-height:1.7;text-align:center">Thank you for choosing VertexTrade Pro for your trading and investment needs.</p>
+      ${regards}`);
+
+  } else if (type === 'stakeProfit') {
+    subject = `Staking Profit Credited - VertexTrade Pro`;
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Staking Profit Notification</h2>
+      <p style="color:#22c55e;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Profit successfully credited to your account</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Your <strong style="color:white">${planDetails?.plan || stakePlan || 'Staking'}</strong> plan has generated a profit. The amount has been credited to your account balance.</p>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:20px;margin:24px 0">
+        <p style="color:white;font-size:14px;font-weight:700;margin:0 0 14px">Profit Details</p>
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)">Profit Credited</td><td style="padding:10px 0;color:#22c55e;font-size:13px;font-weight:700;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">+$${amount}</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)">Stake Plan</td><td style="padding:10px 0;color:white;font-size:13px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">${planDetails?.plan || stakePlan || 'N/A'}</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)">Total Earned</td><td style="padding:10px 0;color:#22c55e;font-size:13px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${totalEarned || '0'}</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)">New Account Balance</td><td style="padding:10px 0;color:white;font-size:13px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${newBalance || '0'}</td></tr>
+        </table>
+      </div>
+      ${btn(`${FRONTEND}/dashboard`, 'View Dashboard')}
+      <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:16px 0 0;line-height:1.7;text-align:center">Thank you for choosing VertexTrade Pro for your trading and investment needs.</p>
+      ${regards}`);
+
+  } else if (type === 'stakeCompleted') {
+    subject = `Staking Completed - Principal Returned - VertexTrade Pro`;
+    html = baseTemplate(`
+      <h2 style="color:white;margin:0 0 8px;font-size:22px;font-weight:700">Staking Completed!</h2>
+      <p style="color:#6366f1;font-size:13px;margin:0 0 24px;font-weight:500;letter-spacing:0.3px">Your stake has matured</p>
+      ${greeting(name)}
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 24px;line-height:1.7">Your <strong style="color:white">${planDetails?.plan || stakePlan || 'Staking'}</strong> plan has successfully completed. Your principal amount has been returned to your account balance.</p>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:20px;margin:24px 0">
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)">Principal Returned</td><td style="padding:10px 0;color:#22c55e;font-size:13px;font-weight:700;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${amount}</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)">Total Earned</td><td style="padding:10px 0;color:#22c55e;font-size:13px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${totalEarned || '0'}</td></tr>
+          <tr><td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)">New Account Balance</td><td style="padding:10px 0;color:white;font-size:13px;font-weight:600;text-align:right;border-top:1px solid rgba(255,255,255,0.05)">$${newBalance || '0'}</td></tr>
+        </table>
+      </div>
+      ${btn(`${FRONTEND}/dashboard/stake`, 'Stake Again')}
       ${regards}`);
 
   } else if (type === 'registrationFee') {
