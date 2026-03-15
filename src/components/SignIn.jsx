@@ -10,6 +10,10 @@ const SignIn = () => {
   const [otp, setOtp] = useState('');
   const [otpEmail, setOtpEmail] = useState('');
   const [otpLoading, setOtpLoading] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [otpEmail, setOtpEmail] = useState('');
+  const [otpLoading, setOtpLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
@@ -46,6 +50,9 @@ const SignIn = () => {
         login(res.token, res.user);
         setSuccess(true);
         setTimeout(() => { window.location.replace('/dashboard'); }, 1500);
+      } else if (res.twoFactorRequired) {
+        setOtpEmail(res.email);
+        setShowOTP(true);
       } else if (res.twoFactorRequired) {
         setOtpEmail(res.email);
         setShowOTP(true);
@@ -170,6 +177,56 @@ const SignIn = () => {
               {forgotLoading ? 'Sending...' : 'Send Reset Link'}
             </button>
             <button onClick={() => { setShowForgot(false); setForgotMsg(''); }} style={{ width: '100%', padding: '9px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', color: 'rgba(255,255,255,0.5)', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+          </div>
+        </>
+      )}
+
+      {/* 2FA OTP Modal */}
+      {showOTP && (
+        <>
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 200 }} />
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: '#1e2538', padding: '28px 24px', width: '300px', borderRadius: '8px', border: '1px solid rgba(99,102,241,0.3)', textAlign: 'center' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+              <svg width='22' height='22' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/></svg>
+            </div>
+            <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Two-Factor Authentication</div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', marginBottom: '20px', lineHeight: '1.6' }}>
+              Enter the 6-digit code sent to<br/><strong style={{ color: 'white' }}>{otpEmail}</strong>
+            </div>
+            <input
+              value={otp}
+              onChange={e => setOtp(e.target.value)}
+              placeholder='000000'
+              maxLength={6}
+              style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '24px', padding: '12px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '8px', fontWeight: '700', marginBottom: '16px' }}
+            />
+            {errors.otp && <div style={{ color: '#ef4444', fontSize: '11px', marginBottom: '12px' }}>{errors.otp}</div>}
+            <button onClick={async () => {
+              if (!otp || otp.length !== 6) { setErrors({ otp: 'Please enter 6-digit code' }); return; }
+              setOtpLoading(true);
+              try {
+                const res = await fetch('https://vertextrades.onrender.com/api/auth/2fa/verify', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: otpEmail, otp })
+                }).then(r => r.json());
+                if (res.token) {
+                  login(res.token, res.user);
+                  setSuccess(true);
+                  setTimeout(() => window.location.replace('/dashboard'), 1500);
+                } else {
+                  setErrors({ otp: res.message || 'Invalid OTP' });
+                }
+              } catch(e) {
+                setErrors({ otp: 'Network error. Please try again.' });
+              }
+              setOtpLoading(false);
+            }} disabled={otpLoading} style={{ width: '100%', padding: '10px', background: otpLoading ? '#4b5563' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '13px', fontWeight: '600', cursor: otpLoading ? 'not-allowed' : 'pointer', marginBottom: '10px' }}>
+              {otpLoading ? 'Verifying...' : 'Verify Code'}
+            </button>
+            <button onClick={() => { setShowOTP(false); setOtp(''); }} style={{ width: '100%', padding: '9px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', color: 'rgba(255,255,255,0.5)', fontSize: '11px', cursor: 'pointer' }}>
+              Back to Login
+            </button>
           </div>
         </>
       )}
