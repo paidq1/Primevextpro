@@ -22,6 +22,10 @@ export default function Packages() {
   const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(urlTab || 'available');
+
+  useEffect(() => {
+    if (urlTab) setActiveTab(urlTab);
+  }, [urlTab]);
   const [amounts, setAmounts] = useState(plans.map(p => p.defaultAmt));
   const [confirmPlan, setConfirmPlan] = useState(null);
   const [success, setSuccess] = useState(false);
