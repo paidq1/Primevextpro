@@ -154,7 +154,6 @@ export default function Dashboard() {
             </div>
             {/* Chart */}
             <BTCChart />
-            <CryptoNews />
             {/* Transaction List */}
             <div style={{ background: '#252d3d', border: '1px solid rgba(99,102,241,0.5)', padding: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
@@ -203,7 +202,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Crypto News */}
+            <CryptoNews />
             
           </div>
 

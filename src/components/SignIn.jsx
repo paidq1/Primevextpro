@@ -178,21 +178,21 @@ const SignIn = () => {
       )}
 
       {showOTP && (
-        <div style={{ position: 'fixed', inset: 0, background: '#0d1117', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#1e2538', padding: '40px 32px', width: '100%', maxWidth: '420px', borderRadius: '0px', border: '1px solid rgba(99,102,241,0.3)', textAlign: 'center' }}>
+        <div style={{ position: 'fixed', inset: 0, background: '#0d1117', zIndex: 200, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: '60px' }}>
+          <div style={{ background: 'transparent', padding: '40px 32px', width: '100%', maxWidth: '420px', border: 'none', textAlign: 'center' }}>
             <div style={{ width: '52px', height: '52px', borderRadius: '0px', border: '2px solid #6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
               <svg width='22' height='22' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/></svg>
             </div>
-            <div style={{ color: 'white', fontSize: '18px', fontWeight: '700', marginBottom: '8px' }}>Two-Factor Authentication</div>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', marginBottom: '24px', lineHeight: '1.6' }}>
+            <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Two-Factor Authentication</div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', marginBottom: '16px', lineHeight: '1.6' }}>
               Enter the 6-digit code sent to<br/><strong style={{ color: 'white' }}>{otpEmail}</strong>
             </div>
             <input
               value={otp}
               onChange={e => setOtp(e.target.value)}
-              placeholder='000000'
+              placeholder='······' type='password'
               maxLength={6}
-              style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '24px', padding: '12px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '8px', fontWeight: '700', marginBottom: '16px' }}
+              style={{ width: '100%', background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '14px', padding: '10px', outline: 'none', boxSizing: 'border-box', borderRadius: '4px', textAlign: 'center', letterSpacing: '4px', fontWeight: '600', marginBottom: '16px' }}
             />
             {errors.otp && <div style={{ color: '#ef4444', fontSize: '11px', marginBottom: '12px' }}>{errors.otp}</div>}
             <button onClick={async () => {
@@ -215,10 +215,10 @@ const SignIn = () => {
                 setErrors({ otp: 'Network error. Please try again.' });
               }
               setOtpLoading(false);
-            }} disabled={otpLoading} style={{ width: '100%', padding: '12px', background: otpLoading ? '#4b5563' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '14px', fontWeight: '600', cursor: otpLoading ? 'not-allowed' : 'pointer', marginBottom: '10px' }}>
+            }} disabled={otpLoading} style={{ width: '100%', padding: '8px', background: otpLoading ? '#4b5563' : '#6366f1', border: 'none', borderRadius: '4px', color: 'white', fontSize: '12px', fontWeight: '600', cursor: otpLoading ? 'not-allowed' : 'pointer', marginBottom: '10px' }}>
               {otpLoading ? 'Verifying...' : 'Verify Code'}
             </button>
-            <button onClick={() => { setShowOTP(false); setOtp(''); }} style={{ width: '100%', padding: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', color: 'rgba(255,255,255,0.5)', fontSize: '12px', cursor: 'pointer' }}>
+            <button onClick={() => { setShowOTP(false); setOtp(''); }} style={{ width: '100%', padding: '7px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', color: 'rgba(255,255,255,0.5)', fontSize: '10px', cursor: 'pointer' }}>
               Back to Login
             </button>
           </div>
