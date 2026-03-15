@@ -10,9 +10,6 @@ const SignIn = () => {
   const [otp, setOtp] = useState('');
   const [otpEmail, setOtpEmail] = useState('');
   const [otpLoading, setOtpLoading] = useState(false);
-  const [showOTP, setShowOTP] = useState(false);
-  const [otp, setOtp] = useState('');
-  const [otpEmail, setOtpEmail] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
