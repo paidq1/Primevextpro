@@ -63,9 +63,12 @@ export default function LiveChat() {
         <div style={{ position: fullscreen ? 'fixed' : 'absolute', bottom: fullscreen ? 0 : '50px', right: fullscreen ? 0 : 0, top: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', width: fullscreen ? '100%' : '280px', height: fullscreen ? '100%' : 'auto', background: 'white', border: '1px solid rgba(99,102,241,0.4)', borderRadius: fullscreen ? '0' : '8px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', zIndex: 9999 }}>
           {/* Header */}
           <div style={{ background: '#6366f1', padding: '10px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Support</div>
-              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>We typically reply within minutes</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <img src="/support-avatar.jpg" alt="Support" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
+              <div>
+                <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Support</div>
+                <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>We typically reply within minutes</div>
+              </div>
             </div>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               <button onClick={() => setFullscreen(!fullscreen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '12px' }}>{fullscreen ? '⊡' : '⛶'}</button>
