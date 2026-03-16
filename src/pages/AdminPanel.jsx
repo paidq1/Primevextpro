@@ -943,7 +943,7 @@ export default function AdminPanel() {
 
         {/* Contacts */}
         {tab === 'contacts' && (
-          <div style={{ padding: '12px', display: 'flex', gap: '12px', height: '500px' }}>
+          <div style={{ padding: '12px', display: 'flex', gap: '12px', height: '600px' }}>
             <div style={{ width: '200px', flexShrink: 0, overflowY: 'auto', borderRight: '1px solid rgba(255,255,255,0.08)', paddingRight: '8px' }}>
               <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Conversations ({contacts.length})</div>
               {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
@@ -967,6 +967,12 @@ export default function AdminPanel() {
                     <div>
                       <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>{selectedChat.name || selectedChat.email}</span>
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginLeft: '8px' }}>{selectedChat.email}</span>
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '3px', flexWrap: 'wrap' }}>
+                        {selectedChat.userInfo?.device && <span style={{ color: '#6366f1', fontSize: '7px', background: 'rgba(99,102,241,0.1)', padding: '1px 5px', borderRadius: '3px' }}>📱 {selectedChat.userInfo.device}</span>}
+                        {selectedChat.userInfo?.browser && <span style={{ color: '#22c55e', fontSize: '7px', background: 'rgba(34,197,94,0.1)', padding: '1px 5px', borderRadius: '3px' }}>🌐 {selectedChat.userInfo.browser.includes('Chrome') ? 'Chrome' : selectedChat.userInfo.browser.includes('Firefox') ? 'Firefox' : selectedChat.userInfo.browser.includes('Safari') ? 'Safari' : 'Browser'}</span>}
+                        {selectedChat.userInfo?.page && <span style={{ color: '#f59e0b', fontSize: '7px', background: 'rgba(245,158,11,0.1)', padding: '1px 5px', borderRadius: '3px' }}>📄 {selectedChat.userInfo.page}</span>}
+                        <span style={{ color: selectedChat.visitorOnline ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '7px' }}>● {selectedChat.visitorOnline ? 'Online' : 'Offline'}</span>
+                      </div>
                     </div>
                     <button onClick={async () => {
                         if (!window.confirm('Delete this conversation?')) return;
@@ -988,11 +994,20 @@ export default function AdminPanel() {
                   </div>
                   <div style={{ flex: 1, overflowY: 'auto', background: '#151c27', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '8px' }}>
                     {selectedChat.messages?.map((msg, i) => (
-                      <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'admin' ? 'flex-end' : 'flex-start' }}>
-                        <div style={{ background: msg.sender === 'admin' ? '#6366f1' : '#2d3748', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '6px', maxWidth: '70%', lineHeight: '1.4' }}>
-                          {msg.text}
-                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString()}</div>
-                        </div>
+                      <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start' }}>
+                        {msg.sender === 'system' ? (
+                          <div style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', fontSize: '7px', padding: '3px 10px', borderRadius: '10px', textAlign: 'center' }}>
+                            {msg.text}
+                          </div>
+                        ) : (
+                          <div style={{ background: msg.sender === 'admin' ? '#6366f1' : '#2d3748', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '6px', maxWidth: '70%', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                            {msg.text}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px', gap: '6px' }}>
+                              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString()}</span>
+                              {msg.sender === 'admin' && <span style={{ color: msg.read ? '#22c55e' : 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

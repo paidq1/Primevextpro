@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const MessageSchema = new mongoose.Schema({
-  sender: { type: String, enum: ['user', 'admin'], required: true },
+  sender: { type: String, enum: ['user', 'admin', 'system'], required: true },
   text: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  read: { type: Boolean, default: false }
 });
 
 const ContactSchema = new mongoose.Schema({
@@ -14,6 +15,14 @@ const ContactSchema = new mongoose.Schema({
   status: { type: String, enum: ['open', 'resolved'], default: 'open' },
   unreadAdmin: { type: Number, default: 0 },
   unreadUser: { type: Number, default: 0 },
+  userInfo: {
+    browser: String,
+    device: String,
+    location: String,
+    page: String
+  },
+  adminJoined: { type: Boolean, default: false },
+  visitorOnline: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });

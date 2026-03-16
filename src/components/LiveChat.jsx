@@ -31,6 +31,21 @@ export default function LiveChat() {
     return () => clearInterval(interval);
   }, [token, open]);
 
+  // Send visitor left when closing chat or leaving page
+  useEffect(() => {
+    const handleLeave = () => {
+      if (token) {
+        fetch(`${API}/visitor-left`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          keepalive: true
+        });
+      }
+    };
+    window.addEventListener('beforeunload', handleLeave);
+    return () => window.removeEventListener('beforeunload', handleLeave);
+  }, [token]);
+
   useEffect(() => {
     if (open) {
       setUnread(0);
@@ -45,7 +60,14 @@ export default function LiveChat() {
       const res = await fetch(`${API}/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({ 
+        text,
+        userInfo: {
+          browser: navigator.userAgent,
+          device: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+          page: window.location.pathname
+        }
+      })
       });
       const data = await res.json();
       setChat(data);

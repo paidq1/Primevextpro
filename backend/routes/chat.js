@@ -9,7 +9,7 @@ const adminAuth = require('../middleware/adminAuth');
 // User: start or continue chat
 router.post('/send', auth, async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, userInfo } = req.body;
     if (!text) return res.status(400).json({ message: 'Message required' });
 
     let chat = await Contact.findOne({ userId: req.user.id, status: 'open' });
@@ -20,22 +20,19 @@ router.post('/send', auth, async (req, res) => {
         email: req.user.email,
         messages: [],
         unreadAdmin: 0,
-        unreadUser: 0
+        unreadUser: 0,
+        userInfo: userInfo || {}
       });
     }
 
     chat.messages.push({ sender: 'user', text });
     chat.unreadAdmin += 1;
+    chat.visitorOnline = true;
     chat.updatedAt = Date.now();
     await chat.save();
-    // Send email notification to admin
-    try {
-      await sendChatNotification({ name: chat.name, email: chat.email, message: text });
-    } catch(e) { console.log('Email notify error:', e.message); }
-    // Send push notification
-    try {
-      await sendAdminPush({ title: 'New Support Message', body: `${chat.name || chat.email}: ${text}`, url: '/admin' });
-    } catch(e) { console.log('Push notify error:', e.message); }
+
+    try { await sendChatNotification({ name: chat.name, email: chat.email, message: text }); } catch(e) {}
+    try { await sendAdminPush({ title: `New message from ${chat.name || chat.email}`, body: text, url: '/admin' }); } catch(e) {}
     res.json(chat);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
@@ -48,6 +45,23 @@ router.get('/my', auth, async (req, res) => {
     const chat = await Contact.findOne({ userId: req.user.id, status: 'open' });
     if (!chat) return res.json(null);
     chat.unreadUser = 0;
+    chat.visitorOnline = true;
+    await chat.save();
+    res.json(chat);
+  } catch (e) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// User: visitor left
+router.post('/visitor-left', auth, async (req, res) => {
+  try {
+    const chat = await Contact.findOne({ userId: req.user.id, status: 'open' });
+    if (!chat) return res.json(null);
+    chat.visitorOnline = false;
+    if (chat.adminJoined) {
+      chat.messages.push({ sender: 'system', text: 'Visitor has left the website' });
+    }
     await chat.save();
     res.json(chat);
   } catch (e) {
@@ -74,19 +88,31 @@ router.post('/reply/:chatId', adminAuth, async (req, res) => {
     const chat = await Contact.findById(req.params.chatId);
     if (!chat) return res.status(404).json({ message: 'Chat not found' });
 
+    // Add "Support joined" system message if first admin reply
+    if (!chat.adminJoined) {
+      chat.messages.push({ sender: 'system', text: 'VertexTrade Pro Support joined' });
+      chat.adminJoined = true;
+    }
+
     chat.messages.push({ sender: 'admin', text });
     chat.unreadUser += 1;
     chat.unreadAdmin = 0;
     chat.updatedAt = Date.now();
     await chat.save();
-    // Send email notification to admin
-    try {
-      await sendChatNotification({ name: chat.name, email: chat.email, message: text });
-    } catch(e) { console.log('Email notify error:', e.message); }
-    // Send push notification
-    try {
-      await sendAdminPush({ title: 'New Support Message', body: `${chat.name || chat.email}: ${text}`, url: '/admin' });
-    } catch(e) { console.log('Push notify error:', e.message); }
+    res.json(chat);
+  } catch (e) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Admin: mark messages as read
+router.patch('/read/:chatId', adminAuth, async (req, res) => {
+  try {
+    const chat = await Contact.findById(req.params.chatId);
+    if (!chat) return res.status(404).json({ message: 'Chat not found' });
+    chat.messages.forEach(m => { if (m.sender === 'user') m.read = true; });
+    chat.unreadAdmin = 0;
+    await chat.save();
     res.json(chat);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
@@ -96,11 +122,7 @@ router.post('/reply/:chatId', adminAuth, async (req, res) => {
 // Admin: resolve chat
 router.patch('/resolve/:chatId', adminAuth, async (req, res) => {
   try {
-    const chat = await Contact.findByIdAndUpdate(
-      req.params.chatId,
-      { status: 'resolved' },
-      { new: true }
-    );
+    const chat = await Contact.findByIdAndUpdate(req.params.chatId, { status: 'resolved' }, { new: true });
     res.json(chat);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
