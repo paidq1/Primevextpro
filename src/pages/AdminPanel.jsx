@@ -881,27 +881,76 @@ export default function AdminPanel() {
 
         {/* Contacts */}
         {tab === 'contacts' && (
-          <div style={{ padding: '12px' }}>
-            <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '12px' }}>Contact Messages ({contacts.length})</div>
-            {contacts.length === 0 ? (
-              <div style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>No contact messages yet</div>
-            ) : (
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr>{['Name', 'Email', 'Message', 'Date'].map(h => <th key={h} style={thStyle}>{h}</th>)}</tr>
-                </thead>
-                <tbody>
-                  {contacts.map((m, i) => (
-                    <tr key={i}>
-                      <td style={tdStyle}>{m.name}</td>
-                      <td style={tdStyle}>{m.email}</td>
-                      <td style={{ ...tdStyle, maxWidth: '200px', wordBreak: 'break-word' }}>{m.message}</td>
-                      <td style={{ ...tdStyle, color: 'rgba(255,255,255,0.4)' }}>{new Date(m.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+          <div style={{ padding: '12px', display: 'flex', gap: '12px', height: '500px' }}>
+            <div style={{ width: '200px', flexShrink: 0, overflowY: 'auto', borderRight: '1px solid rgba(255,255,255,0.08)', paddingRight: '8px' }}>
+              <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Conversations ({contacts.length})</div>
+              {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
+              {contacts.map((c, i) => (
+                <div key={i} onClick={() => setSelectedChat(c)} style={{ padding: '8px', marginBottom: '4px', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.03)', border: selectedChat?._id === c._id ? '1px solid rgba(99,102,241,0.4)' : '1px solid transparent', cursor: 'pointer', borderRadius: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{c.name || c.email || 'User'}</span>
+                    {c.unreadAdmin > 0 && <span style={{ background: '#ef4444', color: 'white', fontSize: '7px', padding: '1px 4px', borderRadius: '8px' }}>{c.unreadAdmin}</span>}
+                  </div>
+                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{c.messages?.length || 0} messages</div>
+                  <div style={{ color: c.status === 'open' ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{c.status}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+              {!selectedChat ? (
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>Select a conversation</div>
+              ) : (
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <div>
+                      <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>{selectedChat.name || selectedChat.email}</span>
+                      <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginLeft: '8px' }}>{selectedChat.email}</span>
+                    </div>
+                    {selectedChat.status === 'open' && (
+                      <button onClick={async () => {
+                        await fetch(`https://vertextrades.onrender.com/api/chat/resolve/${selectedChat._id}`, {
+                          method: 'PATCH', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                        });
+                        fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+                        setSelectedChat(prev => ({ ...prev, status: 'resolved' }));
+                      }} style={{ background: '#22c55e', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer', borderRadius: '3px' }}>Mark Resolved</button>
+                    )}
+                  </div>
+                  <div style={{ flex: 1, overflowY: 'auto', background: '#151c27', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '8px' }}>
+                    {selectedChat.messages?.map((msg, i) => (
+                      <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'admin' ? 'flex-end' : 'flex-start' }}>
+                        <div style={{ background: msg.sender === 'admin' ? '#6366f1' : '#2d3748', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '6px', maxWidth: '70%', lineHeight: '1.4' }}>
+                          {msg.text}
+                          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString()}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {selectedChat.status === 'open' && (
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)}
+                        onKeyDown={async e => {
+                          if (e.key === 'Enter' && adminReply?.trim()) {
+                            const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
+                            const data = await res.json();
+                            setSelectedChat(data);
+                            setAdminReply('');
+                          }
+                        }}
+                        placeholder="Type reply and press Enter..." style={{ flex: 1, background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 8px', outline: 'none', borderRadius: '4px' }}
+                      />
+                      <button onClick={async () => {
+                        if (!adminReply?.trim()) return;
+                        const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
+                        const data = await res.json();
+                        setSelectedChat(data);
+                        setAdminReply('');
+                      }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', borderRadius: '4px' }}>Send</button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         )}
 
