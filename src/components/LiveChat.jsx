@@ -84,10 +84,10 @@ export default function LiveChat() {
                   src="/support-avatar.jpg"
                   alt="Support"
                   onClick={() => setShowAvatar(true)}
-                  style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover', border: '2px solid white', cursor: 'pointer' }}
+                  style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid white', cursor: 'pointer' }}
                 />
                 <div>
-                  <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Support</div>
+                  <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Chat — VertexTrade Pro Support</div>
                   <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>We typically reply within minutes</div>
                 </div>
               </div>
