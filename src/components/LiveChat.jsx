@@ -60,8 +60,8 @@ export default function LiveChat() {
       // Get country from IP
       let country = '';
       try {
-        const geo = await fetch('https://ipapi.co/json/').then(r => r.json());
-        country = geo.country_name || '';
+        const geo = await fetch('https://ip-api.com/json/?fields=country').then(r => r.json());
+        country = geo.country || '';
       } catch(e) {}
 
       const res = await fetch(`${API}/send`, {
