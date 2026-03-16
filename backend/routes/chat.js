@@ -46,6 +46,8 @@ router.get('/my', auth, async (req, res) => {
     if (!chat) return res.json(null);
     chat.unreadUser = 0;
     chat.visitorOnline = true;
+    // Mark admin messages as read
+    chat.messages.forEach(m => { if (m.sender === 'admin') m.read = true; });
     await chat.save();
     res.json(chat);
   } catch (e) {

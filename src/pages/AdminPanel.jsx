@@ -94,10 +94,17 @@ export default function AdminPanel() {
   const [adminSending, setAdminSending] = useState(false);
   // Poll contacts in background for notifications
   useEffect(() => {
-    const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : [])).catch(() => {});
-    const interval = setInterval(fetchChats, 15000);
+    const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => {
+      setContacts(Array.isArray(d) ? d : []);
+      // Update selected chat messages if open
+      if (selectedChat) {
+        const updated = d.find(c => c._id === selectedChat._id);
+        if (updated) setSelectedChat(updated);
+      }
+    }).catch(() => {});
+    const interval = setInterval(fetchChats, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedChat]);
 
   // Chat notification sound + push
   const prevUnread = useRef(0);
@@ -192,7 +199,7 @@ export default function AdminPanel() {
     if (tab === 'contacts') {
       const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
       fetchChats();
-      const interval = setInterval(fetchChats, 10000);
+      const interval = setInterval(fetchChats, 3000);
       return () => clearInterval(interval);
     }
     if (tab === 'bots') api('/bots/all').then(d => setAllBots(Array.isArray(d) ? d : []));
@@ -1054,7 +1061,9 @@ export default function AdminPanel() {
                   </div>
                   {selectedChat.status === 'open' && (
                     <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#151c27' }}>
-                      <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', borderRadius: '4px' }}
+                      <input
+                        value={adminReply || ''}
+                        onChange={e => setAdminReply(e.target.value)}
                         onKeyDown={async e => {
                           if (e.key === 'Enter' && adminReply?.trim()) {
                             setAdminSending(true);
@@ -1065,15 +1074,23 @@ export default function AdminPanel() {
                             setAdminSending(false);
                           }
                         }}
-                        placeholder="Type reply and press Enter..." style={{ flex: 1, background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 8px', outline: 'none', borderRadius: '4px' }}
+                        placeholder="Type reply and press Enter..."
+                        style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', borderRadius: '4px' }}
                       />
                       <button onClick={async () => {
-                        if (!adminReply?.trim()) return;
-                        const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
-                        const data = await res.json();
-                        setSelectedChat(data);
-                        setAdminReply('');
-                      }} disabled={adminSending} style={{ background: adminSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: adminSending ? 'not-allowed' : 'pointer', borderRadius: '4px' }}>{adminSending ? 'Sending...' : 'Send'}</button>
+                        if (!adminReply?.trim() || adminSending) return;
+                        setAdminSending(true);
+                        try {
+                          const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
+                          const data = await res.json();
+                          setSelectedChat(data);
+                          setAdminReply('');
+                        } catch(e) {}
+                        setAdminSending(false);
+                      }} disabled={adminSending} style={{ background: adminSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: adminSending ? 'not-allowed' : 'pointer', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                        {adminSending ? 'Sending...' : 'Send'}
+                      </button>
+                    </div>
                     </div>
                   )}
                 </>
