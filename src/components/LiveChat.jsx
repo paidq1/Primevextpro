@@ -74,7 +74,7 @@ export default function LiveChat() {
           </div>
 
           {/* Messages */}
-          <div style={{ height: fullscreen ? 'calc(100vh - 120px)' : '220px', overflowY: 'auto', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px', background: 'white' }}>
+          <div style={{ height: fullscreen ? 'calc(100vh - 115px)' : '220px', overflowY: 'auto', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px', background: 'white' }}>
             {!chat || chat.messages?.length === 0 ? (
               <div style={{ color: 'rgba(0,0,0,0.3)', fontSize: '9px', textAlign: 'center', marginTop: '80px' }}>
                 Send a message to start chatting
@@ -95,7 +95,7 @@ export default function LiveChat() {
           </div>
 
           {/* Input */}
-          <div style={{ padding: '8px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '6px', background: 'white' }}>
+          <div style={{ padding: '8px', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', gap: '6px', background: 'white', position: fullscreen ? 'fixed' : 'relative', bottom: fullscreen ? 0 : 'auto', left: fullscreen ? 0 : 'auto', right: fullscreen ? 0 : 'auto', zIndex: 10000 }}>
             <input
               value={text}
               onChange={e => setText(e.target.value)}
