@@ -202,6 +202,7 @@ export default function Dashboard() {
               </div>
             </div>
 
+            <CryptoNews />
             
           </div>
 
