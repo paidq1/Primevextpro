@@ -121,11 +121,11 @@ export default function LiveChat() {
 
             {/* Messages */}
             <div style={{ height: fullscreen ? 'calc(100vh - 115px)' : '220px', overflowY: 'auto', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px', background: 'white' }}>
-              {!chat || !chat.messages || chat.messages.length === 0 ? (
+              {!chat || !chat.messages || chat.messages.filter(msg => msg.sender !== 'system').length === 0 ? (
                 <div style={{ color: 'rgba(0,0,0,0.3)', fontSize: '9px', textAlign: 'center', marginTop: '80px' }}>
                   Send a message to start chatting
                 </div>
-              ) : chat.messages.map((msg, i) => (
+              ) : chat.messages.filter(msg => msg.sender !== 'system').map((msg, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
                   <div style={{ background: msg.sender === 'user' ? '#6366f1' : '#f3f4f6', color: msg.sender === 'user' ? 'white' : '#1f2937', fontSize: '9px', padding: '6px 10px', borderRadius: msg.sender === 'user' ? '8px 8px 0 8px' : '8px 8px 8px 0', maxWidth: '75%', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
                     {msg.text}
