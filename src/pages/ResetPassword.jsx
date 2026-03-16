@@ -45,7 +45,7 @@ export default function ResetPassword() {
 
         {success ? (
           <div style={{ textAlign: 'center' }}>
-            <div style={{ color: '#22c55e', fontSize: '24px', marginBottom: '12px' }}>✓</div>
+            <div style={{ color: '#22c55e', fontSize: '24px', marginBottom: '12px' }}><svg width='24' height='24' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg></div>
             <div style={{ color: 'white', fontSize: '10px', marginBottom: '8px' }}>Password reset successfully!</div>
             <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Redirecting to login...</div>
           </div>

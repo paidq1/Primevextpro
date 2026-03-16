@@ -96,7 +96,7 @@ export default function WithdrawVerifyCode() {
           </button>
 
           <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '10px', margin: '16px 0 0', lineHeight: '1.6' }}>
-            🔒 Do not share your withdrawal code with anyone including support staff.
+            Do not share your withdrawal code with anyone including support staff.
           </p>
         </div>
       </div>

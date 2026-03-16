@@ -616,7 +616,7 @@ export default function AdminPanel() {
                     <td style={tdStyle}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
                         <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)', color: u.isBlocked ? '#ef4444' : '#22c55e' }}>
-                          {u.isBlocked ? '🔒 Blocked' : '✅ Active'}
+                          {u.isBlocked ? 'Blocked' : 'Active'}
                         </span>
                         <span style={{ padding: '4px 8px', borderRadius: '0px', fontSize: '10px', fontWeight: '700', background: u.accountUpgraded ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)', color: u.accountUpgraded ? '#22c55e' : '#ef4444' }}>
                           {u.accountUpgraded ? '⬆ Upgraded' : '⬆ Not Upgraded'}

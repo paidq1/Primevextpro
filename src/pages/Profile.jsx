@@ -495,7 +495,7 @@ export default function Profile() {
             } catch(e) {}
             setTwoFALoading(false);
           }} disabled={twoFALoading} style={{ padding: '8px 16px', background: twoFAEnabled ? '#22c55e' : '#374151', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', minWidth: '80px' }}>
-            {twoFALoading ? '...' : twoFAEnabled ? '✅ ON' : '⭕ OFF'}
+            {twoFALoading ? '...' : twoFAEnabled ? 'ON' : 'OFF'}
           </button>
         </div>
       </div>
