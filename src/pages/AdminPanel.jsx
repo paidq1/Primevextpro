@@ -944,11 +944,17 @@ export default function AdminPanel() {
         {/* Contacts */}
         {tab === 'contacts' && (
           <div style={{ padding: '12px', display: 'flex', gap: '12px', height: '600px' }}>
-            <div style={{ width: '200px', flexShrink: 0, overflowY: 'auto', borderRight: '1px solid rgba(255,255,255,0.08)', paddingRight: '8px' }}>
+            <div style={{ width: '180px', flexShrink: 0, overflowY: 'auto', borderRight: '1px solid rgba(255,255,255,0.08)', paddingRight: '8px' }}>
               <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Conversations ({contacts.length})</div>
               {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
               {contacts.map((c, i) => (
-                <div key={i} onClick={() => setSelectedChat(c)} style={{ padding: '8px', marginBottom: '4px', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.03)', border: selectedChat?._id === c._id ? '1px solid rgba(99,102,241,0.4)' : '1px solid transparent', cursor: 'pointer', borderRadius: '4px' }}>
+                <div key={i} onClick={async () => {
+                  setSelectedChat(c);
+                  await fetch(`https://vertextrades.onrender.com/api/chat/read/${c._id}`, {
+                    method: 'PATCH',
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                  });
+                }} style={{ padding: '8px', marginBottom: '4px', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.03)', border: selectedChat?._id === c._id ? '1px solid rgba(99,102,241,0.4)' : '1px solid transparent', cursor: 'pointer', borderRadius: '4px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{c.name || c.email || 'User'}</span>
                     {c.unreadAdmin > 0 && <span style={{ background: '#ef4444', color: 'white', fontSize: '7px', padding: '1px 4px', borderRadius: '8px' }}>{c.unreadAdmin}</span>}
@@ -993,23 +999,50 @@ export default function AdminPanel() {
                     )}
                   </div>
                   <div style={{ flex: 1, overflowY: 'auto', background: '#151c27', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '8px' }}>
-                    {selectedChat.messages?.map((msg, i) => (
-                      <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start' }}>
-                        {msg.sender === 'system' ? (
-                          <div style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', fontSize: '7px', padding: '3px 10px', borderRadius: '10px', textAlign: 'center' }}>
-                            {msg.text}
-                          </div>
-                        ) : (
-                          <div style={{ background: msg.sender === 'admin' ? '#6366f1' : '#2d3748', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '6px', maxWidth: '70%', lineHeight: '1.4', wordBreak: 'break-word' }}>
-                            {msg.text}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px', gap: '6px' }}>
-                              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString()}</span>
-                              {msg.sender === 'admin' && <span style={{ color: msg.read ? '#22c55e' : 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>}
+                    {selectedChat.messages?.map((msg, i) => {
+                      const msgDate = new Date(msg.createdAt).toDateString();
+                      const prevDate = i > 0 ? new Date(selectedChat.messages[i-1].createdAt).toDateString() : null;
+                      const showDate = msgDate !== prevDate;
+                      const initials = (selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase();
+                      return (
+                        <div key={i}>
+                          {showDate && (
+                            <div style={{ textAlign: 'center', margin: '8px 0' }}>
+                              <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.4)', fontSize: '7px', padding: '2px 8px', borderRadius: '8px' }}>
+                                {new Date(msg.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                              </span>
                             </div>
+                          )}
+                          <div style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'admin' ? 'flex-end' : 'flex-start', alignItems: 'flex-end', gap: '6px', marginBottom: '4px' }}>
+                            {msg.sender === 'system' ? (
+                              <div style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', fontSize: '7px', padding: '3px 10px', borderRadius: '10px', textAlign: 'center', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <img src="/support-avatar.jpg" style={{ width: '14px', height: '14px', borderRadius: '50%', objectFit: 'cover' }} />
+                                {msg.text} <span style={{ color: 'rgba(255,255,255,0.3)' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                              </div>
+                            ) : msg.sender === 'user' ? (
+                              <>
+                                <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '7px', color: 'white', fontWeight: '700', flexShrink: 0 }}>{initials}</div>
+                                <div style={{ background: '#2d3748', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                                  {msg.text}
+                                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div style={{ background: '#6366f1', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '8px 8px 0 8px', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                                  {msg.text}
+                                  <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '2px', gap: '4px' }}>
+                                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                                    <span style={{ color: msg.read ? '#22c55e' : 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>
+                                  </div>
+                                </div>
+                                <img src="/support-avatar.jpg" style={{ width: '22px', height: '22px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
+                              </>
+                            )}
                           </div>
-                        )}
-                      </div>
-                    ))}
+                        </div>
+                      );
+                    })}
                   </div>
                   {selectedChat.status === 'open' && (
                     <div style={{ display: 'flex', gap: '6px' }}>

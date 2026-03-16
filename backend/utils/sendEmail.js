@@ -1,4 +1,13 @@
 const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
+
+const gmailTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS
+  }
+});
 
 const baseTemplate = (content) => `
 <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0d0d0d;">
@@ -405,8 +414,9 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
   }
 
   console.log('Sending email type:', type || 'passwordReset', 'to:', to);
-  const { data, error } = await resend.emails.send({
-    from: 'VertexTrade Pro <onboarding@resend.dev>',
+  // Use Gmail SMTP
+  await gmailTransporter.sendMail({
+    from: `VertexTrade Pro <${process.env.GMAIL_USER}>`,
     to,
     subject,
     html,
@@ -435,8 +445,8 @@ async function sendChatNotification({ name, email, message }) {
     <a href="https://vertextradspro.vercel.app/admin" style="display:inline-block;background:#6366f1;color:white;padding:10px 20px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:600;margin-top:8px">View in Admin Panel →</a>
   `);
   
-  await resend.emails.send({
-    from: 'VertexTrade Pro <onboarding@resend.dev>',
+  await gmailTransporter.sendMail({
+    from: `VertexTrade Pro <${process.env.GMAIL_USER}>`,
     to: process.env.ADMIN_EMAIL || 'vertextradespro@gmail.com',
     subject: `New Support Message from ${name || email}`,
     html
