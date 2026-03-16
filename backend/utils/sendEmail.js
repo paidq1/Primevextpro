@@ -443,8 +443,9 @@ async function sendChatNotification({ name, email, message }) {
     <a href="https://vertextradspro.vercel.app/admin" style="display:inline-block;background:#6366f1;color:white;padding:10px 20px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:600;margin-top:8px">View in Admin Panel →</a>
   `);
   
-  await gmailTransporter.sendMail({
-    from: `VertexTrade Pro <${process.env.GMAIL_USER}>`,
+  const resend2 = new Resend(process.env.RESEND_API_KEY);
+  await resend2.emails.send({
+    from: 'VertexTrade Pro <support@vertextradepro.com>',
     to: process.env.ADMIN_EMAIL || 'vertextradespro@gmail.com',
     subject: `New Support Message from ${name || email}`,
     html
