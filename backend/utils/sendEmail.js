@@ -415,23 +415,21 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
 
   console.log('Sending email type:', type || 'passwordReset', 'to:', to);
   console.log('Using Gmail SMTP:', process.env.GMAIL_USER);
-  // Use Gmail SMTP
   try {
     const info = await gmailTransporter.sendMail({
-    from: `VertexTrade Pro <${process.env.GMAIL_USER}>`,
-    to,
-    subject,
-    html,
-  });
-
-  if (error) {
-    console.error('Resend error:', error);
-    throw new Error(error.message);
+      from: `VertexTrade Pro <${process.env.GMAIL_USER}>`,
+      to,
+      subject,
+      html
+    });
+    console.log('Email sent successfully:', info.messageId);
+    return { success: true };
+  } catch (emailErr) {
+    console.error('Gmail SMTP error:', emailErr.message);
+    throw emailErr;
   }
-
-  console.log('Email sent:', data);
-  return { success: true };
 };
+
 
 module.exports = sendEmail;
 
