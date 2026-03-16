@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -90,6 +90,46 @@ export default function AdminPanel() {
   const [contacts, setContacts] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [adminReply, setAdminReply] = useState('');
+  // Poll contacts in background for notifications
+  useEffect(() => {
+    const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : [])).catch(() => {});
+    const interval = setInterval(fetchChats, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Chat notification sound + push
+  const prevUnread = useRef(0);
+  useEffect(() => {
+    if (tab !== 'contacts') {
+      const totalUnread = contacts.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0);
+      if (totalUnread > prevUnread.current) {
+        // Sound alert
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const o = ctx.createOscillator();
+          const g = ctx.createGain();
+          o.connect(g); g.connect(ctx.destination);
+          o.frequency.value = 880;
+          g.gain.setValueAtTime(0.3, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+          o.start(ctx.currentTime);
+          o.stop(ctx.currentTime + 0.4);
+        } catch(e) {}
+        // Browser push
+        if (Notification.permission === 'granted') {
+          new Notification('New Support Message', { body: 'A user sent a new chat message', icon: '/logo.png' });
+        }
+      }
+      prevUnread.current = totalUnread;
+    }
+  }, [contacts]);
+
+  // Request push permission on load
+  useEffect(() => {
+    if (Notification.permission === 'default') Notification.requestPermission();
+  }, []);
+
+
   const [allBots, setAllBots] = useState([]);
   const [allStakes, setAllStakes] = useState([]);
   const [botSearch, setBotSearch] = useState('');
@@ -130,7 +170,12 @@ export default function AdminPanel() {
     if (tab === 'withdrawals') api('/withdrawals').then(setWithdrawals);
     if (tab === 'kyc') api('/kyc').then(setKyc);
     if (tab === 'trades') api('/trades').then(setTrades);
-    if (tab === 'contacts') fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+    if (tab === 'contacts') {
+      const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+      fetchChats();
+      const interval = setInterval(fetchChats, 10000);
+      return () => clearInterval(interval);
+    }
     if (tab === 'bots') api('/bots/all').then(d => setAllBots(Array.isArray(d) ? d : []));
     if (tab === 'stakes') api('/stakes/all').then(d => setAllStakes(Array.isArray(d) ? d : []));
   }, [tab]);
@@ -906,6 +951,14 @@ export default function AdminPanel() {
                       <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>{selectedChat.name || selectedChat.email}</span>
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginLeft: '8px' }}>{selectedChat.email}</span>
                     </div>
+                    <button onClick={async () => {
+                        if (!window.confirm('Delete this conversation?')) return;
+                        await fetch(`https://vertextrades.onrender.com/api/chat/delete/${selectedChat._id}`, {
+                          method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                        });
+                        fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+                        setSelectedChat(null);
+                      }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '3px 8px', cursor: 'pointer', borderRadius: '3px' }}>Delete</button>
                     {selectedChat.status === 'open' && (
                       <button onClick={async () => {
                         await fetch(`https://vertextrades.onrender.com/api/chat/resolve/${selectedChat._id}`, {

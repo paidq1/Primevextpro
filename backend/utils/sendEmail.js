@@ -422,3 +422,25 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
 };
 
 module.exports = sendEmail;
+
+async function sendChatNotification({ name, email, message }) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const html = baseTemplate(`
+    <h2 style="color:white;font-size:20px;margin:0 0 16px">New Support Message 💬</h2>
+    <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0 0 8px">You have a new live chat message:</p>
+    <div style="background:#1e2538;border:1px solid rgba(99,102,241,0.3);border-radius:8px;padding:16px;margin:16px 0">
+      <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:0 0 4px">From: <strong style="color:white">${name || 'Unknown'} (${email})</strong></p>
+      <p style="color:white;font-size:14px;margin:8px 0 0;line-height:1.6">${message}</p>
+    </div>
+    <a href="https://vertextradspro.vercel.app/admin" style="display:inline-block;background:#6366f1;color:white;padding:10px 20px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:600;margin-top:8px">View in Admin Panel →</a>
+  `);
+  
+  await resend.emails.send({
+    from: 'VertexTrade Pro <noreply@vertextradepro.website>',
+    to: process.env.ADMIN_EMAIL || 'vertextradespro@gmail.com',
+    subject: `New Support Message from ${name || email}`,
+    html
+  });
+}
+
+module.exports.sendChatNotification = sendChatNotification;
