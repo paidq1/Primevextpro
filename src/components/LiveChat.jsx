@@ -79,7 +79,7 @@ export default function LiveChat() {
               <div style={{ color: 'rgba(0,0,0,0.3)', fontSize: '9px', textAlign: 'center', marginTop: '80px' }}>
                 Send a message to start chatting
               </div>
-            ) : chat.messages.map((msg, i) => (
+            ) : (chat?.messages || []).map((msg, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
                 <div style={{
                   background: msg.sender === 'user' ? '#6366f1' : '#f3f4f6',
