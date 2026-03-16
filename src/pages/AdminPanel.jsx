@@ -1091,7 +1091,6 @@ export default function AdminPanel() {
                         {adminSending ? 'Sending...' : 'Send'}
                       </button>
                     </div>
-                    </div>
                   )}
                 </>
               )}
