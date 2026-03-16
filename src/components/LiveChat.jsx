@@ -57,15 +57,23 @@ export default function LiveChat() {
     if (!text.trim() || loading) return;
     setLoading(true);
     try {
+      // Get country from IP
+      let country = '';
+      try {
+        const geo = await fetch('https://ipapi.co/json/').then(r => r.json());
+        country = geo.country_name || '';
+      } catch(e) {}
+
       const res = await fetch(`${API}/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
         text,
         userInfo: {
           browser: navigator.userAgent,
           device: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
-          page: window.location.pathname
+          page: window.location.pathname,
+          country
         }
       })
       });
