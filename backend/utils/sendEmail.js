@@ -406,7 +406,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
 
   console.log('Sending email type:', type || 'passwordReset', 'to:', to);
   const { data, error } = await resend.emails.send({
-    from: 'VertexTrade Pro <support@vertextradepro.com>',
+    from: 'VertexTrade Pro <onboarding@resend.dev>',
     to,
     subject,
     html,
@@ -436,7 +436,7 @@ async function sendChatNotification({ name, email, message }) {
   `);
   
   await resend.emails.send({
-    from: 'VertexTrade Pro <noreply@vertextradepro.website>',
+    from: 'VertexTrade Pro <onboarding@resend.dev>',
     to: process.env.ADMIN_EMAIL || 'vertextradespro@gmail.com',
     subject: `New Support Message from ${name || email}`,
     html

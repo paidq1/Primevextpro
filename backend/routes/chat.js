@@ -3,6 +3,7 @@ const router = express.Router();
 const Contact = require('../models/Contact');
 const auth = require('../middleware/auth');
 const { sendChatNotification } = require('../utils/sendEmail');
+const { sendAdminPush } = require('./push');
 const adminAuth = require('../middleware/adminAuth');
 
 // User: start or continue chat
@@ -31,6 +32,10 @@ router.post('/send', auth, async (req, res) => {
     try {
       await sendChatNotification({ name: chat.name, email: chat.email, message: text });
     } catch(e) { console.log('Email notify error:', e.message); }
+    // Send push notification
+    try {
+      await sendAdminPush({ title: 'New Support Message', body: `${chat.name || chat.email}: ${text}`, url: '/admin' });
+    } catch(e) { console.log('Push notify error:', e.message); }
     res.json(chat);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
@@ -78,6 +83,10 @@ router.post('/reply/:chatId', adminAuth, async (req, res) => {
     try {
       await sendChatNotification({ name: chat.name, email: chat.email, message: text });
     } catch(e) { console.log('Email notify error:', e.message); }
+    // Send push notification
+    try {
+      await sendAdminPush({ title: 'New Support Message', body: `${chat.name || chat.email}: ${text}`, url: '/admin' });
+    } catch(e) { console.log('Push notify error:', e.message); }
     res.json(chat);
   } catch (e) {
     res.status(500).json({ message: 'Server error' });
