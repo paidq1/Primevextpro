@@ -944,9 +944,9 @@ export default function AdminPanel() {
 
         {/* Contacts */}
         {tab === 'contacts' && (
-          <div style={{ padding: '12px', display: 'flex', gap: '12px', height: '600px' }}>
-            <div style={{ width: chatFullscreen ? '0px' : '180px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : '1px solid rgba(255,255,255,0.08)', paddingRight: chatFullscreen ? '0' : '8px', overflow: 'hidden', transition: 'width 0.2s' }}>
-              <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Conversations ({contacts.length})</div>
+          <div style={{ padding: '0', display: 'flex', gap: '0', height: '600px', background: '#1a1f2e' }}>
+            <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : '1px solid rgba(255,255,255,0.06)', paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: '#151c27' }}>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', marginBottom: '8px', padding: '12px 12px 0' }}>CONVERSATIONS ({contacts.length})</div>
               {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
               {contacts.map((c, i) => (
                 <div key={i} onClick={async () => {
@@ -956,7 +956,7 @@ export default function AdminPanel() {
                     method: 'PATCH',
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                   });
-                }} style={{ padding: '8px', marginBottom: '4px', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.03)', border: selectedChat?._id === c._id ? '1px solid rgba(99,102,241,0.4)' : '1px solid transparent', cursor: 'pointer', borderRadius: '4px' }}>
+                }} style={{ padding: '10px 12px', marginBottom: '0', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.15)' : 'transparent', borderLeft: selectedChat?._id === c._id ? '3px solid #6366f1' : '3px solid transparent', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>{c.name || c.email || 'User'}</span>
                     {c.unreadAdmin > 0 && <span style={{ background: '#ef4444', color: 'white', fontSize: '7px', padding: '1px 4px', borderRadius: '8px' }}>{c.unreadAdmin}</span>}
@@ -966,12 +966,12 @@ export default function AdminPanel() {
                 </div>
               ))}
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#1a1f2e' }}>
               {!selectedChat ? (
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>Select a conversation</div>
               ) : (
                 <>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', borderBottom: '1px solid rgba(255,255,255,0.06)', background: '#151c27' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       {chatFullscreen && (
                         <button onClick={() => { setChatFullscreen(false); setSelectedChat(null); }} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '16px', padding: '0' }}>←</button>
@@ -1052,8 +1052,8 @@ export default function AdminPanel() {
                     })}
                   </div>
                   {selectedChat.status === 'open' && (
-                    <div style={{ display: 'flex', gap: '6px' }}>
-                      <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)}
+                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#151c27' }}>
+                      <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', borderRadius: '4px' }}
                         onKeyDown={async e => {
                           if (e.key === 'Enter' && adminReply?.trim()) {
                             const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
