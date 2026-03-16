@@ -61,7 +61,9 @@ router.post('/visitor-left', auth, async (req, res) => {
     const chat = await Contact.findOne({ userId: req.user.id, status: 'open' });
     if (!chat) return res.json(null);
     chat.visitorOnline = false;
-    if (chat.adminJoined) {
+    const lastMsg = chat.messages[chat.messages.length - 1];
+    const alreadyLeft = lastMsg && lastMsg.text === 'Visitor has left the website';
+    if (chat.adminJoined && !alreadyLeft) {
       chat.messages.push({ sender: 'system', text: 'Visitor has left the website' });
     }
     await chat.save();
