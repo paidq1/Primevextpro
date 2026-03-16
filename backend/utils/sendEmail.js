@@ -414,6 +414,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
   }
 
   console.log('Sending email type:', type || 'passwordReset', 'to:', to);
+  console.log('Using Gmail SMTP:', process.env.GMAIL_USER);
   // Use Gmail SMTP
   await gmailTransporter.sendMail({
     from: `VertexTrade Pro <${process.env.GMAIL_USER}>`,
