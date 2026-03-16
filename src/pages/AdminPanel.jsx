@@ -89,6 +89,7 @@ export default function AdminPanel() {
   // Activity log
   const [contacts, setContacts] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
+  const [chatFullscreen, setChatFullscreen] = useState(false);
   const [adminReply, setAdminReply] = useState('');
   // Poll contacts in background for notifications
   useEffect(() => {
@@ -944,12 +945,13 @@ export default function AdminPanel() {
         {/* Contacts */}
         {tab === 'contacts' && (
           <div style={{ padding: '12px', display: 'flex', gap: '12px', height: '600px' }}>
-            <div style={{ width: '180px', flexShrink: 0, overflowY: 'auto', borderRight: '1px solid rgba(255,255,255,0.08)', paddingRight: '8px' }}>
+            <div style={{ width: chatFullscreen ? '0px' : '180px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : '1px solid rgba(255,255,255,0.08)', paddingRight: chatFullscreen ? '0' : '8px', overflow: 'hidden', transition: 'width 0.2s' }}>
               <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Conversations ({contacts.length})</div>
               {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
               {contacts.map((c, i) => (
                 <div key={i} onClick={async () => {
                   setSelectedChat(c);
+                  setChatFullscreen(true);
                   await fetch(`https://vertextrades.onrender.com/api/chat/read/${c._id}`, {
                     method: 'PATCH',
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -970,7 +972,11 @@ export default function AdminPanel() {
               ) : (
                 <>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      {chatFullscreen && (
+                        <button onClick={() => { setChatFullscreen(false); setSelectedChat(null); }} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '16px', padding: '0' }}>←</button>
+                      )}
+                      <div>
                       <span style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>{selectedChat.name || selectedChat.email}</span>
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginLeft: '8px' }}>{selectedChat.email}</span>
                       <div style={{ display: 'flex', gap: '8px', marginTop: '3px', flexWrap: 'wrap' }}>
@@ -978,6 +984,7 @@ export default function AdminPanel() {
                         {selectedChat.userInfo?.browser && <span style={{ color: '#22c55e', fontSize: '7px', background: 'rgba(34,197,94,0.1)', padding: '1px 5px', borderRadius: '3px' }}>🌐 {selectedChat.userInfo.browser.includes('Chrome') ? 'Chrome' : selectedChat.userInfo.browser.includes('Firefox') ? 'Firefox' : selectedChat.userInfo.browser.includes('Safari') ? 'Safari' : 'Browser'}</span>}
                         {selectedChat.userInfo?.page && <span style={{ color: '#f59e0b', fontSize: '7px', background: 'rgba(245,158,11,0.1)', padding: '1px 5px', borderRadius: '3px' }}>📄 {selectedChat.userInfo.page}</span>}
                         <span style={{ color: selectedChat.visitorOnline ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '7px' }}>● {selectedChat.visitorOnline ? 'Online' : 'Offline'}</span>
+                      </div>
                       </div>
                     </div>
                     <button onClick={async () => {
