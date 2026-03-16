@@ -85,7 +85,7 @@ export default function LiveChat() {
                   background: msg.sender === 'user' ? '#6366f1' : '#f3f4f6',
                   color: msg.sender === 'user' ? 'white' : '#1f2937', fontSize: '9px', padding: '6px 10px',
                   borderRadius: msg.sender === 'user' ? '8px 8px 0 8px' : '8px 8px 8px 0',
-                  maxWidth: '75%', lineHeight: '1.4'
+                  maxWidth: '75%', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', overflowWrap: 'break-word'
                 }}>
                   {msg.text}
                 </div>
@@ -101,7 +101,7 @@ export default function LiveChat() {
               onChange={e => setText(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
               placeholder="Type a message..."
-              style={{ flex: 1, background: '#f3f4f6', border: '1px solid rgba(0,0,0,0.1)', color: '#1f2937', fontSize: '9px', padding: '6px 8px', outline: 'none', borderRadius: '4px' }}
+              style={{ flex: 1, background: '#f3f4f6', border: '1px solid #6366f1', color: '#1f2937', fontSize: '9px', padding: '6px 8px', outline: 'none', borderRadius: '4px' }}
             />
             <button onClick={sendMessage} disabled={loading} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', padding: '6px 10px', cursor: 'pointer', borderRadius: '4px', fontWeight: '600' }}>
               {loading ? '...' : 'Send'}
