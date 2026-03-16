@@ -19,7 +19,6 @@ import InvestmentOpportunities from "./components/InvestmentOpportunities";
 import ContactUs from "./components/ContactUs";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
-import Smartsupp from "./components/Smartsupp";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Deposit from "./pages/Deposit";
@@ -50,6 +49,7 @@ import Terms from "./pages/Terms";
 import CheckEmail from "./pages/CheckEmail";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
+import LiveChat from "./components/LiveChat";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -95,8 +95,7 @@ function HomePage() {
       <ContactUs />
       <FAQ />
       <Footer />
-      <Smartsupp />
-    </div>
+      </div>
   );
 }
 
@@ -137,7 +136,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-    <Smartsupp />
+    <LiveChat />
     </>
   );
 }

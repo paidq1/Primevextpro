@@ -202,7 +202,6 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <CryptoNews />
             
           </div>
 
@@ -250,6 +249,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+      <CryptoNews />
       </div>
     </div>
   );

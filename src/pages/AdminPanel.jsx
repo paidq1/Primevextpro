@@ -88,6 +88,8 @@ export default function AdminPanel() {
 
   // Activity log
   const [contacts, setContacts] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [adminReply, setAdminReply] = useState('');
   const [allBots, setAllBots] = useState([]);
   const [allStakes, setAllStakes] = useState([]);
   const [botSearch, setBotSearch] = useState('');
@@ -128,7 +130,7 @@ export default function AdminPanel() {
     if (tab === 'withdrawals') api('/withdrawals').then(setWithdrawals);
     if (tab === 'kyc') api('/kyc').then(setKyc);
     if (tab === 'trades') api('/trades').then(setTrades);
-    if (tab === 'contacts') api('/contacts').then(d => setContacts(Array.isArray(d) ? d : []));
+    if (tab === 'contacts') fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
     if (tab === 'bots') api('/bots/all').then(d => setAllBots(Array.isArray(d) ? d : []));
     if (tab === 'stakes') api('/stakes/all').then(d => setAllStakes(Array.isArray(d) ? d : []));
   }, [tab]);

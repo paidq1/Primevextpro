@@ -81,6 +81,7 @@ app.use('/api/bots', require('./routes/bot'));
 app.use('/api/referral', require('./routes/referral'));
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/chat', require('./routes/chat'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'VertexTrade Pro API running' }));
 app.get('/', (req, res) => res.json({ name: 'VertexTrade Pro API', status: 'running' }));
