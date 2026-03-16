@@ -91,6 +91,7 @@ export default function AdminPanel() {
   const [selectedChat, setSelectedChat] = useState(null);
   const [chatFullscreen, setChatFullscreen] = useState(false);
   const [adminReply, setAdminReply] = useState('');
+  const [adminSending, setAdminSending] = useState(false);
   // Poll contacts in background for notifications
   useEffect(() => {
     const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : [])).catch(() => {});
@@ -1056,10 +1057,12 @@ export default function AdminPanel() {
                       <input value={adminReply || ''} onChange={e => setAdminReply(e.target.value)} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', borderRadius: '4px' }}
                         onKeyDown={async e => {
                           if (e.key === 'Enter' && adminReply?.trim()) {
+                            setAdminSending(true);
                             const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
                             const data = await res.json();
                             setSelectedChat(data);
                             setAdminReply('');
+                            setAdminSending(false);
                           }
                         }}
                         placeholder="Type reply and press Enter..." style={{ flex: 1, background: '#2d3748', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '6px 8px', outline: 'none', borderRadius: '4px' }}
@@ -1070,7 +1073,7 @@ export default function AdminPanel() {
                         const data = await res.json();
                         setSelectedChat(data);
                         setAdminReply('');
-                      }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: 'pointer', borderRadius: '4px' }}>Send</button>
+                      }} disabled={adminSending} style={{ background: adminSending ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '8px', padding: '6px 12px', cursor: adminSending ? 'not-allowed' : 'pointer', borderRadius: '4px' }}>{adminSending ? 'Sending...' : 'Send'}</button>
                     </div>
                   )}
                 </>
