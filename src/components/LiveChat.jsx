@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 const API = 'https://vertextrades.onrender.com/api/chat';
 
 export default function LiveChat() {
+  if (window.location.pathname.startsWith('/admin')) return null;
   const { user } = useAuth();
   const token = localStorage.getItem('token');
   const [open, setOpen] = useState(false);
