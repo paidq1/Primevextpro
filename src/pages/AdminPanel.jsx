@@ -953,8 +953,8 @@ export default function AdminPanel() {
 
         {/* Contacts */}
         {tab === 'contacts' && (
-          <div style={{ padding: '0', display: 'flex', gap: '0', height: '600px', background: '#1a1f2e' }}>
-            <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : '1px solid rgba(255,255,255,0.06)', paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: '#151c27' }}>
+          <div style={{ padding: '0', display: 'flex', gap: '0', height: '600px', background: '#000000' }}>
+            <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : '1px solid rgba(255,255,255,0.06)', paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: '#0a0a0a' }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', marginBottom: '8px', padding: '12px 12px 0' }}>CONVERSATIONS ({contacts.length})</div>
               {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
               {contacts.map((c, i) => (
@@ -975,14 +975,14 @@ export default function AdminPanel() {
                 </div>
               ))}
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#1a1f2e' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000000' }}>
               {!selectedChat ? (
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>Select a conversation</div>
               ) : (
                 <>
                   {/* Smartsupp-style user info panel */}
-                  <div style={{ background: '#151c27', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <div style={{ background: '#111111', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         {chatFullscreen && (
                           <button onClick={() => { setChatFullscreen(false); setSelectedChat(null); }} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '18px', padding: '0' }}>←</button>
@@ -1048,7 +1048,7 @@ export default function AdminPanel() {
                       </div>
                     </div>
                   </div>
-                  <div style={{ flex: 1, overflowY: 'auto', background: '#151c27', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '8px' }}>
+                  <div style={{ flex: 1, overflowY: 'auto', background: '#000000', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '8px' }}>
                     {selectedChat.messages?.map((msg, i) => {
                       const msgDate = new Date(msg.createdAt).toDateString();
                       const prevDate = i > 0 ? new Date(selectedChat.messages[i-1].createdAt).toDateString() : null;
@@ -1072,14 +1072,14 @@ export default function AdminPanel() {
                             ) : msg.sender === 'user' ? (
                               <>
                                 <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '7px', color: 'white', fontWeight: '700', flexShrink: 0 }}>{initials}</div>
-                                <div style={{ background: '#2d3748', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                                <div style={{ background: '#1a1a1a', color: 'white', fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
                                   {msg.text}
                                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
                                 </div>
                               </>
                             ) : (
                               <>
-                                <div style={{ background: '#6366f1', color: 'white', fontSize: '8px', padding: '6px 10px', borderRadius: '8px 8px 0 8px', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                                <div style={{ background: '#4f46e5', color: 'white', fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 0 8px', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
                                   {msg.text}
                                   <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '2px', gap: '4px' }}>
                                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
@@ -1095,7 +1095,7 @@ export default function AdminPanel() {
                     })}
                   </div>
                   {selectedChat.status === 'open' && (
-                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#151c27' }}>
+                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.08)', background: '#111111' }}>
                       <input
                         value={adminReply || ''}
                         onChange={e => setAdminReply(e.target.value)}
@@ -1110,7 +1110,7 @@ export default function AdminPanel() {
                           }
                         }}
                         placeholder="Type reply and press Enter..."
-                        style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', borderRadius: '4px' }}
+                        style={{ flex: 1, background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '10px 12px', outline: 'none', borderRadius: '4px' }}
                       />
                       <button onClick={async () => {
                         if (!adminReply?.trim() || adminSending) return;
