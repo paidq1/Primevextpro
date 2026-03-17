@@ -122,12 +122,12 @@ export default function LiveChat() {
             {/* Header */}
             <div style={{ background: '#6366f1', padding: '10px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <img
-                  src="/support-avatar.jpg"
-                  alt="Support"
-                  onClick={() => setShowAvatar(true)}
-                  style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer', boxShadow: '0 0 0 2px rgba(255,255,255,0.6)', background: 'white', padding: '2px', filter: 'brightness(1.4) contrast(1.1)' }}
-                />
+                <div style={{ position: 'relative', flexShrink: 0 }}>
+                  <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: 'linear-gradient(135deg, #818cf8, #4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 2px rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.3)' }}>
+                    <span style={{ color: 'white', fontSize: '14px', fontWeight: '800', letterSpacing: '0.5px' }}>VT</span>
+                  </div>
+                  <div style={{ position: 'absolute', bottom: '2px', right: '2px', width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e', border: '2px solid #6366f1' }} />
+                </div>
                 <div>
                   <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Chat — VertexTrade Pro Support</div>
                   <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>We typically reply within minutes</div>
