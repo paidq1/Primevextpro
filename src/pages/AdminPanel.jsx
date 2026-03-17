@@ -371,6 +371,7 @@ export default function AdminPanel() {
     if (t === 'deposits') return `Deposits${deposits.filter(d => d.status === 'pending').length ? ' (' + deposits.filter(d => d.status === 'pending').length + ')' : ''}`;
     if (t === 'withdrawals') return `Withdrawals${withdrawals.filter(w => w.status === 'pending').length ? ' (' + withdrawals.filter(w => w.status === 'pending').length + ')' : ''}`;
     if (t === 'kyc') return `KYC${kyc.filter(k => k.kycStatus === 'submitted').length ? ' (' + kyc.filter(k => k.kycStatus === 'submitted').length + ')' : ''}`;
+    if (t === 'contacts') { const unread = contacts.reduce((sum, c) => sum + (c.unreadAdmin || 0), 0); return `Contacts${unread ? ' (' + unread + ')' : ''}`; }
     return t.charAt(0).toUpperCase() + t.slice(1);
   };
 
