@@ -981,7 +981,7 @@ export default function AdminPanel() {
               ) : (
                 <>
                   {/* Smartsupp-style user info panel */}
-                  <div style={{ background: '#111111', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div style={{ background: '#0a0a0a', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         {chatFullscreen && (
@@ -1072,7 +1072,7 @@ export default function AdminPanel() {
                             ) : msg.sender === 'user' ? (
                               <>
                                 <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '7px', color: 'white', fontWeight: '700', flexShrink: 0 }}>{initials}</div>
-                                <div style={{ background: '#1a1a1a', color: 'white', fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
+                                <div style={{ background: '#1c1c1c', color: 'white', fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 8px 0', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
                                   {msg.text}
                                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginTop: '2px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
                                 </div>
@@ -1095,7 +1095,7 @@ export default function AdminPanel() {
                     })}
                   </div>
                   {selectedChat.status === 'open' && (
-                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.08)', background: '#111111' }}>
+                    <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.08)', background: '#0a0a0a' }}>
                       <input
                         value={adminReply || ''}
                         onChange={e => setAdminReply(e.target.value)}
@@ -1110,7 +1110,7 @@ export default function AdminPanel() {
                           }
                         }}
                         placeholder="Type reply and press Enter..."
-                        style={{ flex: 1, background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '10px 12px', outline: 'none', borderRadius: '4px' }}
+                        style={{ flex: 1, background: '#111111', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '10px', padding: '10px 12px', outline: 'none', borderRadius: '4px' }}
                       />
                       <button onClick={async () => {
                         if (!adminReply?.trim() || adminSending) return;
