@@ -121,12 +121,12 @@ export default function LiveChat() {
 
             {/* Header */}
             <div style={{ background: '#6366f1', padding: '10px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={(e) => { e.stopPropagation(); setShowAvatar(true); }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <img
                   src="/support-avatar.jpg"
                   alt="Support"
                   onClick={() => setShowAvatar(true)}
-                  style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid white', cursor: 'pointer' }}
+                  style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer' }}
                 />
                 <div>
                   <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Chat — VertexTrade Pro Support</div>
