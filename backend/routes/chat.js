@@ -28,6 +28,7 @@ router.post('/send', auth, async (req, res) => {
     chat.messages.push({ sender: 'user', text });
     chat.unreadAdmin += 1;
     chat.visitorOnline = true;
+    if (userInfo) chat.userInfo = userInfo; // Update userInfo every message
     chat.updatedAt = Date.now();
     await chat.save();
 
