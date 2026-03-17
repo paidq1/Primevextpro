@@ -953,7 +953,7 @@ export default function AdminPanel() {
 
         {/* Contacts */}
         {tab === 'contacts' && (
-          <div style={{ padding: '0', display: 'flex', gap: '0', height: '600px', background: '#000000' }}>
+          <div style={{ padding: '0', display: 'flex', gap: '0', height: 'calc(100vh - 210px)', background: '#000000' }}>
             <div style={{ width: chatFullscreen ? '0px' : '220px', flexShrink: 0, overflowY: 'auto', borderRight: chatFullscreen ? 'none' : '1px solid rgba(255,255,255,0.06)', paddingRight: '0', overflow: 'hidden', transition: 'width 0.2s', background: '#0a0a0a' }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontWeight: '700', marginBottom: '8px', padding: '12px 12px 0' }}>CONVERSATIONS ({contacts.length})</div>
               {contacts.length === 0 && <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>No chats yet</div>}
