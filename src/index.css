@@ -130,3 +130,19 @@ img {
 
 
 
+
+/* Fix mobile keyboard pushing content up */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+@supports (height: 100dvh) {
+  .full-height {
+    height: 100dvh !important;
+  }
+}
+
+input, textarea {
+  font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
+}
