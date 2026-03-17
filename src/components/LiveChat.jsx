@@ -62,7 +62,6 @@ export default function LiveChat() {
       try {
         country = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       } catch(e) {}
-      } catch(e) {}
 
       const res = await fetch(`${API}/send`, {
         method: 'POST',
