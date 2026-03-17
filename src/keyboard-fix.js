@@ -1,18 +1,13 @@
-// Prevent mobile keyboard from resizing layout
-const fix = () => {
-  const vh = window.innerHeight;
-  document.documentElement.style.setProperty('--real-vh', `${vh}px`);
+const setVh = () => {
+  const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 };
 
-fix();
-window.addEventListener('resize', fix);
-window.addEventListener('orientationchange', () => setTimeout(fix, 300));
+setVh();
 
-// Scroll active input into view when keyboard opens
-document.addEventListener('focusin', (e) => {
-  if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
-    setTimeout(() => {
-      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 300);
-  }
-});
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', setVh);
+  window.visualViewport.addEventListener('scroll', setVh);
+} else {
+  window.addEventListener('resize', setVh);
+}
