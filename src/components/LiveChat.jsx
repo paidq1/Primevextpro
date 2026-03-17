@@ -151,20 +151,20 @@ export default function LiveChat() {
 
             {/* Messages */}
             <div style={{ height: fullscreen ? 'calc(100vh - 115px)' : '220px', overflowY: 'auto', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px', background: 'white' }}>
-              {!chat || !chat.messages || chat.messages.filter(msg => !(msg.sender === 'system' && msg.text.includes('left'))).length === 0 ? (
+              {!chat || !chat.messages || chat.messages.filter(msg => !(msg.sender === 'system' && msg.text?.includes('left'))).length === 0 ? (
                 <div style={{ color: 'rgba(0,0,0,0.3)', fontSize: '9px', textAlign: 'center', marginTop: '80px' }}>
                   Send a message to start chatting
                 </div>
-              ) : chat.messages.filter(msg => !(msg.sender === 'system' && msg.text.includes('left'))).map((msg, i) => (
+              ) : chat.messages.filter(msg => !(msg.sender === 'system' && msg.text?.includes('left'))).map((msg, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: msg.sender === 'system' ? 'center' : msg.sender === 'user' ? 'flex-end' : 'flex-start', marginBottom: '4px' }}>
                   {msg.sender === 'system' ? (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '3px 10px', borderRadius: '10px' }}>
                       <img src="/support-avatar.jpg" style={{ width: '14px', height: '14px', borderRadius: '50%', objectFit: 'cover' }} />
-                      <span style={{ color: 'rgba(0,0,0,0.5)', fontSize: '8px' }}>{msg.text}</span>
+                      <span style={{ color: 'rgba(0,0,0,0.5)', fontSize: '8px' }}>{msg.image ? <img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block' }} /> : msg.text}</span>
                     </div>
                   ) : (
                     <div style={{ background: msg.sender === 'user' ? '#6366f1' : '#f3f4f6', color: msg.sender === 'user' ? 'white' : '#1f2937', fontSize: '9px', padding: '6px 10px', borderRadius: msg.sender === 'user' ? '8px 8px 0 8px' : '8px 8px 8px 0', maxWidth: '75%', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
-                      {msg.text}
+                      {msg.image ? <img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block' }} /> : msg.text}
                     </div>
                   )}
                 </div>
