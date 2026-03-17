@@ -365,7 +365,7 @@ export default function AdminPanel() {
     showMsg('Trade updated');
   };
 
-  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'bots', 'stakes', 'activity', 'contacts'];
+  const tabs = ['stats', 'users', 'deposits', 'withdrawals', 'kyc', 'trades', 'bots', 'stakes', 'contacts', 'activity'];
   const pendingCount = (arr) => arr.filter(x => x.status === 'pending' || x.kycStatus === 'submitted').length;
   const tabLabel = (t) => {
     if (t === 'deposits') return `Deposits${deposits.filter(d => d.status === 'pending').length ? ' (' + deposits.filter(d => d.status === 'pending').length + ')' : ''}`;
