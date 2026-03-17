@@ -132,7 +132,7 @@ const handleWithdraw = async () => {
   const statusColor = (s) => s === 'completed' ? '#22c55e' : s === 'pending' ? '#f59e0b' : '#ef4444';
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}

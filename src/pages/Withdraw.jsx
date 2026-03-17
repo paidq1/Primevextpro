@@ -92,7 +92,7 @@ export default function Withdraw() {
   ).slice(0, show);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Method Selector Modal */}

@@ -1,7 +1,7 @@
 export default function LoadingScreen() {
   return (
     <div style={{
-      minHeight: '100vh',
+      minHeight: 'calc(var(--vh, 1vh) * 100)',
       background: '#0e1628',
       display: 'flex',
       flexDirection: 'column',

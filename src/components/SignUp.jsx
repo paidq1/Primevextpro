@@ -157,7 +157,7 @@ const SignUp = () => {
   const errStyle = { color: '#ef4444', fontSize: 'clamp(6px, 1.6vw, 8px)', marginTop: '2px' };
 
   if (checkEmail) return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0e1628' }}>
+    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0e1628' }}>
       <div style={{ background: '#1a2e4a', width: '340px', padding: '40px 24px', textAlign: 'center', borderRadius: '4px' }}>
         <div style={{ marginBottom: '20px' }}>
           <svg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg' style={{ margin: '0 auto' }}>
@@ -186,7 +186,7 @@ const SignUp = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa', padding: '8px', boxSizing: 'border-box', position: 'relative' }}>
+    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa', padding: '8px', boxSizing: 'border-box', position: 'relative' }}>
       <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
         <div style={{ width: '600px', height: '600px', borderRadius: '50%', background: 'rgba(180,190,205,0.25)', position: 'absolute' }} />
         <div style={{ width: '420px', height: '420px', borderRadius: '50%', background: 'rgba(180,190,205,0.25)', position: 'absolute' }} />

@@ -37,7 +37,7 @@ export default function SupportPage() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
+    <div style={{ display: 'flex', height: 'calc(var(--vh, 1vh) * 100)', width: '100vw', background: '#000', overflow: 'hidden', fontFamily: 'sans-serif' }}>
       {/* Sidebar */}
       <div style={{ width: selectedChat ? '0px' : '100%', maxWidth: '280px', flexShrink: 0, background: '#0a0a0a', borderRight: '1px solid rgba(255,255,255,0.06)', overflowY: 'auto', transition: 'width 0.2s', overflow: 'hidden' }}>
         <div style={{ padding: '16px 12px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>

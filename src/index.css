@@ -146,3 +146,14 @@ html, body {
 input, textarea {
   font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
 }
+
+/* Remove the position fixed we just added */
+body {
+  position: static !important;
+}
+
+/* Use dynamic viewport height variable */
+.use-vh {
+  height: calc(var(--vh, 1vh) * 100) !important;
+  min-height: calc(var(--vh, 1vh) * 100) !important;
+}

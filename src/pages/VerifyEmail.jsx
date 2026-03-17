@@ -29,7 +29,7 @@ export default function VerifyEmail() {
   }, [token]);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div style={{ background: 'white', borderRadius: '8px', padding: '40px 32px', width: '100%', maxWidth: '400px', textAlign: 'center' }}>
         
         {status === 'verifying' && (
