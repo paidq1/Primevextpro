@@ -123,12 +123,12 @@ export default function LiveChat() {
             <div style={{ background: '#6366f1', padding: '14px 12px', borderRadius: '8px 8px 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div style={{ position: 'relative', flexShrink: 0 }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#0d1117', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 2px rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.3)' }}>
-                    <svg viewBox="0 0 40 40" fill="none" style={{ width: '26px', height: '26px' }}>
+                  <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#0d1117', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 2px rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.3)' }}>
+                    <svg viewBox="0 0 40 40" fill="none" style={{ width: '34px', height: '34px' }}>
                       {/* Hexagon logo */}
-                      <path d="M20 3L5 11V23L20 37L35 23V11L20 3Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
-                      <path d="M20 8L9 14V22L20 32L31 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
-                      <path d="M20 13L13 17V22L20 27L27 22V17L20 13Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
+                      <path d="M20 3L5 11V23L20 37L35 23V11L20 3Z" fill="#111827" stroke="#818cf8" strokeWidth="1.5"/>
+                      <path d="M20 8L9 14V22L20 32L31 22V14L20 8Z" fill="#111827" stroke="#818cf8" strokeWidth="1.2"/>
+                      <path d="M20 13L13 17V22L20 27L27 22V17L20 13Z" fill="#a5b4fc" stroke="#a5b4fc" strokeWidth="1"/>
                       {/* Headset */}
                       <path d="M13 22C13 17.582 16.134 14 20 14C23.866 14 27 17.582 27 22" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
                       <rect x="11" y="22" width="3" height="5" rx="1.5" fill="white"/>
