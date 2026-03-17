@@ -1079,11 +1079,13 @@ export default function AdminPanel() {
                               </>
                             ) : (
                               <>
-                                <div style={{ background: '#4f46e5', color: 'white', fontSize: '9px', padding: msg.image ? '4px' : '8px 12px', borderRadius: '8px 8px 0 8px', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word', overflow: 'hidden' }}>
-                                  {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
-                                  <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '2px', gap: '4px' }}>
-                                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
-                                    <span style={{ color: msg.read ? '#22c55e' : 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px', maxWidth: '65%' }}>
+                                  <div style={{ background: '#4f46e5', color: 'white', fontSize: '9px', padding: msg.image ? '4px' : '8px 12px', borderRadius: '8px 8px 0 8px', lineHeight: '1.4', wordBreak: 'break-word', overflow: 'hidden' }}>
+                                    {msg.image ? <a href={msg.image} target='_blank' rel='noopener noreferrer'><img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /></a> : msg.text}
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                                    <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                                    <span style={{ color: msg.read ? '#22c55e' : 'rgba(255,255,255,0.4)', fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>
                                   </div>
                                 </div>
                                 <img src="/support-avatar.jpg" style={{ width: '22px', height: '22px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
