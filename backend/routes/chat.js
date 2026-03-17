@@ -16,7 +16,7 @@ router.post('/send', auth, async (req, res) => {
     if (!chat) {
       chat = new Contact({
         userId: req.user.id,
-        name: req.user.name,
+        name: req.user.firstName,
         email: req.user.email,
         messages: [],
         unreadAdmin: 0,
