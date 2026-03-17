@@ -160,11 +160,11 @@ export default function LiveChat() {
                   {msg.sender === 'system' ? (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)', padding: '3px 10px', borderRadius: '10px' }}>
                       <img src="/support-avatar.jpg" style={{ width: '14px', height: '14px', borderRadius: '50%', objectFit: 'cover' }} />
-                      <span style={{ color: 'rgba(0,0,0,0.5)', fontSize: '8px' }}>{msg.image ? <img src={msg.image} onClick={() => window.open(msg.image, '_blank')} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /> : msg.text}</span>
+                      <span style={{ color: 'rgba(0,0,0,0.5)', fontSize: '8px' }}>{msg.image ? <img src={msg.image} onClick={() => { const a = document.createElement('a'); a.href = msg.image; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); document.body.removeChild(a); }} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /> : msg.text}</span>
                     </div>
                   ) : (
                     <div style={{ background: msg.sender === 'user' ? '#6366f1' : '#f3f4f6', color: msg.sender === 'user' ? 'white' : '#1f2937', fontSize: '9px', padding: '6px 10px', borderRadius: msg.sender === 'user' ? '8px 8px 0 8px' : '8px 8px 8px 0', maxWidth: '75%', lineHeight: '1.4', wordBreak: 'break-word', whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
-                      {msg.image ? <img src={msg.image} onClick={() => window.open(msg.image, '_blank')} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /> : msg.text}
+                      {msg.image ? <img src={msg.image} onClick={() => { const a = document.createElement('a'); a.href = msg.image; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); document.body.removeChild(a); }} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block', cursor: 'pointer' }} /> : msg.text}
                     </div>
                   )}
                 </div>
