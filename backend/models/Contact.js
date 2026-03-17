@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const MessageSchema = new mongoose.Schema({
   sender: { type: String, enum: ['user', 'admin', 'system'], required: true },
-  text: { type: String, required: true },
+  text: { type: String, required: false, default: '' },
+  image: { type: String },
   createdAt: { type: Date, default: Date.now },
   read: { type: Boolean, default: false }
 });
