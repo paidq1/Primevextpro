@@ -18,7 +18,7 @@ const ContactSchema = new mongoose.Schema({
   userInfo: {
     browser: String,
     device: String,
-    location: String,
+    country: String,
     page: String
   },
   adminJoined: { type: Boolean, default: false },
