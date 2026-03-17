@@ -97,6 +97,48 @@ export default function SupportPage() {
               </div>
             </div>
 
+            {/* User Info Panel */}
+            <div style={{ background: '#0a0a0a', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '14px 16px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#4b5563', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', color: 'white', fontWeight: '700', flexShrink: 0 }}>
+                {(selectedChat.name || selectedChat.email || 'U').slice(0,2).toUpperCase()}
+              </div>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <div style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>{selectedChat.name || 'Unknown'}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '10px' }}>
+                  <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/><polyline points='22,6 12,13 2,6'/></svg>
+                  {selectedChat.email}
+                </div>
+                {selectedChat.userInfo?.country && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '10px' }}>
+                    <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'/><circle cx='12' cy='9' r='2.5'/></svg>
+                    {selectedChat.userInfo.country}
+                  </div>
+                )}
+                {selectedChat.userInfo?.device && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '10px' }}>
+                    <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='5' y='2' width='14' height='20' rx='2'/></svg>
+                    {selectedChat.userInfo.device}
+                  </div>
+                )}
+                {selectedChat.userInfo?.browser && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '10px' }}>
+                    <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='2' y1='12' x2='22' y2='12'/><path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10'/></svg>
+                    {selectedChat.userInfo.browser.includes('Chrome') ? 'Chrome' : selectedChat.userInfo.browser.includes('Firefox') ? 'Firefox' : selectedChat.userInfo.browser.includes('Safari') ? 'Safari' : 'Browser'}
+                  </div>
+                )}
+                {selectedChat.userInfo?.page && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '10px' }}>
+                    <svg width='10' height='10' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/><path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/></svg>
+                    <span style={{ color: '#6366f1' }}>vertextradspro.vercel.app{selectedChat.userInfo.page}</span>
+                  </div>
+                )}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: selectedChat.visitorOnline ? '#22c55e' : 'rgba(255,255,255,0.3)', fontSize: '10px' }}>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: selectedChat.visitorOnline ? '#22c55e' : 'rgba(255,255,255,0.3)' }}></div>
+                  {selectedChat.visitorOnline ? 'Online' : 'Offline'}
+                </div>
+              </div>
+            </div>
+
             {/* Messages */}
             <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {selectedChat.messages?.map((msg, i) => {
