@@ -154,7 +154,8 @@ router.post('/reply-image/:chatId', adminAuth, uploadMem.single('image'), async 
     if (!req.file) return res.status(400).json({ message: 'No image provided' });
     const chat = await Contact.findById(req.params.chatId);
     if (!chat) return res.status(404).json({ message: 'Chat not found' });
-    const url = await uploadToCloudinary(req.file.buffer);
+    const result = await uploadToCloudinary(req.file);
+    const url = result.secure_url;
     if (!chat.adminJoined) {
       chat.messages.push({ sender: 'system', text: 'VertexTrade Pro Support joined' });
       chat.adminJoined = true;
