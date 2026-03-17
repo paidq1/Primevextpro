@@ -57,12 +57,11 @@ export default function LiveChat() {
     if (!text.trim() || loading) return;
     setLoading(true);
     try {
-      // Get country from IP
+      // Get location from timezone
       let country = '';
       try {
-        const geo = await fetch('https://ip-api.com/json/?fields=country').then(r => r.json());
-        console.log('GEO:', geo);
-        country = geo.country || '';
+        country = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      } catch(e) {}
       } catch(e) {}
 
       const res = await fetch(`${API}/send`, {
