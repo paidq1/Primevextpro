@@ -130,10 +130,10 @@ export default function LiveChat() {
                       <path d="M20 8L9 14V22L20 32L31 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
                       <path d="M20 13L13 17V22L20 27L27 22V17L20 13Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
                       {/* Headset */}
-                      <path d="M14 21C14 17.686 16.686 15 20 15C23.314 15 26 17.686 26 21" stroke="#a5b4fc" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-                      <rect x="12.5" y="21" width="2.5" height="4" rx="1.2" fill="#a5b4fc"/>
-                      <rect x="25" y="21" width="2.5" height="4" rx="1.2" fill="#a5b4fc"/>
-                      <path d="M27.5 24.5C27.5 25.5 27 26.5 26 27L24 27.5" stroke="#a5b4fc" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+                      <path d="M13 22C13 17.582 16.134 14 20 14C23.866 14 27 17.582 27 22" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                      <rect x="11" y="22" width="3" height="5" rx="1.5" fill="white"/>
+                      <rect x="26" y="22" width="3" height="5" rx="1.5" fill="white"/>
+                      <path d="M29 26.5C29 28 28 29.5 26.5 30L24 30.5" stroke="white" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
                     </svg>
                   </div>
                   <div style={{ position: 'absolute', bottom: '2px', right: '2px', width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', border: '2px solid #6366f1' }} />
