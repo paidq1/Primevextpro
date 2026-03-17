@@ -1079,8 +1079,8 @@ export default function AdminPanel() {
                               </>
                             ) : (
                               <>
-                                <div style={{ background: '#4f46e5', color: 'white', fontSize: '9px', padding: '8px 12px', borderRadius: '8px 8px 0 8px', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word' }}>
-                                  {msg.text}
+                                <div style={{ background: '#4f46e5', color: 'white', fontSize: '9px', padding: msg.image ? '4px' : '8px 12px', borderRadius: '8px 8px 0 8px', maxWidth: '65%', lineHeight: '1.4', wordBreak: 'break-word', overflow: 'hidden' }}>
+                                  {msg.image ? <img src={msg.image} style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '6px', display: 'block' }} /> : msg.text}
                                   <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '2px', gap: '4px' }}>
                                     <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
                                     <span style={{ color: msg.read ? '#22c55e' : 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{msg.read ? '✓✓' : '✓'}</span>
@@ -1096,6 +1096,23 @@ export default function AdminPanel() {
                   </div>
                   {selectedChat.status === 'open' && (
                     <div style={{ display: 'flex', gap: '6px', padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.08)', background: '#0a0a0a' }}>
+                      <input type="file" accept="image/*" id="chatImageUpload" style={{ display: 'none' }} onChange={async e => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        setAdminSending(true);
+                        const fd = new FormData();
+                        fd.append('image', file);
+                        try {
+                          const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply-image/${selectedChat._id}`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
+                          const data = await res.json();
+                          setSelectedChat(data);
+                        } catch(e) {}
+                        setAdminSending(false);
+                        e.target.value = '';
+                      }} />
+                      <button onClick={() => document.getElementById('chatImageUpload').click()} style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', color: 'white', padding: '6px 10px', borderRadius: '4px', cursor: 'pointer', flexShrink: 0 }}>
+                        <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>
+                      </button>
                       <input
                         value={adminReply || ''}
                         onChange={e => setAdminReply(e.target.value)}

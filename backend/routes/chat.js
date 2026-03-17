@@ -144,4 +144,31 @@ router.delete('/delete/:chatId', adminAuth, async (req, res) => {
   }
 });
 
+// Admin: upload image in chat
+const multer = require('multer');
+const { uploadToCloudinary } = require('../utils/cloudinary');
+const uploadMem = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
+
+router.post('/reply-image/:chatId', adminAuth, uploadMem.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ message: 'No image provided' });
+    const chat = await Contact.findById(req.params.chatId);
+    if (!chat) return res.status(404).json({ message: 'Chat not found' });
+    const url = await uploadToCloudinary(req.file.buffer);
+    if (!chat.adminJoined) {
+      chat.messages.push({ sender: 'system', text: 'VertexTrade Pro Support joined' });
+      chat.adminJoined = true;
+    }
+    chat.messages.push({ sender: 'admin', text: '', image: url });
+    chat.unreadUser += 1;
+    chat.unreadAdmin = 0;
+    chat.updatedAt = Date.now();
+    await chat.save();
+    res.json(chat);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
