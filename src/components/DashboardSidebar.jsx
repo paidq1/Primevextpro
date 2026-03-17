@@ -85,7 +85,7 @@ export default function DashboardSidebar({ open, onClose }) {
     <>
       {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100 }} />}
       <div style={{
-        position: 'fixed', top: 0, left: open ? '0' : '-180px', height: 'calc(var(--vh, 1vh) * 100)', width: '170px',
+        position: 'fixed', top: 0, left: open ? '0' : '-180px', height: '100vh', width: '170px',
         background: '#1e2845', zIndex: 101, transition: 'left 0.3s ease',
         display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.12)', overflowY: 'auto'
       }}>
@@ -156,7 +156,7 @@ export default function DashboardSidebar({ open, onClose }) {
       </div>
       {/* Notification Panel */}
       {notifOpen && (
-        <div ref={notifRef} style={{ position: 'fixed', top: 0, left: '240px', width: '280px', height: 'calc(var(--vh, 1vh) * 100)', background: '#132035', borderRight: '1px solid rgba(255,255,255,0.1)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
+        <div ref={notifRef} style={{ position: 'fixed', top: 0, left: '240px', width: '280px', height: '100vh', background: '#132035', borderRight: '1px solid rgba(255,255,255,0.1)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>

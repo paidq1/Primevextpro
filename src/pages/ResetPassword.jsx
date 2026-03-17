@@ -29,7 +29,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Segoe UI', sans-serif", padding: '16px' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Segoe UI', sans-serif", padding: '16px' }}>
       <div style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '30px', width: '100%', maxWidth: '360px' }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div style={{ width: '40px', height: '40px', margin: '0 auto 12px' }}>

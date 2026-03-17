@@ -75,7 +75,7 @@ const SignIn = () => {
 
   return (
     <>
-      <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa', padding: '8px', boxSizing: 'border-box', position: 'relative' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#8899aa', padding: '8px', boxSizing: 'border-box', position: 'relative' }}>
         <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
           <div style={{ width: '600px', height: '600px', borderRadius: '50%', background: 'rgba(180,190,205,0.25)', position: 'absolute' }} />
           <div style={{ width: '420px', height: '420px', borderRadius: '50%', background: 'rgba(180,190,205,0.25)', position: 'absolute' }} />

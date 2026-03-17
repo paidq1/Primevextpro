@@ -35,7 +35,7 @@ export default function WithdrawVerifyCode() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0d0d0d' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#0d0d0d' }}>
       <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div style={{ flex: 1, padding: '24px', maxWidth: '600px' }}>
         <div style={{ marginBottom: '20px' }}>

@@ -449,7 +449,7 @@ export default function AdminPanel() {
   };
 
   return (
-    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
 
       {/* Header */}
       <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>

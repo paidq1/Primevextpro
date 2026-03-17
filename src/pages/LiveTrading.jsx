@@ -101,7 +101,7 @@ export default function LiveTrading() {
 
   return (
     <>
-      <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column', paddingBottom: '52px' }}>
+      <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column', paddingBottom: '52px' }}>
         <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Top Nav */}

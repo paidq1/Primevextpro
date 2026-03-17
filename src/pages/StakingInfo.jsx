@@ -4,7 +4,7 @@ import { Wallet, Lock, TrendingUp, Gift, ArrowRight } from 'lucide-react';
 export default function StakingInfo() {
   const navigate = useNavigate();
   return (
-    <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#0e1628', color: 'white', fontFamily: "'Segoe UI', sans-serif" }}>
       <div style={{ background: '#132035', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
         <span style={{ fontWeight: '800', fontSize: '13px' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
         <div style={{ display: 'flex', gap: '12px' }}>

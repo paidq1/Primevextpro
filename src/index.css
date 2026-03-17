@@ -131,29 +131,3 @@ img {
 
 
 
-/* Fix mobile keyboard pushing content up */
-html, body {
-  height: 100%;
-  overflow-x: hidden;
-}
-
-@supports (height: 100dvh) {
-  .full-height {
-    height: 100dvh !important;
-  }
-}
-
-input, textarea {
-  font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
-}
-
-/* Remove the position fixed we just added */
-body {
-  position: static !important;
-}
-
-/* Use dynamic viewport height variable */
-.use-vh {
-  height: calc(var(--vh, 1vh) * 100) !important;
-  min-height: calc(var(--vh, 1vh) * 100) !important;
-}
