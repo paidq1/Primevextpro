@@ -57,10 +57,23 @@ export default function LiveChat() {
     if (!text.trim() || loading) return;
     setLoading(true);
     try {
-      // Get location from timezone
+      // Get country from timezone
       let country = '';
       try {
-        country = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        // Map common timezones to countries
+        const tzMap = {
+          'Africa/Lagos': 'Nigeria', 'Africa/Abidjan': 'Ivory Coast', 'Africa/Accra': 'Ghana',
+          'Africa/Nairobi': 'Kenya', 'Africa/Cairo': 'Egypt', 'Africa/Johannesburg': 'South Africa',
+          'Asia/Calcutta': 'India', 'Asia/Kolkata': 'India', 'Asia/Dubai': 'UAE',
+          'Asia/Karachi': 'Pakistan', 'Asia/Dhaka': 'Bangladesh', 'Asia/Colombo': 'Sri Lanka',
+          'America/New_York': 'USA', 'America/Los_Angeles': 'USA', 'America/Chicago': 'USA',
+          'Europe/London': 'UK', 'Europe/Paris': 'France', 'Europe/Berlin': 'Germany',
+          'Asia/Tokyo': 'Japan', 'Asia/Shanghai': 'China', 'Asia/Singapore': 'Singapore',
+          'Australia/Sydney': 'Australia', 'Pacific/Auckland': 'New Zealand',
+          'America/Toronto': 'Canada', 'America/Sao_Paulo': 'Brazil',
+        };
+        country = tzMap[tz] || tz.split('/').pop().replace(/_/g, ' ');
       } catch(e) {}
 
       const res = await fetch(`${API}/send`, {
