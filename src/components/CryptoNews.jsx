@@ -9,7 +9,18 @@ export default function CryptoNews() {
     fetch('https://api.rss2json.com/v1/api.json?rss_url=https://cointelegraph.com/rss')
       .then(r => r.json())
       .then(data => {
-        if (data.items) setNews(data.items.slice(0, 8));
+        if (data.items) {
+          const items = data.items.slice(0, 8).map(item => {
+            // Try to extract image from content if thumbnail missing
+            let thumbnail = item.thumbnail;
+            if (!thumbnail || thumbnail.includes('placeholder')) {
+              const match = item.content?.match(/<img[^>]+src=["']([^"']+)["']/);
+              if (match) thumbnail = match[1];
+            }
+            return { ...item, thumbnail };
+          });
+          setNews(items);
+        }
         setLoading(false);
       })
       .catch(() => { setError(true); setLoading(false); });
