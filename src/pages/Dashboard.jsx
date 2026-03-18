@@ -155,19 +155,19 @@ export default function Dashboard() {
             {/* Quick Action Buttons */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px", marginBottom: "12px" }}>
               <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#ef4444", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="22" height="22" viewBox="0 0 64 64" fill="white"><path d="M32 4C21 4 14 11 14 20c0 6 3 11 8 15l-4 6h28l-4-6c5-4 8-9 8-15C50 11 43 4 32 4zm0 26c-6 0-10-4-10-10s4-10 10-10 10 4 10 10-4 10-10 10zm-4 14v4h8v-4h4l-2-4H26l-2 4h4z"/><text x="26" y="24" fontSize="14" fontWeight="bold" fill="white">$</text></svg>
+                <Wallet size={22} color="white" />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Deposit</span>
               </div>
               <div onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#06b6d4", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/><line x1="5" y1="21" x2="19" y2="21"/></svg>
+                <ArrowDownCircle size={22} color="white" style={{ transform: "rotate(180deg)" }} />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Withdraw</span>
               </div>
               <div onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#22c55e", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/><path d="M4 14v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/></svg>
+                <DollarSign size={22} color="white" />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Earnings</span>
               </div>
               <div onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#f59e0b", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm4 12H8v-2h8v2zm0-4H8v-2h8v2zm-3-4H8v-2h5v2z"/></svg>
+                <Clock size={22} color="white" />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Transactions</span>
               </div>
             </div>
