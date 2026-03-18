@@ -152,6 +152,13 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
+            {/* Quick Action Buttons */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "12px" }}>
+              <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#ef4444", borderRadius: "8px", padding: "12px 6px", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", cursor: "pointer" }}><svg width="22" height="22" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg><span style={{ color: "white", fontSize: "9px", fontWeight: "600" }}>Deposit</span></div>
+              <div onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#06b6d4", borderRadius: "8px", padding: "12px 6px", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", cursor: "pointer" }}><svg width="22" height="22" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg><span style={{ color: "white", fontSize: "9px", fontWeight: "600" }}>Withdraw</span></div>
+              <div onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#22c55e", borderRadius: "8px", padding: "12px 6px", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", cursor: "pointer" }}><svg width="22" height="22" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span style={{ color: "white", fontSize: "9px", fontWeight: "600" }}>Earnings</span></div>
+              <div onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#f59e0b", borderRadius: "8px", padding: "12px 6px", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", cursor: "pointer" }}><svg width="22" height="22" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span style={{ color: "white", fontSize: "9px", fontWeight: "600" }}>Transactions</span></div>
+            </div>
             {/* Chart */}
             <BTCChart />
             {/* Transaction List */}
