@@ -154,19 +154,19 @@ export default function Dashboard() {
             </div>
             {/* Quick Action Buttons */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px", marginBottom: "12px" }}>
-              <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#f43f5e", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+              <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#f43f5e", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
                 <Wallet size={22} color="white" />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Deposit</span>
               </div>
-              <div onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#22d3ee", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+              <div onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#22d3ee", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
                 <ArrowDownCircle size={22} color="white" style={{ transform: "rotate(180deg)" }} />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Withdraw</span>
               </div>
-              <div onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#4ade80", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+              <div onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#4ade80", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
                 <DollarSign size={22} color="white" />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Earnings</span>
               </div>
-              <div onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#fbbf24", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+              <div onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#fbbf24", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
                 <Clock size={22} color="white" />
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Transactions</span>
               </div>
