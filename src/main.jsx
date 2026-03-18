@@ -29,8 +29,3 @@ createRoot(document.getElementById('root')).render(
     </ErrorBoundary>
   </StrictMode>,
 )
-
-  };
-  window.visualViewport.addEventListener('resize', setVh);
-  setVh();
-}
