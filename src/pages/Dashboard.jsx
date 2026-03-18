@@ -155,19 +155,19 @@ export default function Dashboard() {
             {/* Quick Action Buttons */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px", marginBottom: "12px" }}>
               <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#ef4444", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C9.24 2 7 4.24 7 7c0 2.76 2.24 5 5 5s5-2.24 5-5c0-2.76-2.24-5-5-5zm0 7c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-7 9v1h14v-1c0-2.33-4.67-3.5-7-3.5S5 15.67 5 18zm2.16-.5c.76-.54 2.26-1 4.84-1 2.58 0 4.08.46 4.84 1H7.16z"/><circle cx="17" cy="8" r="1" fill="white"/><text x="15.5" y="9" fontSize="4" fill="white">$</text></svg>
+                <svg width="22" height="22" viewBox="0 0 64 64" fill="white"><path d="M32 4C21 4 14 11 14 20c0 6 3 11 8 15l-4 6h28l-4-6c5-4 8-9 8-15C50 11 43 4 32 4zm0 26c-6 0-10-4-10-10s4-10 10-10 10 4 10 10-4 10-10 10zm-4 14v4h8v-4h4l-2-4H26l-2 4h4z"/><text x="26" y="24" fontSize="14" fontWeight="bold" fill="white">$</text></svg>
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Deposit</span>
               </div>
               <div onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#06b6d4", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/><line x1="5" y1="21" x2="19" y2="21"/></svg>
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Withdraw</span>
               </div>
               <div onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#22c55e", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-4h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/><path d="M4 14v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/></svg>
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Earnings</span>
               </div>
               <div onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#f59e0b", borderRadius: "4px", padding: "10px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3h5v2h-5V6zm0 4h5v2h-5v-2zm0 4h5v2h-5v-2zM7 6h3v2H7V6zm0 4h3v2H7v-2zm0 4h3v2H7v-2z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm4 12H8v-2h8v2zm0-4H8v-2h8v2zm-3-4H8v-2h5v2z"/></svg>
                 <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Transactions</span>
               </div>
             </div>
