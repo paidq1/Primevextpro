@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import { User, Edit2, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -64,7 +64,8 @@ export default function Profile() {
   const { user, updateUser, logout } = useAuth();
   const [twoFALoading, setTwoFALoading] = useState(false);
   const [twoFAEnabled, setTwoFAEnabled] = useState(user?.twoFactorEnabled || false);
-  const [activeTab, setActiveTab] = useState('profile');
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(location.state?.tab || 'profile');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [fileName, setFileName] = useState('No file chosen');
   const [avatarFile, setAvatarFile] = useState(null);

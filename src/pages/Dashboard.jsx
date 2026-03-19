@@ -116,12 +116,12 @@ export default function Dashboard() {
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
                       <User size={14} /> My Account
                     </div>
-                    <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
+                    <div onClick={() => { navigate('/dashboard/profile', { state: { tab: 'edit' } }); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
                       onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
                       <Settings size={14} /> Edit Account
                     </div>
-                    <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
+                    <div onClick={() => { navigate('/dashboard/profile', { state: { tab: 'edit' } }); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
                       onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
                       onMouseLeave={e => e.currentTarget.style.background='transparent'}>
                       <Lock size={14} /> Change Password
