@@ -23,9 +23,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#2a3147', padding: '40px 20px' }}>
-      <div style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', padding: '40px 24px' }}>
-        {/* Logo */}
+    <div style={{ minHeight: '100vh', background: '#1e2538' }}>
+      <div style={{ background: '#252d3d', padding: '40px 24px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           <svg viewBox="0 0 40 40" fill="none" width="48" height="48">
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -33,7 +32,6 @@ export default function ForgotPassword() {
             <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
         </div>
-
         <h2 style={{ color: 'white', fontSize: '20px', fontWeight: '700', textAlign: 'center', marginBottom: '8px' }}>Forgot your password?</h2>
         <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', textAlign: 'center', marginBottom: '28px' }}>Enter your email and we'll send you a reset link.</p>
 
