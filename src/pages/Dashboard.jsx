@@ -54,7 +54,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1e2538', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {tradeSuccess && (
@@ -258,14 +258,14 @@ export default function Dashboard() {
                   <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
                     {field.label}{field.hasIcon && <Clock size={9} color="#f59e0b"/>}
                   </label>
-                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
+                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
                     {field.options.map((o, j) => <option key={j}>{o}</option>)}
                   </select>
                 </div>
               ))}
               <div>
                 <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
-                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
+                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
             </div>
             <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '12px' }}>{tradeError}</div>
