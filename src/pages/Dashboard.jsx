@@ -133,44 +133,48 @@ export default function Dashboard() {
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
-            {/* Stats Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
-              {stats.map((s, i) => (
-                <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '8px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>{s.label}</span>
-                    <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
-                  </div>
-                  <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(8px, 2vw, 15px)', marginBottom: '6px' }}>{s.value}</div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', gap: '4px' }}>
-                      <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-' + getCurrencySymbol(u.currency) + '0.00' : getCurrencySymbol(u.currency) + '0.00'}</span>
-                      <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '6px', padding: '1px 3px' }}>{s.btc}</span>
+            {/* Top Scrollable Stat Card */}
+            <div style={{ overflowX: 'auto', marginBottom: '12px', paddingBottom: '4px' }}>
+              <div style={{ display: 'flex', gap: '8px', minWidth: 'max-content' }}>
+                {stats.map((s, i) => (
+                  <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '10px 12px', minWidth: '140px', flexShrink: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px' }}>{s.label}</span>
+                      <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
                     </div>
-                    {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', cursor: 'pointer' }}>View Trade</button>}
+                    <div style={{ color: 'white', fontWeight: '700', fontSize: '11px', marginBottom: '5px' }}>{s.value}</div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', gap: '3px' }}>
+                        <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-' + getCurrencySymbol(u.currency) + '0.00' : getCurrencySymbol(u.currency) + '0.00'}</span>
+                        <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '6px', padding: '1px 3px' }}>{s.btc}</span>
+                      </div>
+                      {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', cursor: 'pointer' }}>View Trade</button>}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+
             {/* Quick Action Buttons */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px", marginBottom: "12px" }}>
-              <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#f43f5e", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0px', marginBottom: '12px' }}>
+              <div onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ background: '#f43f5e', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
                 <Wallet size={16} color="white" />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Deposit</span>
+                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Deposit</span>
               </div>
-              <div onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#22d3ee", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <ArrowDownCircle size={16} color="white" style={{ transform: "rotate(180deg)" }} />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Withdraw</span>
+              <div onClick={() => navigate('/dashboard/withdraw')} style={{ background: '#22d3ee', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+                <ArrowDownCircle size={16} color="white" style={{ transform: 'rotate(180deg)' }} />
+                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Withdraw</span>
               </div>
-              <div onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#4ade80", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+              <div onClick={() => navigate('/dashboard/investment-records')} style={{ background: '#4ade80', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
                 <DollarSign size={16} color="white" />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Earnings</span>
+                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Earnings</span>
               </div>
-              <div onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#fbbf24", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+              <div onClick={() => navigate('/dashboard/transaction-history')} style={{ background: '#fbbf24', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
                 <Clock size={16} color="white" />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Transactions</span>
+                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Transactions</span>
               </div>
             </div>
+
             {/* Chart */}
             <BTCChart />
             {/* Transaction List */}
