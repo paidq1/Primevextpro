@@ -77,10 +77,10 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ background: '#141824', padding: '6px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ background: '#141824', padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '24px', height: '24px', flexShrink: 0 }}>
-              <svg viewBox='0 0 40 40' fill='none' style={{ width: '24px', height: '24px' }}>
+            <div style={{ width: '32px', height: '32px', flexShrink: 0 }}>
+              <svg viewBox='0 0 40 40' fill='none' style={{ width: '32px', height: '32px' }}>
                 <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
                 <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
                 <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
@@ -91,14 +91,14 @@ export default function Dashboard() {
             </button>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', padding: '4px 10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', padding: '6px 14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: '#f59e0b', fontSize: '10px' }}>₿</span>
               <span style={{ color: 'white', fontSize: '10px', fontWeight: '600' }}>{formatAmount(u.balance || 0, u.currency)}</span>
             </div>
-            <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '5px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
+            <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px' }}>
               <RefreshCw size={9}/> Trade
             </button>
-            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {u.avatar ? <img src={u.avatar} style={{ width: '26px', height: '26px', objectFit: 'cover' }} /> : <User size={13} color="white" />}
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function Dashboard() {
                 <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '10px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px' }}>{s.label}</span>
-                    <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
                   </div>
                   <div style={{ color: 'white', fontWeight: '700', fontSize: '11px', marginBottom: '5px' }}>{s.value}</div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
