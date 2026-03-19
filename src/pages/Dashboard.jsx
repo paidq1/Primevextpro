@@ -153,23 +153,19 @@ export default function Dashboard() {
               ))}
             </div>
             {/* Quick Action Buttons */}
-            <div style={{ display: "flex", justifyContent: "space-around", marginBottom: "12px" }}>
-              <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
-                <div style={{ background: "#f43f5e", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><Wallet size={20} color="white" /></div>
-                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Deposit</span>
-              </div>
-              <div onClick={() => navigate("/dashboard/withdraw")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
-                <div style={{ background: "#22d3ee", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowDownCircle size={20} color="white" style={{ transform: "rotate(180deg)" }} /></div>
-                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Withdraw</span>
-              </div>
-              <div onClick={() => navigate("/dashboard/investment-records")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
-                <div style={{ background: "#4ade80", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><DollarSign size={20} color="white" /></div>
-                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Earnings</span>
-              </div>
-              <div onClick={() => navigate("/dashboard/transaction-history")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
-                <div style={{ background: "#fbbf24", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><Clock size={20} color="white" /></div>
-                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Transactions</span>
-              </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px", marginBottom: "12px" }}>
+              <button onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#f43f5e", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "10px 4px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                <Wallet size={16} color="white" />Deposit
+              </button>
+              <button onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#22d3ee", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "10px 4px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                <ArrowDownCircle size={16} color="white" style={{ transform: "rotate(180deg)" }} />Withdraw
+              </button>
+              <button onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#4ade80", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "10px 4px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                <DollarSign size={16} color="white" />Earnings
+              </button>
+              <button onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#fbbf24", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "10px 4px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                <Clock size={16} color="white" />Transactions
+              </button>
             </div>
             {/* Chart */}
             <BTCChart />
