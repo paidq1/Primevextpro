@@ -106,7 +106,6 @@ export default function Dashboard() {
               {u.avatar ? <img src={u.avatar} style={{ width: '30px', height: '30px', objectFit: 'cover' }} /> : <User size={16} color="white" />}
             </div>
           </div>
-          </div>
         </div>
 
         {u.adminMessage && showNotice && (
