@@ -133,6 +133,41 @@ export default function Dashboard() {
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
+            {/* Welcome Card */}
+            <div style={{ background: '#252d3d', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '20px 16px', marginBottom: '12px', textAlign: 'center' }}>
+              <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
+              <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', marginBottom: '16px' }}>Your investment dashboard overview</div>
+              <div style={{ background: '#1e2538', borderRadius: '8px', padding: '16px', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
+                  <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
+                  <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: '600' }}>Account Balance</span>
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '10px' }}>Your available funds</div>
+                <div style={{ color: 'white', fontSize: '28px', fontWeight: '700', marginBottom: '10px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
+                  <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
+                  <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Available for Withdrawal</span>
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)', color: u.kycStatus === 'approved' ? '#22c55e' : '#ef4444', fontSize: '9px', padding: '3px 10px', borderRadius: '20px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                    <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg>
+                    {u.kycStatus === 'approved' ? 'Verified' : 'Unverified'}
+                  </span>
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+              </div>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '11px', fontWeight: '600', padding: '10px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>
+                  Deposit
+                </button>
+                <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '11px', fontWeight: '600', padding: '10px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><line x1='7' y1='17' x2='17' y2='7'/><polyline points='7 7 17 7 17 17'/></svg>
+                  Withdraw
+                </button>
+              </div>
+            </div>
+
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
               {stats.map((s, i) => (
