@@ -187,13 +187,6 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
-            {/* Quick Action Buttons */}
-            <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
-              <button onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ flex: 1, background: "#f43f5e", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "6px 2px", cursor: "pointer" }}>Deposit</button>
-              <button onClick={() => navigate("/dashboard/withdraw")} style={{ flex: 1, background: "#22d3ee", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "6px 2px", cursor: "pointer" }}>Withdraw</button>
-              <button onClick={() => navigate("/dashboard/investment-records")} style={{ flex: 1, background: "#4ade80", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "6px 2px", cursor: "pointer" }}>Earnings</button>
-              <button onClick={() => navigate("/dashboard/transaction-history")} style={{ flex: 1, background: "#fbbf24", border: "none", color: "white", fontSize: "9px", fontWeight: "700", padding: "6px 2px", cursor: "pointer" }}>Transactions</button>
-            </div>
             {/* Chart */}
             <BTCChart />
             {/* Transaction List */}
