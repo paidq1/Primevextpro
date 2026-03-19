@@ -78,7 +78,7 @@ export default function Dashboard() {
 
         {/* Top Nav */}
         <div style={{ background: '#141824', padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <div style={{ width: '26px', height: '26px', flexShrink: 0 }}>
               <svg viewBox='0 0 40 40' fill='none' style={{ width: '26px', height: '26px' }}>
                 <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -90,12 +90,12 @@ export default function Dashboard() {
               <Menu size={16}/>
             </button>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', padding: '5px 10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.1)', border: 'none', padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <span style={{ color: '#f59e0b', fontSize: '10px' }}>₿</span>
               <span style={{ color: 'white', fontSize: '10px', fontWeight: '600' }}>{formatAmount(u.balance || 0, u.currency)}</span>
             </div>
-            <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px' }}>
+            <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '5px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
               <RefreshCw size={9}/> Trade
             </button>
             <div onClick={() => navigate('/dashboard/profile')} style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#4b5563', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',  }}>
