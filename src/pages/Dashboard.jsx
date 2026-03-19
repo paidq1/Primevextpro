@@ -77,7 +77,7 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ background: '#141824', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ background: '#141824', padding: '6px 10px', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ width: '28px', height: '28px', flexShrink: 0 }}>
             <svg viewBox='0 0 40 40' fill='none' style={{ width: '28px', height: '28px' }}>
               <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -96,7 +96,7 @@ export default function Dashboard() {
             <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <RefreshCw size={10}/> Trade
             </button>
-            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', outline: 'none', border: 'none' }}>
               {u.avatar ? <img src={u.avatar} style={{ width: '28px', height: '28px', objectFit: 'cover' }} /> : <User size={14} color="white" />}
             </div>
           </div>
@@ -114,14 +114,14 @@ export default function Dashboard() {
         {/* Body */}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           {/* Left Panel */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '8px 12px', minWidth: 0 }}>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '8px 16px', minWidth: 0 }}>
 
 
             {/* Horizontally Scrollable Stat Cards */}
             <div style={{ overflowX: 'auto', marginBottom: '12px', paddingBottom: '4px', scrollbarWidth: 'none' }}>
               <div style={{ display: 'flex', gap: '8px', minWidth: 'max-content' }}>
                 {stats.map((s, i) => (
-                  <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '12px', minWidth: '160px', flexShrink: 0 }}>
+                  <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '12px', minWidth: '140px', flexShrink: 0 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
                       <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '9px' }}>{s.label}</span>
                       <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{s.icon}</div>
@@ -142,19 +142,19 @@ export default function Dashboard() {
             {/* Quick Action Buttons */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '12px' }}>
               <div onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
-                <div style={{ background: '#f43f5e', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><Wallet size={22} color="white" /></div>
+                <div style={{ background: '#f43f5e', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Wallet size={22} color="white" /></div>
                 <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Deposit</span>
               </div>
               <div onClick={() => navigate('/dashboard/withdraw')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
-                <div style={{ background: '#22d3ee', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><ArrowDownCircle size={22} color="white" style={{ transform: 'rotate(180deg)' }} /></div>
+                <div style={{ background: '#22d3ee', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ArrowDownCircle size={22} color="white" style={{ transform: 'rotate(180deg)' }} /></div>
                 <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Withdraw</span>
               </div>
               <div onClick={() => navigate('/dashboard/investment-records')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
-                <div style={{ background: '#4ade80', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><DollarSign size={22} color="white" /></div>
+                <div style={{ background: '#4ade80', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><DollarSign size={22} color="white" /></div>
                 <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Earnings</span>
               </div>
               <div onClick={() => navigate('/dashboard/transaction-history')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
-                <div style={{ background: '#fbbf24', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><Clock size={22} color="white" /></div>
+                <div style={{ background: '#fbbf24', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Clock size={22} color="white" /></div>
                 <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Transactions</span>
               </div>
             </div>
