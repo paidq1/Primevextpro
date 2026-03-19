@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import BTCChart from '../components/BTCChart';
 import CryptoNews from '../components/CryptoNews';
-import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings } from 'lucide-react';
+import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings, LogOut } from 'lucide-react';
 
 const navItems = [
   { icon: <User size={12} />, label: 'Profile', route: '/dashboard/profile' },
@@ -29,6 +29,7 @@ export default function Dashboard() {
   const [activeNav, setActiveNav] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showNotice, setShowNotice] = useState(true);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [tradeAccount, setTradeAccount] = useState('---');
   const [tradeMarket, setTradeMarket] = useState('---');
   const [tradeSymbol, setTradeSymbol] = useState('BTC/USD');
@@ -92,18 +93,48 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ background: '#131b2e', padding: '12px 10px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ background: '#131b2e', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
-          <div style={{ display: 'flex', gap: '6px' }}>
-            <button onClick={() => navigate('/dashboard/kyc')} style={{ padding: '5px 10px', background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.15)', border: u.kycStatus === 'approved' ? '1px solid #22c55e' : '1px solid #f59e0b', color: u.kycStatus === 'approved' ? '#22c55e' : '#f59e0b', fontSize: '11px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', borderRadius: '4px' }}>KYC {u.kycStatus === 'approved' ? '✓' : '✗'}</button>
-          </div>
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <button style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', borderRadius: '4px' }}><Lock size={11}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
-            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', borderRadius: '4px' }}><RefreshCw size={11}/> {formatAmount(u.balance || 0, u.currency)}</button>
-            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {u.avatar ? <img src={u.avatar} style={{ width: '30px', height: '30px', objectFit: 'cover' }} /> : <User size={16} color="white" />}
+
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'stretch' }}>
+            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><span style={{ color: '#f7931a' }}>₿</span> {u.balance ? formatAmount(u.balance, u.currency) : '0.00'}</button>
+            <button onClick={() => navigate('/dashboard/live-trading')} style={{ padding: '5px 10px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><RefreshCw size={11}/> Trade</button>
+            <div style={{ position: 'relative' }}>
+              <div onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', borderRight: '1px solid rgba(255,255,255,0.15)', padding: '0 12px', cursor: 'pointer', height: '100%' }}>
+                <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: '#5b6477', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {u.avatar ? <img src={u.avatar} style={{ width: '34px', height: '34px', objectFit: 'cover' }} /> : <User size={18} color="white" />}
+                </div>
+              </div>
+              {showProfileMenu && (
+                <>
+                  <div onClick={() => setShowProfileMenu(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
+                  <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '180px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                    <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+                      onMouseLeave={e => e.currentTarget.style.background='transparent'}>
+                      <User size={14} /> My Account
+                    </div>
+                    <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+                      onMouseLeave={e => e.currentTarget.style.background='transparent'}>
+                      <Settings size={14} /> Edit Account
+                    </div>
+                    <div onClick={() => { navigate('/dashboard/profile'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+                      onMouseLeave={e => e.currentTarget.style.background='transparent'}>
+                      <Lock size={14} /> Change Password
+                    </div>
+                    <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+                    <div onClick={() => { logout(); navigate('/signin'); setShowProfileMenu(false); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', cursor: 'pointer', color: '#ef4444', fontSize: '11px' }}
+                      onMouseEnter={e => e.currentTarget.style.background='rgba(239,68,68,0.05)'}
+                      onMouseLeave={e => e.currentTarget.style.background='transparent'}>
+                      <LogOut size={14} /> Logout
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
