@@ -23,8 +23,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1e2538' }}>
-      <div style={{ background: '#252d3d', padding: '40px 24px' }}>
+    <div style={{ minHeight: '100vh', background: '#131b2e', padding: '16px' }}>
+      <div style={{ background: '#1e2538', padding: '40px 20px', borderRadius: '8px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           <svg viewBox="0 0 40 40" fill="none" width="48" height="48">
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
@@ -42,10 +42,10 @@ export default function ForgotPassword() {
               onChange={e => setEmail(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSubmit()}
               placeholder="Enter email"
-              style={{ width: '100%', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '13px', padding: '12px 16px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box', marginBottom: '16px' }}
+              style={{ width: '100%', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '13px', padding: '8px 16px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box', marginBottom: '12px' }}
             />
             {msg && <div style={{ color: msg.includes('sent') ? '#22c55e' : '#ef4444', fontSize: '11px', marginBottom: '12px' }}>{msg}</div>}
-            <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '14px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+            <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '9px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '14px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
               <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
               {loading ? 'Sending...' : 'Send reset link'}
             </button>

@@ -55,7 +55,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0F172A 0%, #020617 100%)', display: 'flex', fontFamily: "'Segoe UI', sans-serif", overflow: 'hidden' }}>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {tradeSuccess && (
@@ -73,11 +73,11 @@ export default function Dashboard() {
       )}
 
       {/* Icon Sidebar */}
-      <div style={{ width: 'clamp(36px, 8vw, 48px)', background: '#131b2e', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, visibility: sidebarOpen ? 'hidden' : 'visible' }}>
+      <div style={{ width: 'clamp(36px, 8vw, 48px)', background: '#0F172A', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, visibility: sidebarOpen ? 'hidden' : 'visible' }}>
         <div style={{ width: '22px', height: '22px', marginBottom: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
-            <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
-            <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
+            <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0F172A' stroke='#6366F1' strokeWidth='1.5'/>
+            <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0F172A' stroke='#6366F1' strokeWidth='1.2'/>
             <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
           </svg>
         </div>
@@ -93,7 +93,7 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ background: '#131b2e', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
             <Menu size={15}/>
           </button>
@@ -154,8 +154,8 @@ export default function Dashboard() {
           <div style={{ flex: 1, overflowY: 'auto', padding: '12px', minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
               <svg viewBox='0 0 40 40' fill='none' style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-                <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
-                <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
+                <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0F172A' stroke='#6366F1' strokeWidth='1.5'/>
+                <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0F172A' stroke='#6366F1' strokeWidth='1.2'/>
                 <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
               </svg>
               <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>VERTEXTRADE PRO</span>
@@ -186,11 +186,11 @@ export default function Dashboard() {
                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                   <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>
                   Deposit
                 </button>
-                <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                   <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><line x1='7' y1='17' x2='17' y2='7'/><polyline points='7 7 17 7 17 17'/></svg>
                   Withdraw
                 </button>
@@ -200,7 +200,7 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {stats.map((s, i) => (
-                <div key={i} style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '12px 10px', minHeight: '90px', background: '#1e293b', borderRadius: '10px' }}>
+                <div key={i} style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '12px 10px', minHeight: '90px', background: 'rgba(30,41,59,0.6)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', borderRadius: '10px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(8px, 2vw, 11px)' }}>{s.label}</span>
                     <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
