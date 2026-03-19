@@ -134,16 +134,16 @@ export default function Dashboard() {
             </div>
 
             {/* Welcome Card */}
-            <div style={{ background: '#252d3d', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '20px 16px', marginBottom: '12px', textAlign: 'center' }}>
-              <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '4px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
-              <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', marginBottom: '16px' }}>Your investment dashboard overview</div>
-              <div style={{ background: '#1e2538', borderRadius: '8px', padding: '16px', marginBottom: '12px' }}>
+            <div style={{ background: '#1a2035', border: '1px solid rgba(99,102,241,0.4)', borderRadius: '8px', padding: '14px 12px', marginBottom: '12px', textAlign: 'center' }}>
+              <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
+              <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '10px' }}>Your investment dashboard overview</div>
+              <div style={{ background: '#1e2538', borderRadius: '8px', padding: '10px', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
                   <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
-                  <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: '600' }}>Account Balance</span>
+                  <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', fontWeight: '600' }}>Account Balance</span>
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '10px' }}>Your available funds</div>
-                <div style={{ color: 'white', fontSize: '18px', fontWeight: '700', marginBottom: '8px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
+                <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
                   <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Available for Withdrawal</span>
