@@ -23,8 +23,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#151c27', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-      <div style={{ width: '100%', maxWidth: '400px', background: '#1e2538', padding: '40px 32px', borderRadius: '8px' }}>
+    <div style={{ minHeight: '100vh', background: '#151c27', padding: '40px 20px' }}>
+      <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
         {/* Logo */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           <svg viewBox="0 0 40 40" fill="none" width="48" height="48">
@@ -60,7 +60,7 @@ export default function ForgotPassword() {
           </div>
         )}
 
-        <div onClick={() => navigate('/signin')} style={{ textAlign: 'center', marginTop: '20px', color: '#6366f1', fontSize: '12px', cursor: 'pointer' }}>← Back to Login</div>
+        <div onClick={() => navigate('/dashboard')} style={{ textAlign: 'center', marginTop: '20px', color: '#6366f1', fontSize: '12px', cursor: 'pointer' }}>← Back to Dashboard</div>
       </div>
     </div>
   );
