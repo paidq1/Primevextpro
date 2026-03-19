@@ -247,10 +247,13 @@ export default function Dashboard() {
             
           </div>
 
-          {/* Right Panel - Trade Assets */}
-          <div style={{ width: 'clamp(110px, 26vw, 145px)', padding: '8px', overflowY: 'auto', flexShrink: 0, paddingTop: '34px' }}>
-            <div style={{ background: '#252d3d', border: '1px solid rgba(99,102,241,0.4)', padding: '10px' }}>
-              <div style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '14px' }}>TRADE ASSETS</div>
+        </div>
+
+        {/* Trade Assets - Full Width */}
+        <div style={{ padding: '0 8px 8px' }}>
+          <div style={{ background: '#252d3d', border: '1px solid rgba(99,102,241,0.4)', padding: '12px' }}>
+            <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
               {[
                 { label: 'Account', val: tradeAccount, set: setTradeAccount, options: ['---','Real Account','Demo Account'] },
                 { label: 'Markets', val: tradeMarket, set: setTradeMarket, options: ['---','Crypto','Forex','Stocks','Commodities'] },
@@ -258,36 +261,36 @@ export default function Dashboard() {
                 { label: 'Duration', val: tradeDuration, set: setTradeDuration, options: ['---','30 seconds','1 minute','5 minutes','15 minutes','30 minutes','1 hour'], hasIcon: true },
                 { label: 'Leverage', val: tradeLeverage, set: setTradeLeverage, options: ['1x (No Leverage)','2x','5x','10x','20x','50x','100x'] },
               ].map((field, i) => (
-                <div key={i} style={{ marginBottom: '10px' }}>
-                  <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
+                <div key={i}>
+                  <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}>
                     {field.label}{field.hasIcon && <Clock size={9} color="#f59e0b"/>}
                   </label>
-                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 7px', outline: 'none' }}>
+                  <select value={field.val} onChange={e => field.set(e.target.value)} style={{ width: '100%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none' }}>
                     {field.options.map((o, j) => <option key={j}>{o}</option>)}
                   </select>
                 </div>
               ))}
-              <div style={{ marginBottom: '8px' }}>
-                <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
-                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '5px 7px', outline: 'none', boxSizing: 'border-box' }} />
+              <div>
+                <label style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '4px' }}><DollarSign size={9}/> Amount</label>
+                <input value={amount} onChange={e => setAmount(e.target.value)} style={{ width: '100%', background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
               </div>
-              <div style={{ color: '#ef4444', fontSize: '7px', marginBottom: '6px', minHeight: '12px' }}>{tradeError}</div>
-              <div style={{ display: 'flex', gap: '5px' }}>
-                <button onClick={() => {
-                  if (tradeAccount === '---') { setTradeError('Select account'); return; }
-                  if (tradeMarket === '---') { setTradeError('Select market'); return; }
-                  if (tradeDuration === '---') { setTradeError('Select duration'); return; }
-                  if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
-                  setTradeError(''); setTradeType('Buy'); setTradeSuccess(true);
-                }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Buy</button>
-                <button onClick={() => {
-                  if (tradeAccount === '---') { setTradeError('Select account'); return; }
-                  if (tradeMarket === '---') { setTradeError('Select market'); return; }
-                  if (tradeDuration === '---') { setTradeError('Select duration'); return; }
-                  if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
-                  setTradeError(''); setTradeType('Sell'); setTradeSuccess(true);
-                }} style={{ flex: 1, padding: '8px', background: '#ef4444', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>Sell</button>
-              </div>
+            </div>
+            <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '12px' }}>{tradeError}</div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => {
+                if (tradeAccount === '---') { setTradeError('Select account'); return; }
+                if (tradeMarket === '---') { setTradeError('Select market'); return; }
+                if (tradeDuration === '---') { setTradeError('Select duration'); return; }
+                if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
+                setTradeError(''); setTradeType('Buy'); setTradeSuccess(true);
+              }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>Buy</button>
+              <button onClick={() => {
+                if (tradeAccount === '---') { setTradeError('Select account'); return; }
+                if (tradeMarket === '---') { setTradeError('Select market'); return; }
+                if (tradeDuration === '---') { setTradeError('Select duration'); return; }
+                if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
+                setTradeError(''); setTradeType('Sell'); setTradeSuccess(true);
+              }} style={{ flex: 1, padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>Sell</button>
             </div>
           </div>
         </div>
