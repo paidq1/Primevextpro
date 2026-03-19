@@ -122,7 +122,7 @@ export default function Dashboard() {
         {/* Body */}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           {/* Left Panel */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '8px', minWidth: 0 }}>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '12px', minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
               <svg viewBox='0 0 40 40' fill='none' style={{ width: '16px', height: '16px', flexShrink: 0 }}>
                 <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
@@ -134,7 +134,7 @@ export default function Dashboard() {
             </div>
 
             {/* Welcome Card */}
-            <div style={{ background: '#0f172a', border: '1px solid #6366f1', borderRadius: '8px', padding: '14px 12px', marginBottom: '12px', textAlign: 'center' }}>
+            <div style={{ background: '#0f172a', border: '1px solid #6366f1', borderRadius: '8px', padding: '14px 12px', marginBottom: '20px', textAlign: 'center' }}>
               <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '10px' }}>Your investment dashboard overview</div>
               <div style={{ background: '#162032', borderRadius: '8px', padding: '10px', marginBottom: '8px' }}>
@@ -169,7 +169,7 @@ export default function Dashboard() {
             </div>
 
             {/* Stats Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {stats.map((s, i) => (
                 <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor, padding: '12px 10px', minHeight: '90px', background: '#1e293b' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
@@ -243,7 +243,7 @@ export default function Dashboard() {
         </div>
 
         {/* Trade Assets - Full Width */}
-        <div style={{ padding: '0 8px 8px' }}>
+        <div style={{ padding: '0 0 20px' }}>
           <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.15)', padding: '12px' }}>
             <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
