@@ -104,11 +104,11 @@ export default function Dashboard() {
             <Menu size={18}/>
           </button>
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', padding: '5px 12px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', padding: '5px 12px', display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: '#f59e0b', fontSize: '11px' }}>₿</span>
               <span style={{ color: 'white', fontSize: '11px', fontWeight: '600' }}>{formatAmount(u.balance || 0, u.currency)}</span>
             </div>
-            <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <RefreshCw size={10}/> Trade
             </button>
             <div onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
