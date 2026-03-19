@@ -49,6 +49,7 @@ import InvestingInfo from "./pages/InvestingInfo";
 import Terms from "./pages/Terms";
 import CheckEmail from "./pages/CheckEmail";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/ForgotPassword";
 import LoadingScreen from "./components/LoadingScreen";
 import LiveChat from "./components/LiveChat";
 
@@ -113,6 +114,7 @@ function App() {
         <Route path="/admin/support" element={<AdminRoute><SupportPage /></AdminRoute>} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/check-email" element={<CheckEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard/deposit" element={<PrivateRoute><Deposit /></PrivateRoute>} />
         <Route path="/dashboard/withdraw" element={<PrivateRoute><Withdraw /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
