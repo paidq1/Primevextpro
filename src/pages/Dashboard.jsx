@@ -122,7 +122,7 @@ export default function Dashboard() {
         {/* Body */}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           {/* Left Panel */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '8px', minWidth: 0, maxWidth: '520px' }}>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '8px 12px', minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
               <svg viewBox='0 0 40 40' fill='none' style={{ width: '16px', height: '16px', flexShrink: 0 }}>
                 <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
