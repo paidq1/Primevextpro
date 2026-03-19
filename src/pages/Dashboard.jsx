@@ -163,7 +163,7 @@ export default function Dashboard() {
             </div>
 
             {/* Welcome Card */}
-            <div style={{ background: '#111827', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px 12px', marginBottom: '20px', textAlign: 'center' }}>
+            <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '14px 12px', marginBottom: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', textAlign: 'center' }}>
               <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '10px' }}>Your investment dashboard overview</div>
               <div style={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '10px', marginBottom: '8px' }}>
@@ -200,7 +200,7 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {stats.map((s, i) => (
-                <div key={i} style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '12px 10px', minHeight: '90px', background: '#111827', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px' }}>
+                <div key={i} style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '12px 10px', minHeight: '90px', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(8px, 2vw, 11px)' }}>{s.label}</span>
                     <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
@@ -219,7 +219,7 @@ export default function Dashboard() {
             {/* Chart */}
             <BTCChart />
             {/* Transaction List */}
-            <div style={{ background: '#111827', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '10px', marginBottom: '20px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
                 <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
@@ -273,7 +273,7 @@ export default function Dashboard() {
 
         {/* Trade Assets - Full Width */}
         <div style={{ padding: '0 12px 20px' }}>
-          <div style={{ background: '#111827', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px' }}>
+          <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
             <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
               {[
