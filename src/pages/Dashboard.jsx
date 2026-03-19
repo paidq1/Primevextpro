@@ -71,22 +71,7 @@ export default function Dashboard() {
         </>
       )}
 
-      {/* Icon Sidebar */}
-      <div style={{ width: 'clamp(36px, 8vw, 48px)', background: '#141824', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, visibility: sidebarOpen ? 'hidden' : 'visible' }}>
-        <div style={{ width: '22px', height: '22px', marginBottom: '16px' }}>
-          <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
-            <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
-            <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
-            <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
-          </svg>
-        </div>
-        {navItems.map((item, i) => (
-          <button key={i} onClick={() => { setActiveNav(i); navigate(item.route); }} title={item.label}
-            style={{ width: '34px', height: '34px', background: activeNav === i ? '#6366f1' : 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: activeNav === i ? 'white' : 'rgba(255,255,255,0.4)' }}>
-            {item.icon}
-          </button>
-        ))}
-      </div>
+
 
       {/* Main Content */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
@@ -130,15 +115,7 @@ export default function Dashboard() {
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           {/* Left Panel */}
           <div style={{ flex: 1, overflowY: 'auto', padding: '8px 12px', minWidth: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
-              <svg viewBox='0 0 40 40' fill='none' style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-                <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
-                <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
-                <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
-              </svg>
-              <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>VERTEXTRADE PRO</span>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
-            </div>
+
 
             {/* Horizontally Scrollable Stat Cards */}
             <div style={{ overflowX: 'auto', marginBottom: '12px', paddingBottom: '4px', scrollbarWidth: 'none' }}>
