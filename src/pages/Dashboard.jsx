@@ -153,22 +153,22 @@ export default function Dashboard() {
               ))}
             </div>
             {/* Quick Action Buttons */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px", marginBottom: "12px" }}>
-              <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ background: "#f43f5e", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <Wallet size={16} color="white" />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Deposit</span>
+            <div style={{ display: "flex", justifyContent: "space-around", marginBottom: "12px" }}>
+              <div onClick={() => navigate("/dashboard/withdraw-deposit")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
+                <div style={{ background: "#f43f5e", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><Wallet size={20} color="white" /></div>
+                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Deposit</span>
               </div>
-              <div onClick={() => navigate("/dashboard/withdraw")} style={{ background: "#22d3ee", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <ArrowDownCircle size={16} color="white" style={{ transform: "rotate(180deg)" }} />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Withdraw</span>
+              <div onClick={() => navigate("/dashboard/withdraw")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
+                <div style={{ background: "#22d3ee", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowDownCircle size={20} color="white" style={{ transform: "rotate(180deg)" }} /></div>
+                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Withdraw</span>
               </div>
-              <div onClick={() => navigate("/dashboard/investment-records")} style={{ background: "#4ade80", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <DollarSign size={16} color="white" />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Earnings</span>
+              <div onClick={() => navigate("/dashboard/investment-records")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
+                <div style={{ background: "#4ade80", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><DollarSign size={20} color="white" /></div>
+                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Earnings</span>
               </div>
-              <div onClick={() => navigate("/dashboard/transaction-history")} style={{ background: "#fbbf24", borderRadius: "0px", padding: "8px 4px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", cursor: "pointer" }}>
-                <Clock size={16} color="white" />
-                <span style={{ color: "white", fontSize: "8px", fontWeight: "600" }}>Transactions</span>
+              <div onClick={() => navigate("/dashboard/transaction-history")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", cursor: "pointer" }}>
+                <div style={{ background: "#fbbf24", width: "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center" }}><Clock size={20} color="white" /></div>
+                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "8px" }}>Transactions</span>
               </div>
             </div>
             {/* Chart */}
