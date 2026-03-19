@@ -23,8 +23,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#151c27', padding: '40px 20px' }}>
-      <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
+    <div style={{ minHeight: '100vh', background: '#2a3147', padding: '40px 20px' }}>
+      <div style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', padding: '40px 24px' }}>
         {/* Logo */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           <svg viewBox="0 0 40 40" fill="none" width="48" height="48">
@@ -44,7 +44,7 @@ export default function ForgotPassword() {
               onChange={e => setEmail(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSubmit()}
               placeholder="Enter email"
-              style={{ width: '100%', background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '13px', padding: '12px 16px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box', marginBottom: '16px' }}
+              style={{ width: '100%', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '13px', padding: '12px 16px', outline: 'none', borderRadius: '6px', boxSizing: 'border-box', marginBottom: '16px' }}
             />
             {msg && <div style={{ color: msg.includes('sent') ? '#22c55e' : '#ef4444', fontSize: '11px', marginBottom: '12px' }}>{msg}</div>}
             <button onClick={handleSubmit} disabled={loading} style={{ width: '100%', padding: '12px', background: loading ? '#4b5563' : '#6366f1', border: 'none', color: 'white', fontSize: '14px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
