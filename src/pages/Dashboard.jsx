@@ -133,16 +133,25 @@ export default function Dashboard() {
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
-            {/* First Large Stat Card */}
-            <div style={{ background: '#252d3d', border: '1px solid #6366f180', padding: '12px', marginBottom: '12px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
-                <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '9px' }}>Total Deposits</span>
-                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f140', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CreditCard size={14} color="#6366f1" /></div>
-              </div>
-              <div style={{ color: 'white', fontWeight: '700', fontSize: '14px', marginBottom: '6px' }}>+ {formatAmountWithCode(u.totalDeposits || 0, u.currency)}</div>
-              <div style={{ display: 'flex', gap: '4px' }}>
-                <span style={{ background: '#ef4444', color: 'white', fontSize: '7px', padding: '1px 4px' }}>{getCurrencySymbol(u.currency)}0.00</span>
-                <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '7px', padding: '1px 4px' }}>BTC: 0.00</span>
+            {/* Horizontally Scrollable Stat Cards */}
+            <div style={{ overflowX: 'auto', marginBottom: '12px', paddingBottom: '4px', scrollbarWidth: 'none' }}>
+              <div style={{ display: 'flex', gap: '8px', minWidth: 'max-content' }}>
+                {stats.map((s, i) => (
+                  <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '12px', minWidth: '160px', flexShrink: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '9px' }}>{s.label}</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{s.icon}</div>
+                    </div>
+                    <div style={{ color: 'white', fontWeight: '700', fontSize: '13px', marginBottom: '6px' }}>{s.value}</div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', gap: '3px' }}>
+                        <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-' + getCurrencySymbol(u.currency) + '0.00' : getCurrencySymbol(u.currency) + '0.00'}</span>
+                        <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '6px', padding: '1px 3px' }}>BTC: 0.00</span>
+                      </div>
+                      {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', cursor: 'pointer' }}>View Trade</button>}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -168,7 +177,7 @@ export default function Dashboard() {
 
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
-              {stats.slice(1).map((s, i) => (
+              {stats.map((s, i) => (
                 <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '10px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px' }}>{s.label}</span>
