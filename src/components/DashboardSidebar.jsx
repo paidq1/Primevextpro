@@ -86,7 +86,7 @@ export default function DashboardSidebar({ open, onClose }) {
       {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100 }} />}
       <div style={{
         position: 'fixed', top: 0, left: open ? '0' : '-180px', height: '100vh', width: '170px',
-        background: '#1e2845', zIndex: 101, transition: 'left 0.3s ease',
+        background: '#131b2e', zIndex: 101, transition: 'left 0.3s ease',
         display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255,255,255,0.12)', overflowY: 'auto'
       }}>
         {/* Logo */}
