@@ -91,14 +91,14 @@ export default function Dashboard() {
             </button>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', padding: '6px 14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', padding: '5px 10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
               <span style={{ color: '#f59e0b', fontSize: '10px' }}>₿</span>
               <span style={{ color: 'white', fontSize: '10px', fontWeight: '600' }}>{formatAmount(u.balance || 0, u.currency)}</span>
             </div>
             <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '7px 14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px' }}>
               <RefreshCw size={9}/> Trade
             </button>
-            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#4b5563', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid rgba(255,255,255,0.15)' }}>
+            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#4b5563', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',  }}>
               {u.avatar ? <img src={u.avatar} style={{ width: '26px', height: '26px', objectFit: 'cover' }} /> : <User size={13} color="white" />}
             </div>
           </div>
