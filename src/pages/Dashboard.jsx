@@ -190,7 +190,7 @@ export default function Dashboard() {
             {/* Chart */}
             <BTCChart />
             {/* Transaction List */}
-            <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.15)', padding: '8px' }}>
+            <div style={{ background: '#1e293b', border: '1px solid rgba(99,102,241,0.5)', padding: '10px', marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ color: 'white', fontSize: '9px', fontWeight: '700', letterSpacing: '0.08em' }}>TRANSACTION LIST</span>
                 <select style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none' }}>
@@ -244,7 +244,7 @@ export default function Dashboard() {
 
         {/* Trade Assets - Full Width */}
         <div style={{ padding: '0 0 20px' }}>
-          <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.15)', padding: '12px' }}>
+          <div style={{ background: '#1e293b', border: '1px solid rgba(99,102,241,0.5)', padding: '14px' }}>
             <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', marginBottom: '12px' }}>TRADE ASSETS</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
               {[
