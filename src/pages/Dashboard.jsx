@@ -143,7 +143,7 @@ export default function Dashboard() {
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: '600' }}>Account Balance</span>
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '10px' }}>Your available funds</div>
-                <div style={{ color: 'white', fontSize: '28px', fontWeight: '700', marginBottom: '10px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
+                <div style={{ color: 'white', fontSize: '18px', fontWeight: '700', marginBottom: '8px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
                   <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Available for Withdrawal</span>
@@ -157,11 +157,11 @@ export default function Dashboard() {
                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '11px', fontWeight: '600', padding: '10px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                   <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>
                   Deposit
                 </button>
-                <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '11px', fontWeight: '600', padding: '10px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: '#252d3d', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                   <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><line x1='7' y1='17' x2='17' y2='7'/><polyline points='7 7 17 7 17 17'/></svg>
                   Withdraw
                 </button>
