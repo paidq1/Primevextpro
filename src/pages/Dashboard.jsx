@@ -133,48 +133,58 @@ export default function Dashboard() {
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
-            {/* Top Scrollable Stat Card */}
-            <div style={{ overflowX: 'auto', marginBottom: '12px', paddingBottom: '4px' }}>
-              <div style={{ display: 'flex', gap: '8px', minWidth: 'max-content' }}>
-                {stats.map((s, i) => (
-                  <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '10px 12px', minWidth: '140px', flexShrink: 0 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
-                      <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px' }}>{s.label}</span>
-                      <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
-                    </div>
-                    <div style={{ color: 'white', fontWeight: '700', fontSize: '11px', marginBottom: '5px' }}>{s.value}</div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', gap: '3px' }}>
-                        <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-' + getCurrencySymbol(u.currency) + '0.00' : getCurrencySymbol(u.currency) + '0.00'}</span>
-                        <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '6px', padding: '1px 3px' }}>{s.btc}</span>
-                      </div>
-                      {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', cursor: 'pointer' }}>View Trade</button>}
-                    </div>
-                  </div>
-                ))}
+            {/* First Large Stat Card */}
+            <div style={{ background: '#252d3d', border: '1px solid #6366f180', padding: '12px', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '9px' }}>Total Deposits</span>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f140', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CreditCard size={14} color="#6366f1" /></div>
+              </div>
+              <div style={{ color: 'white', fontWeight: '700', fontSize: '14px', marginBottom: '6px' }}>+ {formatAmountWithCode(u.totalDeposits || 0, u.currency)}</div>
+              <div style={{ display: 'flex', gap: '4px' }}>
+                <span style={{ background: '#ef4444', color: 'white', fontSize: '7px', padding: '1px 4px' }}>{getCurrencySymbol(u.currency)}0.00</span>
+                <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '7px', padding: '1px 4px' }}>BTC: 0.00</span>
               </div>
             </div>
 
             {/* Quick Action Buttons */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0px', marginBottom: '12px' }}>
-              <div onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ background: '#f43f5e', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-                <Wallet size={16} color="white" />
-                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Deposit</span>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '12px' }}>
+              <div onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                <div style={{ background: '#f43f5e', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><Wallet size={22} color="white" /></div>
+                <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Deposit</span>
               </div>
-              <div onClick={() => navigate('/dashboard/withdraw')} style={{ background: '#22d3ee', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-                <ArrowDownCircle size={16} color="white" style={{ transform: 'rotate(180deg)' }} />
-                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Withdraw</span>
+              <div onClick={() => navigate('/dashboard/withdraw')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                <div style={{ background: '#22d3ee', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><ArrowDownCircle size={22} color="white" style={{ transform: 'rotate(180deg)' }} /></div>
+                <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Withdraw</span>
               </div>
-              <div onClick={() => navigate('/dashboard/investment-records')} style={{ background: '#4ade80', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-                <DollarSign size={16} color="white" />
-                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Earnings</span>
+              <div onClick={() => navigate('/dashboard/investment-records')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                <div style={{ background: '#4ade80', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><DollarSign size={22} color="white" /></div>
+                <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Earnings</span>
               </div>
-              <div onClick={() => navigate('/dashboard/transaction-history')} style={{ background: '#fbbf24', padding: '10px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-                <Clock size={16} color="white" />
-                <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>Transactions</span>
+              <div onClick={() => navigate('/dashboard/transaction-history')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                <div style={{ background: '#fbbf24', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px' }}><Clock size={22} color="white" /></div>
+                <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '8px', fontWeight: '500' }}>Transactions</span>
               </div>
             </div>
 
+            {/* Stats Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
+              {stats.slice(1).map((s, i) => (
+                <div key={i} style={{ background: '#252d3d', border: '1px solid ' + s.borderColor + '80', padding: '10px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '8px' }}>{s.label}</span>
+                    <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
+                  </div>
+                  <div style={{ color: 'white', fontWeight: '700', fontSize: '11px', marginBottom: '5px' }}>{s.value}</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '3px' }}>
+                      <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-' + getCurrencySymbol(u.currency) + '0.00' : getCurrencySymbol(u.currency) + '0.00'}</span>
+                      <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '6px', padding: '1px 3px' }}>{s.btc}</span>
+                    </div>
+                    {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', cursor: 'pointer' }}>View Trade</button>}
+                  </div>
+                </div>
+              ))}
+            </div>
             {/* Chart */}
             <BTCChart />
             {/* Transaction List */}
