@@ -92,20 +92,27 @@ export default function Dashboard() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Top Nav */}
-        <div style={{ background: '#141824', padding: '6px 8px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
-            <Menu size={15}/>
-          </button>
-          <div style={{ display: 'flex', gap: '3px' }}>
-            <button onClick={() => navigate('/dashboard/packages')} style={{ padding: 'clamp(2px,1vw,4px) clamp(4px,2vw,10px)', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: 'clamp(7px,1.8vw,9px)', fontWeight: '700', cursor: 'pointer' }}>{u.plan?.toUpperCase() || 'STARTER'}</button>
-            <button style={{ padding: '3px 6px', background: '#6366f1', border: 'none', color: 'white', fontSize: 'clamp(6px, 1.5vw, 13px)', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}>{u.currency || 'USD'}</button>
-            <button onClick={() => navigate('/dashboard/kyc')} style={{ padding: '3px 6px', background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.15)', border: u.kycStatus === 'approved' ? '1px solid #22c55e' : '1px solid #f59e0b', color: u.kycStatus === 'approved' ? '#22c55e' : '#f59e0b', fontSize: 'clamp(6px, 1.5vw, 13px)', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}>KYC {u.kycStatus === 'approved' ? '✓' : '✗'}</button>
+        <div style={{ background: '#141824', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+          <div style={{ width: '28px', height: '28px', flexShrink: 0 }}>
+            <svg viewBox='0 0 40 40' fill='none' style={{ width: '28px', height: '28px' }}>
+              <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
+              <path d='M20 8L8 14V22L20 34L32 22V14L20 8Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.2'/>
+              <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
+            </svg>
           </div>
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: '3px', alignItems: 'center' }}>
-            <button style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: 'clamp(6px, 1.5vw, 13px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><Lock size={9}/> {u.accountType?.toUpperCase() || 'REAL'} ACCOUNT</button>
-            <button onClick={() => getDashboard().then(data => setDashData(data))} style={{ padding: '3px 5px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: '#22c55e', fontSize: 'clamp(6px, 1.5vw, 13px)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px', whiteSpace: 'nowrap' }}><RefreshCw size={9}/> {formatAmount(u.balance || 0, u.currency)}</button>
-            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {u.avatar ? <img src={u.avatar} style={{ width: '24px', height: '24px', objectFit: 'cover' }} /> : <User size={13} color="white" />}
+          <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            <Menu size={18}/>
+          </button>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', padding: '5px 12px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: '#f59e0b', fontSize: '11px' }}>₿</span>
+              <span style={{ color: 'white', fontSize: '11px', fontWeight: '600' }}>{formatAmount(u.balance || 0, u.currency)}</span>
+            </div>
+            <button onClick={() => navigate('/dashboard/live-trading')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <RefreshCw size={10}/> Trade
+            </button>
+            <div onClick={() => navigate('/dashboard/profile')} style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#6366f1', cursor: 'pointer', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {u.avatar ? <img src={u.avatar} style={{ width: '28px', height: '28px', objectFit: 'cover' }} /> : <User size={14} color="white" />}
             </div>
           </div>
         </div>
