@@ -166,7 +166,7 @@ export default function Dashboard() {
             <MarketTicker />
             <div style={{ height: "10px" }}></div>
             {/* Welcome Card */}
-            <div style={{ background: '#161b27', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '14px 12px', marginBottom: '20px', textAlign: 'center' }}>
+            <div style={{ background: '#0a0e1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '14px 12px', marginBottom: '20px', textAlign: 'center' }}>
               <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '10px' }}>Your investment dashboard overview</div>
               <div style={{ background: '#131722', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '14px', marginBottom: '8px' }}>
@@ -222,7 +222,7 @@ export default function Dashboard() {
             {/* Chart */}
             {/* Identity Verification Card */}
             {u.kycStatus !== 'approved' && (
-              <div style={{ background: '#161b27', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center' }}>
+              <div style={{ background: '#0a0e1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center' }}>
                 <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
                 </div>
