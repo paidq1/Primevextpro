@@ -176,7 +176,7 @@ export default function Dashboard() {
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', fontWeight: '600' }}>Account Balance</span>
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '10px' }}>Your available funds</div>
-                <div style={{ color: 'white', fontSize: '22px', fontWeight: '800', marginBottom: '6px', letterSpacing: '-0.5px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
+                <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
                   <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Available for Withdrawal</span>
