@@ -200,10 +200,10 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {stats.map((s, i) => (
-                <div key={i} style={{ background: '#252d3d', border: '1px solid rgba(255,255,255,0.08)', padding: '12px 10px', minHeight: '90px', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+                <div key={i} style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.06)', borderLeft: `3px solid ${s.borderColor}`, borderRadius: '10px', padding: '12px 10px', minHeight: '90px', boxShadow: `0 4px 20px rgba(0,0,0,0.3), 0 0 12px ${s.borderColor}15` }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(8px, 2vw, 11px)' }}>{s.label}</span>
-                    <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: s.iconBg + '40', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.icon}</div>
+                    <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: s.iconBg + '30', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 0 10px ${s.iconBg}60` }}>{s.icon}</div>
                   </div>
                   <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(11px, 2.5vw, 16px)', marginBottom: '8px' }}>{s.value}</div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
