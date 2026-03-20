@@ -44,7 +44,7 @@ export default function MarketTicker() {
   }).filter(Boolean);
 
   return (
-    <div style={{ background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '5px 0', display: 'flex', alignItems: 'center', overflow: 'hidden', flexShrink: 0 }}>
+    <div style={{ background: 'transparent', padding: '5px 0', display: 'flex', alignItems: 'center', overflow: 'hidden', flexShrink: 0 }}>
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
