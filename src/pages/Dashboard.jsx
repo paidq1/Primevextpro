@@ -68,7 +68,7 @@ export default function Dashboard() {
             </div>
             <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Trade Placed!</div>
             <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>{tradeType} order submitted successfully.</div>
-            <button onClick={() => setTradeSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+            <button onClick={() => setTradeSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', }}>Okay</button>
           </div>
         </>
       )}
@@ -180,7 +180,7 @@ export default function Dashboard() {
                   <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Available for Withdrawal</span>
                 </div>
-                <div style={{ marginBottom: '8px' }}>
+                <div style={{ marginBottom: '8px', display: 'block', margin: '0 auto 8px' }}>
                   <span style={{ background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)', color: u.kycStatus === 'approved' ? '#22c55e' : '#ef4444', fontSize: '9px', padding: '3px 10px', borderRadius: '20px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                     <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg>
                     {u.kycStatus === 'approved' ? 'Verified' : 'Unverified'}
@@ -214,7 +214,7 @@ export default function Dashboard() {
                       <span style={{ background: s.label === 'Total Withdrawals' ? '#ec4899' : '#ef4444', color: 'white', fontSize: '6px', padding: '1px 3px' }}>{s.label === 'Total Withdrawals' ? '-' + getCurrencySymbol(u.currency) + '0.00' : getCurrencySymbol(u.currency) + '0.00'}</span>
                       <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.45)', fontSize: '6px', padding: '1px 3px' }}>{s.btc}</span>
                     </div>
-                    {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', cursor: 'pointer' }}>View Trade</button>}
+                    {s.hasViewTrade && <button onClick={() => navigate('/dashboard/packages')} style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '6px', padding: '1px 4px', }}>View Trade</button>}
                   </div>
                 </div>
               ))}
@@ -277,8 +277,8 @@ export default function Dashboard() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
                   <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {Math.min(transactions.length, 10)} of {transactions.length} entries</span>
                   <div style={{ display: 'flex', gap: '4px' }}>
-                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8249;</button>
-                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: 'pointer' }}>&#8250;</button>
+                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8249;</button>
+                    <button style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', }}>&#8250;</button>
                   </div>
                 </div>
               </div>
@@ -291,8 +291,8 @@ export default function Dashboard() {
 
         {/* Quick Trade Banner */}
         <div style={{ padding: '0 12px 16px' }}>
-          <div onClick={() => navigate('/dashboard/live-trading')} style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', borderRadius: '12px', padding: '20px 16px', textAlign: 'center', cursor: 'pointer' }}>
-            <svg width='28' height='28' fill='none' stroke='white' strokeWidth='2' viewBox='0 0 24 24' style={{ marginBottom: '8px' }}><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/></svg>
+          <div style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', borderRadius: '12px', padding: '20px 16px', textAlign: 'center', }}>
+            <svg width='28' height='28' fill='none' stroke='white' strokeWidth='2' viewBox='0 0 24 24' style={{ marginBottom: '8px', display: 'block', margin: '0 auto 8px' }}><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/></svg>
             <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>Quick Trade</div>
             <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '10px' }}>Start a new trade instantly or explore investment plans.</div>
           </div>
@@ -332,14 +332,14 @@ export default function Dashboard() {
                 if (tradeDuration === '---') { setTradeError('Select duration'); return; }
                 if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
                 setTradeError(''); setTradeType('Buy'); setTradeSuccess(true);
-              }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>Buy</button>
+              }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', }}>Buy</button>
               <button onClick={() => {
                 if (tradeAccount === '---') { setTradeError('Select account'); return; }
                 if (tradeMarket === '---') { setTradeError('Select market'); return; }
                 if (tradeDuration === '---') { setTradeError('Select duration'); return; }
                 if (!amount || Number(amount) < 10) { setTradeError('Min amount $10'); return; }
                 setTradeError(''); setTradeType('Sell'); setTradeSuccess(true);
-              }} style={{ flex: 1, padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>Sell</button>
+              }} style={{ flex: 1, padding: '10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '11px', fontWeight: '700', }}>Sell</button>
             </div>
           </div>
         </div>
