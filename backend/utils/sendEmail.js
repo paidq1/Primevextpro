@@ -30,11 +30,8 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <!-- Header -->
       <tr><td style="background:#0d1117;padding:18px 28px;border-bottom:1px solid rgba(99,102,241,0.12);">
         <table cellpadding="0" cellspacing="0"><tr>
-          <td style="padding-right:10px;vertical-align:middle;">
-            <div style="width:34px;height:34px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:8px;text-align:center;line-height:34px;font-size:13px;font-weight:900;color:white;font-family:Arial,sans-serif;letter-spacing:-0.5px;">VT</div>
-          </td>
-          <td style="vertical-align:middle;">
-            <span style="color:white;font-size:15px;font-weight:800;letter-spacing:0.5px;">VERTEXTRADE <span style="color:#818cf8;">PRO</span></span>
+          <td style="vertical-align:middle;"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 58' width='30' height='38'><path d='M22,4 L42,15 L42,36 L22,54 L2,36 L2,15 Z' fill='none' stroke='#6366f1' stroke-width='2.5' stroke-linejoin='round'/><path d='M22,10 L36,19 L36,35 L22,48 L8,35 L8,19 Z' fill='none' stroke='#6366f1' stroke-width='2.5' stroke-linejoin='round'/><path d='M22,16 L32,23 L32,34 L22,42 L12,34 L12,23 Z' fill='none' stroke='#6366f1' stroke-width='2.5' stroke-linejoin='round'/><path d='M22,21 L29,25 L29,33 L22,37 L15,33 L15,25 Z' fill='#6366f1'/></svg></td>
+          <td style="vertical-align:middle;padding-left:10px;"><span style="color:white;font-size:15px;font-weight:800;letter-spacing:0.5px;">VertexTrade <span style="color:#818cf8;">Pro</span></span>
           </td>
         </tr></table>
       </td></tr>
