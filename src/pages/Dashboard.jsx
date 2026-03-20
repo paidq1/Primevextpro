@@ -109,6 +109,32 @@ export default function Dashboard() {
                         <svg width='18' height='18' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/><path d='M13.73 21a2 2 0 0 1-3.46 0'/></svg>
                         <span style={{ position: 'absolute', top: '2px', right: '4px', width: '7px', height: '7px', borderRadius: '50%', background: '#ef4444' }} />
                       </button>
+                      {showNotifications && (
+                        <>
+                          <div onClick={() => setShowNotifications(false)} style={{ position: 'fixed', inset: 0, zIndex: 998 }} />
+                          <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
+                            <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
+                              <span onClick={() => setShowNotifications(false)} style={{ color: '#6366f1', fontSize: '9px', cursor: 'pointer' }}>Mark all read</span>
+                            </div>
+                            {[
+                              { icon: '💰', title: 'Deposit Confirmed', desc: 'Your deposit has been approved', time: '2m ago', unread: true },
+                              { icon: '📈', title: 'Trade Update', desc: 'Your BTC trade is active', time: '1h ago', unread: true },
+                              { icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features', time: '2h ago', unread: false },
+                            ].map((n, i) => (
+                              <div key={i} style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                                <span style={{ fontSize: '16px' }}>{n.icon}</span>
+                                <div style={{ flex: 1 }}>
+                                  <div style={{ color: 'white', fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
+                                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '2px' }}>{n.desc}</div>
+                                  <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>{n.time}</div>
+                                </div>
+                                {n.unread && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, marginTop: '4px' }} />}
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div style={{ position: 'relative' }}>
               <div onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', borderRight: '1px solid rgba(255,255,255,0.15)', padding: '0 12px', cursor: 'pointer', height: '100%' }}>
