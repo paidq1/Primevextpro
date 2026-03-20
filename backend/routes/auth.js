@@ -174,3 +174,54 @@ router.post('/2fa/verify', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Send 6-digit OTP for password change
+router.post('/send-change-otp', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'No account with that email' });
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.resetPasswordToken = otp;
+    user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+    await user.save({ validateBeforeSave: false });
+
+    await sendEmail({
+      to: user.email,
+      name: user.firstName || user.email,
+      subject: 'Your Password Change Verification Code',
+      html: `
+        <div style="font-family:sans-serif;max-width:500px;margin:0 auto;background:#0d1117;padding:32px;border-radius:12px;">
+          <h2 style="color:white;">Password Change Request</h2>
+          <p style="color:rgba(255,255,255,0.7);">Hi ${user.firstName || 'User'},</p>
+          <p style="color:rgba(255,255,255,0.7);">Your verification code is:</p>
+          <div style="background:#6366f1;color:white;font-size:32px;font-weight:800;letter-spacing:10px;text-align:center;padding:20px;border-radius:8px;margin:20px 0;">${otp}</div>
+          <p style="color:rgba(255,255,255,0.5);font-size:12px;">This code expires in 10 minutes. If you did not request this, ignore this email.</p>
+        </div>
+      `
+    });
+
+    res.json({ message: 'OTP sent successfully' });
+  } catch(e) {
+    console.error(e);
+    res.status(500).json({ message: 'Failed to send OTP' });
+  }
+});
+
+// Verify OTP for password change
+router.post('/verify-change-otp', async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const user = await User.findOne({
+      email,
+      resetPasswordToken: otp,
+      resetPasswordExpire: { $gt: Date.now() }
+    });
+    if (!user) return res.status(400).json({ message: 'Invalid or expired code' });
+    const token = user.resetPasswordToken;
+    res.json({ message: 'OTP verified', token });
+  } catch(e) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
