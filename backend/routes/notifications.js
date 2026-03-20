@@ -1,81 +1,53 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const Transaction = require('../models/Transaction');
 const User = require('../models/User');
 
-// Get real notifications from user's activity
 router.get('/', auth, async (req, res) => {
   try {
     const userId = req.user.id;
     const notifications = [];
 
-    // Get deposits
-    const Deposit = require('../models/Deposit');
-    const deposits = await Deposit.find({ user: userId }).sort({ createdAt: -1 }).limit(5);
-    deposits.forEach(d => {
+    const transactions = await Transaction.find({ user: userId }).sort({ createdAt: -1 }).limit(10);
+
+    transactions.forEach(t => {
+      let icon, title;
+      if (t.type === 'deposit') {
+        icon = t.status === 'approved' ? '💰' : t.status === 'rejected' ? '❌' : '⏳';
+        title = `Deposit ${t.status === 'approved' ? 'Confirmed' : t.status === 'rejected' ? 'Rejected' : 'Pending'}`;
+      } else if (t.type === 'withdrawal') {
+        icon = t.status === 'approved' ? '💸' : t.status === 'rejected' ? '❌' : '⏳';
+        title = `Withdrawal ${t.status === 'approved' ? 'Processed' : t.status === 'rejected' ? 'Rejected' : 'Pending'}`;
+      } else if (t.type === 'profit') {
+        icon = '📈';
+        title = 'Profit Credited';
+      } else if (t.type === 'referral') {
+        icon = '🤝';
+        title = 'Referral Bonus';
+      }
       notifications.push({
-        id: d._id,
-        icon: d.status === 'approved' ? '💰' : d.status === 'rejected' ? '❌' : '⏳',
-        title: `Deposit ${d.status === 'approved' ? 'Confirmed' : d.status === 'rejected' ? 'Rejected' : 'Pending'}`,
-        desc: `Your deposit of ${d.amount} ${d.currency || 'USD'} is ${d.status}.`,
-        time: d.createdAt,
-        unread: d.status === 'approved' || d.status === 'rejected',
-        type: 'deposit'
+        id: t._id,
+        icon,
+        title,
+        desc: `${t.type.charAt(0).toUpperCase() + t.type.slice(1)} of $${t.amount} is ${t.status}.`,
+        time: t.createdAt,
+        unread: t.status === 'approved' || t.status === 'rejected',
+        type: t.type
       });
     });
 
-    // Get withdrawals
-    const Withdrawal = require('../models/Withdrawal');
-    const withdrawals = await Withdrawal.find({ user: userId }).sort({ createdAt: -1 }).limit(5);
-    withdrawals.forEach(w => {
-      notifications.push({
-        id: w._id,
-        icon: w.status === 'approved' ? '💸' : w.status === 'rejected' ? '❌' : '⏳',
-        title: `Withdrawal ${w.status === 'approved' ? 'Processed' : w.status === 'rejected' ? 'Rejected' : 'Pending'}`,
-        desc: `Your withdrawal of ${w.amount} USD is ${w.status}.`,
-        time: w.createdAt,
-        unread: w.status === 'approved' || w.status === 'rejected',
-        type: 'withdrawal'
-      });
-    });
-
-    // KYC status
+    // KYC notification
     const user = await User.findById(userId);
     if (user.kycStatus === 'approved') {
-      notifications.push({
-        id: 'kyc-approved',
-        icon: '✅',
-        title: 'KYC Approved',
-        desc: 'Your identity verification has been approved.',
-        time: user.updatedAt,
-        unread: false,
-        type: 'kyc'
-      });
+      notifications.push({ id: 'kyc', icon: '✅', title: 'KYC Approved', desc: 'Your identity verification has been approved.', time: user.updatedAt, unread: false, type: 'kyc' });
     } else if (user.kycStatus === 'submitted') {
-      notifications.push({
-        id: 'kyc-pending',
-        icon: '🔐',
-        title: 'KYC Under Review',
-        desc: 'Your KYC documents are being reviewed.',
-        time: user.updatedAt,
-        unread: true,
-        type: 'kyc'
-      });
+      notifications.push({ id: 'kyc', icon: '🔐', title: 'KYC Under Review', desc: 'Your KYC documents are being reviewed.', time: user.updatedAt, unread: true, type: 'kyc' });
     } else {
-      notifications.push({
-        id: 'kyc-reminder',
-        icon: '🔐',
-        title: 'KYC Reminder',
-        desc: 'Complete your identity verification to unlock all features.',
-        time: new Date(),
-        unread: true,
-        type: 'kyc'
-      });
+      notifications.push({ id: 'kyc', icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features.', time: new Date(), unread: true, type: 'kyc' });
     }
 
-    // Sort by time
     notifications.sort((a, b) => new Date(b.time) - new Date(a.time));
-
     res.json(notifications);
   } catch (e) {
     console.error(e);
