@@ -289,6 +289,15 @@ export default function Dashboard() {
 
         </div>
 
+        {/* Quick Trade Banner */}
+        <div style={{ padding: '0 12px 16px' }}>
+          <div onClick={() => navigate('/dashboard/live-trading')} style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', borderRadius: '12px', padding: '20px 16px', textAlign: 'center', cursor: 'pointer' }}>
+            <svg width='28' height='28' fill='none' stroke='white' strokeWidth='2' viewBox='0 0 24 24' style={{ marginBottom: '8px' }}><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/></svg>
+            <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>Quick Trade</div>
+            <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '10px' }}>Start a new trade instantly or explore investment plans.</div>
+          </div>
+        </div>
+
         {/* Trade Assets - Full Width */}
         <div style={{ padding: '0 12px 20px' }}>
           <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '14px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
