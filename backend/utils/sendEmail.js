@@ -23,35 +23,24 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#060a12;font-family:'Segoe UI',Arial,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#060a12;padding:40px 16px;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0f1a;padding:32px 16px;">
   <tr><td align="center">
-    <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#0d1117;border:1px solid rgba(99,102,241,0.2);box-shadow:0 0 60px rgba(99,102,241,0.08);">
+    <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#111827;border:1px solid rgba(99,102,241,0.15);box-shadow:0 0 40px rgba(0,0,0,0.4);">
       
       <!-- Header -->
-      <tr><td style="background:linear-gradient(135deg,#0f0c29,#1a1040,#0d1117);padding:32px 36px;border-bottom:1px solid rgba(99,102,241,0.15);">
-        <table width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td style="vertical-align:middle;">
-              <table cellpadding="0" cellspacing="0"><tr>
-                <td style="padding-right:10px;vertical-align:middle;">
-                  <div style="width:38px;height:38px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-                    <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="white" stroke-width="1.5"/>
-                      <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/>
-                      <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="white" stroke="white" stroke-width="1"/>
-                    </svg>
-                  </div>
-                </td>
-                <td style="vertical-align:middle;">
-                  <span style="color:white;font-size:17px;font-weight:800;letter-spacing:0.3px;">VERTEXTRADE <span style="color:#818cf8;">PRO</span></span>
-                </td>
-              </tr></table>
-            </td>
-            <td align="right" style="vertical-align:middle;">
-              <span style="color:rgba(255,255,255,0.25);font-size:11px;letter-spacing:1px;">SMART INVESTMENT BROKERS</span>
-            </td>
-          </tr>
-        </table>
+      <tr><td style="background:#0d1117;padding:18px 28px;border-bottom:1px solid rgba(99,102,241,0.12);">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="padding-right:8px;vertical-align:middle;">
+            <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" stroke-width="1.5"/>
+              <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" stroke-width="1.2"/>
+              <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" stroke-width="1"/>
+            </svg>
+          </td>
+          <td style="vertical-align:middle;">
+            <span style="color:white;font-size:15px;font-weight:800;letter-spacing:0.5px;">VERTEXTRADE <span style="color:#818cf8;">PRO</span></span>
+          </td>
+        </tr></table>
       </td></tr>
 
       <!-- Accent Line -->
@@ -63,7 +52,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       </td></tr>
 
       <!-- Footer -->
-      <tr><td style="background:#080c14;padding:24px 36px;border-top:1px solid rgba(255,255,255,0.05);">
+      <tr><td style="background:#0d1117;padding:20px 28px;border-top:1px solid rgba(255,255,255,0.05);">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td align="center" style="padding-bottom:12px;">
