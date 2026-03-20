@@ -78,7 +78,7 @@ export default function Dashboard() {
       )}
 
       {/* Icon Sidebar */}
-      <div style={{ width: 'clamp(36px, 8vw, 48px)', background: '#0F172A', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, visibility: sidebarOpen ? 'hidden' : 'visible' }}>
+      <div style={{ width: 'clamp(36px, 8vw, 48px)', background: '#0F172A', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 0', gap: '4px', flexShrink: 0, display: sidebarOpen ? 'none' : 'flex' }}>
         <div style={{ width: '22px', height: '22px', marginBottom: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
             <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0F172A' stroke='#6366F1' strokeWidth='1.5'/>
