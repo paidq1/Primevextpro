@@ -31,11 +31,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <tr><td style="background:#0d1117;padding:18px 28px;border-bottom:1px solid rgba(99,102,241,0.12);">
         <table cellpadding="0" cellspacing="0"><tr>
           <td style="padding-right:8px;vertical-align:middle;">
-            <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" stroke-width="1.5"/>
-              <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" stroke-width="1.2"/>
-              <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" stroke-width="1"/>
-            </svg>
+            <img src="https://vertextradspro.vercel.app/logo.png" width="30" height="30" alt="VT" style="display:block;border-radius:6px;" />
           </td>
           <td style="vertical-align:middle;">
             <span style="color:white;font-size:15px;font-weight:800;letter-spacing:0.5px;">VERTEXTRADE <span style="color:#818cf8;">PRO</span></span>
