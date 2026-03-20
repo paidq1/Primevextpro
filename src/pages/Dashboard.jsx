@@ -31,6 +31,8 @@ export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showNotice, setShowNotice] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [tradeAccount, setTradeAccount] = useState('---');
   const [tradeMarket, setTradeMarket] = useState('---');
   const [tradeSymbol, setTradeSymbol] = useState('BTC/USD');
