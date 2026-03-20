@@ -217,6 +217,21 @@ export default function Dashboard() {
               ))}
             </div>
             {/* Chart */}
+            {/* Identity Verification Card */}
+            {u.kycStatus !== 'approved' && (
+              <div style={{ background: '#161b27', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '20px', marginBottom: '16px', textAlign: 'center' }}>
+                <div style={{ width: '48px', height: '48px', background: 'rgba(99,102,241,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+                  <svg width='24' height='24' fill='none' stroke='#6366f1' viewBox='0 0 24 24' strokeWidth='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><polyline points='9 12 11 14 15 10'/></svg>
+                </div>
+                <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>Identity Verification</div>
+                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', marginBottom: '16px' }}>Complete verification to access all features</div>
+                <button onClick={() => navigate('/dashboard/kyc')} style={{ width: '100%', background: 'linear-gradient(90deg, #3b82f6, #6366f1)', border: 'none', color: 'white', fontSize: '12px', fontWeight: '700', padding: '12px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(99,102,241,0.4)' }}>
+                  View Details
+                  <svg width='16' height='16' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><polyline points='6 9 12 15 18 9'/></svg>
+                </button>
+              </div>
+            )}
+
             <div style={{ borderRadius: "12px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.08)", marginBottom: "12px" }}><BTCChart /></div>
             {/* Transaction List */}
             <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', marginBottom: '20px' }}>
