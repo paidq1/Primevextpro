@@ -164,6 +164,7 @@ export default function Dashboard() {
             </div>
 
             <MarketTicker />
+            <div style={{ height: "10px" }}></div>
             {/* Welcome Card */}
             <div style={{ background: '#161b27', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '14px 12px', marginBottom: '20px', textAlign: 'center' }}>
               <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
