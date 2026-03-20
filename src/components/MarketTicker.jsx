@@ -1,68 +1,54 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
+
+const coins = [
+  { id: 'bitcoin', symbol: 'BTC', color: '#f7931a' },
+  { id: 'ethereum', symbol: 'ETH', color: '#627eea' },
+  { id: 'binancecoin', symbol: 'BNB', color: '#f3ba2f' },
+  { id: 'solana', symbol: 'SOL', color: '#9945ff' },
+  { id: 'ripple', symbol: 'XRP', color: '#00aae4' },
+  { id: 'cardano', symbol: 'ADA', color: '#0033ad' },
+];
 
 export default function MarketTicker() {
-  const [coins, setCoins] = useState([]);
+  const [prices, setPrices] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchCoins() {
-      try {
-        const res = await fetch(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
-        );
-        const data = await res.json();
-        setCoins(data);
-      } catch (err) {
-        console.error("Error fetching coins:", err);
-      }
-    }
-    fetchCoins();
-    const interval = setInterval(fetchCoins, 60000);
+    const fetchPrices = () => {
+      const ids = coins.map(c => c.id).join(',');
+      fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`)
+        .then(r => r.json())
+        .then(data => { setPrices(data); setLoading(false); })
+        .catch(() => setLoading(false));
+    };
+    fetchPrices();
+    const interval = setInterval(fetchPrices, 30000);
     return () => clearInterval(interval);
   }, []);
 
-  const tickerCoins = [...coins, ...coins, ...coins];
-
   return (
-    <div style={{ overflow: "hidden", width: "calc(100% - 24px)", height: "17px", marginLeft: "12px", marginRight: "12px", borderRadius: "4px" }} className="relative z-20">
-      <div style={{
-        display: "inline-flex",
-        alignItems: "center",
-        height: "17px",
-        animation: "tickerScroll 40s linear infinite",
-        whiteSpace: "nowrap"
-      }}>
-        {tickerCoins.map((coin, i) => {
-          const isUp = coin.price_change_percentage_24h >= 0;
-          return (
-            <React.Fragment key={i}>
-              <div style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "3px",
-                paddingLeft: "8px",
-                paddingRight: "8px",
-                flexShrink: 0
-              }}>
-                <img src={coin.image} alt={coin.name} style={{ width: "10px", height: "10px", borderRadius: "50%" }} />
-                <span style={{ color: "white", fontWeight: 600, fontSize: "8px" }}>{coin.name}</span>
-                <span style={{ color: "#848e9c", fontSize: "7px" }}>{coin.symbol.toUpperCase()}</span>
-                <span style={{ color: "white", fontSize: "8px" }}>${coin.current_price.toLocaleString()}</span>
-                <span style={{ fontSize: "7px", color: isUp ? "#00c896" : "#ff3b69" }}>
-                  {isUp ? "▲" : "▼"} {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
-                </span>
-              </div>
-              <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "8px", flexShrink: 0 }}>|</span>
-            </React.Fragment>
-          );
-        })}
+    <div style={{ background: '#131722', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '16px', overflowX: 'auto', flexShrink: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }}></div>
+        <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '600' }}>LIVE</span>
       </div>
-
-      <style>{`
-        @keyframes tickerScroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-      `}</style>
+      {loading ? (
+        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</span>
+      ) : (
+        coins.map(coin => {
+          const data = prices[coin.id];
+          if (!data) return null;
+          const change = data.usd_24h_change?.toFixed(2);
+          const isPos = change >= 0;
+          return (
+            <div key={coin.id} style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
+              <span style={{ color: coin.color, fontSize: '8px', fontWeight: '700' }}>{coin.symbol}:</span>
+              <span style={{ color: 'white', fontSize: '8px', fontWeight: '600' }}>${data.usd?.toLocaleString()}</span>
+              <span style={{ color: isPos ? '#22c55e' : '#ef4444', fontSize: '7px' }}>{isPos ? '+' : ''}{change}%</span>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 }

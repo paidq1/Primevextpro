@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import BTCChart from '../components/BTCChart';
 import CryptoNews from '../components/CryptoNews';
+import MarketTicker from '../components/MarketTicker';
 import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings, LogOut } from 'lucide-react';
 
 const navItems = [
@@ -151,6 +152,7 @@ export default function Dashboard() {
         {/* Body */}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           {/* Left Panel */}
+          <MarketTicker />
           <div style={{ flex: 1, overflowY: 'auto', padding: '12px', minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
               <svg viewBox='0 0 40 40' fill='none' style={{ width: '16px', height: '16px', flexShrink: 0 }}>
