@@ -45,7 +45,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     getDashboard().then(data => setDashData(data));
-    fetch('https://vertextrades.onrender.com/api/notifications', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => Array.isArray(d) ? setNotifications(d) : []).catch(() => {});
+    fetch('https://vertextrades.onrender.com/api/notifications', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => Array.isArray(d) ? setNotifications(d) : setNotifications([])).catch(() => {});
     getTransactions().then(data => Array.isArray(data) ? setTransactions(data) : setTransactions([]));
   }, []);
 
