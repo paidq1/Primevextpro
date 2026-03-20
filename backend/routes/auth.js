@@ -190,16 +190,8 @@ router.post('/send-change-otp', async (req, res) => {
     await sendEmail({
       to: user.email,
       name: user.firstName || user.email,
-      subject: 'Your Password Change Verification Code',
-      html: `
-        <div style="font-family:sans-serif;max-width:500px;margin:0 auto;background:#0d1117;padding:32px;border-radius:12px;">
-          <h2 style="color:white;">Password Change Request</h2>
-          <p style="color:rgba(255,255,255,0.7);">Hi ${user.firstName || 'User'},</p>
-          <p style="color:rgba(255,255,255,0.7);">Your verification code is:</p>
-          <div style="background:#6366f1;color:white;font-size:32px;font-weight:800;letter-spacing:10px;text-align:center;padding:20px;border-radius:8px;margin:20px 0;">${otp}</div>
-          <p style="color:rgba(255,255,255,0.5);font-size:12px;">This code expires in 10 minutes. If you did not request this, ignore this email.</p>
-        </div>
-      `
+      type: 'twoFactorOTP',
+      code: otp
     });
 
     res.json({ message: 'OTP sent successfully' });
