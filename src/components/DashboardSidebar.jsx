@@ -60,6 +60,7 @@ const sidebarSections = [
       { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
       { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
       { icon: <Bell size={13}/>, label: 'Support', route: null, external: null, action: 'smartsupp' },
+      { icon: <Settings size={13}/>, label: 'Settings', route: '/dashboard/settings' },
     ]
   }
 ];

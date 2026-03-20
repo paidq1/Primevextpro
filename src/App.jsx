@@ -42,6 +42,7 @@ import BotTransactionHistory from "./pages/BotTransactionHistory";
 import VerifyEmail from "./pages/VerifyEmail";
 import AdminPanel from "./pages/AdminPanel";
 import Notifications from "./pages/Notifications";
+import SettingsPage from "./pages/Settings";
 import SupportPage from "./pages/SupportPage";
 import ResetPassword from "./pages/ResetPassword";
 import TradingInfo from "./pages/TradingInfo";
@@ -112,6 +113,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+        <Route path="/dashboard/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/dashboard/notifications" element={<PrivateRoute><Notifications /></PrivateRoute>} />
         <Route path="/admin/support" element={<AdminRoute><SupportPage /></AdminRoute>} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
