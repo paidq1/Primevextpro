@@ -56,3 +56,17 @@ router.get('/', auth, async (req, res) => {
 });
 
 module.exports = router;
+
+// Mark notification as read (we track this client-side via localStorage for now)
+router.patch('/read/:id', auth, async (req, res) => {
+  try {
+    const Notification = require('../models/Notification');
+    await Notification.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      { read: true }
+    );
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});

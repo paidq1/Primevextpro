@@ -21,12 +21,28 @@ export default function Notifications() {
   useEffect(() => {
     fetch('https://vertextrades.onrender.com/api/notifications', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    }).then(r => r.json()).then(d => Array.isArray(d) ? setNotifications(d) : setNotifications(allNotifications)).catch(() => setNotifications(allNotifications));
+    }).then(r => r.json()).then(d => {
+      if (Array.isArray(d)) {
+        const readIds = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+        setNotifications(d.map(n => ({ ...n, unread: readIds.includes(String(n.id)) ? false : n.unread })));
+      } else {
+        setNotifications(allNotifications);
+      }
+    }).catch(() => setNotifications(allNotifications));
   }, []);
   const [filter, setFilter] = useState('all');
 
-  const markAllRead = () => setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
-  const markRead = (id) => setNotifications(prev => prev.map(n => n.id === id ? { ...n, unread: false } : n));
+  const markAllRead = () => {
+    const ids = notifications.map(n => String(n.id));
+    const existing = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+    localStorage.setItem('readNotifications', JSON.stringify([...new Set([...existing, ...ids])]));
+    setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
+  };
+  const markRead = (id) => {
+    const existing = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+    localStorage.setItem('readNotifications', JSON.stringify([...new Set([...existing, String(id)])]));
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, unread: false } : n));
+  };
 
   const filtered = filter === 'unread' ? notifications.filter(n => n.unread) : notifications;
   const unreadCount = notifications.filter(n => n.unread).length;
