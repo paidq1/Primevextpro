@@ -27,7 +27,7 @@ export default function MarketTicker() {
   }, []);
 
   return (
-    <div style={{ background: '#131722', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '16px', overflowX: 'auto', flexShrink: 0 }}>
+    <div style={{ background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '16px', overflowX: 'auto', flexShrink: 0 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
         <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }}></div>
         <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '600' }}>LIVE</span>
