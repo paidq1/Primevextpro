@@ -180,7 +180,28 @@ export default function Dashboard() {
               <div style={{ position: 'relative', zIndex: 1 }}>
               <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '10px' }}>Your investment dashboard overview</div>
-              <div style={{ background: 'linear-gradient(135deg, #0d1117 0%, #111827 100%)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '10px', padding: '10px', marginBottom: '8px', boxShadow: '0 0 20px rgba(99,102,241,0.08) inset' }}>
+              <div style={{ background: 'linear-gradient(135deg, #0d1117 0%, #0f0a2e 100%)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '10px', padding: '10px', marginBottom: '8px', boxShadow: '0 0 20px rgba(99,102,241,0.1) inset', position: 'relative', overflow: 'hidden' }}>
+                <svg style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '60px', opacity: 0.4, pointerEvents: 'none' }} viewBox='0 0 400 60' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'>
+                  <defs>
+                    <linearGradient id='wg1' x1='0%' y1='0%' x2='100%' y2='0%'>
+                      <stop offset='0%' stopColor='#6366f1'/>
+                      <stop offset='50%' stopColor='#a855f7'/>
+                      <stop offset='100%' stopColor='#06b6d4'/>
+                    </linearGradient>
+                    <linearGradient id='wg2' x1='0%' y1='0%' x2='100%' y2='0%'>
+                      <stop offset='0%' stopColor='#4f46e5'/>
+                      <stop offset='50%' stopColor='#7c3aed'/>
+                      <stop offset='100%' stopColor='#0891b2'/>
+                    </linearGradient>
+                  </defs>
+                  <path d='M0,40 C50,20 100,50 150,35 C200,20 250,45 300,30 C350,15 380,40 400,35 L400,60 L0,60 Z' fill='url(#wg2)' opacity='0.5'/>
+                  <path d='M0,45 C60,25 120,55 180,40 C240,25 280,50 340,35 C370,25 390,45 400,40 L400,60 L0,60 Z' fill='url(#wg1)' opacity='0.6'/>
+                  <path d='M0,50 C40,35 90,55 140,45 C200,32 260,52 320,42 C360,35 385,50 400,45 L400,60 L0,60 Z' fill='url(#wg1)' opacity='0.4'/>
+                  {[...Array(30)].map((_, i) => (
+                    <circle key={i} cx={i * 14} cy={35 + Math.sin(i * 0.8) * 12} r='1.5' fill='#818cf8' opacity='0.6'/>
+                  ))}
+                </svg>
+                <div style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
                   <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', fontWeight: '600' }}>Account Balance</span>
@@ -196,6 +217,7 @@ export default function Dashboard() {
                     <svg width='10' height='10' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg>
                     {u.kycStatus === 'approved' ? 'Verified' : 'Unverified'}
                   </span>
+                </div>
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
               </div>
