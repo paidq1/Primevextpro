@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import BTCChart from '../components/BTCChart';
 import CryptoNews from '../components/CryptoNews';
-import ParticleWave from '../components/ParticleWave';
 import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings, LogOut } from 'lucide-react';
 
 const navItems = [
@@ -220,8 +219,7 @@ export default function Dashboard() {
                   </span>
                 </div>
                 </div>
-                <ParticleWave />
-                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px', position: 'relative', zIndex: 1 }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
