@@ -180,8 +180,7 @@ export default function Dashboard() {
               <div style={{ position: 'relative', zIndex: 1 }}>
               <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '10px' }}>Your investment dashboard overview</div>
-              <div style={{ background: 'linear-gradient(135deg, #0d1117 0%, #111827 100%)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '10px', padding: '10px', marginBottom: '8px', boxShadow: '0 0 20px rgba(99,102,241,0.08) inset' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
                   <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', fontWeight: '600' }}>Account Balance</span>
                 </div>
