@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
 import BTCChart from '../components/BTCChart';
 import CryptoNews from '../components/CryptoNews';
-import MarketTicker from '../components/MarketTicker';
+import DashboardTicker from '../components/DashboardTicker';
 import { User, LayoutDashboard, Wallet, Bot, Package, BarChart2, Lock, RefreshCw, CreditCard, TrendingUp, ArrowDownCircle, Clock, DollarSign, Menu, Users, Settings, LogOut } from 'lucide-react';
 
 const navItems = [
@@ -163,7 +163,7 @@ export default function Dashboard() {
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
-            <MarketTicker />
+            <DashboardTicker />
             <div style={{ height: "10px" }}></div>
             {/* Welcome Card */}
             <div style={{ background: '#161b27', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '14px 12px', marginBottom: '20px', textAlign: 'center' }}>
