@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import DashboardSidebar from '../components/DashboardSidebar';
-import { ArrowLeft, Settings, Shield, Moon, Sun, Bell, Lock, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, Settings, Shield, Bell, Lock, Eye, EyeOff } from 'lucide-react';
 
 export default function SettingsPage() {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ export default function SettingsPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [twoFAEnabled, setTwoFAEnabled] = useState(user?.twoFactorEnabled || false);
   const [twoFALoading, setTwoFALoading] = useState(false);
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') !== 'light');
   const [notifDeposit, setNotifDeposit] = useState(localStorage.getItem('notif_deposit') !== 'false');
   const [notifWithdrawal, setNotifWithdrawal] = useState(localStorage.getItem('notif_withdrawal') !== 'false');
   const [notifTrade, setNotifTrade] = useState(localStorage.getItem('notif_trade') !== 'false');
@@ -29,12 +28,6 @@ export default function SettingsPage() {
     setTwoFALoading(false);
   };
 
-  const toggleTheme = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    localStorage.setItem('theme', newMode ? 'dark' : 'light');
-    document.documentElement.style.setProperty('--bg', newMode ? '#0f172a' : '#f1f5f9');
-  };
 
   const saveNotifSettings = () => {
     localStorage.setItem('notif_deposit', notifDeposit);
@@ -82,16 +75,6 @@ export default function SettingsPage() {
       </div>
 
       <div style={{ padding: '16px 12px' }}>
-
-        {/* Appearance */}
-        <Section title="Appearance">
-          <Row
-            icon={darkMode ? <Moon size={16} color="#6366f1" /> : <Sun size={16} color="#f59e0b" />}
-            title="Dark Mode"
-            desc={darkMode ? 'Dark theme is active' : 'Light theme is active'}
-            right={<ToggleSwitch value={darkMode} onChange={toggleTheme} />}
-          />
-        </Section>
 
         {/* Security */}
         <Section title="Security">
