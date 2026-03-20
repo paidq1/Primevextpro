@@ -32,6 +32,7 @@ export default function Dashboard() {
   const [showNotice, setShowNotice] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const [darkMode, setDarkMode] = useState(true);
   const [tradeAccount, setTradeAccount] = useState('---');
   const [tradeMarket, setTradeMarket] = useState('---');
@@ -44,6 +45,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     getDashboard().then(data => setDashData(data));
+    fetch('https://vertextrades.onrender.com/api/notifications', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => Array.isArray(d) ? setNotifications(d) : []).catch(() => {});
     getTransactions().then(data => Array.isArray(data) ? setTransactions(data) : setTransactions([]));
   }, []);
 
@@ -117,17 +119,15 @@ export default function Dashboard() {
                               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
                               <span onClick={() => setShowNotifications(false)} style={{ color: '#6366f1', fontSize: '9px', cursor: 'pointer' }}>Mark all read</span>
                             </div>
-                            {[
-                              { icon: '💰', title: 'Deposit Confirmed', desc: 'Your deposit has been approved', time: '2m ago', unread: true },
-                              { icon: '📈', title: 'Trade Update', desc: 'Your BTC trade is active', time: '1h ago', unread: true },
-                              { icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features', time: '2h ago', unread: false },
-                            ].map((n, i) => (
+                            {(notifications.length ? notifications.slice(0,5) : [
+                              { id: 1, icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features', time: new Date(), unread: true },
+                            ]).map((n, i) => (
                               <div key={i} style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                                 <span style={{ fontSize: '16px' }}>{n.icon}</span>
                                 <div style={{ flex: 1 }}>
                                   <div style={{ color: 'white', fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
                                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '2px' }}>{n.desc}</div>
-                                  <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>{n.time}</div>
+                                  <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString()}</div>
                                 </div>
                                 {n.unread && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, marginTop: '4px' }} />}
                               

@@ -16,7 +16,13 @@ const allNotifications = [
 export default function Notifications() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [notifications, setNotifications] = useState(allNotifications);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    fetch('https://vertextrades.onrender.com/api/notifications', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    }).then(r => r.json()).then(d => Array.isArray(d) ? setNotifications(d) : setNotifications(allNotifications)).catch(() => setNotifications(allNotifications));
+  }, []);
   const [filter, setFilter] = useState('all');
 
   const markAllRead = () => setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
@@ -67,7 +73,7 @@ export default function Notifications() {
                 {n.unread && <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#6366f1', flexShrink: 0 }} />}
               </div>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', marginBottom: '4px', lineHeight: '1.4' }}>{n.desc}</div>
-              <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '9px' }}>{n.time}</div>
+              <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '9px' }}>{typeof n.time === 'string' && n.time.includes('ago') ? n.time : new Date(n.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
             </div>
           </div>
         ))}
