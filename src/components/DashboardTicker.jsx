@@ -49,12 +49,12 @@ export default function DashboardTicker() {
         <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', fontWeight: '600' }}>LIVE</span>
       </div>
       <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
-        <style>{\`
+        <style>{`
           @keyframes ticker {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
           }
-        \`}</style>
+        `}</style>
         {loading ? (
           <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px', padding: '0 12px' }}>Loading...</span>
         ) : (
