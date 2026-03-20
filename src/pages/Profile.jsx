@@ -475,30 +475,6 @@ export default function Profile() {
           </div>
         )}
       </div>
-      {/* 2FA Section */}
-      <div style={{ margin: '16px 14px', background: '#1a2540', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <div style={{ color: 'white', fontSize: '12px', fontWeight: '700', marginBottom: '4px' }}>Two-Factor Authentication</div>
-            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>Add extra security with email OTP on login</div>
-          </div>
-          <button onClick={async () => {
-            setTwoFALoading(true);
-            try {
-              const token = localStorage.getItem('token');
-              const res = await fetch('https://vertextrades.onrender.com/api/auth/2fa/toggle', {
-                method: 'PUT',
-                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
-              }).then(r => r.json());
-              if (res.twoFactorEnabled !== undefined) setTwoFAEnabled(res.twoFactorEnabled);
-            } catch(e) {}
-            setTwoFALoading(false);
-          }} disabled={twoFALoading} style={{ padding: '8px 16px', background: twoFAEnabled ? '#22c55e' : '#374151', border: 'none', color: 'white', fontSize: '11px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px', minWidth: '80px' }}>
-            {twoFALoading ? '...' : twoFAEnabled ? 'ON' : 'OFF'}
-          </button>
-        </div>
-      </div>
-
       <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; VertexTrade Pro</div>
 
     </div>
