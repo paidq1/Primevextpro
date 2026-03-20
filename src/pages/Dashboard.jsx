@@ -131,7 +131,7 @@ export default function Dashboard() {
                                 </div>
                                 {n.unread && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1', flexShrink: 0, marginTop: '4px' }} />}
                               
-                            <div onClick={() => { navigate('/dashboard/notifications'); setShowNotifications(false); }} style={{ padding: '10px 16px', textAlign: 'center', color: '#6366f1', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderTop: '1px solid rgba(255,255,255,0.06)' }}>View All Notifications →</div></div>
+                            </div>
                             ))}
                           </div>
                         </>
