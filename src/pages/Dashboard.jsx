@@ -117,7 +117,12 @@ export default function Dashboard() {
                           <div style={{ position: 'absolute', top: '110%', right: 0, background: '#1e2538', border: '1px solid rgba(255,255,255,0.08)', zIndex: 999, minWidth: '260px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', borderRadius: '8px', overflow: 'hidden' }}>
                             <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                               <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Notifications</span>
-                              <span onClick={() => setShowNotifications(false)} style={{ color: '#6366f1', fontSize: '9px', cursor: 'pointer' }}>Mark all read</span>
+                              <span onClick={() => {
+                                const ids = notifications.map(n => String(n.id));
+                                const existing = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+                                localStorage.setItem('readNotifications', JSON.stringify([...new Set([...existing, ...ids])]));
+                                setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
+                              }} style={{ color: '#6366f1', fontSize: '9px', cursor: 'pointer' }}>Mark all read</span>
                             </div>
                             {(notifications.length ? notifications.slice(0,5) : [
                               { id: 1, icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features', time: new Date(), unread: true },
