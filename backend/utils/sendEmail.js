@@ -31,13 +31,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       <tr><td style="background:#0d1117;padding:18px 28px;border-bottom:1px solid rgba(99,102,241,0.12);">
         <table cellpadding="0" cellspacing="0"><tr>
           <td style="padding-right:10px;vertical-align:middle;">
-            <table cellpadding="0" cellspacing="0"><tr><td style="width:32px;height:32px;background:#0d1117;border:1px solid #6366f1;border-radius:6px;text-align:center;vertical-align:middle;">
-              <table cellpadding="0" cellspacing="0" style="margin:0 auto;"><tr>
-                <td style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:8px solid #6366f1;"></td>
-              </tr><tr>
-                <td style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:8px solid #6366f1;"></td>
-              </tr></table>
-            </td></tr></table>
+            <div style="width:34px;height:34px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:8px;text-align:center;line-height:34px;font-size:13px;font-weight:900;color:white;font-family:Arial,sans-serif;letter-spacing:-0.5px;">VT</div>
           </td>
           <td style="vertical-align:middle;">
             <span style="color:white;font-size:15px;font-weight:800;letter-spacing:0.5px;">VERTEXTRADE <span style="color:#818cf8;">PRO</span></span>
