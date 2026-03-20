@@ -92,7 +92,7 @@ export default function SettingsPage() {
             icon={<Lock size={16} color="#6366f1" />}
             title="Change Password"
             desc="Update your account password"
-            right={<button onClick={() => navigate('/dashboard/profile')} style={{ padding: '6px 14px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '10px', cursor: 'pointer', borderRadius: '6px' }}>Edit</button>}
+            right={<button onClick={() => navigate('/dashboard/change-password')} style={{ padding: '6px 14px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', fontSize: '10px', cursor: 'pointer', borderRadius: '6px' }}>Edit</button>}
           />
         </Section>
 

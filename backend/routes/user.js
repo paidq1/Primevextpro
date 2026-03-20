@@ -24,3 +24,19 @@ router.get('/transactions', auth, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Change password
+router.put('/change-password', auth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = await require('../models/User').findById(req.user.id).select('+password');
+    const bcrypt = require('bcryptjs');
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return res.status(400).json({ message: 'Current password is incorrect.' });
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    res.json({ message: 'Password changed successfully.' });
+  } catch(e) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
