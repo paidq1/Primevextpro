@@ -166,13 +166,13 @@ export default function Dashboard() {
             <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '14px 12px', marginBottom: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', textAlign: 'center' }}>
               <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>Welcome back, {u.firstName || 'User'} {u.lastName || ''}!</div>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', marginBottom: '10px' }}>Your investment dashboard overview</div>
-              <div style={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '10px', marginBottom: '8px' }}>
+              <div style={{ background: 'linear-gradient(135deg, #0d1117 0%, #111827 100%)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '10px', padding: '10px', marginBottom: '8px', boxShadow: '0 0 20px rgba(99,102,241,0.08) inset' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '4px' }}>
                   <svg width='16' height='16' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><rect x='2' y='5' width='20' height='14' rx='2'/><line x1='2' y1='10' x2='22' y2='10'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', fontWeight: '600' }}>Account Balance</span>
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '10px' }}>Your available funds</div>
-                <div style={{ color: 'white', fontSize: '14px', fontWeight: '700', marginBottom: '6px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
+                <div style={{ color: 'white', fontSize: '22px', fontWeight: '800', marginBottom: '6px', letterSpacing: '-0.5px' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255,255,255,0.08)', padding: '4px 12px', borderRadius: '20px', marginBottom: '8px' }}>
                   <svg width='12' height='12' fill='none' stroke='rgba(255,255,255,0.6)' viewBox='0 0 24 24' strokeWidth='2'><polyline points='20 6 9 17 4 12'/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px' }}>Available for Withdrawal</span>
@@ -186,7 +186,7 @@ export default function Dashboard() {
                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: 'linear-gradient(135deg, #6366f1, #4f46e5)', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', padding: '7px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
                   <svg width='14' height='14' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>
                   Deposit
                 </button>
