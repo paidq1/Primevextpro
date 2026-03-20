@@ -62,8 +62,6 @@ const COUNTRIES = [
 export default function Profile() {
   const navigate = useNavigate();
   const { user, updateUser, logout } = useAuth();
-  const [twoFALoading, setTwoFALoading] = useState(false);
-  const [twoFAEnabled, setTwoFAEnabled] = useState(user?.twoFactorEnabled || false);
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(location.state?.tab || 'profile');
   const [sidebarOpen, setSidebarOpen] = useState(false);
