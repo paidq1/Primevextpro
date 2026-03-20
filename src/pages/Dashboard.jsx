@@ -111,7 +111,7 @@ export default function Dashboard() {
                       </button>
                     </div>
                     <div style={{ position: 'relative' }}>
-              <div onClick={() => setShowProfileMenu(!showProfileMenu)}} style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', borderRight: '1px solid rgba(255,255,255,0.15)', padding: '0 12px', cursor: 'pointer', height: '100%' }}>
+              <div onClick={() => setShowProfileMenu(!showProfileMenu)} style={{ display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.15)', borderRight: '1px solid rgba(255,255,255,0.15)', padding: '0 12px', cursor: 'pointer', height: '100%' }}>
                 <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: '#5b6477', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {u.avatar ? <img src={u.avatar} style={{ width: '34px', height: '34px', objectFit: 'cover' }} /> : <User size={18} color="white" />}
                 </div>
