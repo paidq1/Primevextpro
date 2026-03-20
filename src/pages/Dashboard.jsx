@@ -162,53 +162,63 @@ export default function Dashboard() {
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>| {u.firstName || ''} {u.lastName || ''}</span>
             </div>
 
-            {/* Welcome Card */}
-            <div style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(99,102,241,0.08))', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '16px', padding: '14px 12px', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.3)', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '80px', background: 'linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.06) 100%)', pointerEvents: 'none', borderRadius: '16px 16px 0 0' }}></div>
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', gap: '10px' }}>
+            {/* Welcome Card - Premium */}
+            <div style={{ background: 'linear-gradient(135deg, rgba(15,20,60,0.95) 0%, rgba(30,15,60,0.95) 50%, rgba(15,20,60,0.95) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(99,102,241,0.35)', borderRadius: '20px', padding: '16px 14px', marginBottom: '20px', boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 60px rgba(99,102,241,0.08)', position: 'relative', overflow: 'hidden' }}>
+              {/* Glow effects */}
+              <div style={{ position: 'absolute', top: '-20px', left: '20%', width: '120px', height: '80px', background: 'radial-gradient(ellipse, rgba(139,92,246,0.3) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+              <div style={{ position: 'absolute', top: '-10px', right: '10%', width: '80px', height: '60px', background: 'radial-gradient(ellipse, rgba(59,130,246,0.25) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+              <div style={{ position: 'relative', zIndex: 1, display: 'flex', gap: '12px' }}>
                 {/* LEFT SIDE */}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ color: 'white', fontSize: '13px', fontWeight: '800', marginBottom: '1px', letterSpacing: '-0.3px' }}>Welcome back, {u.firstName || 'User'}! 👋</div>
-                  <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '7px', marginBottom: '10px' }}>Your investment dashboard</div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '2px' }}>Account Balance</div>
-                  <div style={{ color: 'white', fontSize: '22px', fontWeight: '800', marginBottom: '2px', letterSpacing: '-0.5px', textShadow: '0 0 10px rgba(99,102,241,0.3)' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</div>
-                  <div style={{ color: '#22c55e', fontSize: '9px', fontWeight: '600', marginBottom: '8px' }}>+0.00% today</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '10px' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', color: '#22c55e', fontSize: '7px', padding: '2px 7px', borderRadius: '20px', width: 'fit-content' }}>
-                      💰 Available for Withdrawal
+                  <div style={{ color: 'white', fontSize: '14px', fontWeight: '800', marginBottom: '2px', letterSpacing: '-0.3px' }}>Welcome back, {u.firstName || 'User'}! 👋</div>
+                  <div style={{ marginBottom: '10px' }}>
+                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '3px' }}>Account Balance</div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
+                      <span style={{ color: 'white', fontSize: '22px', fontWeight: '800', letterSpacing: '-0.5px', textShadow: '0 0 20px rgba(99,102,241,0.5)' }}>{formatAmountWithCode(u.balance || 0, u.currency)}</span>
+                      <span style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>+0.00%</span>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: '5px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.35)', color: '#22c55e', fontSize: '7px', padding: '3px 8px', borderRadius: '20px' }}>
+                      ✅ {u.kycStatus === 'approved' ? 'KYC Verified' : 'KYC Unverified'}
                     </span>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: u.kycStatus === 'approved' ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)', border: u.kycStatus === 'approved' ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(239,68,68,0.3)', color: u.kycStatus === 'approved' ? '#22c55e' : '#ef4444', fontSize: '7px', padding: '2px 7px', borderRadius: '20px', width: 'fit-content' }}>
-                      {u.kycStatus === 'approved' ? '✅ KYC Verified' : '⚠️ KYC Unverified'}
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.35)', color: '#818cf8', fontSize: '7px', padding: '3px 8px', borderRadius: '20px' }}>
+                      💰 Available: {formatAmountWithCode(u.balance || 0, u.currency)}
                     </span>
                   </div>
-                  <div style={{ display: 'flex', gap: '6px' }}>
-                    <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: 'linear-gradient(90deg, #3b82f6, #6366f1)', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', padding: '7px 4px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
-                      <svg width='11' height='11' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>
+                  <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: '7px', marginBottom: '12px' }}>Last Updated: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ago</div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button onClick={() => navigate('/dashboard/withdraw-deposit')} style={{ flex: 1, background: 'linear-gradient(90deg, #3b82f6 0%, #6366f1 100%)', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '9px 6px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', boxShadow: '0 4px 15px rgba(99,102,241,0.5)' }}>
+                      <svg width='12' height='12' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>
                       Deposit
                     </button>
-                    <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', color: 'white', fontSize: '8px', fontWeight: '700', padding: '7px 4px', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                      <svg width='11' height='11' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><line x1='7' y1='17' x2='17' y2='7'/><polyline points='7 7 17 7 17 17'/></svg>
+                    <button onClick={() => navigate('/dashboard/withdraw')} style={{ flex: 1, background: 'linear-gradient(90deg, #7c3aed 0%, #a855f7 100%)', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '9px 6px', cursor: 'pointer', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', boxShadow: '0 4px 15px rgba(168,85,247,0.4)' }}>
+                      <svg width='12' height='12' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><line x1='7' y1='17' x2='17' y2='7'/><polyline points='7 7 17 7 17 17'/></svg>
                       Withdraw
                     </button>
                   </div>
                 </div>
-                {/* RIGHT SIDE - Mini Chart */}
-                <div style={{ width: '90px', flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '6px', textAlign: 'center' }}>Portfolio</div>
-                  <div style={{ width: '100%', height: '60px', position: 'relative', borderRadius: '8px', overflow: 'hidden', background: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.15)' }}>
-                    <svg viewBox='0 0 90 60' width='100%' height='100%' preserveAspectRatio='none'>
+                {/* RIGHT SIDE - Glowing Chart */}
+                <div style={{ width: '95px', flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ width: '100%', flex: 1, position: 'relative', borderRadius: '12px', overflow: 'hidden', background: 'rgba(6,182,212,0.05)', border: '1px solid rgba(6,182,212,0.2)', minHeight: '100px' }}>
+                    <svg viewBox='0 0 95 100' width='100%' height='100%' preserveAspectRatio='none'>
                       <defs>
-                        <linearGradient id='chartGrad' x1='0' y1='0' x2='0' y2='1'>
-                          <stop offset='0%' stopColor='#22c55e' stopOpacity='0.3'/>
-                          <stop offset='100%' stopColor='#22c55e' stopOpacity='0'/>
+                        <linearGradient id='cg1' x1='0' y1='0' x2='0' y2='1'>
+                          <stop offset='0%' stopColor='#06b6d4' stopOpacity='0.4'/>
+                          <stop offset='100%' stopColor='#06b6d4' stopOpacity='0'/>
                         </linearGradient>
+                        <filter id='glow'>
+                          <feGaussianBlur stdDeviation='2' result='coloredBlur'/>
+                          <feMerge><feMergeNode in='coloredBlur'/><feMergeNode in='SourceGraphic'/></feMerge>
+                        </filter>
                       </defs>
-                      <path d='M0,50 C10,45 20,40 25,35 C30,30 35,32 40,28 C50,22 55,25 60,20 C70,14 75,18 80,12 C84,8 87,10 90,8 L90,60 L0,60 Z' fill='url(#chartGrad)'/>
-                      <path d='M0,50 C10,45 20,40 25,35 C30,30 35,32 40,28 C50,22 55,25 60,20 C70,14 75,18 80,12 C84,8 87,10 90,8' fill='none' stroke='#22c55e' strokeWidth='1.5'/>
+                      <path d='M0,85 C8,80 15,75 20,68 C28,58 32,62 38,55 C45,46 50,50 56,42 C63,33 68,37 74,28 C80,20 85,24 90,15 C92,12 93,13 95,10 L95,100 L0,100 Z' fill='url(#cg1)'/>
+                      <path d='M0,85 C8,80 15,75 20,68 C28,58 32,62 38,55 C45,46 50,50 56,42 C63,33 68,37 74,28 C80,20 85,24 90,15 C92,12 93,13 95,10' fill='none' stroke='#06b6d4' strokeWidth='2' filter='url(#glow)'/>
+                      <circle cx='95' cy='10' r='3' fill='#06b6d4' filter='url(#glow)'/>
+                      {[0,20,40,60,80,95].map((x,i) => <line key={i} x1={x} y1='0' x2={x} y2='100' stroke='rgba(255,255,255,0.03)' strokeWidth='1'/>)}
+                      {[25,50,75].map((y,i) => <line key={i} x1='0' y1={y} x2='95' y2={y} stroke='rgba(255,255,255,0.03)' strokeWidth='1'/>)}
                     </svg>
                   </div>
-                  <div style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700', marginTop: '6px' }}>↑ Growing</div>
-                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '2px' }}>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                 </div>
               </div>
             </div>
