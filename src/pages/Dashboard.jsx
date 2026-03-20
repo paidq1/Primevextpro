@@ -152,7 +152,6 @@ export default function Dashboard() {
         {/* Body */}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           {/* Left Panel */}
-          <MarketTicker />
           <div style={{ flex: 1, overflowY: 'auto', padding: '12px', minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
               <svg viewBox='0 0 40 40' fill='none' style={{ width: '16px', height: '16px', flexShrink: 0 }}>
