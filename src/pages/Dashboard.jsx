@@ -200,7 +200,7 @@ export default function Dashboard() {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
               {stats.map((s, i) => (
-                <div key={i} style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '10px', padding: '12px 10px', minHeight: '90px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+                <div key={i} style={{ background: '#111827', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '12px 10px', minHeight: '90px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(8px, 2vw, 11px)' }}>{s.label}</span>
                     <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: s.iconBg + '30', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 0 10px ${s.iconBg}60` }}>{s.icon}</div>
