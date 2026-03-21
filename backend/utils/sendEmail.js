@@ -93,7 +93,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = 'Your Verification Code — VertexTrade Pro';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">🔐</div>
+        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;"></div>
         <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Verification Code</h2>
         <p style="color:rgba(255,255,255,0.4);font-size:13px;margin:0;">Two-Factor Authentication</p>
       </div>
