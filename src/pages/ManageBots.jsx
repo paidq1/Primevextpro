@@ -76,7 +76,7 @@ export default function ManageBots() {
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ background: '#0d1426', padding: '0 16px', display: 'flex', alignItems: 'center', gap: '10px', height: '44px', borderBottom: '1px solid rgba(99,102,241,0.2)' }}>
+      <div style={{ background: 'linear-gradient(90deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.9) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '0 16px', display: 'flex', alignItems: 'center', gap: '10px', height: '44px', borderBottom: '1px solid rgba(99,102,241,0.3)', boxShadow: '0 4px 24px rgba(99,102,241,0.15)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
