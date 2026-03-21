@@ -5,14 +5,14 @@ import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import DashboardSidebar from '../components/DashboardSidebar';
 
 const cryptoPlans = [
-  { name: 'Bitcoin',     symbol: 'BTC',  roi: '28.75%', minRoi: 28.75, color: '#f97316', bg: '#f9731620', logo: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
-  { name: 'Ethereum',    symbol: 'ETH',  roi: '30%',    minRoi: 30,    color: '#6366f1', bg: '#6366f120', logo: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' },
-  { name: 'Litecoin',    symbol: 'LTC',  roi: '24.75%', minRoi: 24.75, color: '#94a3b8', bg: '#94a3b820', logo: 'https://assets.coingecko.com/coins/images/2/large/litecoin.png' },
-  { name: 'BNB',         symbol: 'BNB',  roi: '28%',    minRoi: 28,    color: '#f59e0b', bg: '#f59e0b20', logo: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png' },
-  { name: 'Tether USD',  symbol: 'USDT', roi: '24.75%', minRoi: 24.75, color: '#22c55e', bg: '#22c55e20', logo: 'https://assets.coingecko.com/coins/images/325/large/Tether.png' },
-  { name: 'Solana',      symbol: 'SOL',  roi: '32%',    minRoi: 32,    color: '#a855f7', bg: '#a855f720', logo: 'https://assets.coingecko.com/coins/images/4128/large/solana.png' },
-  { name: 'XRP',         symbol: 'XRP',  roi: '22.5%',  minRoi: 22.5,  color: '#22d3ee', bg: '#22d3ee20', logo: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png' },
-  { name: 'Cardano',     symbol: 'ADA',  roi: '20%',    minRoi: 20,    color: '#3b82f6', bg: '#3b82f620', logo: 'https://assets.coingecko.com/coins/images/975/large/cardano.png' },
+  { name: 'Bitcoin',     symbol: 'BTC',  roi: '28.75%', minRoi: 28.75, color: '#f7931a', bg: '#f7931a', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png' },
+  { name: 'Ethereum',    symbol: 'ETH',  roi: '30%',    minRoi: 30,    color: '#627eea', bg: '#627eea', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' },
+  { name: 'Litecoin',    symbol: 'LTC',  roi: '24.75%', minRoi: 24.75, color: '#345d9d', bg: '#345d9d', logo: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png' },
+  { name: 'BNB',         symbol: 'BNB',  roi: '28%',    minRoi: 28,    color: '#f3ba2f', bg: '#f3ba2f', logo: 'https://cryptologos.cc/logos/bnb-bnb-logo.png' },
+  { name: 'Tether USD',  symbol: 'USDT', roi: '24.75%', minRoi: 24.75, color: '#26a17b', bg: '#26a17b', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
+  { name: 'Solana',      symbol: 'SOL',  roi: '32%',    minRoi: 32,    color: '#9945ff', bg: '#9945ff', logo: 'https://cryptologos.cc/logos/solana-sol-logo.png' },
+  { name: 'XRP',         symbol: 'XRP',  roi: '22.5%',  minRoi: 22.5,  color: '#00aae4', bg: '#00aae4', logo: 'https://cryptologos.cc/logos/xrp-xrp-logo.png' },
+  { name: 'Cardano',     symbol: 'ADA',  roi: '20%',    minRoi: 20,    color: '#0033ad', bg: '#0033ad', logo: 'https://cryptologos.cc/logos/cardano-ada-logo.png' },
 ];
 
 export default function NewStake() {
@@ -96,8 +96,8 @@ export default function NewStake() {
                 <div key={i} onClick={() => setSelected(c)}
                   style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer' }}>
                   {/* Coin icon */}
-                  <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: c.bg, border: `2px solid ${c.color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <img src={c.logo} alt={c.symbol} style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+                  <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: c.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 4px 15px ${c.bg}80` }}>
+                    <img src={c.logo} alt={c.symbol} style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
                   </div>
                   {/* Info */}
                   <div style={{ flex: 1 }}>
@@ -121,8 +121,8 @@ export default function NewStake() {
             </button>
 
             <div style={{ background: '#132035', border: `1px solid ${selected.color}30`, padding: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: selected.bg, border: `2px solid ${selected.color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <img src={selected.logo} alt={selected.symbol} style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: selected.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 4px 15px ${selected.bg}80` }}>
+                <img src={selected.logo} alt={selected.symbol} style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
               </div>
               <div>
                 <div style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>{selected.name}</div>
