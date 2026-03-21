@@ -22,10 +22,10 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#060a12;font-family:'Segoe UI',Arial,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0f1a;padding:32px 16px;">
+<body style="margin:0;padding:0;background:#0a0f1a;font-family:'Segoe UI',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#060a12;padding:32px 16px;">
   <tr><td align="center">
-    <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#111827;border:1px solid rgba(99,102,241,0.15);box-shadow:0 0 40px rgba(0,0,0,0.4);">
+    <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#060a12;border:1px solid rgba(99,102,241,0.15);box-shadow:0 0 40px rgba(0,0,0,0.4);">
       
       <!-- Header -->
       <tr><td style="background:#ffffff;padding:24px 28px;border-bottom:1px solid rgba(99,102,241,0.12);text-align:center;">
@@ -40,7 +40,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
       </td></tr>
 
       <!-- Footer -->
-      <tr><td style="background:#0d1117;padding:20px 28px;border-top:1px solid rgba(255,255,255,0.05);">
+      <tr><td style="background:#111827;padding:20px 28px;border-top:1px solid rgba(255,255,255,0.05);">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td align="center" style="padding-bottom:12px;">
