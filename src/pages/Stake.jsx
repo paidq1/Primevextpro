@@ -24,8 +24,9 @@ export default function Stake() {
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [show, setShow] = useState(10);
+  const perPage = show;
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  
   const [stakes, setStakes] = useState([]);
   const [loadingStakes, setLoadingStakes] = useState(true);
   const [submitting, setSubmitting] = useState(false);
