@@ -151,8 +151,8 @@ export default function ManageBots() {
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{elapsed} / {totalDays} days</span>
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{daysLeft} days left</span>
                     </div>
-                    <div style={{ background: 'rgba(255,255,255,0.08)', height: '5px', , overflow: 'hidden' }}>
-                      <div style={{ width: progress + '%', height: '100%', background: '#6366f1', , transition: 'width 0.3s' }} />
+                    <div style={{ background: 'rgba(255,255,255,0.08)', height: "5px", overflow: 'hidden' }}>
+                      <div style={{ width: progress + '%', height: '100%', background: '#6366f1', transition: 'width 0.3s' }} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px' }}>
                       <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{progress.toFixed(0)}% complete</span>
@@ -175,7 +175,7 @@ export default function ManageBots() {
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
             return (
-              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', , position: 'relative' }}>
+              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
                 <div style={{ color: '#818cf8', fontSize: '7px', fontWeight: '600', marginBottom: '2px' }}>{bot.name}</div>
                 <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>${bot.amount.toLocaleString()}</div>
                 {[
