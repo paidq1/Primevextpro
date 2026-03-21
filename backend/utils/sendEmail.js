@@ -28,11 +28,8 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#111827;border:1px solid rgba(99,102,241,0.15);box-shadow:0 0 40px rgba(0,0,0,0.4);">
       
       <!-- Header -->
-      <tr><td style="background:#0d1117;padding:18px 28px;border-bottom:1px solid rgba(99,102,241,0.12);">
-        <table cellpadding="0" cellspacing="0"><tr>
-          <td style="vertical-align:middle;"><img src="https://res.cloudinary.com/drix04cop/image/upload/v1774077555/vertextrade/logo.png" alt="VertexTrade" height="36" style="display:block;" /></td>
-          </td>
-        </tr></table>
+      <tr><td style="background:#ffffff;padding:24px 28px;border-bottom:1px solid rgba(99,102,241,0.12);text-align:center;">
+        <img src="https://res.cloudinary.com/drix04cop/image/upload/v1774078009/vertextrade/logo-full.jpg" alt="VertexTrade" height="50" style="display:inline-block;" />
       </td></tr>
 
       <!-- Accent Line -->
