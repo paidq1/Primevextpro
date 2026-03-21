@@ -93,8 +93,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = 'Your Verification Code — VertexTrade Pro';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;"></div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Verification Code</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Verification Code</h2>
         <p style="color:rgba(255,255,255,0.4);font-size:13px;margin:0;">Two-Factor Authentication</p>
       </div>
       ${hi}
@@ -114,8 +113,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = 'Verify Your Email — VertexTrade Pro';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">✉️</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Verify Your Email</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Verify Your Email</h2>
         <p style="color:rgba(255,255,255,0.4);font-size:13px;margin:0;">One last step to get started</p>
       </div>
       ${hi}
@@ -131,8 +129,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = '💰 Deposit Confirmed — Funds Credited';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(16,185,129,0.1));border:1px solid rgba(34,197,94,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">💰</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Deposit Approved!</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Deposit Approved!</h2>
         <p style="color:#22c55e;font-size:13px;margin:0;">Funds successfully credited to your account</p>
       </div>
       ${hi}
@@ -150,8 +147,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = 'Deposit Update — Action Required';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">❌</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Deposit Not Processed</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Deposit Not Processed</h2>
         <p style="color:#ef4444;font-size:13px;margin:0;">Your deposit requires attention</p>
       </div>
       ${hi}
@@ -168,8 +164,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = '💸 Withdrawal Approved — Funds On The Way';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(16,185,129,0.1));border:1px solid rgba(34,197,94,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">💸</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Withdrawal Approved!</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Withdrawal Approved!</h2>
         <p style="color:#22c55e;font-size:13px;margin:0;">Your funds are on the way</p>
       </div>
       ${hi}
@@ -187,8 +182,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = 'Withdrawal Update — Action Required';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">❌</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Withdrawal Not Processed</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Withdrawal Not Processed</h2>
         <p style="color:#ef4444;font-size:13px;margin:0;">Your withdrawal requires attention</p>
       </div>
       ${hi}
@@ -205,8 +199,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = '✅ KYC Verified — Full Access Granted';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(16,185,129,0.1));border:1px solid rgba(34,197,94,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">✅</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Identity Verified!</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Identity Verified!</h2>
         <p style="color:#22c55e;font-size:13px;margin:0;">Full platform access granted</p>
       </div>
       ${hi}
@@ -223,8 +216,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = 'KYC Verification — Resubmission Required';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">🔍</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">KYC Verification Failed</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">KYC Verification Failed</h2>
         <p style="color:#ef4444;font-size:13px;margin:0;">Please resubmit your documents</p>
       </div>
       ${hi}
@@ -241,8 +233,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = '🚀 Welcome to VertexTrade Pro!';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">🚀</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Welcome Aboard!</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Welcome Aboard!</h2>
         <p style="color:#818cf8;font-size:13px;margin:0;">Your account is ready</p>
       </div>
       ${hi}
@@ -264,8 +255,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = customSubject || 'Message from VertexTrade Pro Support';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">💬</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Message from Support</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Message from Support</h2>
         <p style="color:#818cf8;font-size:13px;margin:0;">VertexTrade Pro Support Team</p>
       </div>
       ${hi}
@@ -280,8 +270,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = 'Your Withdrawal Code — VertexTrade Pro';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">🔑</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Withdrawal Code</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Withdrawal Code</h2>
         <p style="color:#818cf8;font-size:13px;margin:0;">Your secure withdrawal authorization code</p>
       </div>
       ${hi}
@@ -301,8 +290,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = '📈 Bot Profit Credited — VertexTrade Pro';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(16,185,129,0.1));border:1px solid rgba(34,197,94,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">🤖</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Bot Profit Credited!</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Bot Profit Credited!</h2>
         <p style="color:#22c55e;font-size:13px;margin:0;">Your trading bot is performing great</p>
       </div>
       ${hi}
@@ -326,8 +314,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = '📊 Staking Profit Credited — VertexTrade Pro';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">📊</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Staking Profit Credited!</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Staking Profit Credited!</h2>
         <p style="color:#818cf8;font-size:13px;margin:0;">Your investment is earning</p>
       </div>
       ${hi}
@@ -351,8 +338,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     subject = '🎉 Staking Completed — Principal Returned';
     html = wrap(`
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:50%;margin:0 auto 16px;line-height:60px;font-size:26px;">🎉</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Staking Completed!</h2>
+                <h2 style="color:white;margin:0 0 6px;font-size:22px;font-weight:800;">Staking Completed!</h2>
         <p style="color:#818cf8;font-size:13px;margin:0;">Your principal has been returned</p>
       </div>
       ${hi}
