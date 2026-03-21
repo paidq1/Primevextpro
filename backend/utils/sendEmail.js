@@ -25,7 +25,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
 <body style="margin:0;padding:0;background:#0a0f1a;font-family:'Segoe UI',Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#060a12;padding:32px 16px;">
   <tr><td align="center">
-    <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#060a12;border:1px solid rgba(99,102,241,0.15);box-shadow:0 0 40px rgba(0,0,0,0.4);">
+    <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#0d1117;border:1px solid rgba(99,102,241,0.15);box-shadow:0 0 40px rgba(0,0,0,0.4);">
       
       <!-- Header -->
       <tr><td style="background:#ffffff;padding:24px 28px;border-bottom:1px solid rgba(99,102,241,0.12);text-align:center;">
