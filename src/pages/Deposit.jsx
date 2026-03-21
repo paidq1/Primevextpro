@@ -24,6 +24,7 @@ export default function Deposit() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
+  const perPage = show;
 
   const coinData = {
     USDT: { address: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS', network: 'TRC20 (Tron)' },
@@ -88,7 +89,7 @@ export default function Deposit() {
   const statusLabel = s => s === 'approved' ? 'Approved' : s === 'rejected' ? 'Rejected' : 'Pending';
 
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  
   const filtered = deposits.filter(d =>
     d.method?.toLowerCase().includes(search.toLowerCase()) ||
     d.status?.toLowerCase().includes(search.toLowerCase())

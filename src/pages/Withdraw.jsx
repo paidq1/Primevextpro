@@ -25,10 +25,11 @@ export default function Withdraw() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [withdrawals, setWithdrawals] = useState([]);
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
+  const perPage = show;
   const [error, setError] = useState('');
   const [amount, setAmount] = useState('');
   const [address, setAddress] = useState('');

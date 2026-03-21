@@ -11,10 +11,11 @@ export default function InvestmentRecords() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [show, setShow] = useState(10);
+  const perPage = show;
   const [search, setSearch] = useState('');
   const [investments, setInvestments] = useState([]);
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
