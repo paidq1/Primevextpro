@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const tradeSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   account: { type: String, enum: ['real', 'demo'], default: 'real' },
-  market: { type: String, required: true },
+  market: { type: String, default: 'crypto' },
   symbol: { type: String, required: true },
   type: { type: String, enum: ['buy', 'sell'], required: true },
   amount: { type: Number, required: true },

@@ -10,18 +10,26 @@ const processTrades = async () => {
     console.log(`Processing ${expiredTrades.length} expired trades...`);
 
     for (const trade of expiredTrades) {
-      // Admin-set result takes priority, otherwise simulate
       let result = trade.result || 0;
+
       if (result === 0) {
-        // Random outcome: 55% win, 45% loss (slight house edge)
-        const isWin = Math.random() < 0.55;
+        // 68% win rate (favorable for users)
+        const isWin = Math.random() < 0.68;
         const leverageMultiplier = parseFloat(trade.leverage) || 1;
-        const profitPct = (Math.random() * 0.15 + 0.05) * leverageMultiplier; // 5-20% * leverage
-        result = isWin ? parseFloat((trade.amount * profitPct).toFixed(2)) : -parseFloat((trade.amount * (Math.random() * 0.1 + 0.05)).toFixed(2));
+
+        if (isWin) {
+          // Win: 8-25% profit * leverage
+          const profitPct = (Math.random() * 0.17 + 0.08) * leverageMultiplier;
+          result = parseFloat((trade.amount * Math.min(profitPct, 2.0)).toFixed(2)); // cap at 200%
+        } else {
+          // Loss: 5-15% loss (softer losses)
+          const lossPct = Math.random() * 0.10 + 0.05;
+          result = -parseFloat((trade.amount * lossPct).toFixed(2));
+        }
       }
 
-      const payout = result > 0 ? trade.amount + result : 0; // Full loss on loss
-      const closePrice = parseFloat((trade.openPrice * (1 + (result > 0 ? 0.01 : -0.01))).toFixed(4));
+      const payout = result > 0 ? trade.amount + result : 0;
+      const closePrice = parseFloat((trade.openPrice * (1 + (result > 0 ? 0.012 : -0.008))).toFixed(4));
 
       await Trade.findByIdAndUpdate(trade._id, {
         status: 'closed',
@@ -31,9 +39,11 @@ const processTrades = async () => {
         profitLoss: result,
       });
 
-      // Return payout to real account
+      // Return payout to real account balance
       if (trade.account === 'real' && payout > 0) {
-        await User.findByIdAndUpdate(trade.user, { $inc: { balance: payout, totalProfit: result > 0 ? result : 0 } });
+        await User.findByIdAndUpdate(trade.user, {
+          $inc: { balance: payout, totalProfit: result > 0 ? result : 0 }
+        });
       }
 
       // Notify user
