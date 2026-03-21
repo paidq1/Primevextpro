@@ -38,7 +38,10 @@ const sidebarSections = [
     items: [
       { icon: <User size={13}/>, label: 'Profile', route: '/dashboard/profile' },
       { icon: <BarChart2 size={13}/>, label: 'Live Market', badge: 'New', route: '/dashboard/live-market' },
-      { icon: <Wallet size={13}/>, label: 'Stake', route: '/dashboard/stake' },
+      { icon: <Wallet size={13}/>, label: 'Stake', route: null, submenu: [
+        { label: 'New Stake', route: '/dashboard/new-stake' },
+        { label: 'Stake History', route: '/dashboard/stake' },
+      ]},
       { icon: <Bot size={13}/>, label: 'Manage Bots', badge: 'New', route: '/dashboard/manage-bots' },
     ]
   },

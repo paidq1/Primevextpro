@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import { getStakes } from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
 
@@ -18,6 +18,8 @@ const stakePlans = [
 export default function Stake() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => { if (location.search.includes('new=1')) setShowForm(true); }, [location]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [amount, setAmount] = useState('');

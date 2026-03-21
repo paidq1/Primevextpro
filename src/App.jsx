@@ -34,6 +34,7 @@ import WithdrawDeposit from "./pages/WithdrawDeposit";
 import Packages from "./pages/Packages";
 import KYC from "./pages/KYC";
 import ReferUsers from "./pages/ReferUsers";
+import NewStake from './pages/NewStake';
 import ManageBots from "./pages/ManageBots";
 import LiveTrading from "./pages/LiveTrading";
 import WithdrawNew from "./pages/WithdrawNew";
@@ -127,6 +128,7 @@ function App() {
         <Route path="/dashboard/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path="/dashboard/live-market" element={<PrivateRoute><LiveMarket /></PrivateRoute>} />
         <Route path="/dashboard/stake" element={<PrivateRoute><Stake /></PrivateRoute>} />
+        <Route path="/dashboard/new-stake" element={<PrivateRoute><NewStake /></PrivateRoute>} />
         <Route path="/dashboard/investment-records" element={<PrivateRoute><InvestmentRecords /></PrivateRoute>} />
         <Route path="/dashboard/transaction-history" element={<PrivateRoute><TransactionHistory /></PrivateRoute>} />
         <Route path="/dashboard/withdraw-deposit" element={<PrivateRoute><WithdrawDeposit /></PrivateRoute>} />
