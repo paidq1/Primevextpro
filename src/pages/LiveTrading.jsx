@@ -81,16 +81,10 @@ export default function LiveTrading() {
     setSubmitting(true); setError(''); setMsg('');
     try {
       const res = await createTrade({ symbol: symbol.label, type: sheetDir, direction: sheetDir, account: 'real', amount: parseFloat(amount), duration, leverage });
-      console.log('Trade response:', res);
       setMsg('Trade placed successfully!');
       setAmount('');
-      setTimeout(() => {
-        setShowSheet(false);
-        setMsg('');
-        fetchAll();
-      }, 1500);
+      setTimeout(() => { setShowSheet(false); setMsg(''); fetchAll(); }, 1500);
     } catch (e) {
-      console.error('Trade error:', e);
       setError(e.message || 'Failed to place trade');
     }
     setSubmitting(false);
@@ -123,7 +117,7 @@ export default function LiveTrading() {
           </div>
         </div>
 
-        {/* Chart */}
+        {/* Symbol Bar */}
         <div style={{ background: '#0d1426', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '6px 12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ color: 'white', fontSize: '11px', fontWeight: '800' }}>{symbol.label}</span>
@@ -136,7 +130,11 @@ export default function LiveTrading() {
             ))}
           </div>
         </div>
-        <div style={{ height: '500px', width: '100%', flexShrink: 0, position: 'relative' }}><div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} /></div>
+
+        {/* Chart */}
+        <div style={{ height: '500px', width: '100%', flexShrink: 0, position: 'relative' }}>
+          <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
+        </div>
 
         {/* Stats Bar */}
         {stats && (
@@ -235,7 +233,6 @@ export default function LiveTrading() {
             })()}
           </div>
         </div>
-
       </div>
 
       {/* Trade Sheet */}
