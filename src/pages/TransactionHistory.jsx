@@ -11,10 +11,11 @@ export default function TransactionHistory() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
+  const perPage = show;
   const [filter, setFilter] = useState('All');
   const [transactions, setTransactions] = useState([]);
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
