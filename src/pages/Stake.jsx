@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
+import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import { getStakes } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
 import DashboardSidebar from '../components/DashboardSidebar';
 
 const stakePlans = [
-  { name: 'STARTER',  apy: '5%',  min: 500,   max: 999,   duration: '7 days',   color: '#22c55e', bg: '#22c55e20' },
-  { name: 'SILVER',   apy: '8%',  min: 1000,  max: 2499,  duration: '14 days',  color: '#94a3b8', bg: '#94a3b820' },
-  { name: 'GOLD',     apy: '12%', min: 2500,  max: 4999,  duration: '30 days',  color: '#f59e0b', bg: '#f59e0b20' },
-  { name: 'PLATINUM', apy: '18%', min: 5000,  max: 9999,  duration: '60 days',  color: '#6366f1', bg: '#6366f120' },
-  { name: 'DIAMOND',  apy: '25%', min: 10000, max: 24999, duration: '90 days',  color: '#22d3ee', bg: '#22d3ee20' },
-  { name: 'ELITE',    apy: '35%', min: 25000, max: null,  duration: '120 days', color: '#ec4899', bg: '#ec489920' },
+  { name: 'STARTER',  apy: '5%',  min: 500,   max: 999,   duration: '7',   color: '#22c55e', bg: '#22c55e20' },
+  { name: 'SILVER',   apy: '8%',  min: 1000,  max: 2499,  duration: '14',  color: '#94a3b8', bg: '#94a3b820' },
+  { name: 'GOLD',     apy: '12%', min: 2500,  max: 4999,  duration: '30',  color: '#f59e0b', bg: '#f59e0b20' },
+  { name: 'PLATINUM', apy: '18%', min: 5000,  max: 9999,  duration: '60',  color: '#6366f1', bg: '#6366f120' },
+  { name: 'DIAMOND',  apy: '25%', min: 10000, max: 24999, duration: '90',  color: '#22d3ee', bg: '#22d3ee20' },
+  { name: 'ELITE',    apy: '35%', min: 25000, max: null,  duration: '120', color: '#ec4899', bg: '#ec489920' },
 ];
 
 export default function Stake() {
@@ -23,18 +23,16 @@ export default function Stake() {
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [show, setShow] = useState(10);
   const perPage = show;
   const [page, setPage] = useState(1);
-  
+  const [search, setSearch] = useState('');
   const [stakes, setStakes] = useState([]);
   const [loadingStakes, setLoadingStakes] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [totalStaked, setTotalStaked] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
-
-
-
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
@@ -51,54 +49,34 @@ export default function Stake() {
     }).catch(() => setLoadingStakes(false));
   }, []);
 
-
   const handleSubmit = async () => {
     if (!selectedPlan) { setError('Please select a staking plan.'); return; }
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
-    if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} plan is ${getCurrencySymbol(user?.currency)}selectedPlan.min.`); return; }
-    if (selectedPlan.max && Number(amount) > selectedPlan.max) { setError(`Maximum stake for ${selectedPlan.name} plan is ${getCurrencySymbol(user?.currency)}selectedPlan.max.`); return; }
-    setError('');
-    setSubmitting(true);
+    if (Number(amount) < selectedPlan.min) { setError(`Minimum stake for ${selectedPlan.name} is $${selectedPlan.min}`); return; }
+    if (selectedPlan.max && Number(amount) > selectedPlan.max) { setError(`Maximum stake for ${selectedPlan.name} is $${selectedPlan.max}`); return; }
+    setError(''); setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
       const res = await fetch('https://vertextrades.onrender.com/api/stake', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({
-          plan: selectedPlan.name,
-          amount: Number(amount),
-          apy: selectedPlan.apy,
-          duration: selectedPlan.duration.replace(' days', '')
-        })
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ plan: selectedPlan.name, amount: Number(amount), apy: selectedPlan.apy, duration: selectedPlan.duration })
       }).then(r => r.json());
       if (res.success || res._id || res.stake) {
-        setShowSuccess(true);
+        setShowSuccess(true); setShowForm(false);
         getStakes().then(data => { if (Array.isArray(data)) { setStakes(data); setTotalStaked(data.reduce((s,i) => s+(i.amount||0),0)); setTotalEarned(data.reduce((s,i) => s+(i.earned||0),0)); }});
       } else {
-        setError(res.message || 'Stake submission failed. Please try again.');
+        setError(res.message || 'Stake submission failed.');
       }
-    } catch (err) {
-      setError('Network error. Please check your connection.');
-    } finally {
-      setSubmitting(false);
-    }
+    } catch { setError('Network error.'); }
+    setSubmitting(false);
   };
 
-  const inputStyle = { width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' };
-  const labelStyle = { color: 'rgba(255,255,255,0.7)', fontSize: '8px', display: 'block', marginBottom: '6px' };
-
   const statusColor = s => s === 'active' ? '#22c55e' : s === 'completed' ? '#6366f1' : s === 'cancelled' ? '#ef4444' : '#f59e0b';
-  const statCard = (icon, label, value, color) => (
-    <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
-      <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-        {icon}
-      </div>
-      <div>
-        <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '3px' }}>{label}</div>
-        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', fontWeight: '700' }}>{value}</div>
-      </div>
-    </div>
-  );
+
+  const filtered = stakes.filter(s => !search || s.plan?.toLowerCase().includes(search.toLowerCase()) || s.status?.toLowerCase().includes(search.toLowerCase()));
+  const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+  const paginated = filtered.slice((page-1)*perPage, page*perPage);
 
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
@@ -109,7 +87,6 @@ export default function Stake() {
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
             <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
-            <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
             <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
         </div>
@@ -121,171 +98,156 @@ export default function Stake() {
         <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
       </div>
 
+      {/* New Stake Modal */}
+      {showForm && (
+        <>
+          <div onClick={() => setShowForm(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 101, background: '#0e1628', border: '1px solid rgba(99,102,241,0.3)', padding: '16px', width: '340px', maxHeight: '90vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>New Stake</span>
+              <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '16px' }}>×</button>
+            </div>
+
+            {/* Plans */}
+            <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', fontWeight: '600', marginBottom: '8px' }}>Choose a Plan</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '14px' }}>
+              {stakePlans.map((plan, i) => (
+                <div key={i} onClick={() => { setSelectedPlan(plan); setAmount(String(plan.min)); }}
+                  style={{ background: selectedPlan?.name === plan.name ? plan.bg : '#1a2e4a', border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : 'rgba(255,255,255,0.08)'}`, padding: '10px', cursor: 'pointer' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                    <span style={{ color: plan.color, fontSize: '8px', fontWeight: '800' }}>{plan.name}</span>
+                    <span style={{ background: plan.bg, color: plan.color, fontSize: '7px', fontWeight: '700', padding: '1px 5px', border: `1px solid ${plan.color}40` }}>{plan.apy}</span>
+                  </div>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Min: <span style={{ color: 'white' }}>${plan.min.toLocaleString()}</span></div>
+                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{plan.duration} days</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Form */}
+            <div style={{ marginBottom: '10px' }}>
+              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '4px' }}>Selected Plan</div>
+              <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
+                {selectedPlan ? `${selectedPlan.name} — ${selectedPlan.apy} APY — ${selectedPlan.duration} days` : 'No plan selected'}
+              </div>
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '4px' }}>Amount (USD) — Balance: <span style={{ color: '#22c55e' }}>{formatAmount(balance, user?.currency)}</span></div>
+              <input value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00"
+                style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+            </div>
+            {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
+            <button onClick={handleSubmit} disabled={submitting}
+              style={{ width: '100%', padding: '9px', background: submitting ? '#4b4e9b' : '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+              {submitting ? 'Processing...' : 'Stake Now'}
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* Success Modal */}
+      {showSuccess && (
+        <>
+          <div onClick={() => setShowSuccess(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Stake Submitted!</div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your staking request has been submitted and is pending approval.</div>
+            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Okay</button>
+          </div>
+        </>
+      )}
+
       <div style={{ padding: '16px' }}>
-        <div style={{ marginBottom: '16px' }}>
-          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Staking</span>
-          <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginTop: '3px' }}>Lock your funds and earn passive rewards</div>
+
+        {/* Balance + New Stake */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+          <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '8px 14px' }}>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Available Balance</div>
+            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(balance || 0, user?.currency)}</div>
+          </div>
+          <button onClick={() => setShowForm(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Stake</button>
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-          {statCard(<Lock size={16} color='#6366f1'/>, 'Total Staked', formatAmount(totalStaked, user?.currency), '#6366f1')}
-          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Earned', formatAmount(totalEarned, user?.currency), '#22c55e')}
-        </div>
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
-          {statCard(<TrendingUp size={16} color='#f59e0b'/>, 'Active Stakes', String(stakes.filter(s=>s.status==='active').length), '#f59e0b')}
-          {statCard(<Unlock size={16} color='#94a3b8'/>, 'Completed Stakes', String(stakes.filter(s=>s.status==='completed').length), '#94a3b8')}
-        </div>
-
-        {/* Stake Plans */}
-        <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', fontWeight: '600', marginBottom: '10px' }}>Choose a Staking Plan</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '20px' }}>
-          {stakePlans.map((plan, i) => (
-            <div key={i} onClick={() => { setSelectedPlan(plan); setAmount(String(plan.min)); }}
-              style={{ background: selectedPlan?.name === plan.name ? plan.bg : '#1a2e4a', border: `1px solid ${selectedPlan?.name === plan.name ? plan.color : 'rgba(255,255,255,0.08)'}`, padding: '12px', cursor: 'pointer', transition: 'all 0.2s' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                <span style={{ color: plan.color, fontSize: '9px', fontWeight: '800' }}>{plan.name}</span>
-                <span style={{ background: plan.bg, color: plan.color, fontSize: '8px', fontWeight: '700', padding: '2px 7px', border: `1px solid ${plan.color}40` }}>{plan.apy} APY</span>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '3px' }}>
-                Min: <span style={{ color: 'white' }}>${plan.min.toLocaleString()}</span>
-                {plan.max && <> — Max: <span style={{ color: 'white' }}>${plan.max.toLocaleString()}</span></>}
-                {!plan.max && <> — <span style={{ color: 'white' }}>No limit</span></>}
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>
-                <Lock size={8}/> Lock period: <span style={{ color: 'rgba(255,255,255,0.7)' }}>{plan.duration}</span>
-              </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '8px', marginBottom: '16px' }}>
+          {[
+            ['Total Staked', formatAmount(totalStaked, user?.currency), '#6366f1'],
+            ['Total Earned', formatAmount(totalEarned, user?.currency), '#22c55e'],
+            ['Active', String(stakes.filter(s=>s.status==='active').length), '#f59e0b'],
+            ['Completed', String(stakes.filter(s=>s.status==='completed').length), '#94a3b8'],
+          ].map(([l,v,c]) => (
+            <div key={l} style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '8px', textAlign: 'center' }}>
+              <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{l}</div>
+              <div style={{ color: c, fontSize: '11px', fontWeight: '800' }}>{v}</div>
             </div>
           ))}
         </div>
 
-        {/* Stake Form + QR */}
-        <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', fontWeight: '600', marginBottom: '10px' }}>Stake Now</div>
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-          {/* Form */}
-          <div style={{ flex: 1 }}>
-            <div style={{ marginBottom: '12px' }}>
-              <label style={labelStyle}>Selected Plan</label>
-              <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '8px 10px', fontSize: '9px', color: selectedPlan ? selectedPlan.color : 'rgba(255,255,255,0.3)' }}>
-                {selectedPlan ? `${selectedPlan.name} — ${selectedPlan.apy} APY — ${selectedPlan.duration}` : 'No plan selected — choose above'}
-              </div>
-            </div>
-
-            <div style={{ marginBottom: '12px' }}>
-              <label style={labelStyle}>Amount to Stake (USD)</label>
-              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginBottom: '4px' }}>Available Balance: <span style={{ color: '#22c55e', fontWeight: '700' }}>{formatAmount(balance || 0, user?.currency)}</span></div>
-              <input value={amount} onChange={e => setAmount(e.target.value)} placeholder={selectedPlan ? `Min ${getCurrencySymbol(user?.currency)}selectedPlan.min` : '0.00'} style={inputStyle} />
-            </div>
-
-            <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px', minHeight: '14px' }}>{error}</div>
-            <button onClick={handleSubmit} disabled={submitting} style={{ padding: '10px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer', width: '100%' }}>
-              {submitting ? 'Processing...' : 'Stake Now'}
-            </button>
-          </div>
-        </div>
-
-        {/* Active Stakes Table */}
-        <div style={{ marginTop: '24px', color: 'rgba(255,255,255,0.7)', fontSize: '9px', fontWeight: '600', marginBottom: '10px' }}>Active Stakes</div>
+        {/* Table */}
         <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
-              <select value={show} onChange={e => setShow(Number(e.target.value))} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
+              <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
                 <option>10</option><option>25</option><option>50</option>
               </select>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
-              <input style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
+              <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }}/>
             </div>
           </div>
-          {loadingStakes ? (
-            <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</div>
-          ) : stakes.length === 0 ? (
-            <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No stakes found</div>
-          ) : stakes.slice((page-1)*perPage, page*perPage).map((s, i) => {
-            const totalDays = parseInt(s.duration) || 30;
-            const elapsed = Math.floor((Date.now() - new Date(s.createdAt)) / (1000 * 60 * 60 * 24));
-            const daysLeft = Math.max(0, totalDays - elapsed);
-            const progress = Math.min(100, Math.max(0, (elapsed / totalDays) * 100));
-            const earned = s.earned || 0;
-            const roi = s.amount > 0 ? ((earned / s.amount) * 100).toFixed(2) : '0.00';
-            const color = statusColor(s.status);
-            return (
-              <div key={i} style={{ padding: '12px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
-                {/* Row 1: Plan + Status */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ color: '#6366f1', fontSize: '9px', fontWeight: '800' }}>{s.plan}</span>
-                  <span style={{ background: color+'20', color, fontSize: '7px', padding: '2px 8px', textTransform: 'capitalize', fontWeight: '700' }}>{s.status}</span>
-                </div>
-                {/* Row 2: Stats */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '6px', marginBottom: '8px' }}>
-                  <div>
-                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Staked</div>
-                    <div style={{ color: 'white', fontSize: '9px', fontWeight: '700' }}>${s.amount?.toFixed(2)}</div>
-                  </div>
-                  <div>
-                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>APY</div>
-                    <div style={{ color: '#22c55e', fontSize: '9px', fontWeight: '700' }}>{s.apy}</div>
-                  </div>
-                  <div>
-                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>Earned</div>
-                    <div style={{ color: '#f59e0b', fontSize: '9px', fontWeight: '700' }}>${earned.toFixed(4)}</div>
-                  </div>
-                  <div>
-                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>ROI</div>
-                    <div style={{ color: parseFloat(roi) >= 0 ? '#22c55e' : '#ef4444', fontSize: '9px', fontWeight: '700' }}>{roi}%</div>
-                  </div>
-                </div>
-                {/* Row 3: Progress Bar */}
-                <div style={{ marginBottom: '4px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{elapsed} / {totalDays} days</span>
-                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{daysLeft} days left</span>
-                  </div>
-                  <div style={{ background: 'rgba(255,255,255,0.08)', height: '5px', borderRadius: '3px', overflow: 'hidden' }}>
-                    <div style={{ width: progress + '%', height: '100%', background: s.status === 'completed' ? '#22c55e' : '#6366f1', borderRadius: '3px', transition: 'width 0.3s' }} />
-                  </div>
-                  <div style={{ textAlign: 'right', color: 'rgba(255,255,255,0.3)', fontSize: '7px', marginTop: '2px' }}>{progress.toFixed(0)}% complete</div>
-                </div>
-                {/* Row 4: Dates */}
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>Start: {new Date(s.createdAt).toLocaleDateString()}</span>
-                  <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>End: {s.expiresAt ? new Date(s.expiresAt).toLocaleDateString() : '-'}</span>
-                </div>
-              </div>
-            );
-          })}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {stakes.length === 0 ? 0 : (page-1)*perPage+1}–{Math.min(page*perPage, stakes.length)} of {stakes.length} entries</span>
-            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
+                {['Plan','Amount','APY','Earned','Duration','Status'].map((h,i) => (
+                  <th key={i} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', fontWeight: '700', padding: '8px 10px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h} ↕</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {loadingStakes ? (
+                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '8px' }}>Loading...</td></tr>
+              ) : paginated.length === 0 ? (
+                <tr><td colSpan={6} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No stakes found</td></tr>
+              ) : paginated.map((s, i) => {
+                const color = statusColor(s.status);
+                const earned = s.earned || 0;
+                return (
+                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
+                    <td style={{ padding: '8px 10px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{s.plan}</td>
+                    <td style={{ padding: '8px 10px', color: 'white', fontSize: '8px', fontWeight: '700' }}>{formatAmount(s.amount||0, user?.currency)}</td>
+                    <td style={{ padding: '8px 10px', color: '#22c55e', fontSize: '8px', fontWeight: '700' }}>{s.apy}</td>
+                    <td style={{ padding: '8px 10px', color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>{formatAmount(earned, user?.currency)}</td>
+                    <td style={{ padding: '8px 10px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{s.duration} days</td>
+                    <td style={{ padding: '8px 10px' }}>
+                      <span style={{ background: color+'20', color, fontSize: '7px', padding: '2px 6px', display: 'inline-block', textTransform: 'capitalize' }}>{s.status}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {filtered.length === 0 ? 0 : (page-1)*perPage+1}–{Math.min(page*perPage, filtered.length)} of {filtered.length} entries</span>
+            <div style={{ display: 'flex', gap: '4px' }}>
               <button onClick={() => setPage(1)} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
               <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page} of {Math.ceil(stakes.length/perPage)||1}</span>
-              <button onClick={() => setPage(p=>Math.min(Math.ceil(stakes.length/perPage),p+1))} disabled={page>=Math.ceil(stakes.length/perPage)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=Math.ceil(stakes.length/perPage)?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=Math.ceil(stakes.length/perPage)?'default':'pointer' }}>›</button>
-              <button onClick={() => setPage(Math.ceil(stakes.length/perPage))} disabled={page>=Math.ceil(stakes.length/perPage)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=Math.ceil(stakes.length/perPage)?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=Math.ceil(stakes.length/perPage)?'default':'pointer' }}>»</button>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page} of {totalPages}</span>
+              <button onClick={() => setPage(p=>Math.min(totalPages,p+1))} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page>=totalPages?'default':'pointer' }}>›</button>
+              <button onClick={() => setPage(totalPages)} disabled={page>=totalPages} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page>=totalPages?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page>=totalPages?'default':'pointer' }}>»</button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Success Popup */}
-      {showSuccess && (
-        <>
-          <div onClick={() => setShowSuccess(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }} />
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
-            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
-              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12'/></svg>
-            </div>
-            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Stake Submitted!</div>
-            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your staking request has been submitted and is pending approval. Check your active stakes for updates.</div>
-            <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
-          </div>
-        </>
-      )}
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; VertexTrade Pro</div>
-
+      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © VertexTrade Pro</div>
     </div>
   );
 }
