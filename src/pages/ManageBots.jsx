@@ -105,7 +105,7 @@ export default function ManageBots() {
             ['Total Bots', activeBots.length, '#6366f1'],
             ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
           ].map(([l,v,c]) => (
-            <div key={l} style={{ background: '#0d1426', padding: '10px', border: '1px solid rgba(99,102,241,0.15)', borderRadius: '4px' }}>
+            <div key={l} style={{ background: '#0d1426', padding: '10px', border: '1px solid rgba(99,102,241,0.15)',  }}>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
               <div style={{ color: c, fontSize: '13px', fontWeight: '800' }}>{v}</div>
             </div>
@@ -125,7 +125,7 @@ export default function ManageBots() {
               const roi = b.amount > 0 ? ((earned / b.amount) * 100).toFixed(2) : '0.00';
               const botColor = bots.find(x => x.name === b.botName)?.color || '#6366f1';
               return (
-                <div key={i} style={{ background: '#0d1426', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', marginBottom: '8px', borderRadius: '4px' }}>
+                <div key={i} style={{ background: '#0d1426', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', marginBottom: '8px',  }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ color: botColor, fontSize: '10px', fontWeight: '800' }}>{b.botName}</span>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -140,7 +140,7 @@ export default function ManageBots() {
                       ['Earned', formatAmount(earned, user?.currency), '#f59e0b'],
                       ['ROI', `${roi}%`, parseFloat(roi) >= 0 ? '#22c55e' : '#ef4444'],
                     ].map(([l,v,col]) => (
-                      <div key={l} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '6px', borderRadius: '4px' }}>
+                      <div key={l} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '6px',  }}>
                         <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>{l}</div>
                         <div style={{ color: col, fontSize: '10px', fontWeight: '700' }}>{v}</div>
                       </div>
@@ -151,8 +151,8 @@ export default function ManageBots() {
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{elapsed} / {totalDays} days</span>
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{daysLeft} days left</span>
                     </div>
-                    <div style={{ background: 'rgba(255,255,255,0.08)', height: '5px', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div style={{ width: progress + '%', height: '100%', background: '#6366f1', borderRadius: '3px', transition: 'width 0.3s' }} />
+                    <div style={{ background: 'rgba(255,255,255,0.08)', height: '5px', , overflow: 'hidden' }}>
+                      <div style={{ width: progress + '%', height: '100%', background: '#6366f1', , transition: 'width 0.3s' }} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px' }}>
                       <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{progress.toFixed(0)}% complete</span>
@@ -175,7 +175,7 @@ export default function ManageBots() {
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
             return (
-              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', borderRadius: '4px', position: 'relative' }}>
+              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', , position: 'relative' }}>
                 <div style={{ color: '#818cf8', fontSize: '7px', fontWeight: '600', marginBottom: '2px' }}>{bot.name}</div>
                 <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>${bot.amount.toLocaleString()}</div>
                 {[
@@ -192,7 +192,7 @@ export default function ManageBots() {
                 <button
                   onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`)}
                   disabled={isSubscribing}
-                  style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: canAfford ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed', borderRadius: '3px' }}>
+                  style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: canAfford ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed',  }}>
                   {isSubscribing ? 'Activating...' : canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
                 </button>
               </div>
@@ -204,7 +204,7 @@ export default function ManageBots() {
       {/* Confirm Modal */}
       {confirmBot && (
         <div onClick={() => setConfirmBot(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#0d1426', border: `1px solid ${confirmBot.color}40`, width: '100%', maxWidth: '320px', padding: '20px', borderRadius: '8px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#0d1426', border: `1px solid ${confirmBot.color}40`, width: '100%', maxWidth: '320px', padding: '20px',  }}>
             <div style={{ color: confirmBot.color, fontSize: '12px', fontWeight: '800', marginBottom: '12px' }}>{confirmBot.name}</div>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', lineHeight: '1.6', marginBottom: '16px' }}>
               You are about to subscribe to <strong style={{ color: 'white' }}>{confirmBot.name}</strong> for <strong style={{ color: '#ef4444' }}>{formatAmount(confirmBot.amount, user?.currency)}</strong>. This amount will be deducted from your balance immediately.
@@ -222,8 +222,8 @@ export default function ManageBots() {
               </div>
             ))}
             <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer', borderRadius: '4px' }}>Cancel</button>
-              <button onClick={() => subscribe(confirmBot)} style={{ flex: 1, padding: '9px', background: confirmBot.color, border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer', borderRadius: '4px' }}>Confirm</button>
+              <button onClick={() => setConfirmBot(null)} style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '9px', cursor: 'pointer',  }}>Cancel</button>
+              <button onClick={() => subscribe(confirmBot)} style={{ flex: 1, padding: '9px', background: confirmBot.color, border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer',  }}>Confirm</button>
             </div>
           </div>
         </div>
