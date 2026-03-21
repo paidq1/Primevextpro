@@ -28,7 +28,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
     <table width="100%" style="max-width:560px;border-radius:16px;overflow:hidden;background:#0d1117;border:1px solid rgba(99,102,241,0.15);box-shadow:0 0 40px rgba(0,0,0,0.4);">
       
       <!-- Header -->
-      <tr><td style="background:#ffffff;padding:24px 28px;border-bottom:1px solid rgba(99,102,241,0.12);text-align:center;">
+      <tr><td style="background:#0d1117;padding:24px 28px;border-bottom:1px solid rgba(99,102,241,0.12);text-align:center;">
         <img src="https://res.cloudinary.com/drix04cop/image/upload/v1774078009/vertextrade/logo-full.jpg" alt="VertexTrade" height="50" style="display:inline-block;" />
       </td></tr>
 
