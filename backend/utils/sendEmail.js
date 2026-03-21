@@ -32,8 +32,7 @@ const sendEmail = async ({ to, type, name, resetUrl, verifyUrl, amount, currency
         <img src="https://res.cloudinary.com/drix04cop/image/upload/v1774078009/vertextrade/logo-full.jpg" alt="VertexTrade" height="50" style="display:inline-block;" />
       </td></tr>
 
-      <!-- Accent Line -->
-      <tr><td style="height:2px;background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899,#6366f1);"></td></tr>
+      
 
       <!-- Body -->
       <tr><td style="padding:36px 36px 28px;">
