@@ -125,7 +125,7 @@ export default function ManageBots() {
               const roi = b.amount > 0 ? ((earned / b.amount) * 100).toFixed(2) : '0.00';
               const botColor = bots.find(x => x.name === b.botName)?.color || '#6366f1';
               return (
-                <div key={i} style={{ background: '#0d1426', border: `1px solid ${botColor}40`, padding: '12px', marginBottom: '8px', borderRadius: '4px' }}>
+                <div key={i} style={{ background: '#0d1426', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', marginBottom: '8px', borderRadius: '4px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ color: botColor, fontSize: '10px', fontWeight: '800' }}>{b.botName}</span>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -152,7 +152,7 @@ export default function ManageBots() {
                       <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px' }}>{daysLeft} days left</span>
                     </div>
                     <div style={{ background: 'rgba(255,255,255,0.08)', height: '5px', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div style={{ width: progress + '%', height: '100%', background: botColor, borderRadius: '3px', transition: 'width 0.3s' }} />
+                      <div style={{ width: progress + '%', height: '100%', background: '#6366f1', borderRadius: '3px', transition: 'width 0.3s' }} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px' }}>
                       <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px' }}>{progress.toFixed(0)}% complete</span>
@@ -175,11 +175,9 @@ export default function ManageBots() {
             const canAfford = (user?.balance || 0) >= bot.amount;
             const isSubscribing = subscribing === bot.name;
             return (
-              <div key={i} style={{ background: '#0d1426', border: `1px solid ${bot.color}30`, padding: '12px', borderRadius: '4px', position: 'relative' }}>
-                {/* Color top bar */}
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: bot.color, borderRadius: '4px 4px 0 0' }} />
-                <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '2px' }}>{bot.name}</div>
-                <div style={{ color: 'white', fontSize: '14px', fontWeight: '900', marginBottom: '8px' }}>${bot.amount.toLocaleString()}</div>
+              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', borderRadius: '4px', position: 'relative' }}>
+                <div style={{ color: '#818cf8', fontSize: '7px', fontWeight: '600', marginBottom: '2px' }}>{bot.name}</div>
+                <div style={{ color: '#6366f1', fontSize: '10px', fontWeight: '700', marginBottom: '8px' }}>${bot.amount.toLocaleString()}</div>
                 {[
                   ['Daily Return', bot.dailyRate, '#22c55e'],
                   ['Duration', bot.duration, 'white'],
@@ -194,7 +192,7 @@ export default function ManageBots() {
                 <button
                   onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`)}
                   disabled={isSubscribing}
-                  style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? bot.color : 'rgba(255,255,255,0.06)', border: 'none', color: canAfford ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed', borderRadius: '3px' }}>
+                  style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: canAfford ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed', borderRadius: '3px' }}>
                   {isSubscribing ? 'Activating...' : canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
                 </button>
               </div>
