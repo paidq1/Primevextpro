@@ -27,6 +27,9 @@ export default function ManageBots() {
   const [msg, setMsg] = useState('');
   const [error, setError] = useState('');
   const [confirmBot, setConfirmBot] = useState(null);
+  const [search, setSearch] = useState('');
+  const [show, setShow] = useState(10);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetch(`${BASE_URL}/bots`, { headers: headers() })
@@ -95,7 +98,66 @@ export default function ManageBots() {
           ))}
         </div>
 
-        {/* Active Bots */}
+        {/* Bots Table */}
+        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
+              <select value={show} onChange={e => { setShow(Number(e.target.value)); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '2px 5px', outline: 'none' }}>
+                <option>10</option><option>25</option><option>50</option>
+              </select>
+              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>entries</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Search:</span>
+              <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
+            </div>
+          </div>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
+                {['Bot Name','Invested','Daily Rate','Earned','Duration','Status','Action'].map((h,i) => (
+                  <th key={i} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', fontWeight: '700', padding: '8px 6px', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', textAlign: 'left' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {activeBots.length === 0 ? (
+                <tr><td colSpan={7} style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No bots found</td></tr>
+              ) : activeBots
+                  .filter(b => !search || b.botName?.toLowerCase().includes(search.toLowerCase()) || b.status?.toLowerCase().includes(search.toLowerCase()))
+                  .slice((page-1)*show, page*show)
+                  .map((b, i) => {
+                    const color = b.status === 'active' ? '#22c55e' : b.status === 'cancelled' ? '#ef4444' : '#f59e0b';
+                    const earned = b.earned || 0;
+                    return (
+                      <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
+                        <td style={{ padding: '8px 6px', color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{b.botName}</td>
+                        <td style={{ padding: '8px 6px', color: 'white', fontSize: '8px' }}>{formatAmount(b.amount||0, user?.currency)}</td>
+                        <td style={{ padding: '8px 6px', color: '#22c55e', fontSize: '8px' }}>{b.dailyRate}</td>
+                        <td style={{ padding: '8px 6px', color: '#f59e0b', fontSize: '8px' }}>{formatAmount(earned, user?.currency)}</td>
+                        <td style={{ padding: '8px 6px', color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{b.duration}</td>
+                        <td style={{ padding: '8px 6px' }}><span style={{ background: color+'20', color, fontSize: '7px', padding: '2px 6px', textTransform: 'capitalize' }}>{b.status}</span></td>
+                        <td style={{ padding: '8px 6px' }}>
+                          {b.status === 'active' && <button onClick={() => cancelBot(b._id)} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '7px', padding: '2px 6px', cursor: 'pointer' }}>Cancel</button>}
+                        </td>
+                      </tr>
+                    );
+                  })}
+            </tbody>
+          </table>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '8px' }}>Showing {activeBots.length === 0 ? 0 : (page-1)*show+1} to {Math.min(page*show, activeBots.length)} of {activeBots.length} entries</span>
+            <div style={{ display: 'flex', gap: '4px' }}>
+              <button onClick={() => setPage(1)} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '8px', padding: '2px 6px', cursor: page===1?'default':'pointer' }}>«</button>
+              <button onClick={() => setPage(p=>Math.max(1,p-1))} disabled={page===1} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: page===1?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: page===1?'default':'pointer' }}>‹</button>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px' }}>Page {page}</span>
+              <button onClick={() => setPage(p=>p+1)} disabled={activeBots.length <= page*show} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: activeBots.length<=page*show?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.6)', fontSize: '10px', padding: '2px 8px', cursor: activeBots.length<=page*show?'default':'pointer' }}>›</button>
+            </div>
+          </div>
+        </div>
+
+        {/* Active Bots Cards */}
         {activeBots.filter(b => b.status === 'active').length > 0 && (
           <div style={{ marginBottom: '16px' }}>
             <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '10px' }}>Active Bots</div>
