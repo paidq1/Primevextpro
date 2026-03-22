@@ -83,21 +83,23 @@ export default function ManageBots() {
 
       <div style={{ padding: '16px' }}>
 
-        {/* Stats + Subscribe Button */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', flex: 1, marginRight: '8px' }}>
-            {[
-              ['Active Bots', activeCount, '#22c55e'],
-              ['Total Bots', activeBots.length, '#6366f1'],
-              ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
-            ].map(([l,v,c]) => (
-              <div key={l} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', textAlign: 'center' }}>
-                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{l}</div>
-                <div style={{ color: c, fontSize: '11px', fontWeight: '800' }}>{v}</div>
-              </div>
-            ))}
-          </div>
-          <button onClick={() => navigate('/dashboard/bot-plans')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>+ Subscribe Bot</button>
+        {/* Subscribe Button */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
+          <button onClick={() => navigate('/dashboard/bot-plans')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Subscribe Bot</button>
+        </div>
+
+        {/* Stats */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '14px' }}>
+          {[
+            ['Active Bots', activeCount, '#22c55e'],
+            ['Total Bots', activeBots.length, '#6366f1'],
+            ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
+          ].map(([l,v,c]) => (
+            <div key={l} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', textAlign: 'center' }}>
+              <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{l}</div>
+              <div style={{ color: c, fontSize: '11px', fontWeight: '800' }}>{v}</div>
+            </div>
+          ))}
         </div>
 
         {/* Bots Table */}
