@@ -110,8 +110,8 @@ export default function NewStake() {
                 <div key={i} onClick={() => setSelected(c)}
                   style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer' }}>
                   {/* Coin icon */}
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
-                    <img src={c.logo} alt={c.symbol} style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '50%' }} />
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: c.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden', padding: '4px', boxSizing: 'border-box' }}>
+                    <img src={c.logo} alt={c.symbol} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   {/* Info */}
                   <div style={{ flex: 1 }}>
@@ -135,8 +135,8 @@ export default function NewStake() {
             </button>
 
             <div style={{ background: '#132035', border: `1px solid ${selected.color}30`, padding: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
-                <img src={selected.logo} alt={selected.symbol} style={{ width: '48px', height: '48px', objectFit: 'cover' }} />
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: selected.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden', padding: '4px', boxSizing: 'border-box' }}>
+                <img src={selected.logo} alt={selected.symbol} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
               <div>
                 <div style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>{selected.name}</div>
