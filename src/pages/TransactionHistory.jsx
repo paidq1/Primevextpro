@@ -2,13 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
-import DashboardSidebar from '../components/DashboardSidebar';
+import PageHeader from '../components/PageHeader';
 import { getDeposits, getWithdrawals } from '../services/api';
 
 export default function TransactionHistory() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
   const perPage = show;
@@ -64,7 +63,6 @@ export default function TransactionHistory() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
-      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ width: '16px', height: '16px' }}>
           <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>

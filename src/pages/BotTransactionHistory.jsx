@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { getBots } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
-import DashboardSidebar from '../components/DashboardSidebar';
+import PageHeader from '../components/PageHeader';
 
 const botColors = {
   'STARTER BOT': '#6366f1', 'SILVER BOT': '#6366f1', 'GOLD BOT': '#6366f1',
@@ -18,7 +18,6 @@ const statusColor = s => s === 'active' ? '#22c55e' : s === 'completed' ? '#6366
 export default function BotTransactionHistory() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
   const [bots, setBots] = useState([]);
@@ -43,7 +42,6 @@ export default function BotTransactionHistory() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
-      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
       <div style={{ background: '#132035', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>

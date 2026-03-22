@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardSidebar from '../components/DashboardSidebar';
+import PageHeader from '../components/PageHeader';
 import { createWithdrawal, getWithdrawals } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
@@ -17,7 +17,6 @@ const methods = [
 export default function Withdraw() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMethodSelector, setShowMethodSelector] = useState(false);
   const [selected, setSelected] = useState('');
   const [showForm, setShowForm] = useState(false);
@@ -94,7 +93,6 @@ export default function Withdraw() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
-      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Method Selector Modal */}
       {showMethodSelector && !showForm && (
@@ -253,21 +251,9 @@ export default function Withdraw() {
       )}
 
       {/* Header */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: 'linear-gradient(90deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.9) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, borderBottom: '1px solid rgba(99,102,241,0.3)', boxShadow: '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.05) inset' }}>
-        <div style={{ width: '16px', height: '16px' }}>
-          <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
-            <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
-            <path d="M20 8L8 14V22L20 34L32 22V14L20 8Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.2"/>
-            <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
-          </svg>
-        </div>
-        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
-        <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>/ Withdraw</span>
-        <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
-      </div>
+      <PageHeader title="Withdraw" />
+
+      
 
       <div style={{ padding: '16px' }}>
         {/* Top Bar */}

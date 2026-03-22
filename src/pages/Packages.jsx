@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import DashboardSidebar from '../components/DashboardSidebar';
+import PageHeader from '../components/PageHeader';
 import { CheckCircle, X, AlertCircle, Zap, TrendingUp, Award, Crown, Rocket, Star } from 'lucide-react';
 import { joinPlan, getInvestments } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -20,7 +20,6 @@ export default function Packages() {
   const location = useLocation();
   const urlTab = new URLSearchParams(location.search).get('tab');
   const { user } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(urlTab || 'available');
 
   useEffect(() => {
@@ -94,7 +93,6 @@ export default function Packages() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
-      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Low Balance Notice */}
       {lowBalance && (

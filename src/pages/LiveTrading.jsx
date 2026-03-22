@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { formatAmount, getCurrencySymbol, formatAmountWithCode } from '../utils/currency';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import DashboardSidebar from '../components/DashboardSidebar';
+import PageHeader from '../components/PageHeader';
 import { getTrades, createTrade } from '../services/api';
 
 const SYMBOLS = [
@@ -19,7 +19,6 @@ const DURATIONS = ['30 seconds','1 minute','2 minutes','5 minutes','10 minutes',
 export default function LiveTrading() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [balance, setBalance] = useState(null);
   const [trades, setTrades] = useState([]);
   const [stats, setStats] = useState(null);
@@ -96,7 +95,6 @@ export default function LiveTrading() {
   return (
     <>
       <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column', paddingBottom: '52px' }}>
-        <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Top Nav */}
         <div style={{ background: '#0d1426', borderBottom: '1px solid rgba(99,102,241,0.2)', padding: '0 12px', display: 'flex', alignItems: 'center', height: '44px', gap: '10px', flexShrink: 0 }}>

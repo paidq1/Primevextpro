@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
-import { Menu, RefreshCw, User, Settings, Lock, LogOut } from 'lucide-react';
+import { RefreshCw, User, Settings, Lock, LogOut } from 'lucide-react';
 import DashboardSidebar from './DashboardSidebar';
 
 export default function PageHeader({ title }) {
@@ -28,19 +28,22 @@ export default function PageHeader({ title }) {
     <>
       <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: 'linear-gradient(90deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.9) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0, borderBottom: '1px solid rgba(99,102,241,0.3)', boxShadow: '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.05) inset' }}>
+
+        {/* Hamburger */}
         <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', marginRight: '4px', display: 'flex', alignItems: 'center' }}>
-          <Menu size={15}/>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
 
         {title && <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>/ {title}</span>}
 
         <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'stretch' }}>
+
           {/* Balance */}
-          <button style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+          <button style={{ padding: '5px 10px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', cursor: 'default', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
             <span style={{ color: '#f7931a' }}>₿</span> {formatAmount(balance, user?.currency)}
           </button>
 
-          {/* Trade button */}
+          {/* Trade */}
           <button onClick={() => navigate('/dashboard/live-trading')} style={{ padding: '5px 10px', background: 'transparent', border: '1px solid #6366f1', color: 'white', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
             <RefreshCw size={11}/> Trade
           </button>
@@ -49,7 +52,7 @@ export default function PageHeader({ title }) {
           <div style={{ position: 'relative' }}>
             <button onClick={() => { setShowNotifications(!showNotifications); setShowProfileMenu(false); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', padding: '5px 8px', position: 'relative', display: 'flex', alignItems: 'center' }}>
               <svg width='18' height='18' fill='none' stroke='currentColor' viewBox='0 0 24 24' strokeWidth='2'><path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/><path d='M13.73 21a2 2 0 0 1-3.46 0'/></svg>
-              <span style={{ position: 'absolute', top: '2px', right: '4px', width: '7px', height: '7px', borderRadius: '50%', background: '#ef4444' }} />
+              {notifications.some(n => n.unread) && <span style={{ position: 'absolute', top: '2px', right: '4px', width: '7px', height: '7px', borderRadius: '50%', background: '#ef4444' }} />}
             </button>
             {showNotifications && (
               <>
@@ -63,7 +66,7 @@ export default function PageHeader({ title }) {
                     { id: 1, icon: '🔐', title: 'KYC Reminder', desc: 'Complete verification to unlock all features', time: new Date(), unread: true },
                   ]).map((n, i) => (
                     <div key={i} style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: n.unread ? 'rgba(99,102,241,0.08)' : 'transparent', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                      <span style={{ fontSize: '16px' }}>{n.icon}</span>
+                      <span style={{ fontSize: '16px' }}>{n.icon || '🔔'}</span>
                       <div style={{ flex: 1 }}>
                         <div style={{ color: 'white', fontSize: '10px', fontWeight: '600', marginBottom: '2px' }}>{n.title}</div>
                         <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>{n.desc || n.message}</div>

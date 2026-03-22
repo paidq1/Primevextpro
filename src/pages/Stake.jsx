@@ -4,7 +4,7 @@ import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import { getStakes } from '../services/api';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lock, Unlock } from 'lucide-react';
-import DashboardSidebar from '../components/DashboardSidebar';
+import PageHeader from '../components/PageHeader';
 
 const stakePlans = [
   { name: 'STARTER',  apy: '5%',  min: 500,   max: 999,   duration: '7',   color: '#22c55e', bg: '#22c55e20' },
@@ -20,7 +20,6 @@ export default function Stake() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => { if (location.search.includes('new=1')) setShowForm(true); }, [location]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
@@ -82,23 +81,11 @@ export default function Stake() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
-      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 1000, background: 'linear-gradient(90deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.9) 100%)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, borderBottom: '1px solid rgba(99,102,241,0.3)', boxShadow: '0 4px 24px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.05) inset' }}>
-        <div style={{ width: '16px', height: '16px' }}>
-          <svg viewBox="0 0 40 40" fill="none" style={{ width: '100%', height: '100%' }}>
-            <path d="M20 2L4 10V22L20 38L36 22V10L20 2Z" fill="#0d1117" stroke="#6366F1" strokeWidth="1.5"/>
-            <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
-          </svg>
-        </div>
-        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <span style={{ color: 'white', fontSize: '10px', fontWeight: '800' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
-        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', marginLeft: '4px' }}>/ Stake</span>
-        <button onClick={() => navigate('/dashboard')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', fontSize: '8px', cursor: 'pointer' }}>Back</button>
-      </div>
+      <PageHeader title="Stake" />
+
+      
 
       {/* New Stake Modal */}
       {showForm && (
