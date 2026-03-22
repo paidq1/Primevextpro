@@ -151,13 +151,9 @@ export default function Stake() {
 
       <div style={{ padding: '16px' }}>
 
-        {/* Balance + New Stake */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '8px 14px' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Available Balance</div>
-            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(balance || 0, user?.currency)}</div>
-          </div>
-          <button onClick={() => setShowForm(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Stake</button>
+        {/* New Stake Button */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
+          <button onClick={() => navigate('/dashboard/new-stake')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Stake</button>
         </div>
 
         {/* Stats */}
