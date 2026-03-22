@@ -164,7 +164,7 @@ export default function Stake() {
             ['Active', String(stakes.filter(s=>s.status==='active').length), '#f59e0b'],
             ['Completed', String(stakes.filter(s=>s.status==='completed').length), '#94a3b8'],
           ].map(([l,v,c]) => (
-            <div key={l} style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '8px', textAlign: 'center' }}>
+            <div key={l} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', textAlign: 'center', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
               <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{l}</div>
               <div style={{ color: c, fontSize: '11px', fontWeight: '800' }}>{v}</div>
             </div>
