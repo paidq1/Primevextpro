@@ -27,6 +27,7 @@ export default function ManageBots() {
   const [msg, setMsg] = useState('');
   const [error, setError] = useState('');
   const [confirmBot, setConfirmBot] = useState(null);
+  const [showPlans, setShowPlans] = useState(false);
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(10);
   const [page, setPage] = useState(1);
@@ -98,6 +99,23 @@ export default function ManageBots() {
           ))}
         </div>
 
+        {/* Subscribe + Stats */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', flex: 1, marginRight: '8px' }}>
+            {[
+              ['Active Bots', activeCount, '#22c55e'],
+              ['Total Bots', activeBots.length, '#6366f1'],
+              ['Total Earned', formatAmount(totalEarned, user?.currency), '#f59e0b'],
+            ].map(([l,v,c]) => (
+              <div key={l} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', textAlign: 'center' }}>
+                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{l}</div>
+                <div style={{ color: c, fontSize: '11px', fontWeight: '800' }}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setShowPlans(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>+ Subscribe Bot</button>
+        </div>
+
         {/* Bots Table */}
         <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', marginBottom: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
@@ -156,6 +174,10 @@ export default function ManageBots() {
             </div>
           </div>
         </div>
+
+            </div>
+          </>
+        )}
 
         {/* Active Bots Cards */}
         {activeBots.filter(b => b.status === 'active').length > 0 && (
