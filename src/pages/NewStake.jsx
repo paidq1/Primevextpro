@@ -148,6 +148,50 @@ export default function NewStake() {
                 ))}
               </div>
 
+              {/* Duration */}
+              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '6px' }}>Lock Duration</div>
+              <div style={{ display: 'flex', gap: '6px', marginBottom: '14px' }}>
+                {[7, 14, 30, 60, 90].map(d => (
+                  <button key={d} onClick={() => setDuration(d)}
+                    style={{ flex: 1, padding: '7px 2px', background: duration === d ? selected.color : 'rgba(255,255,255,0.06)', border: `1px solid ${duration === d ? selected.color : 'rgba(255,255,255,0.1)'}`, color: 'white', fontSize: '8px', fontWeight: duration === d ? '700' : '400', cursor: 'pointer' }}>
+                    {d}d
+                  </button>
+                ))}
+              </div>
+
+              {/* Profit Preview */}
+              {amount && Number(amount) >= 100 && (
+                <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '12px', marginBottom: '14px' }}>
+                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '8px', letterSpacing: '1px' }}>ESTIMATED RETURNS</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                    <div>
+                      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Daily Profit</div>
+                      <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800' }}>+${((Number(amount) * parseFloat(selected.roi) / 100) / 30).toFixed(2)}</div>
+                    </div>
+                    <div>
+                      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Total Profit ({duration}d)</div>
+                      <div style={{ color: '#f59e0b', fontSize: '13px', fontWeight: '800' }}>+${((Number(amount) * parseFloat(selected.roi) / 100) / 30 * duration).toFixed(2)}</div>
+                    </div>
+                    <div>
+                      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Total Return</div>
+                      <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>${(Number(amount) + (Number(amount) * parseFloat(selected.roi) / 100) / 30 * duration).toFixed(2)}</div>
+                    </div>
+                    <div>
+                      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>ROI Rate</div>
+                      <div style={{ color: '#6366f1', fontSize: '11px', fontWeight: '700' }}>{selected.roi}</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Lock Warning */}
+              <div style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)', padding: '10px 12px', marginBottom: '14px', display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <span style={{ fontSize: '12px' }}>🔒</span>
+                <div style={{ color: 'rgba(255,100,100,0.8)', fontSize: '8px', lineHeight: '1.6' }}>
+                  Funds will be locked for <strong style={{ color: 'white' }}>{duration} days</strong>. Early withdrawal is not permitted. Profits are credited daily.
+                </div>
+              </div>
+
               {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '10px' }}>{error}</div>}
 
               <button onClick={handleStake} disabled={submitting}
