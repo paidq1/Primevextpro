@@ -134,9 +134,7 @@ export default function NewStake() {
             </button>
 
             <div style={{ background: '#132035', border: `1px solid ${selected.color}30`, padding: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: selected.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden', padding: '4px', boxSizing: 'border-box' }}>
-                <img src={selected.logo} alt={selected.symbol} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-              </div>
+              <img src={selected.logo} alt={selected.symbol} style={{ width: '48px', height: '48px', objectFit: 'contain', flexShrink: 0 }} />
               <div>
                 <div style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>{selected.name}</div>
                 <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>{selected.symbol}</div>
