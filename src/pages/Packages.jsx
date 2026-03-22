@@ -32,6 +32,7 @@ export default function Packages() {
   const [lowBalance, setLowBalance] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [showInsufficient, setShowInsufficient] = useState(false);
 
   const userBalance = user?.balance || 0;
   const [investments, setInvestments] = useState([]);
@@ -57,7 +58,7 @@ export default function Packages() {
       setTimeout(() => setError(''), 4000);
       return;
     }
-    if (userBalance < amt) {
+    if (userBalance < amt) { setShowInsufficient(true);
       setLowBalance(true);
       setTimeout(() => setLowBalance(false), 4000);
       return;
@@ -143,11 +144,29 @@ export default function Packages() {
         </>
       )}
 
+      {/* Insufficient Balance Popup */}
+      {showInsufficient && (
+        <>
+          <div onClick={() => setShowInsufficient(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 200 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 201, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='24' height='24' fill='none' stroke='#ef4444' viewBox='0 0 24 24' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Insufficient Balance</div>
+            <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Hello <strong style={{ color: '#111' }}>{user?.name || user?.email?.split('@')[0] || 'there'}</strong>, your balance is too low for this plan. Please make a deposit and try again.</div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setShowInsufficient(false)} style={{ flex: 1, padding: '10px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>Cancel</button>
+              <button onClick={() => { setShowInsufficient(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>Deposit Now</button>
+            </div>
+          </div>
+        </>
+      )}
+
       {/* Success Modal */}
       {success && (
         <>
           <div onClick={() => setSuccess(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }}/>
-          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 151, background: 'white', padding: '36px 28px', width: '320px', textAlign: 'center', borderRadius: '8px' }}>
             <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
               <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#22c55e' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12'/></svg>
             </div>

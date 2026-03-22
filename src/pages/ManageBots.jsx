@@ -193,7 +193,7 @@ export default function ManageBots() {
                       </div>
                     ))}
                     <button
-                      onClick={() => canAfford ? setConfirmBot(bot) : setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`)}
+                      onClick={() => canAfford ? setConfirmBot(bot) : (setError(`Insufficient balance. You need $${bot.amount.toLocaleString()}.`), setShowInsufficient && setShowInsufficient(true))}
                       disabled={isSubscribing}
                       style={{ width: '100%', marginTop: '10px', padding: '7px', background: canAfford ? '#6366f1' : 'rgba(255,255,255,0.06)', border: 'none', color: canAfford ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '8px', fontWeight: '700', cursor: canAfford ? 'pointer' : 'not-allowed' }}>
                       {isSubscribing ? 'Activating...' : canAfford ? 'Subscribe Now' : 'Insufficient Balance'}
