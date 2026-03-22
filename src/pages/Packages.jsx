@@ -190,8 +190,8 @@ export default function Packages() {
                   <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', padding: '3px 8px', outline: 'none', width: '80px' }} />
                 </div>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                {['Plan','Amount','ROI','Start Date','End Date','Status'].map((h,i) => (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                {['Plan','Amount','ROI','Earned','Start Date','End Date','Status'].map((h,i) => (
                   <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '7px', fontWeight: '600', borderRight: '1px solid #6366f1', borderBottom: '1px solid #6366f1', padding: '7px 6px', display: 'block' }}>{h}</span>
                 ))}
               </div>
@@ -204,10 +204,11 @@ export default function Packages() {
                     {paged.length === 0 ? (
                       <div style={{ padding: '24px', textAlign: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '8px' }}>No investment records found</div>
                     ) : paged.map((inv, i) => (
-                      <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 6px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
+                      <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr', padding: '8px 6px', borderBottom: '1px solid rgba(255,255,255,0.04)', background: i%2===0?'transparent':'rgba(255,255,255,0.02)' }}>
                         <span style={{ color: '#6366f1', fontSize: '8px', fontWeight: '700' }}>{inv.plan}</span>
                         <span style={{ color: 'white', fontSize: '8px' }}>${parseFloat(inv.amount).toLocaleString()}</span>
                         <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
+                        <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(inv.earned || inv.profit || 0, user?.currency)}</span>
                         <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
                         <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{inv.expiresAt ? new Date(inv.expiresAt).toLocaleDateString() : '—'}</span>
                         <span style={{ background: inv.status==='active'?'rgba(34,197,94,0.15)':inv.status==='completed'?'rgba(99,102,241,0.15)':'rgba(239,68,68,0.15)', color: inv.status==='active'?'#22c55e':inv.status==='completed'?'#818cf8':'#ef4444', fontSize: '6px', padding: '2px 5px', fontWeight: '600', textTransform: 'uppercase', display: 'inline-block' }}>{inv.status}</span>
