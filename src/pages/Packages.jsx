@@ -209,6 +209,7 @@ export default function Packages() {
                         <span style={{ color: 'white', fontSize: '8px' }}>${parseFloat(inv.amount).toLocaleString()}</span>
                         <span style={{ color: '#22c55e', fontSize: '8px' }}>{inv.roi}</span>
                         <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(inv.earned || inv.profit || 0, user?.currency)}</span>
+                        <span style={{ color: '#f59e0b', fontSize: '8px', fontWeight: '700' }}>+{formatAmount(inv.earned || inv.profit || 0, user?.currency)}</span>
                         <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{new Date(inv.createdAt).toLocaleDateString()}</span>
                         <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>{inv.expiresAt ? new Date(inv.expiresAt).toLocaleDateString() : '—'}</span>
                         <span style={{ background: inv.status==='active'?'rgba(34,197,94,0.15)':inv.status==='completed'?'rgba(99,102,241,0.15)':'rgba(239,68,68,0.15)', color: inv.status==='active'?'#22c55e':inv.status==='completed'?'#818cf8':'#ef4444', fontSize: '6px', padding: '2px 5px', fontWeight: '600', textTransform: 'uppercase', display: 'inline-block' }}>{inv.status}</span>
