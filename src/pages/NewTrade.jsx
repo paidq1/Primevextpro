@@ -71,7 +71,7 @@ export default function NewTrade() {
       <PageHeader title="New Trade" />
 
       {/* Chart */}
-      <div style={{ height: '450px', width: '100%', flexShrink: 0, position: 'relative' }}>
+      <div style={{ height: '55vh', width: '100%', flexShrink: 0, position: 'relative' }}>
         <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
 
@@ -81,7 +81,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px', overflowX: 'auto' }}>
           {SYMBOLS.map(s => (
             <button key={s.label} onClick={() => setSymbol(s)}
-              style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : '1px solid rgba(255,255,255,0.06)', color: symbol.label === s.label ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '9px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : '1px solid rgba(255,255,255,0.06)', color: symbol.label === s.label ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '9px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap', borderRadius: '20px' }}>
               {s.label}
             </button>
           ))}
@@ -90,11 +90,11 @@ export default function NewTrade() {
         {/* BUY/SELL */}
         <div style={{ display: 'flex', gap: '8px' }}>
           <button onClick={() => setDirection('buy')}
-            style={{ flex: 1, padding: '9px', background: direction === 'buy' ? '#16a34a' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '10px', borderRadius: '8px', background: direction === 'buy' ? '#16a34a' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
             BUY
           </button>
           <button onClick={() => setDirection('sell')}
-            style={{ flex: 1, padding: '9px', background: direction === 'sell' ? '#dc2626' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '10px', borderRadius: '8px', background: direction === 'sell' ? '#dc2626' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
             SELL
           </button>
         </div>
@@ -115,7 +115,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px' }}>
           {[10, 50, 100, 500].map(a => (
             <button key={a} onClick={() => setAmount(String(a))}
-              style={{ flex: 1, padding: '6px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', cursor: 'pointer' }}>
+              style={{ flex: 1, padding: '6px', borderRadius: '6px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', cursor: 'pointer' }}>
               ${a}
             </button>
           ))}
@@ -126,14 +126,14 @@ export default function NewTrade() {
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>Duration</div>
             <select value={duration} onChange={e => setDuration(e.target.value)}
-              style={{ width: '100%', background: '#0d1426', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box' }}>
+              style={{ width: '100%', background: '#0d1426', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
               {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>Leverage</div>
             <select value={leverage} onChange={e => setLeverage(e.target.value)}
-              style={{ width: '100%', background: '#0d1426', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box' }}>
+              style={{ width: '100%', background: '#0d1426', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '8px', outline: 'none', boxSizing: 'border-box', borderRadius: '8px' }}>
               {['1x','2x','5x','10x','20x','50x','100x'].map(l => <option key={l} value={l}>{l}</option>)}
             </select>
           </div>
@@ -143,7 +143,7 @@ export default function NewTrade() {
         {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
         <button onClick={handleTrade} disabled={submitting}
-          style={{ width: '100%', padding: '10px', background: submitting ? '#4b4e9b' : direction === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+          style={{ width: '100%', padding: '12px', borderRadius: '8px', background: submitting ? '#4b4e9b' : direction === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: submitting ? 'not-allowed' : 'pointer' }}>
           {submitting ? 'Placing...' : `Confirm ${direction === 'buy' ? 'Buy' : 'Sell'}`}
         </button>
       </div>
