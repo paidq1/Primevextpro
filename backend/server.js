@@ -13,11 +13,14 @@ dotenv.config();
 const processBotProfits = require('./utils/botCron');
 const processStakeProfits = require('./utils/stakeCron');
 const processTrades = require('./utils/tradeCron');
+const processInvestments = require('./utils/investmentCron');
 
 // Run bot profit cron every 30 minutes
 const BOT_CRON_INTERVAL = 30 * 60 * 1000; // 30 minutes
 setInterval(processBotProfits, BOT_CRON_INTERVAL);
 setInterval(processStakeProfits, BOT_CRON_INTERVAL);
+setInterval(processInvestments, 24 * 60 * 60 * 1000); // Daily
+setTimeout(processInvestments, 10 * 1000);
 // Also run once on startup after 1 minute delay
 setTimeout(processBotProfits, 60 * 1000);
 setTimeout(processStakeProfits, 90 * 1000);
