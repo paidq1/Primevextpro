@@ -81,7 +81,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px', overflowX: 'auto' }}>
           {SYMBOLS.map(s => (
             <button key={s.label} onClick={() => setSymbol(s)}
-              style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : '1px solid rgba(255,255,255,0.06)', color: symbol.label === s.label ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '9px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap', borderRadius: '20px' }}>
+              style={{ background: symbol.label === s.label ? 'rgba(99,102,241,0.2)' : 'transparent', border: symbol.label === s.label ? '1px solid rgba(99,102,241,0.5)' : '1px solid rgba(255,255,255,0.06)', color: symbol.label === s.label ? '#818cf8' : 'rgba(255,255,255,0.4)', fontSize: '9px', fontWeight: '700', padding: '6px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
               {s.label}
             </button>
           ))}
@@ -115,7 +115,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px' }}>
           {[10, 50, 100, 500].map(a => (
             <button key={a} onClick={() => setAmount(String(a))}
-              style={{ flex: 1, padding: '6px', borderRadius: '6px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', cursor: 'pointer' }}>
+              style={{ flex: 1, padding: '6px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', cursor: 'pointer' }}>
               ${a}
             </button>
           ))}
