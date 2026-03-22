@@ -8,6 +8,7 @@ const investmentSchema = new mongoose.Schema({
   duration: { type: String },
   status: { type: String, enum: ['active', 'completed', 'cancelled'], default: 'active' },
   profit: { type: Number, default: 0 },
+  earned: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   expiresAt: { type: Date },
 });

@@ -14,7 +14,7 @@ const processInvestments = async () => {
 
       // Credit daily profit
       await Investment.findByIdAndUpdate(inv._id, {
-        $inc: { earned: dailyProfit }
+        $inc: { earned: dailyProfit, profit: dailyProfit }
       });
 
       await User.findByIdAndUpdate(inv.user, {
