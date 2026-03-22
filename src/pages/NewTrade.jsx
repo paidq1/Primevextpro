@@ -28,6 +28,7 @@ export default function NewTrade() {
   const [submitting, setSubmitting] = useState(false);
   const [msg, setMsg] = useState('');
   const [error, setError] = useState('');
+  const [showError, setShowError] = useState(false);
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -51,9 +52,9 @@ export default function NewTrade() {
   }, [symbol]);
 
   const handleTrade = async () => {
-    if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); return; }
-    if (parseFloat(amount) < 10) { setError('Minimum trade amount is $10'); return; }
-    if (balance !== null && parseFloat(amount) > parseFloat(balance)) { setError('Insufficient balance'); return; }
+    if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); setShowError(true); return; }
+    if (parseFloat(amount) < 10) { setError('Minimum trade amount is $10'); setShowError(true); return; }
+    if (balance !== null && parseFloat(amount) > parseFloat(balance)) { setError('Insufficient balance'); setShowError(true); return; }
     setSubmitting(true); setError(''); setMsg('');
     try {
       await createTrade({ symbol: symbol.label, type: direction, direction, account: 'real', amount: parseFloat(amount), duration, leverage });
@@ -115,7 +116,7 @@ export default function NewTrade() {
         <div style={{ display: 'flex', gap: '6px' }}>
           {[10, 50, 100, 500].map(a => (
             <button key={a} onClick={() => setAmount(String(a))}
-              style={{ flex: 1, padding: '6px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', cursor: 'pointer' }}>
+              style={{ flex: 1, padding: '6px', borderRadius: '6px', background: amount === String(a) ? '#6366f1' : 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', cursor: 'pointer' }}>
               ${a}
             </button>
           ))}
@@ -140,7 +141,6 @@ export default function NewTrade() {
         </div>
 
         {msg && <div style={{ color: '#22c55e', fontSize: '9px' }}>{msg}</div>}
-        {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
         <button onClick={handleTrade} disabled={submitting}
           style={{ width: '100%', padding: '12px', borderRadius: '8px', background: submitting ? '#4b4e9b' : direction === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: submitting ? 'not-allowed' : 'pointer' }}>
@@ -148,6 +148,25 @@ export default function NewTrade() {
         </button>
       </div>
 
+      {/* Error Popup */}
+      {showError && (
+        <>
+          <div onClick={() => setShowError(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#ef4444' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Trade Error</div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>{error}</div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setShowError(false)} style={{ flex: 1, padding: '8px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              {error === 'Insufficient balance' && (
+                <button onClick={() => { setShowError(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Deposit Now</button>
+              )}
+            </div>
+          </div>
+        </>
+      )}
       <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }`}</style>
     </div>
   );
