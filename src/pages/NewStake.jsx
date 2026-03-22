@@ -166,15 +166,15 @@ export default function NewStake() {
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                     <div>
                       <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Daily Profit</div>
-                      <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800' }}>+${((Number(amount) * parseFloat(selected.roi) / 100) / 30).toFixed(2)}</div>
+                      <div style={{ color: '#22c55e', fontSize: '13px', fontWeight: '800' }}>+${((Number(amount) * parseFloat(selected.roi) / 100) / duration).toFixed(2)}</div>
                     </div>
                     <div>
                       <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Total Profit ({duration}d)</div>
-                      <div style={{ color: '#f59e0b', fontSize: '13px', fontWeight: '800' }}>+${((Number(amount) * parseFloat(selected.roi) / 100) / 30 * duration).toFixed(2)}</div>
+                      <div style={{ color: '#f59e0b', fontSize: '13px', fontWeight: '800' }}>+${(Number(amount) * parseFloat(selected.roi) / 100).toFixed(2)}</div>
                     </div>
                     <div>
                       <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Total Return</div>
-                      <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>${(Number(amount) + (Number(amount) * parseFloat(selected.roi) / 100) / 30 * duration).toFixed(2)}</div>
+                      <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>${(Number(amount) + Number(amount) * parseFloat(selected.roi) / 100).toFixed(2)}</div>
                     </div>
                     <div>
                       <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>ROI Rate</div>
