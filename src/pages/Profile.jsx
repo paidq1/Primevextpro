@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import DashboardSidebar from '../components/DashboardSidebar';
+import PageHeader from '../components/PageHeader';
 import { User, Edit2, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
@@ -261,8 +261,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-
-      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div style={{ padding: '14px' }}>
         {activeTab === 'profile' ? (
