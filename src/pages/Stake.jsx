@@ -149,7 +149,7 @@ export default function Stake() {
         </>
       )}
 
-      <div style={{ padding: '16px' }}>
+      <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
         {/* New Stake Button */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
@@ -157,7 +157,7 @@ export default function Stake() {
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '8px', marginBottom: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '8px', marginBottom: '0' }}>
           {[
             ['Total Staked', formatAmount(totalStaked, user?.currency), '#6366f1'],
             ['Total Earned', formatAmount(totalEarned, user?.currency), '#22c55e'],
