@@ -73,7 +73,7 @@ export default function BotPlans() {
             const totalProfit = (bot.amount * rateNum * bot.days).toFixed(0);
             const canAfford = (user?.balance || 0) >= bot.amount;
             return (
-              <div key={i} style={{ background: '#0d1426', border: '1px solid rgba(99,102,241,0.3)', padding: '14px', position: 'relative' }}>
+              <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '4px' }}>{bot.name}</div>
                 <div style={{ color: bot.color, fontSize: '18px', fontWeight: '900', marginBottom: '10px' }}>${bot.amount.toLocaleString()}</div>
                 {[
