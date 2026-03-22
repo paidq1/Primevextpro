@@ -52,8 +52,8 @@ export default function NewTrade() {
   }, [symbol]);
 
   const handleTrade = async () => {
-    if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); setShowError(true); return; }
-    if (parseFloat(amount) < 10) { setError('Minimum trade amount is $10'); setShowError(true); return; }
+    if (!amount || parseFloat(amount) <= 0) { setError('Enter a valid amount'); return; }
+    if (parseFloat(amount) < 10) { setError('Minimum trade amount is $10'); return; }
     if (balance !== null && parseFloat(amount) > parseFloat(balance)) { setError('Insufficient balance'); setShowError(true); return; }
     setSubmitting(true); setError(''); setMsg('');
     try {
@@ -141,6 +141,7 @@ export default function NewTrade() {
         </div>
 
         {msg && <div style={{ color: '#22c55e', fontSize: '9px' }}>{msg}</div>}
+        {error && !showError && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
         <button onClick={handleTrade} disabled={submitting}
           style={{ width: '100%', padding: '12px', borderRadius: '8px', background: submitting ? '#4b4e9b' : direction === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: submitting ? 'not-allowed' : 'pointer' }}>
