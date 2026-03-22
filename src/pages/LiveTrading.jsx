@@ -173,7 +173,7 @@ export default function LiveTrading() {
               </div>
             ))}
           </div>
-          <button onClick={() => { setShowForm(true); }} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>+ New Trade</button>
+          <button onClick={() => navigate("/dashboard/new-trade")} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>+ New Trade</button>
         </div>
 
         {/* Trades Table */}

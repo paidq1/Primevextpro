@@ -37,6 +37,7 @@ import ReferUsers from "./pages/ReferUsers";
 import NewStake from './pages/NewStake';
 import ManageBots from "./pages/ManageBots";
 import BotPlans from "./pages/BotPlans";
+import NewTrade from "./pages/NewTrade";
 import LiveTrading from "./pages/LiveTrading";
 import WithdrawNew from "./pages/WithdrawNew";
 import WithdrawVerifyCode from "./pages/WithdrawVerifyCode";
@@ -137,6 +138,7 @@ function App() {
         <Route path="/dashboard/kyc" element={<PrivateRoute><KYC /></PrivateRoute>} />
         <Route path="/dashboard/refer-users" element={<PrivateRoute><ReferUsers /></PrivateRoute>} />
         <Route path="/dashboard/manage-bots" element={<PrivateRoute><ManageBots /></PrivateRoute>} />
+        <Route path="/dashboard/new-trade" element={<PrivateRoute><NewTrade /></PrivateRoute>} />
         <Route path="/dashboard/bot-plans" element={<PrivateRoute><BotPlans /></PrivateRoute>} />
         <Route path="/dashboard/live-trading" element={<PrivateRoute><LiveTrading /></PrivateRoute>} />
         <Route path="/dashboard/withdraw/new" element={<PrivateRoute><WithdrawNew /></PrivateRoute>} />
