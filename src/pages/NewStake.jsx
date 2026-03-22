@@ -111,7 +111,6 @@ export default function NewStake() {
                   style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer' }}>
                   {/* Coin icon */}
                   <img src={c.logo} alt={c.symbol} style={{ width: '48px', height: '48px', objectFit: 'contain', flexShrink: 0 }} />
-                  </div>
                   {/* Info */}
                   <div style={{ flex: 1 }}>
                     <div style={{ color: 'white', fontSize: '13px', fontWeight: '700', marginBottom: '2px' }}>{c.name}</div>
