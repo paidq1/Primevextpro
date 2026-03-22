@@ -33,10 +33,11 @@ export default function NewStake() {
   const [duration, setDuration] = useState(30);
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showInsufficient, setShowInsufficient] = useState(false);
 
   const handleStake = async () => {
     if (!amount || isNaN(amount) || Number(amount) < 100) { setError('Minimum stake is $100'); return; }
-    if (Number(amount) > (user?.balance || 0)) { setError('Insufficient balance'); return; }
+    if (Number(amount) > (user?.balance || 0)) { setShowInsufficient(true); return; }
     setError(''); setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
@@ -75,6 +76,25 @@ export default function NewStake() {
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => { setShowSuccess(false); setSelected(null); setAmount(''); }} style={{ flex: 1, padding: '8px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '9px', cursor: 'pointer' }}>New Stake</button>
               <button onClick={() => navigate('/dashboard/stake')} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>View History</button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Insufficient Balance Popup */}
+      {showInsufficient && (
+        <>
+          <div onClick={() => setShowInsufficient(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 150 }}/>
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 151, background: 'white', padding: '28px 20px', width: '260px', textAlign: 'center', borderRadius: '4px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#ef4444' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/><circle cx='12' cy='12' r='10'/></svg>
+            </div>
+            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Insufficient Balance</div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '6px', lineHeight: '1.6' }}>You don't have enough balance to stake <strong>${amount}</strong>.</div>
+            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px' }}>Available: <strong style={{ color: '#22c55e' }}>{formatAmount(user?.balance || 0, user?.currency)}</strong></div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setShowInsufficient(false)} style={{ flex: 1, padding: '8px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={() => { setShowInsufficient(false); navigate('/dashboard/deposit'); }} style={{ flex: 1, padding: '8px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer' }}>Deposit Now</button>
             </div>
           </div>
         </>
