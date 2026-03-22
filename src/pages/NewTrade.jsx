@@ -158,7 +158,7 @@ export default function NewTrade() {
               <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#ef4444' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg>
             </div>
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Trade Error</div>
-            <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.6' }}>{error}</div>
+            <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Hello <strong style={{ color: '#111' }}>{user?.name || user?.email?.split('@')[0] || 'there'}</strong>, your balance is too low to place this trade. Please make a deposit and try again.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setShowError(false)} style={{ flex: 1, padding: '8px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
               {error === 'Insufficient balance' && (
