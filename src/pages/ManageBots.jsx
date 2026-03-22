@@ -76,7 +76,7 @@ export default function ManageBots() {
       {/* Header */}
       <PageHeader title="Trading Bots" />
 
-       <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}
+       {msg && <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}
       {error && <div style={{ background: '#ef4444', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{error}</div>}
 
       <div style={{ padding: '16px' }}>
