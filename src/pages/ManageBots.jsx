@@ -89,7 +89,7 @@ export default function ManageBots() {
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '14px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '20px' }}>
           {[
             ['Active Bots', activeCount, '#22c55e'],
             ['Total Bots', activeBots.length, '#6366f1'],
