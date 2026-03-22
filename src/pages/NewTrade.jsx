@@ -71,7 +71,7 @@ export default function NewTrade() {
       <PageHeader title="New Trade" />
 
       {/* Chart */}
-      <div style={{ height: '350px', width: '100%', flexShrink: 0, position: 'relative' }}>
+      <div style={{ height: '450px', width: '100%', flexShrink: 0, position: 'relative' }}>
         <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
 
@@ -90,11 +90,11 @@ export default function NewTrade() {
         {/* BUY/SELL */}
         <div style={{ display: 'flex', gap: '8px' }}>
           <button onClick={() => setDirection('buy')}
-            style={{ flex: 1, padding: '12px', background: direction === 'buy' ? '#16a34a' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '9px', background: direction === 'buy' ? '#16a34a' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
             BUY
           </button>
           <button onClick={() => setDirection('sell')}
-            style={{ flex: 1, padding: '12px', background: direction === 'sell' ? '#dc2626' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '9px', background: direction === 'sell' ? '#dc2626' : 'rgba(255,255,255,0.06)', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: 'pointer' }}>
             SELL
           </button>
         </div>
@@ -108,7 +108,7 @@ export default function NewTrade() {
         <div>
           <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '8px', marginBottom: '6px' }}>Amount (USD)</div>
           <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min. $10.00'
-            style={{ width: '100%', background: '#0d1426', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: 'white', fontSize: '14px', fontWeight: '700', padding: '10px 12px', outline: 'none', boxSizing: 'border-box' }} />
+            style={{ width: '100%', background: '#0d1426', border: `1px solid ${direction === 'buy' ? 'rgba(34,197,94,0.4)' : 'rgba(239,68,68,0.4)'}`, color: 'white', fontSize: '11px', fontWeight: '700', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
 
         {/* Quick amounts */}
@@ -143,7 +143,7 @@ export default function NewTrade() {
         {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
         <button onClick={handleTrade} disabled={submitting}
-          style={{ width: '100%', padding: '14px', background: submitting ? '#4b4e9b' : direction === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '14px', fontWeight: '800', cursor: submitting ? 'not-allowed' : 'pointer' }}>
+          style={{ width: '100%', padding: '10px', background: submitting ? '#4b4e9b' : direction === 'buy' ? '#16a34a' : '#dc2626', border: 'none', color: 'white', fontSize: '11px', fontWeight: '800', cursor: submitting ? 'not-allowed' : 'pointer' }}>
           {submitting ? 'Placing...' : `Confirm ${direction === 'buy' ? 'Buy' : 'Sell'}`}
         </button>
       </div>
