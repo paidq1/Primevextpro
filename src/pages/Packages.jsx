@@ -181,7 +181,7 @@ export default function Packages() {
                 ['Active', investments.filter(i => i.status==='active').length, '#22c55e'],
                 ['Completed', investments.filter(i => i.status==='completed').length, '#f59e0b'],
               ].map(([l,v,c]) => (
-                <div key={l} style={{ background: '#1a2e4a', padding: '10px', border: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' }}>
+                <div key={l} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', padding: '10px', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', textAlign: 'center', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
                   <div style={{ color: c, fontSize: '11px', fontWeight: '700' }}>{v}</div>
                 </div>
@@ -189,7 +189,7 @@ export default function Packages() {
             </div>
 
             {/* Records Table */}
-            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', marginTop: '14px' }}>
+            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', marginTop: '0' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px' }}>Show</span>
