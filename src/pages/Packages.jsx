@@ -165,12 +165,6 @@ export default function Packages() {
       <PageHeader title="Packages" />
 
       <div style={{ padding: '14px' }}>
-        {/* Balance display */}
-        <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 14px', marginBottom: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px' }}>Available Balance</span>
-          <span style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(userBalance, user?.currency)}</span>
-        </div>
-
 
         {activeTab === 'my' && (
           <div>
