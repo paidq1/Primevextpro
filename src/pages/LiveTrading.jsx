@@ -95,15 +95,7 @@ export default function LiveTrading() {
   return (
     <>
       <div style={{ minHeight: '100vh', background: '#0a0f1e', fontFamily: "'Segoe UI', sans-serif", color: 'white', display: 'flex', flexDirection: 'column', paddingBottom: '52px' }}>
-
-        {/* Top Nav */}
-        <div style={{ background: '#0d1426', borderBottom: '1px solid rgba(99,102,241,0.2)', padding: '0 12px', display: 'flex', alignItems: 'center', height: '44px', gap: '10px', flexShrink: 0 }}>
-          <div style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-            <svg viewBox='0 0 40 40' fill='none' style={{ width: '100%', height: '100%' }}>
-              <path d='M20 2L4 10V22L20 38L36 22V10L20 2Z' fill='#0d1117' stroke='#6366F1' strokeWidth='1.5'/>
-              <path d='M20 14L12 18V23L20 30L28 23V18L20 14Z' fill='#6366F1' stroke='#6366F1' strokeWidth='1'/>
-            </svg>
-          </div>
+      <PageHeader title="Live Trading" />
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', padding: 0 }}>
             <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'><line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='18' x2='21' y2='18'/></svg>
           </button>
@@ -231,7 +223,6 @@ export default function LiveTrading() {
             })()}
           </div>
         </div>
-      </div>
 
       {/* Trade Sheet */}
       {showSheet && (
