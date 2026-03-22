@@ -4,15 +4,24 @@ import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
 
+const BASE = 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/';
 const cryptoPlans = [
-  { name: 'Bitcoin',    symbol: 'BTC',  roi: '28.75%', color: '#f7931a', bg: '#f7931a', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/btc.png' },
-  { name: 'Ethereum',   symbol: 'ETH',  roi: '30%',    color: '#627eea', bg: '#627eea', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/eth.png' },
-  { name: 'Litecoin',   symbol: 'LTC',  roi: '24.75%', color: '#345d9d', bg: '#345d9d', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/ltc.png' },
-  { name: 'BNB',        symbol: 'BNB',  roi: '28%',    color: '#f3ba2f', bg: '#f3ba2f', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/bnb.png' },
-  { name: 'Tether USD', symbol: 'USDT', roi: '24.75%', color: '#26a17b', bg: '#26a17b', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/usdt.png' },
-  { name: 'Solana',     symbol: 'SOL',  roi: '32%',    color: '#9945ff', bg: '#9945ff', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/sol.png' },
-  { name: 'XRP',        symbol: 'XRP',  roi: '22.5%',  color: '#00aae4', bg: '#00aae4', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/xrp.png' },
-  { name: 'Cardano',    symbol: 'ADA',  roi: '20%',    color: '#0033ad', bg: '#0033ad', logo: 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/ada.png' },
+  { name: 'Bitcoin',      symbol: 'BTC',  roi: '28.75%', color: '#f7931a', bg: '#f7931a', logo: BASE+'btc.png' },
+  { name: 'Ethereum',     symbol: 'ETH',  roi: '30%',    color: '#627eea', bg: '#627eea', logo: BASE+'eth.png' },
+  { name: 'Litecoin',     symbol: 'LTC',  roi: '24.75%', color: '#345d9d', bg: '#345d9d', logo: BASE+'ltc.png' },
+  { name: 'BNB',          symbol: 'BNB',  roi: '28%',    color: '#f3ba2f', bg: '#f3ba2f', logo: BASE+'bnb.png' },
+  { name: 'Tether USD',   symbol: 'USDT', roi: '24.75%', color: '#26a17b', bg: '#26a17b', logo: BASE+'usdt.png' },
+  { name: 'Solana',       symbol: 'SOL',  roi: '32%',    color: '#9945ff', bg: '#9945ff', logo: BASE+'sol.png' },
+  { name: 'XRP',          symbol: 'XRP',  roi: '22.5%',  color: '#00aae4', bg: '#00aae4', logo: BASE+'xrp.png' },
+  { name: 'Cardano',      symbol: 'ADA',  roi: '20%',    color: '#0033ad', bg: '#0033ad', logo: BASE+'ada.png' },
+  { name: 'Dogecoin',     symbol: 'DOGE', roi: '18%',    color: '#c2a633', bg: '#c2a633', logo: BASE+'doge.png' },
+  { name: 'Polkadot',     symbol: 'DOT',  roi: '22%',    color: '#e6007a', bg: '#e6007a', logo: BASE+'dot.png' },
+  { name: 'Avalanche',    symbol: 'AVAX', roi: '26%',    color: '#e84142', bg: '#e84142', logo: BASE+'avax.png' },
+  { name: 'Chainlink',    symbol: 'LINK', roi: '21%',    color: '#375bd2', bg: '#375bd2', logo: BASE+'link.png' },
+  { name: 'Polygon',      symbol: 'MATIC',roi: '23.5%',  color: '#8247e5', bg: '#8247e5', logo: BASE+'matic.png' },
+  { name: 'Uniswap',      symbol: 'UNI',  roi: '19.5%',  color: '#ff007a', bg: '#ff007a', logo: BASE+'uni.png' },
+  { name: 'TRON',         symbol: 'TRX',  roi: '17.5%',  color: '#eb0029', bg: '#eb0029', logo: BASE+'trx.png' },
+  { name: 'Shiba Inu',    symbol: 'SHIB', roi: '15%',    color: '#e44d26', bg: '#e44d26', logo: BASE+'shib.png' },
 ];
 
 export default function NewStake() {
