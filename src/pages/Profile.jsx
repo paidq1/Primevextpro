@@ -64,7 +64,6 @@ export default function Profile() {
   const { user, updateUser, logout } = useAuth();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(location.state?.tab || 'profile');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [fileName, setFileName] = useState('No file chosen');
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
