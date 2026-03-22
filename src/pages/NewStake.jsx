@@ -30,6 +30,7 @@ export default function NewStake() {
   const [selected, setSelected] = useState(null);
   const [amount, setAmount] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [duration, setDuration] = useState(30);
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -42,7 +43,7 @@ export default function NewStake() {
       const res = await fetch('https://vertextrades.onrender.com/api/stake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ plan: selected.symbol, amount: Number(amount), apy: selected.roi, duration: '30' })
+        body: JSON.stringify({ plan: selected.symbol, amount: Number(amount), apy: selected.roi, duration: String(duration) })
       }).then(r => r.json());
       if (res.success || res._id || res.stake) {
         setShowSuccess(true);
