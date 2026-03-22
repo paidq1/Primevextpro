@@ -174,17 +174,12 @@ export default function Packages() {
 
         {activeTab === 'my' && (
           <div>
-            {/* Summary Stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '14px' }}>
-              {[
-                ['Total Invested', formatAmount(investments.reduce((s,i) => s + parseFloat(i.amount||0), 0), user?.currency), '#6366f1'],
-                ['Active', investments.filter(i => i.status==='active').length, '#22c55e'],
-                ['Completed', investments.filter(i => i.status==='completed').length, '#f59e0b'],
-              ].map(([l,v,c]) => (
-                <div key={l} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', padding: '10px', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', textAlign: 'center', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '4px' }}>{l}</div>
-                  <div style={{ color: c, fontSize: '11px', fontWeight: '700' }}>{v}</div>
-                </div>
+            {/* Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px', fontWeight: '600' }}>Current Packages</span>
+              <button onClick={() => setActiveTab('available')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Add Plan</button>
+            </div>
+
               ))}
             </div>
 
