@@ -136,6 +136,7 @@ function App() {
         <Route path="/dashboard/kyc" element={<PrivateRoute><KYC /></PrivateRoute>} />
         <Route path="/dashboard/refer-users" element={<PrivateRoute><ReferUsers /></PrivateRoute>} />
         <Route path="/dashboard/manage-bots" element={<PrivateRoute><ManageBots /></PrivateRoute>} />
+        <Route path="/dashboard/bot-plans" element={<PrivateRoute><BotPlans /></PrivateRoute>} />
         <Route path="/dashboard/live-trading" element={<PrivateRoute><LiveTrading /></PrivateRoute>} />
         <Route path="/dashboard/withdraw/new" element={<PrivateRoute><WithdrawNew /></PrivateRoute>} />
         <Route path="/dashboard/withdraw/verify-code" element={<PrivateRoute><WithdrawVerifyCode /></PrivateRoute>} />

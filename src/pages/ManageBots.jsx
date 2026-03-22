@@ -97,7 +97,7 @@ export default function ManageBots() {
               </div>
             ))}
           </div>
-          <button onClick={() => setShowPlans(true)} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>+ Subscribe Bot</button>
+          <button onClick={() => navigate('/dashboard/bot-plans')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>+ Subscribe Bot</button>
         </div>
 
         {/* Bots Table */}
