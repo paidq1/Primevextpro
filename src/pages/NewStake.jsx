@@ -4,24 +4,23 @@ import { useAuth } from '../context/AuthContext';
 import { formatAmount, getCurrencySymbol } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
 
-const BASE = 'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa/128/color/';
 const cryptoPlans = [
-  { name: 'Bitcoin',      symbol: 'BTC',  roi: '28.75%', color: '#f7931a', bg: '#f7931a', logo: BASE+'btc.png' },
-  { name: 'Ethereum',     symbol: 'ETH',  roi: '30%',    color: '#627eea', bg: '#627eea', logo: BASE+'eth.png' },
-  { name: 'Litecoin',     symbol: 'LTC',  roi: '24.75%', color: '#345d9d', bg: '#345d9d', logo: BASE+'ltc.png' },
-  { name: 'BNB',          symbol: 'BNB',  roi: '28%',    color: '#f3ba2f', bg: '#f3ba2f', logo: BASE+'bnb.png' },
-  { name: 'Tether USD',   symbol: 'USDT', roi: '24.75%', color: '#26a17b', bg: '#26a17b', logo: BASE+'usdt.png' },
-  { name: 'Solana',       symbol: 'SOL',  roi: '32%',    color: '#9945ff', bg: '#9945ff', logo: BASE+'sol.png' },
-  { name: 'XRP',          symbol: 'XRP',  roi: '22.5%',  color: '#00aae4', bg: '#00aae4', logo: BASE+'xrp.png' },
-  { name: 'Cardano',      symbol: 'ADA',  roi: '20%',    color: '#0033ad', bg: '#0033ad', logo: BASE+'ada.png' },
-  { name: 'Dogecoin',     symbol: 'DOGE', roi: '18%',    color: '#c2a633', bg: '#c2a633', logo: BASE+'doge.png' },
-  { name: 'Polkadot',     symbol: 'DOT',  roi: '22%',    color: '#e6007a', bg: '#e6007a', logo: BASE+'dot.png' },
-  { name: 'Avalanche',    symbol: 'AVAX', roi: '26%',    color: '#e84142', bg: '#e84142', logo: BASE+'avax.png' },
-  { name: 'Chainlink',    symbol: 'LINK', roi: '21%',    color: '#375bd2', bg: '#375bd2', logo: BASE+'link.png' },
-  { name: 'Polygon',      symbol: 'MATIC',roi: '23.5%',  color: '#8247e5', bg: '#8247e5', logo: BASE+'matic.png' },
-  { name: 'Uniswap',      symbol: 'UNI',  roi: '19.5%',  color: '#ff007a', bg: '#ff007a', logo: BASE+'uni.png' },
-  { name: 'TRON',         symbol: 'TRX',  roi: '17.5%',  color: '#eb0029', bg: '#eb0029', logo: BASE+'trx.png' },
-  { name: 'Shiba Inu',    symbol: 'SHIB', roi: '15%',    color: '#e44d26', bg: '#e44d26', logo: BASE+'shib.png' },
+  { name: 'Bitcoin',    symbol: 'BTC',  roi: '28.75%', color: '#f7931a', bg: '#f7931a', logo: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
+  { name: 'Ethereum',   symbol: 'ETH',  roi: '30%',    color: '#627eea', bg: '#627eea', logo: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' },
+  { name: 'BNB',        symbol: 'BNB',  roi: '28%',    color: '#f3ba2f', bg: '#1a1a2e', logo: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png' },
+  { name: 'Solana',     symbol: 'SOL',  roi: '32%',    color: '#9945ff', bg: '#1a1a2e', logo: 'https://assets.coingecko.com/coins/images/4128/large/solana.png' },
+  { name: 'XRP',        symbol: 'XRP',  roi: '22.5%',  color: '#00aae4', bg: '#00aae4', logo: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png' },
+  { name: 'Cardano',    symbol: 'ADA',  roi: '20%',    color: '#3cc8c8', bg: '#1a1a2e', logo: 'https://assets.coingecko.com/coins/images/975/large/cardano.png' },
+  { name: 'Avalanche',  symbol: 'AVAX', roi: '26%',    color: '#e84142', bg: '#e84142', logo: 'https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png' },
+  { name: 'Polkadot',   symbol: 'DOT',  roi: '22%',    color: '#e6007a', bg: '#e6007a', logo: 'https://assets.coingecko.com/coins/images/12171/large/polkadot.png' },
+  { name: 'Chainlink',  symbol: 'LINK', roi: '21%',    color: '#375bd2', bg: '#375bd2', logo: 'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png' },
+  { name: 'Polygon',    symbol: 'MATIC',roi: '23.5%',  color: '#8247e5', bg: '#8247e5', logo: 'https://assets.coingecko.com/coins/images/4713/large/matic-token-icon.png' },
+  { name: 'Litecoin',   symbol: 'LTC',  roi: '24.75%', color: '#bfbbbb', bg: '#1a1a2e', logo: 'https://assets.coingecko.com/coins/images/2/large/litecoin.png' },
+  { name: 'Tether USD', symbol: 'USDT', roi: '24.75%', color: '#26a17b', bg: '#26a17b', logo: 'https://assets.coingecko.com/coins/images/325/large/Tether.png' },
+  { name: 'Dogecoin',   symbol: 'DOGE', roi: '18%',    color: '#c2a633', bg: '#1a1a2e', logo: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png' },
+  { name: 'Uniswap',    symbol: 'UNI',  roi: '19.5%',  color: '#ff007a', bg: '#ff007a', logo: 'https://assets.coingecko.com/coins/images/12504/large/uni.jpg' },
+  { name: 'TRON',       symbol: 'TRX',  roi: '17.5%',  color: '#eb0029', bg: '#eb0029', logo: 'https://assets.coingecko.com/coins/images/1094/large/tron-logo.png' },
+  { name: 'Shiba Inu',  symbol: 'SHIB', roi: '15%',    color: '#e44d26', bg: '#1a1a2e', logo: 'https://assets.coingecko.com/coins/images/11939/large/shiba.png' },
 ];
 
 export default function NewStake() {
@@ -111,8 +110,8 @@ export default function NewStake() {
                 <div key={i} onClick={() => setSelected(c)}
                   style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer' }}>
                   {/* Coin icon */}
-                  <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: c.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 4px 12px ${c.bg}60` }}>
-                    <img src={c.logo} alt={c.symbol} style={{ width: '26px', height: '26px', objectFit: 'contain' }} />
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
+                    <img src={c.logo} alt={c.symbol} style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '50%' }} />
                   </div>
                   {/* Info */}
                   <div style={{ flex: 1 }}>
@@ -136,8 +135,8 @@ export default function NewStake() {
             </button>
 
             <div style={{ background: '#132035', border: `1px solid ${selected.color}30`, padding: '16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: selected.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 4px 12px ${selected.bg}60` }}>
-                <img src={selected.logo} alt={selected.symbol} style={{ width: '26px', height: '26px', objectFit: 'contain' }} />
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
+                <img src={selected.logo} alt={selected.symbol} style={{ width: '48px', height: '48px', objectFit: 'cover' }} />
               </div>
               <div>
                 <div style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>{selected.name}</div>
