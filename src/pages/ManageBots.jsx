@@ -81,7 +81,7 @@ export default function ManageBots() {
       {msg && <div style={{ background: '#22c55e', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{msg}</div>}
       {error && <div style={{ background: '#ef4444', color: 'white', padding: '8px 16px', fontSize: '9px', fontWeight: '600' }}>{error}</div>}
 
-      <div style={{ padding: '16px' }}>
+      <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
         {/* Subscribe Button */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
@@ -89,7 +89,7 @@ export default function ManageBots() {
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '0' }}>
           {[
             ['Active Bots', activeCount, '#22c55e'],
             ['Total Bots', activeBots.length, '#6366f1'],
