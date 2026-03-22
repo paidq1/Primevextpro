@@ -69,8 +69,8 @@ export default function BotPlans() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
           {bots.map((bot, i) => {
             const rateNum = parseFloat(bot.dailyRate) / 100;
-            const dailyProfit = (bot.amount * rateNum).toFixed(0);
-            const totalProfit = (bot.amount * rateNum * bot.days).toFixed(0);
+            const dailyProfit = (bot.amount * rateNum).toLocaleString();
+            const totalProfit = (bot.amount * rateNum * bot.days).toLocaleString();
             const canAfford = (user?.balance || 0) >= bot.amount;
             return (
               <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
