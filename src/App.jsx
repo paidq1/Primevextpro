@@ -36,6 +36,7 @@ import KYC from "./pages/KYC";
 import ReferUsers from "./pages/ReferUsers";
 import NewStake from './pages/NewStake';
 import ManageBots from "./pages/ManageBots";
+import BotPlans from "./pages/BotPlans";
 import LiveTrading from "./pages/LiveTrading";
 import WithdrawNew from "./pages/WithdrawNew";
 import WithdrawVerifyCode from "./pages/WithdrawVerifyCode";
