@@ -180,8 +180,6 @@ export default function Packages() {
               <button onClick={() => setActiveTab('available')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ Add Plan</button>
             </div>
 
-              ))}
-            </div>
 
             {/* Records Table */}
             <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', marginTop: '0' }}>
