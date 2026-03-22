@@ -208,8 +208,8 @@ export default function KYC() {
             <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
               <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#f59e0b' strokeWidth='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>
             </div>
-            <div style={{ color: '#111', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Submitted!</div>
-            <div style={{ color: '#555', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Your KYC documents have been submitted. Verification takes 24-48 hours.</div>
+            <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>KYC Submitted!</div>
+            <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your KYC documents have been submitted successfully. Verification takes 24-48 hours.</div>
             <button onClick={() => setShowSuccess(false)} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '3px' }}>Okay</button>
           </div>
         </>
