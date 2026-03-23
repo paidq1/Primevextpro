@@ -183,10 +183,6 @@ export default function Deposit() {
       <div style={{ padding: '16px' }}>
         {/* Balance + New Deposit */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '8px 14px' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px' }}>Available Balance</div>
-            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(user?.balance || 0, user?.currency)}</div>
-          </div>
           <button onClick={() => navigate('/dashboard/deposit-funds')} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Deposit</button>
         </div>
 
