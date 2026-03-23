@@ -74,19 +74,8 @@ export default function DepositFunds() {
 
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
-          {/* QR Code */}
-          <div style={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
-            <img src={qrUrl} alt="QR Code" style={{ width: '220px', height: '220px', background: 'white', padding: '8px' }} />
-            <div style={{ width: '100%' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>Address</span>
-                <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', wordBreak: 'break-all', maxWidth: '200px', textAlign: 'right' }}>{address}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>Network</span>
-                <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>{network}</span>
-              </div>
-            </div>
+                    {/* QR Image */}
+          <img src="/qr-usdt.jpg" alt="USDT QR Code" style={{ width: '100%', display: 'block' }} />
             <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px', textAlign: 'center' }}>*Do not deposit assets other than USDT.</div>
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
           </div>
