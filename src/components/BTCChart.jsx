@@ -22,8 +22,7 @@ export default function BTCChart() {
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: symbol,
-      interval: 'W',
-            range: '6M',
+      interval: 'D',
       timezone: 'Etc/UTC',
       theme: 'dark',
       style: '1',
@@ -49,7 +48,7 @@ export default function BTCChart() {
           </button>
         ))}
       </div>
-      <div ref={containerRef} style={{ height: '500px', width: '100%' }}>
+      <div ref={containerRef} style={{ height: '350px', width: '100%' }}>
         <div className="tradingview-widget-container__widget" style={{ height: '100%', width: '100%' }} />
       </div>
     </div>
