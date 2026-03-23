@@ -2,41 +2,18 @@ import { useState } from 'react';
 import { createDeposit } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
-import { useAuth } from '../context/AuthContext';
 
 export default function DepositFunds() {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const [amount, setAmount] = useState('100.00');
-  const [coin, setCoin] = useState('USDT');
-  const [copied, setCopied] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState('');
   const [fileName, setFileName] = useState('No file chosen');
   const [fileData, setFileData] = useState(null);
 
-  const coinData = {
-    USDT: { address: 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS', network: 'TRC20 (Tron)', qr: 'USDT' },
-    ETH:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'Ethereum (ERC20)', qr: 'ETH' },
-    USDC: { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (BSC)', qr: 'USDC' },
-    BNB:  { address: '0xc6b676d4595687ac100dcb3f350fb6845df2daa8', network: 'BEP20 (BSC)', qr: 'BNB' },
-    SOL:  { address: 'EZT8kz4psrz7rTkbs8kN8ARbzQfkhzmutRRBefJLCiAN', network: 'Solana (SOL)', qr: 'SOL' },
-    BTC:  { address: '1B587SJUL5RSNjr41iU2e8eGencRRjUU8d', network: 'Bitcoin (BTC)', qr: 'BTC' },
-  };
-
-  const coins = ['USDT'];
-  const walletAddress = coinData[coin]?.address;
-  const walletNetwork = coinData[coin]?.network;
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${walletAddress}`;
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(walletAddress).catch(() => {
-      const el = document.createElement('textarea');
-      el.value = walletAddress;
-      document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
-    });
-    setCopied(true); setTimeout(() => setCopied(false), 2000);
-  };
+  const address = 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS';
+  const network = 'TRC20 (Tron)';
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${address}&bgcolor=ffffff`;
 
   const handleSubmit = async () => {
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
@@ -58,75 +35,66 @@ export default function DepositFunds() {
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Deposit Funds" />
 
-      <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Deposit Funds:</div>
+      <div style={{ padding: '16px' }}>
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          
+          <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Deposit Funds:</div>
 
-        {/* Payment Method */}
-        <div>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Method</div>
-          <select style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
-            <option>Crypto</option>
-          </select>
-        </div>
-
-        {/* Amount */}
-        <div>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Amount to deposit</div>
-          <input value={amount} onChange={e => setAmount(e.target.value)}
-            style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
-        </div>
-
-        {/* Payment Proof */}
-        <div>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Proof</div>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
-            <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', fontSize: '9px', color: 'white' }}>Choose File</span>
-            <span style={{ color: fileData ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '9px' }}>{fileName}</span>
-            <input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]) { setFileName(e.target.files[0].name); setFileData(e.target.files[0]); } }} />
-          </label>
-        </div>
-
-        {/* Coin Address */}
-        <div>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>{coin} Address:</div>
-          <div style={{ color: '#6366f1', fontSize: '9px', wordBreak: 'break-all', marginBottom: '10px' }}>{walletAddress}</div>
-        </div>
-
-        {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
-
-        {/* QR Section */}
-        <div style={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '16px' }}>
-          <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginBottom: '8px', textAlign: 'center' }}>Select Coin:</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', marginBottom: '14px' }}>
-            {coins.map(c => (
-              <button key={c} onClick={() => setCoin(c)} style={{ padding: '5px 14px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: coin === c ? 'none' : '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', fontWeight: coin === c ? '700' : '400', cursor: 'pointer' }}>{c}</button>
-            ))}
+          {/* Payment Method */}
+          <div>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Method</div>
+            <select style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
+              <option>Select Payment Method</option>
+              <option selected>Crypto</option>
+            </select>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
-            <img src={qrUrl} alt="QR Code" style={{ width: '200px', height: '200px' }} />
+          {/* Amount */}
+          <div>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Amount to deposit</div>
+            <input value={amount} onChange={e => setAmount(e.target.value)}
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>Address</span>
-            <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', wordBreak: 'break-all', maxWidth: '200px', textAlign: 'right' }}>{walletAddress}</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>Network</span>
-            <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>{walletNetwork}</span>
+          {/* Payment Proof */}
+          <div>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Proof</div>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
+              <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', fontSize: '9px', color: 'white', whiteSpace: 'nowrap' }}>Choose File</span>
+              <span style={{ color: fileData ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '9px' }}>{fileName}</span>
+              <input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]) { setFileName(e.target.files[0].name); setFileData(e.target.files[0]); } }} />
+            </label>
           </div>
 
-          <button onClick={handleCopy} style={{ width: '100%', marginTop: '12px', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', cursor: 'pointer' }}>
-            {copied ? '✓ Copied!' : 'Copy Address'}
+          {/* Address */}
+          <div>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '4px' }}>USDT Address:</div>
+            <div style={{ color: '#6366f1', fontSize: '9px', wordBreak: 'break-all', fontWeight: '600' }}>{address}</div>
+          </div>
+
+          {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
+
+          {/* QR Code */}
+          <div style={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
+            <img src={qrUrl} alt="QR Code" style={{ width: '220px', height: '220px', background: 'white', padding: '8px' }} />
+            <div style={{ width: '100%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>Address</span>
+                <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px', wordBreak: 'break-all', maxWidth: '200px', textAlign: 'right' }}>{address}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>Network</span>
+                <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>{network}</span>
+              </div>
+            </div>
+            <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px', textAlign: 'center' }}>*Do not deposit assets other than USDT.</div>
+            <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
+          </div>
+
+          <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
+            Submit Payment
           </button>
-
-          <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '7px', textAlign: 'center', marginTop: '10px' }}>*Do not deposit assets other than {coin}.</div>
-          <div style={{ color: '#6366f1', fontSize: '8px', textAlign: 'center', marginTop: '6px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
         </div>
-
-        <button onClick={handleSubmit} style={{ padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
-          Submit Payment
-        </button>
       </div>
 
       {/* Success Popup */}
@@ -140,7 +108,7 @@ export default function DepositFunds() {
             <div style={{ color: '#111', fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>Deposit Submitted!</div>
             <div style={{ color: '#555', fontSize: '12px', marginBottom: '24px', lineHeight: '1.8' }}>Your deposit has been submitted successfully. It will reflect in your account once confirmed.</div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => { setShowSuccess(false); }} style={{ flex: 1, padding: '10px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>New Deposit</button>
+              <button onClick={() => setShowSuccess(false)} style={{ flex: 1, padding: '10px', background: 'rgba(0,0,0,0.08)', border: 'none', color: '#333', fontSize: '10px', cursor: 'pointer', borderRadius: '4px' }}>New Deposit</button>
               <button onClick={() => navigate('/dashboard/deposit')} style={{ flex: 1, padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer', borderRadius: '4px' }}>View History</button>
             </div>
           </div>
