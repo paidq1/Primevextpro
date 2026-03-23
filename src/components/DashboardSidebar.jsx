@@ -55,7 +55,7 @@ const sidebarSections = [
         { label: 'My Packages', route: '/dashboard/packages?tab=my' },
       ]},
       { icon: <ArrowDownCircle size={13}/>, label: 'Withdraw / Deposit', route: null, submenu: [
-        { label: 'Deposit', route: '/dashboard/withdraw-deposit' },
+        { label: 'Deposit', route: '/dashboard/deposit' },
         { label: 'Withdraw', route: '/dashboard/withdraw' },
       ]},
       { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
