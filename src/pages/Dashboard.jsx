@@ -65,7 +65,7 @@ function TrendyStocks() {
   }, [activeStock, period]);
 
   return (
-    <div style={{ background: '#000', borderRadius: '16px', padding: '16px', marginBottom: '16px', margin: '0 4px 16px' }}>
+    <div style={{ background: '#132035', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '16px' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
@@ -93,7 +93,7 @@ function TrendyStocks() {
       </div>
 
       {/* Chart */}
-      <div style={{ height: '380px', position: 'relative', margin: '0 4px' }}>
+      <div style={{ height: '350px', position: 'relative' }}>
         <div ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
     </div>
