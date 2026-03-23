@@ -35,7 +35,7 @@ function TrendyStocks() {
   ];
 
   const periods = ['1D', '1M', '3M', '1Y', '5Y', 'All'];
-  const periodMap = { '1D': '1', '1M': 'M', '3M': '3M', '1Y': '12M', '5Y': '60M', 'All': 'ALL' };
+  const periodMap = { '1D': 'D', '1M': '1M', '3M': '3M', '1Y': '12M', '5Y': '60M', 'All': 'ALL' };
 
   const activeSymbol = stocks.find(s => s.symbol.includes(activeStock))?.symbol || stocks[0].symbol;
 
@@ -48,7 +48,7 @@ function TrendyStocks() {
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: activeSymbol,
-      interval: period === '1D' ? '60' : 'D',
+      interval: period === '1D' ? '60' : period === '1M' ? 'D' : period === '3M' ? 'D' : 'W',
       timezone: 'Etc/UTC',
       theme: 'dark',
       style: '3',
