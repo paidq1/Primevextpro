@@ -7,6 +7,15 @@ export default function DepositFunds() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('100.00');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(address).catch(() => {
+      const el = document.createElement('textarea');
+      el.value = address;
+      document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+    });
+    setCopied(true); setTimeout(() => setCopied(false), 2000);
+  };
   const [error, setError] = useState('');
   const [fileName, setFileName] = useState('No file chosen');
   const [fileData, setFileData] = useState(null);
