@@ -462,6 +462,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+      <TrendyStocks />
       <CryptoNews />
       </div>
     </div>
