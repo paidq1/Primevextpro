@@ -48,7 +48,7 @@ function TrendyStocks() {
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: activeSymbol,
-      interval: period === '1D' ? '60' : period === '1M' ? 'D' : period === '3M' ? 'D' : 'W',
+      interval: period === '1D' ? '30' : period === '1M' ? 'D' : 'W',
       timezone: 'Etc/UTC',
       theme: 'dark',
       style: '3',
@@ -60,6 +60,7 @@ function TrendyStocks() {
       save_image: false,
       allow_symbol_change: false,
       price_scale_mode: 1,
+      range: period === '1D' ? '1D' : period === '1M' ? '1M' : period === '3M' ? '3M' : period === '1Y' ? '12M' : '60M',
       range: periodMap[period],
     });
     chartRef.current.appendChild(script);
