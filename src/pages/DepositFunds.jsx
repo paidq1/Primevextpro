@@ -71,7 +71,7 @@ export default function DepositFunds() {
           <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Deposit Funds:</span>
         </div>
 
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {/* Left Form */}
           <div style={{ flex: 1 }}>
             <div style={{ marginBottom: '12px' }}>
@@ -124,7 +124,7 @@ export default function DepositFunds() {
                 </div>
 
         {depositMethod === 'crypto' ? (
-          <div style={{ width: '180px', flexShrink: 0, background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '14px', textAlign: 'center' }}>
+          <div style={{ width: '100%', background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', padding: '14px', textAlign: 'center', marginTop: '16px' }}>
             <div style={{ marginBottom: '10px' }}>
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '6px' }}>Select Coin:</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
