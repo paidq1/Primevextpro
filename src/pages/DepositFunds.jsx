@@ -76,7 +76,6 @@ export default function DepositFunds() {
 
                     {/* QR Image */}
           <img src="/qr-usdt.jpg" alt="USDT QR Code" style={{ width: '100%', display: 'block' }} />
-            <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '8px', textAlign: 'center' }}>*Do not deposit assets other than USDT.</div>
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
           </div>
 
