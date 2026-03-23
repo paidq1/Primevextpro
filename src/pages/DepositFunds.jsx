@@ -112,7 +112,7 @@ export default function DepositFunds() {
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
           </div>
 
-          <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
+          <button onClick={handleSubmit} style={{ width: 'auto', padding: '12px 40px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', display: 'block', margin: '0 auto' }}>
             Submit Payment
           </button>
         </div>
