@@ -72,7 +72,7 @@ export default function NewTrade() {
       <PageHeader title="New Trade" />
 
       {/* Chart */}
-      <div style={{ height: '55vh', width: '100%', flexShrink: 0, position: 'relative' }}>
+      <div style={{ height: '65vh', width: '100%', flexShrink: 0, position: 'relative' }}>
         <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
 
