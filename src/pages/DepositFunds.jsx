@@ -102,7 +102,6 @@ export default function DepositFunds() {
               {address}
             </div>
           </div>}
-          {method === 'crypto' && <div style={{display:'none'}}></div>
 
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
