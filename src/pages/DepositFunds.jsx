@@ -75,9 +75,9 @@ export default function DepositFunds() {
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
                     {/* QR Card */}
-          <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', boxShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+          <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', boxShadow: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
             <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', textAlign: 'center' }}>Deposit USDT to Bitget</div>
-            <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '220px', height: '220px', borderRadius: '16px', objectFit: 'contain' }} />
+            <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '180px', height: '180px', borderRadius: '12px', objectFit: 'contain' }} />
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Address</span>
