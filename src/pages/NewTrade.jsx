@@ -46,6 +46,7 @@ export default function NewTrade() {
     script.innerHTML = JSON.stringify({
       autosize: true, symbol: symbol.tv, interval: '240', timezone: 'Etc/UTC',
       theme: 'dark', style: '1', locale: 'en', backgroundColor: '#0a0f1e',
+      hide_top_toolbar: false, hide_side_toolbar: false, save_image: false, range: '3D',
       hide_top_toolbar: false, hide_side_toolbar: false, save_image: false,
     });
     chartRef.current.appendChild(script);
