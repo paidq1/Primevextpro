@@ -93,12 +93,9 @@ export default function DepositFunds() {
               </div>
               <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
-              <svg width='20' height='20' viewBox='0 0 40 40' fill='none'>
-                <path d='M8 20 L20 8 L32 20 L20 32 Z' fill='#00f0ff' opacity='0.9'/>
-                <path d='M14 20 L20 14 L26 20 L20 26 Z' fill='white'/>
-              </svg>
-              <span style={{ color: 'white', fontSize: '15px', fontWeight: '800', letterSpacing: '0.5px' }}>Bitget</span>
+            <img src="https://cdn.bitget.com/bitget-web/assets/logo/bitget-logo-white.png" alt="Bitget" style={{ height: '24px', objectFit: 'contain' }} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
+            <div style={{ display: 'none', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'white', fontSize: '15px', fontWeight: '800' }}>⟠ Bitget</span>
             </div>
           </div>
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
