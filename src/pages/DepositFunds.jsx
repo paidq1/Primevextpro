@@ -74,9 +74,29 @@ export default function DepositFunds() {
 
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
-                    {/* QR Image */}
-          <div style={{ background: '#000', paddingTop: '8px', paddingBottom: '8px', overflow: 'hidden', borderRadius: '12px' }}>
-            <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '100%', display: 'block', transform: 'scale(1.06)', transformOrigin: 'center center' }} />
+                    {/* QR Card */}
+          <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', boxShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+            <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', textAlign: 'center' }}>Deposit USDT to Bitget</div>
+            <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '240px', height: '240px', borderRadius: '16px', objectFit: 'cover' }} />
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Address</span>
+                <span style={{ color: 'white', fontSize: '13px', fontWeight: '600', textAlign: 'right', maxWidth: '200px', wordBreak: 'break-all' }}>TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Network</span>
+                <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>TRC20 (Tron)</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Minimum deposit amount</span>
+                <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>0.01</span>
+              </div>
+              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
+              <svg width='18' height='18' viewBox='0 0 24 24' fill='white'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg>
+              <span style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Bitget</span>
+            </div>
           </div>
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
           </div>
