@@ -94,8 +94,7 @@ export default function DepositFunds() {
               <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
-              <svg width='18' height='18' viewBox='0 0 24 24' fill='white'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg>
-              <span style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Bitget</span>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Bitget_logo.svg/512px-Bitget_logo.svg.png" alt="Bitget" style={{ height: '20px', objectFit: 'contain' }} />
             </div>
           </div>
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
