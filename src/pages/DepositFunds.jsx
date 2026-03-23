@@ -45,7 +45,7 @@ export default function DepositFunds() {
       <PageHeader title="Deposit Funds" />
 
       <div style={{ padding: '16px' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           
           <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Deposit Funds:</div>
 
