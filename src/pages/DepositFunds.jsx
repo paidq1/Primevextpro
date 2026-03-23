@@ -79,7 +79,7 @@ export default function DepositFunds() {
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '4px' }}>USDT Address:</div>
             <div onClick={handleCopy} style={{ color: '#6366f1', fontSize: '13px', wordBreak: 'break-all', fontWeight: '700', lineHeight: '1.5', cursor: 'pointer' }}>
-              {address} {copied ? <span style={{ color: '#22c55e', fontSize: '10px' }}>✓ Copied!</span> : <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '10px' }}>tap to copy</span>}
+              {address} {copied && <span style={{ color: '#22c55e', fontSize: '10px' }}>✓ Copied!</span>}
             </div>
           </div>
 
