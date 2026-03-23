@@ -51,7 +51,7 @@ function TrendyStocks() {
       interval: period === '1D' ? '60' : 'D',
       timezone: 'Etc/UTC',
       theme: 'dark',
-      style: '3',
+      style: '2',
       locale: 'en',
       backgroundColor: '#132035',
       hide_top_toolbar: true,
@@ -59,6 +59,7 @@ function TrendyStocks() {
       hide_legend: false,
       save_image: false,
       allow_symbol_change: false,
+      price_scale_mode: 1,
       range: periodMap[period],
     });
     chartRef.current.appendChild(script);
