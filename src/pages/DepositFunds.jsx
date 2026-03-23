@@ -8,7 +8,7 @@ export default function DepositFunds() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [amount, setAmount] = useState('100.00');
-  const [coin, setCoin] = useState('BTC');
+  const [coin, setCoin] = useState('USDT');
   const [copied, setCopied] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -24,7 +24,7 @@ export default function DepositFunds() {
     BTC:  { address: '1B587SJUL5RSNjr41iU2e8eGencRRjUU8d', network: 'Bitcoin (BTC)', qr: 'BTC' },
   };
 
-  const coins = ['USDT', 'ETH', 'USDC', 'BNB', 'SOL', 'BTC'];
+  const coins = ['USDT'];
   const walletAddress = coinData[coin]?.address;
   const walletNetwork = coinData[coin]?.network;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${walletAddress}`;
@@ -103,7 +103,7 @@ export default function DepositFunds() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
             <img src={qrUrl} alt="QR Code" style={{ width: '200px', height: '200px' }} />
           </div>
 
