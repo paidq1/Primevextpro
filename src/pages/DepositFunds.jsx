@@ -95,7 +95,7 @@ export default function DepositFunds() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <img src='/bitget-logo.png' alt='Bitget' style={{ width: '28px', height: '28px', objectFit: 'contain' }} />
-              <span style={{ color: 'white', fontSize: '16px', fontWeight: '700', letterSpacing: '0.3px' }}>Bitget</span>
+
             </div>
           </div>
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
