@@ -38,14 +38,12 @@ export default function InvestmentRecords() {
   const statusColor = s => s === 'active' ? '#22c55e' : s === 'completed' ? '#6366f1' : s === 'cancelled' ? '#ef4444' : '#f59e0b';
 
   const statCard = (icon, label, value, color) => (
-    <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
-      <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+    <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '10px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {icon}
       </div>
-      <div>
-        <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '3px' }}>{label}</div>
-        <div style={{ color: 'white', fontSize: '10px', fontWeight: '700' }}>{value}</div>
-      </div>
+      <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>{label}</div>
+      <div style={{ color, fontSize: '10px', fontWeight: '700' }}>{value}</div>
     </div>
   );
 

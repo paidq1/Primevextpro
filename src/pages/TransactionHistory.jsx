@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { formatAmount } from '../utils/currency';
 import PageHeader from '../components/PageHeader';
 import { getDeposits, getWithdrawals } from '../services/api';
+import { DollarSign, ArrowUpDown, Clock } from 'lucide-react';
 
 export default function TransactionHistory() {
   const { user } = useAuth();
@@ -70,17 +71,20 @@ export default function TransactionHistory() {
           <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Transaction History</span>
         </div>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
-          <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Total Deposits</div>
-            <div style={{ color: '#22c55e', fontSize: '11px', fontWeight: '700' }}>{formatAmount(totalDeposits, user?.currency)}</div>
+          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '10px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><DollarSign size={14} color="#22c55e"/></div>
+            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Total Deposits</div>
+            <div style={{ color: '#22c55e', fontSize: '10px', fontWeight: '700' }}>{formatAmount(totalDeposits, user?.currency)}</div>
           </div>
-          <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Total Withdrawals</div>
-            <div style={{ color: '#ec4899', fontSize: '11px', fontWeight: '700' }}>{formatAmount(totalWithdrawals, user?.currency)}</div>
+          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '10px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(236,72,153,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ArrowUpDown size={14} color="#ec4899"/></div>
+            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Total Withdrawals</div>
+            <div style={{ color: '#ec4899', fontSize: '10px', fontWeight: '700' }}>{formatAmount(totalWithdrawals, user?.currency)}</div>
           </div>
-          <div style={{ flex: 1, background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', padding: '10px 12px' }}>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px' }}>Pending</div>
-            <div style={{ color: '#f59e0b', fontSize: '11px', fontWeight: '700' }}>{pendingCount}</div>
+          <div style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '10px', flex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(245,158,11,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Clock size={14} color="#f59e0b"/></div>
+            <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px' }}>Pending</div>
+            <div style={{ color: '#f59e0b', fontSize: '10px', fontWeight: '700' }}>{pendingCount}</div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', flexWrap: 'wrap' }}>
