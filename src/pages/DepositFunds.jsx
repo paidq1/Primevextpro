@@ -75,14 +75,9 @@ export default function DepositFunds() {
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
                     {/* QR Image */}
-          <div style={{ 
-            backgroundImage: "url('/qr-usdt.jpg')", 
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            width: '100%',
-            height: '500px',
-            borderRadius: '8px'
-          }} />
+          <div style={{ background: '#000', margin: '0 -20px', overflow: 'hidden' }}>
+            <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '100%', display: 'block' }} />
+          </div>
             <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
           </div>
 
