@@ -22,7 +22,7 @@ export default function BTCChart() {
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol: symbol,
-      interval: 'D',
+      interval: 'W',
       timezone: 'Etc/UTC',
       theme: 'dark',
       style: '1',
