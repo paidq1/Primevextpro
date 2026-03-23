@@ -71,7 +71,7 @@ function TrendyStocks() {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
-        <button onClick={() => window.location.href='/dashboard/deposit'} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>Deposit</button>
+        <button onClick={() => window.location.href='/dashboard/deposit-funds'} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>Deposit</button>
       </div>
 
       {/* Stock Tabs */}
