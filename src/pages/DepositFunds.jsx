@@ -94,11 +94,9 @@ export default function DepositFunds() {
               <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <svg width='24' height='24' viewBox='0 0 100 100' fill='none'>
-                {/* Top-left chevron pointing left */}
-                <path d='M55 10L20 38L55 52L55 42L32 38L55 24Z' fill='white'/>
-                {/* Bottom-right chevron pointing right */}
-                <path d='M45 48L80 62L45 90L45 80L68 62L45 58Z' fill='white'/>
+              <svg width='28' height='28' viewBox='0 0 100 100' fill='none'>
+                <path d='M60 5 L25 28 L60 40 L60 30 L38 28 L60 16 Z' fill='white'/>
+                <path d='M40 60 L75 72 L40 95 L40 85 L62 72 L40 70 Z' fill='white'/>
               </svg>
               <span style={{ color: 'white', fontSize: '16px', fontWeight: '700', letterSpacing: '0.3px' }}>Bitget</span>
             </div>
