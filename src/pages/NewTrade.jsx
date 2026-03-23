@@ -44,7 +44,7 @@ export default function NewTrade() {
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
     script.async = true;
     script.innerHTML = JSON.stringify({
-      autosize: true, symbol: symbol.tv, interval: '15', timezone: 'Etc/UTC',
+      autosize: true, symbol: symbol.tv, interval: '60', timezone: 'Etc/UTC',
       theme: 'dark', style: '1', locale: 'en', backgroundColor: '#0a0f1e',
       hide_top_toolbar: false, hide_side_toolbar: false, save_image: false,
     });
@@ -72,7 +72,7 @@ export default function NewTrade() {
       <PageHeader title="New Trade" />
 
       {/* Chart */}
-      <div style={{ height: '65vh', width: '100%', flexShrink: 0, position: 'relative' }}>
+      <div style={{ height: '75vh', width: '100%', flexShrink: 0, position: 'relative' }}>
         <div className='tradingview-widget-container' ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
 
