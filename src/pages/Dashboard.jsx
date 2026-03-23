@@ -464,7 +464,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      <TrendyStocks />
+      <div style={{ padding: '0 12px' }}><TrendyStocks /></div>
       <CryptoNews />
       </div>
     </div>
