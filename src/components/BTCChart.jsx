@@ -23,6 +23,7 @@ export default function BTCChart() {
       autosize: true,
       symbol: symbol,
       interval: 'W',
+            range: '6M',
       timezone: 'Etc/UTC',
       theme: 'dark',
       style: '1',
