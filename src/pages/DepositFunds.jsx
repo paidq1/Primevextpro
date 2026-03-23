@@ -6,9 +6,16 @@ import PageHeader from '../components/PageHeader';
 export default function DepositFunds() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('100.00');
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [method, setMethod] = useState('crypto');
+  const [copied, setCopied] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const [fileName, setFileName] = useState('No file chosen');
+  const [fileData, setFileData] = useState(null);
+
+  const address = 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS';
+  const network = 'TRC20 (Tron)';
+
   const handleCopy = () => {
     navigator.clipboard.writeText(address).catch(() => {
       const el = document.createElement('textarea');
@@ -17,13 +24,6 @@ export default function DepositFunds() {
     });
     setCopied(true); setTimeout(() => setCopied(false), 2000);
   };
-  const [error, setError] = useState('');
-  const [fileName, setFileName] = useState('No file chosen');
-  const [fileData, setFileData] = useState(null);
-
-  const address = 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS';
-  const network = 'TRC20 (Tron)';
-  const qrUrl = '/qr-usdt.jpg';
 
   const handleSubmit = async () => {
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
@@ -33,7 +33,7 @@ export default function DepositFunds() {
     try {
       const formData = new FormData();
       formData.append('amount', amount);
-      formData.append('method', 'crypto');
+      formData.append('method', method);
       formData.append('proof', fileData);
       const res = await createDeposit(formData);
       if (res.transaction) { setShowSuccess(true); }
@@ -47,15 +47,15 @@ export default function DepositFunds() {
 
       <div style={{ padding: '16px' }}>
         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          
+
           <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Deposit Funds:</div>
 
           {/* Payment Method */}
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Method</div>
-            <select style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
-              <option>Select Payment Method</option>
-              <option selected>Crypto</option>
+            <select value={method} onChange={e => setMethod(e.target.value)} style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
+              <option value='crypto'>Crypto</option>
+              <option value='bank'>Bank Transfer</option>
             </select>
           </div>
 
@@ -76,7 +76,7 @@ export default function DepositFunds() {
             </label>
           </div>
 
-          {/* Bank Details */}
+          {/* Bank Transfer Details */}
           {method === 'bank' && (
             <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '4px' }}>Bank Transfer Details</div>
@@ -95,45 +95,54 @@ export default function DepositFunds() {
             </div>
           )}
 
-          {/* Address */}
-          {method === 'crypto' && <div>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '4px' }}>USDT Address:</div>
-            <div onClick={handleCopy} style={{ color: '#6366f1', fontSize: '13px', wordBreak: 'break-all', fontWeight: '700', lineHeight: '1.5', cursor: 'pointer' }}>
-              {address}
+          {/* Crypto Address */}
+          {method === 'crypto' && (
+            <div>
+              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>USDT Address:</div>
+              <div onClick={handleCopy} style={{ color: '#6366f1', fontSize: '13px', wordBreak: 'break-all', fontWeight: '700', lineHeight: '1.5', cursor: 'pointer' }}>
+                {address} {copied && <span style={{ color: '#22c55e', fontSize: '10px' }}>✓ Copied!</span>}
+              </div>
             </div>
-          </div>}
+          )}
 
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
-                    {method === 'crypto' && <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', boxShadow: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', textAlign: 'center' }}>Deposit USDT to Bitget</div>
-            <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '180px', height: '180px', borderRadius: '12px', objectFit: 'contain' }} />
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Address</span>
-                <span style={{ color: 'white', fontSize: '13px', fontWeight: '600', textAlign: 'right', maxWidth: '200px', wordBreak: 'break-all' }}>TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS</span>
+          {/* Crypto QR Card */}
+          {method === 'crypto' && (
+            <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+              <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', textAlign: 'center' }}>Deposit USDT to Bitget</div>
+              <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '180px', height: '180px', borderRadius: '12px', objectFit: 'contain' }} />
+              <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Address</span>
+                  <span style={{ color: 'white', fontSize: '13px', fontWeight: '600', textAlign: 'right', maxWidth: '200px', wordBreak: 'break-all' }}>{address}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Network</span>
+                  <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>{network}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Minimum deposit amount</span>
+                  <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>0.01</span>
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Network</span>
-                <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>TRC20 (Tron)</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Minimum deposit amount</span>
-                <span style={{ color: 'white', fontSize: '13px', fontWeight: '600' }}>0.01</span>
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>* Do not deposit any assets other than USDT to the address.</div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <img src='/bitget-logo.png' alt='Bitget' style={{ width: '160px', height: '55px', objectFit: 'contain' }} />
-
+              <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
+                Submit Payment
+              </button>
             </div>
-          </div>
-            <div style={{ color: '#6366f1', fontSize: '9px', fontWeight: '700' }}>✦ VertexTrade Pro</div>
-            <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginTop: '8px' }}>
+          )}
+
+          {/* Bank Submit */}
+          {method === 'bank' && (
+            <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}>
               Submit Payment
             </button>
-          </div>}
+          )}
 
+        </div>
+      </div>
 
       {/* Success Popup */}
       {showSuccess && (
