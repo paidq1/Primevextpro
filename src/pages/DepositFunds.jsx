@@ -129,12 +129,12 @@ export default function DepositFunds() {
               <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '6px' }}>Select Coin:</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                 {coins.map(c => (
-                  <button key={c} onClick={() => setCoin(c)} style={{ padding: '4px 10px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: coin === c ? 'none' : '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', fontWeight: coin === c ? '700' : '400', cursor: 'pointer' }}>{c}</button>
+                  <button key={c} onClick={() => setCoin(c)} style={{ padding: '3px 8px', background: coin === c ? '#6366f1' : 'rgba(255,255,255,0.06)', border: coin === c ? 'none' : '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '8px', fontWeight: coin === c ? '700' : '400', cursor: 'pointer' }}>{c}</button>
                 ))}
               </div>
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '7px', marginBottom: '4px', textAlign: 'left' }}>{coin} Address:</div>
-              <div style={{ color: '#6366f1', fontSize: '7px', wordBreak: 'break-all', marginBottom: '6px', textAlign: 'left' }}>{walletAddress}</div>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '4px', textAlign: 'left', fontWeight: '600' }}>{coin} Address:</div>
+              <div style={{ color: '#6366f1', fontSize: '9px', wordBreak: 'break-all', marginBottom: '8px', textAlign: 'left' }}>{walletAddress}</div>
             <button onClick={handleCopy} style={{ display: 'flex', alignItems: 'center', gap: '4px', background: copied ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', marginBottom: '8px', width: '100%', justifyContent: 'center' }}>{copied ? 'Copied!' : 'Copy Address'}</button>
             <div style={{ color: 'white', fontSize: '8px', fontWeight: '700', marginBottom: '8px' }}>Deposit {coin} to VertexTrade Pro</div>
              <img src='/qrcode.jpg' alt='QR' style={{ width: '110px', height: '110px', margin: '0 auto 10px', display: 'block' }} />
