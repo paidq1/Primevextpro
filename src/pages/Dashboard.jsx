@@ -51,7 +51,7 @@ function TrendyStocks() {
       interval: period === '1D' ? '60' : 'D',
       timezone: 'Etc/UTC',
       theme: 'dark',
-      style: '2',
+      style: '3',
       locale: 'en',
       backgroundColor: '#132035',
       hide_top_toolbar: true,
@@ -94,7 +94,7 @@ function TrendyStocks() {
       </div>
 
       {/* Chart */}
-      <div style={{ height: '350px', position: 'relative' }}>
+      <div style={{ height: '250px', position: 'relative' }}>
         <div ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
     </div>
