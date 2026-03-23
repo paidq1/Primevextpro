@@ -69,7 +69,7 @@ export default function DepositFunds() {
           {/* Address */}
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '4px' }}>USDT Address:</div>
-            <div style={{ color: '#6366f1', fontSize: '9px', wordBreak: 'break-all', fontWeight: '600' }}>{address}</div>
+            <div style={{ color: '#6366f1', fontSize: '13px', wordBreak: 'break-all', fontWeight: '700', lineHeight: '1.5' }}>{address}</div>
           </div>
 
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
