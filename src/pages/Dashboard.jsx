@@ -54,9 +54,11 @@ function TrendyStocks() {
       style: '3',
       locale: 'en',
       backgroundColor: '#000000',
-      hide_top_toolbar: true,
+      hide_top_toolbar: false,
       hide_side_toolbar: true,
+      hide_legend: false,
       save_image: false,
+      allow_symbol_change: false,
       range: periodMap[period],
     });
     chartRef.current.appendChild(script);
@@ -91,7 +93,7 @@ function TrendyStocks() {
       </div>
 
       {/* Chart */}
-      <div style={{ height: '300px', position: 'relative' }}>
+      <div style={{ height: '380px', position: 'relative' }}>
         <div ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
       </div>
     </div>
