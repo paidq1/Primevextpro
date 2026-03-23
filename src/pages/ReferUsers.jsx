@@ -61,7 +61,7 @@ export default function ReferUsers() {
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
           {statCard(<Users size={14} color="#6366f1"/>, 'Total Referrals', data.totalReferrals, '#6366f1')}
           {statCard(<DollarSign size={14} color="#22c55e"/>, 'Commission Earned', formatAmount(data.commission, user?.currency), '#22c55e')}
           {statCard(<Gift size={14} color="#f59e0b"/>, 'Pending Rewards', '$' + (data.commission || 0).toFixed(2), '#f59e0b')}
