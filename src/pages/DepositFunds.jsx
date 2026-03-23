@@ -77,7 +77,7 @@ export default function DepositFunds() {
                     {/* QR Card */}
           <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', boxShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
             <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', textAlign: 'center' }}>Deposit USDT to Bitget</div>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS&bgcolor=ffffff&color=000000&margin=10" alt="USDT QR" style={{ width: '240px', height: '240px', borderRadius: '16px' }} />
+            <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '220px', height: '220px', borderRadius: '16px', objectFit: 'contain' }} />
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Address</span>
