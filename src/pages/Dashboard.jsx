@@ -21,6 +21,83 @@ const navItems = [
   { icon: <Settings size={12} />, label: 'KYC', route: '/dashboard/kyc' },
 ];
 
+
+function TrendyStocks() {
+  const [activeStock, setActiveStock] = useState('AAPL');
+  const [period, setPeriod] = useState('1M');
+  const chartRef = useRef(null);
+
+  const stocks = [
+    { label: 'Apple', symbol: 'NASDAQ:AAPL' },
+    { label: 'Google', symbol: 'NASDAQ:GOOGL' },
+    { label: 'Microsoft', symbol: 'NASDAQ:MSFT' },
+    { label: 'RNDRUSDT', symbol: 'BINANCE:RNDRUSDT' },
+  ];
+
+  const periods = ['1D', '1M', '3M', '1Y', '5Y', 'All'];
+  const periodMap = { '1D': '1', '1M': 'M', '3M': '3M', '1Y': '12M', '5Y': '60M', 'All': 'ALL' };
+
+  const activeSymbol = stocks.find(s => s.symbol.includes(activeStock))?.symbol || stocks[0].symbol;
+
+  useEffect(() => {
+    if (!chartRef.current) return;
+    chartRef.current.innerHTML = '';
+    const script = document.createElement('script');
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      autosize: true,
+      symbol: activeSymbol,
+      interval: period === '1D' ? '60' : 'D',
+      timezone: 'Etc/UTC',
+      theme: 'dark',
+      style: '3',
+      locale: 'en',
+      backgroundColor: '#000000',
+      hide_top_toolbar: true,
+      hide_side_toolbar: true,
+      save_image: false,
+      range: periodMap[period],
+    });
+    chartRef.current.appendChild(script);
+  }, [activeStock, period]);
+
+  return (
+    <div style={{ background: '#000', borderRadius: '16px', padding: '16px', marginBottom: '16px' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <div style={{ color: 'white', fontSize: '14px', fontWeight: '700' }}>Trendy Stock Markets</div>
+        <button onClick={() => window.location.href='/dashboard/deposit'} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>Deposit</button>
+      </div>
+
+      {/* Stock Tabs */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', overflowX: 'auto' }}>
+        {stocks.map(s => (
+          <button key={s.symbol} onClick={() => setActiveStock(s.symbol.split(':')[1])}
+            style={{ padding: '6px 14px', borderRadius: '8px', background: activeStock === s.symbol.split(':')[1] ? 'rgba(255,255,255,0.15)' : 'transparent', border: 'none', color: activeStock === s.symbol.split(':')[1] ? 'white' : 'rgba(255,255,255,0.5)', fontSize: '11px', fontWeight: activeStock === s.symbol.split(':')[1] ? '700' : '400', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            {s.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Period Tabs */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+        {periods.map(p => (
+          <button key={p} onClick={() => setPeriod(p)}
+            style={{ padding: '4px 10px', borderRadius: '6px', background: period === p ? 'rgba(255,255,255,0.15)' : 'transparent', border: 'none', color: period === p ? 'white' : 'rgba(255,255,255,0.4)', fontSize: '10px', fontWeight: period === p ? '700' : '400', cursor: 'pointer' }}>
+            {p}
+          </button>
+        ))}
+      </div>
+
+      {/* Chart */}
+      <div style={{ height: '300px', position: 'relative' }}>
+        <div ref={chartRef} style={{ position: 'absolute', inset: 0 }} />
+      </div>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
