@@ -8,6 +8,7 @@ export default function DepositFunds() {
   const [amount, setAmount] = useState('100.00');
   const [showSuccess, setShowSuccess] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [method, setMethod] = useState('crypto');
   const handleCopy = () => {
     navigator.clipboard.writeText(address).catch(() => {
       const el = document.createElement('textarea');
@@ -75,18 +76,37 @@ export default function DepositFunds() {
             </label>
           </div>
 
+          {/* Bank Details */}
+          {method === 'bank' && (
+            <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '4px' }}>Bank Transfer Details</div>
+              {[
+                ['Bank Name', 'VertexTrade Bank'],
+                ['Account Name', 'VertexTrade Pro Ltd'],
+                ['Account Number', '0123456789'],
+                ['Routing Number', '021000021'],
+                ['SWIFT/BIC', 'VTPROUS33'],
+              ].map(([l, v]) => (
+                <div key={l} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px' }}>{l}</span>
+                  <span style={{ color: 'white', fontSize: '9px', fontWeight: '600' }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Address */}
-          <div>
+          {method === 'crypto' && <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '4px' }}>USDT Address:</div>
             <div onClick={handleCopy} style={{ color: '#6366f1', fontSize: '13px', wordBreak: 'break-all', fontWeight: '700', lineHeight: '1.5', cursor: 'pointer' }}>
               {address}
             </div>
-          </div>
+          </div>}
+          {method === 'crypto' && <div style={{display:'none'}}></div>
 
           {error && <div style={{ color: '#ef4444', fontSize: '9px' }}>{error}</div>}
 
-                    {/* QR Card */}
-          <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', boxShadow: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                    {method === 'crypto' && <div style={{ background: '#000', borderRadius: '16px', padding: '24px 20px', boxShadow: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
             <div style={{ color: 'white', fontSize: '16px', fontWeight: '700', textAlign: 'center' }}>Deposit USDT to Bitget</div>
             <img src="/qr-usdt.jpg" alt="USDT QR" style={{ width: '180px', height: '180px', borderRadius: '12px', objectFit: 'contain' }} />
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -113,7 +133,7 @@ export default function DepositFunds() {
             <button onClick={handleSubmit} style={{ width: '100%', padding: '12px', background: '#22c55e', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', marginTop: '8px' }}>
               Submit Payment
             </button>
-          </div>
+          </div>}
 
         </div>
 
