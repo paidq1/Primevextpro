@@ -52,7 +52,7 @@ export default function DepositFunds() {
           {/* Payment Method */}
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Method</div>
-            <select style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
+            <select style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }}>
               <option>Select Payment Method</option>
               <option selected>Crypto</option>
             </select>
@@ -62,13 +62,13 @@ export default function DepositFunds() {
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Amount to deposit</div>
             <input value={amount} onChange={e => setAmount(e.target.value)}
-              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
+              style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '9px', padding: '10px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
 
           {/* Payment Proof */}
           <div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '9px', marginBottom: '6px' }}>Payment Proof</div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.15)', padding: '10px', cursor: 'pointer', width: '100%', boxSizing: 'border-box' }}>
               <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', fontSize: '9px', color: 'white', whiteSpace: 'nowrap' }}>Choose File</span>
               <span style={{ color: fileData ? 'white' : 'rgba(255,255,255,0.3)', fontSize: '9px' }}>{fileName}</span>
               <input type='file' accept='image/*,application/pdf' style={{ display: 'none' }} onChange={e => { if(e.target.files[0]) { setFileName(e.target.files[0].name); setFileData(e.target.files[0]); } }} />
