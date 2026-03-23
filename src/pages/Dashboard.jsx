@@ -53,7 +53,7 @@ function TrendyStocks() {
       theme: 'dark',
       style: '3',
       locale: 'en',
-      backgroundColor: '#000000',
+      backgroundColor: '#132035',
       hide_top_toolbar: true,
       hide_side_toolbar: true,
       hide_legend: false,
