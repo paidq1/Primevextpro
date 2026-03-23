@@ -95,8 +95,8 @@ export default function DepositFunds() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <svg width='28' height='28' viewBox='0 0 100 100' fill='none'>
-                <path d='M60 5 L25 28 L60 40 L60 30 L38 28 L60 16 Z' fill='white'/>
-                <path d='M40 60 L75 72 L40 95 L40 85 L62 72 L40 70 Z' fill='white'/>
+                <path d='M65 8 L22 38 L65 50 L65 62 L38 50 L65 80 L55 80 L10 50 L55 8 Z' fill='white'/>
+                <path d='M45 20 L88 50 L45 92 L45 80 L72 50 L45 38 Z' fill='white'/>
               </svg>
               <span style={{ color: 'white', fontSize: '16px', fontWeight: '700', letterSpacing: '0.3px' }}>Bitget</span>
             </div>
