@@ -134,7 +134,6 @@ export default function DepositFunds() {
             </button>
           </div>}
 
-        </div>
 
       {/* Success Popup */}
       {showSuccess && (
