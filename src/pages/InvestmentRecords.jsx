@@ -62,13 +62,11 @@ export default function InvestmentRecords() {
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-          {statCard(<TrendingUp size={16} color='#6366f1'/>, 'Total Invested', formatAmount(totalInvested, user?.currency), '#6366f1')}
-          {statCard(<DollarSign size={16} color='#22c55e'/>, 'Total Returns', formatAmount(totalReturns, user?.currency), '#22c55e')}
-        </div>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-          {statCard(<Clock size={16} color='#f59e0b'/>, 'Active Investments', String(activeCount), '#f59e0b')}
-          {statCard(<CheckCircle size={16} color='#94a3b8'/>, 'Completed', String(completedCount), '#94a3b8')}
+          {statCard(<TrendingUp size={12} color='#6366f1'/>, 'Total Invested', formatAmount(totalInvested, user?.currency), '#6366f1')}
+          {statCard(<DollarSign size={12} color='#22c55e'/>, 'Total Returns', formatAmount(totalReturns, user?.currency), '#22c55e')}
+          {statCard(<Clock size={12} color='#f59e0b'/>, 'Active', String(activeCount), '#f59e0b')}
+          {statCard(<CheckCircle size={12} color='#94a3b8'/>, 'Completed', String(completedCount), '#94a3b8')}
         </div>
 
         {/* Table */}
