@@ -13,7 +13,7 @@ export default function DepositFunds() {
 
   const address = 'TRLEtqXxtP9VV49nzvEuLhpo8S1UVFwGkS';
   const network = 'TRC20 (Tron)';
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${address}&bgcolor=ffffff`;
+  const qrUrl = '/qr-usdt.jpg';
 
   const handleSubmit = async () => {
     if (!amount || isNaN(amount) || Number(amount) <= 0) { setError('Please enter a valid amount.'); return; }
