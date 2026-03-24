@@ -18,7 +18,7 @@ const upload = multer({ storage });
 // Get all traders (public)
 router.get('/', async (req, res) => {
   try {
-    const traders = await Trader.find().sort({ createdAt: -1 });
+    const traders = await Trader.find().sort({ order: 1, createdAt: 1 });
     res.json(traders);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });

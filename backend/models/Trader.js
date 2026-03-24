@@ -12,5 +12,6 @@ const TraderSchema = new mongoose.Schema({
   winRate: { type: Number },
   img: { type: String },
   verified: { type: Boolean, default: true },
+  order: { type: Number, default: 99 },
 }, { timestamps: true });
 module.exports = mongoose.model('Trader', TraderSchema);
