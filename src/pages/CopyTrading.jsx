@@ -93,8 +93,8 @@ export default function CopyTrading() {
                 </div>
               ))}
             </div>
-            <button onClick={() => { setCopied(prev => new Set([...prev, t.id])); setTimeout(() => setCopied(prev => { const n = new Set(prev); n.delete(t.id); return n; }), 3000); }} style={{ width: '100%', padding: '10px', background: copied.has(t.id) ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
-              {copied.has(t.id) ? '✓ Strategy Copied!' : 'Copy Trader Strategy'}
+            <button onClick={() => { setCopied(prev => new Set([...prev, t.name])); setTimeout(() => setCopied(prev => { const n = new Set(prev); n.delete(t.name); return n; }), 3000); }} style={{ width: '100%', padding: '10px', background: copied.has(t.name) ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
+              {copied.has(t.name) ? '✓ Strategy Copied!' : 'Copy Trader Strategy'}
             </button>
           </div>
         ))}
