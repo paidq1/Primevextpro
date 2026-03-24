@@ -60,9 +60,9 @@ export default function CopyTrading() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ fontSize: '13px', fontWeight: '700' }}>{t.name}</span>
                 {t.verified && (
-                  <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2l2.4 3.2L18 4l.8 3.8 3.8.8-1.2 3.6L24 15l-3.2 2.4L22 21l-3.8-.8-.8 3.8L14.4 22 12 25.2 9.6 22l-3.4 1L5.4 20l-3.8.8L2 17.4 0 15l2.6-2.8L1.4 8.6l3.8-.8L6 4l3.6 1.2z" fill="#3b82f6"/>
-                    <path d="M8 12.5l3 3 5.5-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  <svg width="18" height="18" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2l3.5 4.5 5.5-1.5 1.5 5.5 5.5 1.5-1.5 5.5 4.5 3.5-4.5 3.5 1.5 5.5-5.5 1.5-1.5 5.5-5.5-1.5L20 38l-3.5-4.5-5.5 1.5-1.5-5.5-5.5-1.5 1.5-5.5L1 20l4.5-3.5-1.5-5.5 5.5-1.5 1.5-5.5 5.5 1.5z" fill="#3b82f6"/>
+                    <path d="M13 20.5l5 5 9-10" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
                 )}
               </div>
