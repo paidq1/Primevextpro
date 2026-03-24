@@ -1208,6 +1208,12 @@ export default function AdminPanel() {
                     <div style={{ fontSize: '9px', fontWeight: '700' }}>{t.name}</div>
                     <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>{t.location} · Win: {t.winRate}% · Trades: {t.totalTrades}</div>
                   </div>
+                  <button onClick={async () => {
+                    const fd = new FormData();
+                    fd.append('verified', !t.verified);
+                    await fetch(`${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders/${t._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
+                    setTraders(traders.map(tr => tr._id === t._id ? { ...tr, verified: !tr.verified } : tr));
+                  }} style={{ padding: '4px 10px', background: t.verified ? '#22c55e' : 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{t.verified ? '✓ Verified' : 'Unverified'}</button>
                   <button onClick={() => { setEditTrader(t); setTraderForm({ name: t.name, location: t.location, flag: t.flag, followers: t.followers, risk: t.risk, favorite: t.favorite, totalTrades: t.totalTrades, totalLoss: t.totalLoss, profitShare: t.profitShare, winRate: t.winRate, verified: t.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
                   <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders/${t._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(traders.filter(tr => tr._id !== t._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Delete</button>
                 </div>

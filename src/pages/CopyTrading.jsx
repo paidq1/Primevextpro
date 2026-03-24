@@ -59,7 +59,12 @@ export default function CopyTrading() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ fontSize: '13px', fontWeight: '700' }}>{t.name}</span>
-                {t.verified && <CheckCircle2 size={14} color="#3b82f6" fill="#3b82f6" />}
+                {t.verified && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px', background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.4)', borderRadius: '10px', padding: '1px 5px' }}>
+                    <CheckCircle2 size={9} color="#3b82f6" fill="#3b82f6" />
+                    <span style={{ fontSize: '6px', color: '#3b82f6', fontWeight: '700' }}>VERIFIED</span>
+                  </div>
+                )}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginTop: '3px' }}>
                 <MapPin size={9} color="rgba(255,255,255,0.4)" />
