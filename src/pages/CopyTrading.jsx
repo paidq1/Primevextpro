@@ -1,0 +1,89 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Search, MapPin, Users, FlaskConical, Heart, CheckCircle2 } from 'lucide-react';
+import PageHeader from '../components/PageHeader';
+
+const TRADERS = [
+  { id: 1, name: 'J Bravo', location: 'Valencia, California', flag: '🇺🇸', followers: '1.2k', risk: 8.2, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: 'https://randomuser.me/api/portraits/men/32.jpg', verified: true },
+  { id: 2, name: 'Ross Cameron', location: 'Vermont', flag: '🇺🇸', followers: '0.8k', risk: 6.5, favorite: 'GOOGL', totalTrades: 450, totalLoss: 8, profitShare: 15.2, winRate: 82, img: 'https://randomuser.me/api/portraits/men/44.jpg', verified: true },
+  { id: 3, name: 'Sarah Chen', location: 'Singapore', flag: '🇸🇬', followers: '2.1k', risk: 5.4, favorite: 'BTC', totalTrades: 820, totalLoss: 34, profitShare: 18.0, winRate: 79, img: 'https://randomuser.me/api/portraits/women/68.jpg', verified: true },
+  { id: 4, name: 'Marcus Wolf', location: 'Frankfurt, Germany', flag: '🇩🇪', followers: '1.5k', risk: 7.1, favorite: 'ETH', totalTrades: 610, totalLoss: 21, profitShare: 22.3, winRate: 71, img: 'https://randomuser.me/api/portraits/men/55.jpg', verified: true },
+  { id: 5, name: 'Aiko Tanaka', location: 'Tokyo, Japan', flag: '🇯🇵', followers: '3.4k', risk: 4.8, favorite: 'SOL', totalTrades: 1200, totalLoss: 45, profitShare: 12.5, winRate: 88, img: 'https://randomuser.me/api/portraits/women/33.jpg', verified: true },
+  { id: 6, name: 'Daniel Osei', location: 'Accra, Ghana', flag: '🇬🇭', followers: '0.6k', risk: 9.1, favorite: 'XRP', totalTrades: 180, totalLoss: 28, profitShare: 25.0, winRate: 65, img: 'https://randomuser.me/api/portraits/men/76.jpg', verified: false },
+];
+
+export default function CopyTrading() {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+  const [copied, setCopied] = useState(null);
+
+  const filtered = TRADERS.filter(t =>
+    t.name.toLowerCase().includes(search.toLowerCase()) ||
+    t.location.toLowerCase().includes(search.toLowerCase()) ||
+    t.favorite.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const riskColor = r => r <= 4 ? '#22c55e' : r <= 7 ? '#f59e0b' : '#ef4444';
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
+      <PageHeader title="Copy Trading" />
+      <div style={{ padding: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+          <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
+          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Copy Expert Traders</span>
+        </div>
+        <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)', margin: '0 0 14px' }}>Copy expert traders from all over the world and enhance your investment portfolio.</p>
+        <div style={{ position: 'relative', marginBottom: '16px' }}>
+          <Search size={12} color="rgba(255,255,255,0.3)" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search expert traders" style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '9px 10px 9px 28px', outline: 'none', boxSizing: 'border-box' }} />
+        </div>
+        {filtered.map(t => (
+          <div key={t.id} style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: '12px', right: '12px', fontSize: '20px' }}>{t.flag}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
+              <div style={{ width: '64px', height: '64px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(99,102,241,0.5)', marginBottom: '8px' }}>
+                <img src={t.img} style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'auto' }} onError={e => e.target.src = 'https://ui-avatars.com/api/?name=' + t.name + '&background=6366f1&color=fff'} />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '700' }}>{t.name}</span>
+                {t.verified && <CheckCircle2 size={14} color="#3b82f6" fill="#3b82f6" />}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginTop: '3px' }}>
+                <MapPin size={9} color="rgba(255,255,255,0.4)" />
+                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>{t.location}</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
+                <Users size={9} color="rgba(255,255,255,0.6)" />
+                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>{t.followers}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
+                <FlaskConical size={9} color={riskColor(t.risk)} />
+                <span style={{ fontSize: '8px', color: riskColor(t.risk) }}>{t.risk}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'rgba(255,255,255,0.07)', padding: '4px 8px', borderRadius: '20px' }}>
+                <Heart size={9} color="#ef4444" fill="#ef4444" />
+                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>{t.favorite}</span>
+              </div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', overflow: 'hidden', marginBottom: '14px' }}>
+              {[{ label: 'Total trades', value: t.totalTrades, color: 'white' }, { label: 'Total loss', value: t.totalLoss, color: '#ef4444' }, { label: 'Profit share', value: t.profitShare + '%', color: '#22c55e' }, { label: 'Win rate', value: t.winRate + '%', color: '#22c55e' }].map((s, i) => (
+                <div key={i} style={{ background: '#0e1628', padding: '8px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
+                  <span style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setCopied(t.id)} style={{ width: '100%', padding: '10px', background: copied === t.id ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
+              {copied === t.id ? '✓ Strategy Copied!' : 'Copy Trader Strategy'}
+            </button>
+          </div>
+        ))}
+        {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No traders found</div>}
+        <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '8px' }}>2020-2026 &copy; VertexTrade Pro</div>
+      </div>
+    </div>
+  );
+}

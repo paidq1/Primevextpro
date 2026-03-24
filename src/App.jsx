@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CopyTrading from './pages/CopyTrading';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
 import HeroSection from "./components/HeroSection";
@@ -146,6 +147,7 @@ function App() {
         <Route path="/dashboard/bot-transactions" element={<PrivateRoute><BotTransactionHistory /></PrivateRoute>} />
         <Route path="/dashboard/deposit-funds" element={<PrivateRoute><DepositFunds /></PrivateRoute>} />
         <Route path="/trading-info" element={<TradingInfo />} />
+        <Route path="/dashboard/copy-trading" element={<PrivateRoute><CopyTrading /></PrivateRoute>} />
         <Route path="/staking-info" element={<StakingInfo />} />
         <Route path="/investing-info" element={<InvestingInfo />} />
         <Route path="/terms" element={<Terms />} />
