@@ -4,7 +4,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const Trader = require('../models/Trader');
 const adminAuth = require('../middleware/adminAuth');
-const auth = require('../middleware/auth');
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 });
 
 // Add trader (admin)
-router.post('/', auth, adminAuth, upload.single('img'), async (req, res) => {
+router.post('/', adminAuth, upload.single('img'), async (req, res) => {
   try {
     let imgUrl = '';
     if (req.file) {
@@ -43,7 +43,7 @@ router.post('/', auth, adminAuth, upload.single('img'), async (req, res) => {
 });
 
 // Update trader (admin)
-router.put('/:id', auth, adminAuth, upload.single('img'), async (req, res) => {
+router.put('/:id', adminAuth, upload.single('img'), async (req, res) => {
   try {
     let update = { ...req.body };
     if (req.file) {
@@ -60,7 +60,7 @@ router.put('/:id', auth, adminAuth, upload.single('img'), async (req, res) => {
 });
 
 // Delete trader (admin)
-router.delete('/:id', auth, adminAuth, async (req, res) => {
+router.delete('/:id', adminAuth, async (req, res) => {
   try {
     await Trader.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
