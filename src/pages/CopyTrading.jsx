@@ -4,12 +4,14 @@ import { Search, MapPin, Users, FlaskConical, Heart, CheckCircle2 } from 'lucide
 import PageHeader from '../components/PageHeader';
 
 const TRADERS = [
-  { id: 1, name: 'J Bravo', location: 'Valencia, California', flag: '🇺🇸', followers: '1.2k', risk: 8.2, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: 'https://randomuser.me/api/portraits/men/32.jpg', verified: true },
-  { id: 2, name: 'Ross Cameron', location: 'Vermont', flag: '🇺🇸', followers: '0.8k', risk: 6.5, favorite: 'GOOGL', totalTrades: 450, totalLoss: 8, profitShare: 15.2, winRate: 82, img: 'https://randomuser.me/api/portraits/men/44.jpg', verified: true },
-  { id: 3, name: 'Sarah Chen', location: 'Singapore', flag: '🇸🇬', followers: '2.1k', risk: 5.4, favorite: 'BTC', totalTrades: 820, totalLoss: 34, profitShare: 18.0, winRate: 79, img: 'https://randomuser.me/api/portraits/women/68.jpg', verified: true },
-  { id: 4, name: 'Marcus Wolf', location: 'Frankfurt, Germany', flag: '🇩🇪', followers: '1.5k', risk: 7.1, favorite: 'ETH', totalTrades: 610, totalLoss: 21, profitShare: 22.3, winRate: 71, img: 'https://randomuser.me/api/portraits/men/55.jpg', verified: true },
-  { id: 5, name: 'Aiko Tanaka', location: 'Tokyo, Japan', flag: '🇯🇵', followers: '3.4k', risk: 4.8, favorite: 'SOL', totalTrades: 1200, totalLoss: 45, profitShare: 12.5, winRate: 88, img: 'https://randomuser.me/api/portraits/women/33.jpg', verified: true },
-  { id: 6, name: 'Daniel Osei', location: 'Accra, Ghana', flag: '🇬🇭', followers: '0.6k', risk: 9.1, favorite: 'XRP', totalTrades: 180, totalLoss: 28, profitShare: 25.0, winRate: 65, img: 'https://randomuser.me/api/portraits/men/76.jpg', verified: false },
+  { id: 1, name: 'Ross Cameron', location: 'Vermont, USA', flag: '🇺🇸', followers: '1.2k', risk: 6.5, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: 'https://pbs.twimg.com/profile_images/1455505244947677185/9RzBQSfz_400x400.jpg', verified: true },
+  { id: 2, name: 'Rayner Teo', location: 'Singapore', flag: '🇸🇬', followers: '3.4k', risk: 4.8, favorite: 'SPY', totalTrades: 820, totalLoss: 34, profitShare: 18.0, winRate: 82, img: 'https://pbs.twimg.com/profile_images/1103183080958976000/p62sIBrs_400x400.jpg', verified: true },
+  { id: 3, name: 'Kathy Lien', location: 'New York, USA', flag: '🇺🇸', followers: '2.1k', risk: 5.4, favorite: 'EURUSD', totalTrades: 950, totalLoss: 21, profitShare: 15.2, winRate: 79, img: 'https://pbs.twimg.com/profile_images/840029503371943936/yMYFSXBf_400x400.jpg', verified: true },
+  { id: 4, name: 'Nicola Duke', location: 'United Kingdom', flag: '🇬🇧', followers: '1.6k', risk: 5.2, favorite: 'GBPUSD', totalTrades: 540, totalLoss: 15, profitShare: 19.5, winRate: 81, img: 'https://pbs.twimg.com/profile_images/1355902342899159042/7o8YDcGo_400x400.jpg', verified: true },
+  { id: 5, name: 'Anton Kreil', location: 'London, UK', flag: '🇬🇧', followers: '2.8k', risk: 7.1, favorite: 'ETH', totalTrades: 1200, totalLoss: 45, profitShare: 12.5, winRate: 88, img: 'https://pbs.twimg.com/profile_images/671429009364660224/2bgFqpGc_400x400.jpg', verified: true },
+  { id: 6, name: 'Timothy Sykes', location: 'Miami, USA', flag: '🇺🇸', followers: '4.1k', risk: 9.1, favorite: 'TSLA', totalTrades: 1800, totalLoss: 280, profitShare: 25.0, winRate: 65, img: 'https://pbs.twimg.com/profile_images/1116420827930513408/t0kjA5Wj_400x400.jpg', verified: true },
+  { id: 7, name: 'Nial Fuller', location: 'Australia', flag: '🇦🇺', followers: '1.8k', risk: 5.1, favorite: 'GBPUSD', totalTrades: 610, totalLoss: 18, profitShare: 22.3, winRate: 84, img: 'https://pbs.twimg.com/profile_images/1084765838857977856/hVNAQgqI_400x400.jpg', verified: true },
+  { id: 8, name: 'Anne-Marie Baiynd', location: 'Texas, USA', flag: '🇺🇸', followers: '1.4k', risk: 4.9, favorite: 'SPX', totalTrades: 720, totalLoss: 22, profitShare: 17.8, winRate: 80, img: 'https://pbs.twimg.com/profile_images/1468339762411233282/Zx_da_KO_400x400.jpg', verified: true },
 ];
 
 export default function CopyTrading() {
