@@ -60,10 +60,10 @@ export default function CopyTrading() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ fontSize: '13px', fontWeight: '700' }}>{t.name}</span>
                 {t.verified && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px', background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.4)', borderRadius: '10px', padding: '1px 5px' }}>
-                    <CheckCircle2 size={9} color="#3b82f6" fill="#3b82f6" />
-                    <span style={{ fontSize: '6px', color: '#3b82f6', fontWeight: '700' }}>VERIFIED</span>
-                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="12" fill="#3b82f6"/>
+                    <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
                 )}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginTop: '3px' }}>
