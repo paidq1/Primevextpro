@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, Users, FlaskConical, Heart, CheckCircle2 } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import { getTraders } from '../services/api';
 
-const TRADERS = [
+const TRADERS_DEFAULT = [
   { id: 1, name: 'Ross Cameron', location: 'Vermont, USA', flag: '🇺🇸', followers: '1.2k', risk: 6.5, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: 'https://ui-avatars.com/api/?name=Ross+Cameron&background=6366f1&color=fff&size=128', verified: true },
   { id: 2, name: 'Rayner Teo', location: 'Singapore', flag: '🇸🇬', followers: '3.4k', risk: 4.8, favorite: 'SPY', totalTrades: 820, totalLoss: 34, profitShare: 18.0, winRate: 82, img: 'https://ui-avatars.com/api/?name=Rayner+Teo&background=22c55e&color=fff&size=128', verified: true },
   { id: 3, name: 'Kathy Lien', location: 'New York, USA', flag: '🇺🇸', followers: '2.1k', risk: 5.4, favorite: 'EURUSD', totalTrades: 950, totalLoss: 21, profitShare: 15.2, winRate: 79, img: 'https://ui-avatars.com/api/?name=Kathy+Lien&background=ec4899&color=fff&size=128', verified: true },
@@ -16,10 +17,19 @@ const TRADERS = [
 
 export default function CopyTrading() {
   const navigate = useNavigate();
+  const [traders, setTraders] = useState(TRADERS_DEFAULT);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    getTraders().then(data => {
+      if (Array.isArray(data) && data.length > 0) setTraders(data);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
   const [copied, setCopied] = useState(null);
 
-  const filtered = TRADERS.filter(t =>
+  const filtered = traders.filter(t =>
     t.name.toLowerCase().includes(search.toLowerCase()) ||
     t.location.toLowerCase().includes(search.toLowerCase()) ||
     t.favorite.toLowerCase().includes(search.toLowerCase())

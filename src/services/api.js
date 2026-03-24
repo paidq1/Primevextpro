@@ -72,3 +72,9 @@ export const getReferrals = () => fetch(`${BASE_URL}/referral`, { headers: heade
 // Admin Email
 export const sendUserEmail = (id, data) => fetch(`${BASE_URL}/admin/users/${id}/email`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
 export const sendBulkEmail = (data) => fetch(`${BASE_URL}/admin/email/bulk`, { method: 'POST', headers: headers(), body: JSON.stringify(data) }).then(handleResponse);
+
+// Traders
+export const getTraders = () => fetch(`${BASE_URL}/traders`).then(handleResponse);
+export const addTrader = (data) => fetch(`${BASE_URL}/traders`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: data }).then(handleResponse);
+export const updateTrader = (id, data) => fetch(`${BASE_URL}/traders/${id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: data }).then(handleResponse);
+export const deleteTrader = (id) => fetch(`${BASE_URL}/traders/${id}`, { method: 'DELETE', headers: headers() }).then(handleResponse);
