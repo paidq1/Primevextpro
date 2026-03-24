@@ -61,8 +61,8 @@ export default function CopyTrading() {
                 <span style={{ fontSize: '13px', fontWeight: '700' }}>{t.name}</span>
                 {t.verified && (
                   <svg width="18" height="18" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 3 L55 14 L64 7 L65 19 L76 16 L73 28 L85 29 L78 39 L89 44 L80 52 L89 60 L78 65 L85 75 L73 76 L76 88 L65 85 L64 97 L55 90 L50 101 L45 90 L36 97 L35 85 L24 88 L27 76 L15 75 L22 65 L11 60 L20 52 L11 44 L22 39 L15 29 L27 28 L24 16 L35 19 L36 7 L45 14 Z" fill="#3b82f6"/>
-                    <path d="M33 50l12 12 22-24" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    <path d="M50 2 C53 2 55 8 58 9 C61 10 67 6 70 8 C73 10 71 16 73 19 C75 22 81 23 83 26 C85 29 81 34 82 37 C83 40 89 43 89 46 C89 49 83 51 82 54 C81 57 85 63 83 66 C81 69 75 68 73 71 C71 74 73 80 70 82 C67 84 62 81 59 82 C56 83 53 89 50 89 C47 89 44 83 41 82 C38 81 33 84 30 82 C27 80 29 74 27 71 C25 68 19 69 17 66 C15 63 19 57 18 54 C17 51 11 49 11 46 C11 43 17 40 18 37 C19 34 15 29 17 26 C19 23 25 22 27 19 C29 16 27 10 30 8 C33 6 39 10 42 9 C45 8 47 2 50 2 Z" fill="#3b82f6"/>
+                    <path d="M32 50l13 13 23-26" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
                 )}
               </div>
