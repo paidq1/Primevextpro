@@ -61,8 +61,8 @@ export default function CopyTrading() {
                 <span style={{ fontSize: '13px', fontWeight: '700' }}>{t.name}</span>
                 {t.verified && (
                   <svg width="18" height="18" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 2 C53 2 55 8 58 9 C61 10 67 6 70 8 C73 10 71 16 73 19 C75 22 81 23 83 26 C85 29 81 34 82 37 C83 40 89 43 89 46 C89 49 83 51 82 54 C81 57 85 63 83 66 C81 69 75 68 73 71 C71 74 73 80 70 82 C67 84 62 81 59 82 C56 83 53 89 50 89 C47 89 44 83 41 82 C38 81 33 84 30 82 C27 80 29 74 27 71 C25 68 19 69 17 66 C15 63 19 57 18 54 C17 51 11 49 11 46 C11 43 17 40 18 37 C19 34 15 29 17 26 C19 23 25 22 27 19 C29 16 27 10 30 8 C33 6 39 10 42 9 C45 8 47 2 50 2 Z" fill="#3b82f6"/>
-                    <path d="M32 50l13 13 23-26" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    <path d="M 50.0,3.0 L 57.4,12.7 L 68.0,6.6 L 71.1,18.4 L 83.2,16.8 L 81.6,28.9 L 93.4,32.0 L 87.3,42.6 L 97.0,50.0 L 87.3,57.4 L 93.4,68.0 L 81.6,71.1 L 83.2,83.2 L 71.1,81.6 L 68.0,93.4 L 57.4,87.3 L 50.0,97.0 L 42.6,87.3 L 32.0,93.4 L 28.9,81.6 L 16.8,83.2 L 18.4,71.1 L 6.6,68.0 L 12.7,57.4 L 3.0,50.0 L 12.7,42.6 L 6.6,32.0 L 18.4,28.9 L 16.8,16.8 L 28.9,18.4 L 32.0,6.6 L 42.6,12.7 Z" fill="#3b82f6"/>
+                    <path d="M32 51l12 12 24-26" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
                 )}
               </div>
