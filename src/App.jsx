@@ -3,6 +3,7 @@ import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CopyTrading from './pages/CopyTrading';
+import MyCopyTrades from './pages/MyCopyTrades';
 import CopyTradingSetup from './pages/CopyTradingSetup';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
@@ -149,6 +150,7 @@ function App() {
         <Route path="/dashboard/deposit-funds" element={<PrivateRoute><DepositFunds /></PrivateRoute>} />
         <Route path="/trading-info" element={<TradingInfo />} />
         <Route path="/dashboard/copy-trading" element={<PrivateRoute><CopyTrading /></PrivateRoute>} />
+        <Route path="/dashboard/my-copy-trades" element={<PrivateRoute><MyCopyTrades /></PrivateRoute>} />
         <Route path="/dashboard/copy-trading/setup" element={<PrivateRoute><CopyTradingSetup /></PrivateRoute>} />
         <Route path="/staking-info" element={<StakingInfo />} />
         <Route path="/investing-info" element={<InvestingInfo />} />

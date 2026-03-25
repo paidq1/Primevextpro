@@ -59,7 +59,10 @@ const sidebarSections = [
         { label: 'Withdraw', route: '/dashboard/withdraw' },
       ]},
       { icon: <TrendingUp size={13}/>, label: 'Live Trading', badge: 'New', route: '/dashboard/live-trading' },
-      { icon: <Users size={13}/>, label: 'Copy Trading', badge: 'New', route: '/dashboard/copy-trading' },
+      { icon: <Users size={13}/>, label: 'Copy Trading', badge: 'New', route: null, submenu: [
+        { label: 'Browse Traders', route: '/dashboard/copy-trading' },
+        { label: 'My Copy Trades', route: '/dashboard/my-copy-trades' },
+      ]},
       
       { icon: <Lock size={13}/>, label: 'KYC', route: '/dashboard/kyc' },
       { icon: <Users size={13}/>, label: 'Refer Users', route: '/dashboard/refer-users' },
