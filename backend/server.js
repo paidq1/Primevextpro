@@ -78,6 +78,7 @@ app.use('/api/user', require('./routes/user'));
 app.use('/api/deposit', require('./routes/deposit'));
 app.use('/api/withdraw', require('./routes/withdraw'));
 app.use('/api/trade', require('./routes/trade'));
+app.use('/api/copy-trade', require('./routes/copyTrade'));
 app.use('/api/packages', require('./routes/packages'));
 app.use('/api/kyc', require('./routes/kyc'));
 app.use('/api/stake', require('./routes/stake'));

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { MapPin, Users, FlaskConical, Heart, CheckCircle2, AlertTriangle, TrendingUp, Percent, Shield } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../context/AuthContext';
-import { getDashboard } from '../services/api';
+import { getDashboard, startCopyTrade } from '../services/api';
 import { formatAmountWithCode, getCurrencySymbol } from '../utils/currency';
 
 export default function CopyTradingSetup() {
@@ -37,9 +37,12 @@ export default function CopyTradingSetup() {
     if (Number(amount) > balance) { setError('Insufficient balance. Please deposit funds.'); return; }
     if (!agreed) { setError('Please agree to the terms before proceeding.'); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1500));
-    setLoading(false);
-    setSuccess(true);
+    try {
+      const res = await startCopyTrade({ traderId: trader._id, traderName: trader.name, traderImg: trader.img, amount: parseFloat(amount), profitShare: trader.profitShare });
+      setLoading(false);
+      if (res.success) setSuccess(true);
+      else setError(res.message || 'Something went wrong.');
+    } catch { setLoading(false); setError('Something went wrong. Try again.'); }
   };
 
   if (!trader) return null;
