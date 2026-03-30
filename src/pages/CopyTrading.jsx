@@ -58,9 +58,12 @@ export default function CopyTrading() {
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Copy Trading" />
       <div style={{ padding: '14px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-          <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
-          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Copy Expert Traders</span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
+            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Copy Expert Traders</span>
+          </div>
+          <button onClick={() => navigate('/dashboard/my-copy-trades')} style={{ padding: '5px 10px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#6366f1', fontSize: '8px', fontWeight: '600', cursor: 'pointer', borderRadius: '6px' }}>My Copies</button>
         </div>
         <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)', margin: '0 0 14px' }}>Copy expert traders from all over the world and enhance your investment portfolio.</p>
         <div style={{ position: 'relative', marginBottom: '16px' }}>
