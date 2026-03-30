@@ -1,154 +1,293 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, StopCircle, TrendingUp, Clock, DollarSign } from 'lucide-react';
-import PageHeader from '../components/PageHeader';
-import { getCopyTrades, stopCopyTrade } from '../services/api';
-import { formatAmountWithCode } from '../utils/currency';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
+import { Copy, TrendingUp, TrendingDown, DollarSign, Calendar, Percent, User, X } from 'lucide-react';
 
-export default function MyCopyTrades() {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const [trades, setTrades] = useState([]);
+const MyCopyTrades = () => {
+  const { token } = useAuth();
+  const [copyTrades, setCopyTrades] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [stopping, setStopping] = useState(null);
-  const [confirmStop, setConfirmStop] = useState(null);
+  const [showStopModal, setShowStopModal] = useState(false);
+  const [selectedTrade, setSelectedTrade] = useState(null);
 
   useEffect(() => {
-    getCopyTrades().then(data => {
-      setTrades(Array.isArray(data) ? data : []);
-      setLoading(false);
-    }).catch(() => setLoading(false));
+    fetchCopyTrades();
   }, []);
 
-  const handleStop = async (id) => {
-    setStopping(id);
+  const fetchCopyTrades = async () => {
     try {
-      await stopCopyTrade(id);
-      setTrades(prev => prev.map(t => t._id === id ? { ...t, status: 'stopped' } : t));
-    } catch {}
-    setStopping(null);
-    setConfirmStop(null);
+      const response = await axios.get('/api/copy-trade', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const trades = Array.isArray(response.data) ? response.data : [];
+      setCopyTrades(trades);
+    } catch (error) {
+      console.error('Error fetching copy trades:', error);
+      setCopyTrades([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const active = trades.filter(t => t.status === 'active');
-  const stopped = trades.filter(t => t.status === 'stopped');
+  const handleStopCopy = async () => {
+    if (!selectedTrade) return;
+    
+    try {
+      await axios.put(`/api/copy-trade/${selectedTrade._id}/stop`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success(`Stopped copying ${selectedTrade.traderName}`);
+      setShowStopModal(false);
+      setSelectedTrade(null);
+      fetchCopyTrades();
+    } catch (error) {
+      toast.error('Failed to stop copy trading');
+    }
+  };
+
+  // Calculate total stats
+  const totalInvested = Array.isArray(copyTrades) ? copyTrades.reduce((sum, trade) => sum + (trade.amount || 0), 0) : 0;
+  const totalEarned = Array.isArray(copyTrades) ? copyTrades.reduce((sum, trade) => sum + (trade.totalEarned || 0), 0) : 0;
+  const totalProfitPercent = totalInvested > 0 ? (totalEarned / totalInvested * 100).toFixed(2) : 0;
+  const activeCopies = Array.isArray(copyTrades) ? copyTrades.filter(t => t.status === 'active').length : 0;
+
+  const formatDate = (date) => {
+    if (!date) return 'Never';
+    return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
-      <PageHeader title="My Copy Trades" />
-      <div style={{ padding: '14px' }}>
+    <div className="min-h-screen bg-[#151c27] text-white p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">My Copy Trades</h1>
+          <p className="text-gray-400">Track your copy trading performance and earnings</p>
+        </div>
 
-        {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '16px' }}>
-          {[
-            { label: 'Active Copies', value: active.length, color: '#22c55e', icon: <CheckCircle2 size={14} color="#22c55e" /> },
-            { label: 'Total Invested', value: '$' + trades.filter(t => t.status === 'active').reduce((s, t) => s + t.amount, 0).toFixed(2), color: '#6366f1', icon: <DollarSign size={14} color="#6366f1" /> },
-          ].map((s, i) => (
-            <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                {s.icon}
-                <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
-              </div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: s.color }}>{s.value}</div>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-[#1e2538] rounded-2xl p-6 border border-gray-700/50 hover:border-gray-600 transition-all">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-gray-400 text-sm">Active Copies</p>
+              <Copy className="w-5 h-5 text-blue-400" />
             </div>
-          ))}
-        </div>
-
-        {/* Active Trades */}
-        <div style={{ fontSize: '10px', fontWeight: '700', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <div style={{ width: '4px', height: '14px', background: '#22c55e', borderRadius: '2px' }} />
-          Active Copy Trades
-        </div>
-
-        {loading && <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>Loading...</div>}
-
-        {!loading && active.length === 0 && (
-          <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '30px', textAlign: 'center', marginBottom: '16px' }}>
-            <TrendingUp size={28} color="rgba(255,255,255,0.15)" style={{ marginBottom: '8px' }} />
-            <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)', marginBottom: '12px' }}>No active copy trades</div>
-            <button onClick={() => navigate('/dashboard/copy-trading')} style={{ padding: '8px 16px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px' }}>
-              Browse Traders
-            </button>
+            <p className="text-3xl font-bold">{activeCopies}</p>
           </div>
-        )}
 
-        {active.map(t => (
-          <div key={t._id} style={{ background: '#1a2e4a', border: '1px solid rgba(34,197,94,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(99,102,241,0.5)', flexShrink: 0 }}>
-                <img src={t.traderImg} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.target.src = 'https://ui-avatars.com/api/?name=' + t.traderName + '&background=6366f1&color=fff'} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '11px', fontWeight: '700', marginBottom: '2px' }}>{t.traderName}</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
-                  <span style={{ fontSize: '8px', color: '#22c55e' }}>Active</span>
-                </div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: '#22c55e' }}>${t.amount.toFixed(2)}</div>
-                <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>invested</div>
-              </div>
+          <div className="bg-[#1e2538] rounded-2xl p-6 border border-gray-700/50 hover:border-gray-600 transition-all">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-gray-400 text-sm">Total Invested</p>
+              <DollarSign className="w-5 h-5 text-green-400" />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '10px' }}>
-              <div style={{ background: '#0e1628', borderRadius: '6px', padding: '7px 10px', display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>Profit Share</span>
-                <span style={{ fontSize: '8px', fontWeight: '700', color: '#f59e0b' }}>{t.profitShare}%</span>
-              </div>
-              <div style={{ background: '#0e1628', borderRadius: '6px', padding: '7px 10px', display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '7px', color: 'rgba(255,255,255,0.4)' }}>Started</span>
-                <span style={{ fontSize: '8px', fontWeight: '700', color: 'white' }}>{new Date(t.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-              </div>
+            <p className="text-3xl font-bold">${totalInvested.toFixed(2)}</p>
+          </div>
+
+          <div className="bg-[#1e2538] rounded-2xl p-6 border border-gray-700/50 hover:border-gray-600 transition-all">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-gray-400 text-sm">Total Earned</p>
+              {totalEarned >= 0 ? (
+                <TrendingUp className="w-5 h-5 text-green-400" />
+              ) : (
+                <TrendingDown className="w-5 h-5 text-red-400" />
+              )}
             </div>
-            {confirmStop === t._id ? (
-              <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '8px', padding: '10px', marginBottom: '6px' }}>
-                <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.6)', marginBottom: '8px', textAlign: 'center' }}>Are you sure you want to stop copying {t.traderName}?</div>
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <button onClick={() => setConfirmStop(null)} style={{ flex: 1, padding: '7px', background: 'rgba(255,255,255,0.08)', border: 'none', color: 'white', fontSize: '8px', cursor: 'pointer', borderRadius: '6px' }}>Cancel</button>
-                  <button onClick={() => handleStop(t._id)} disabled={stopping === t._id} style={{ flex: 1, padding: '7px', background: '#ef4444', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
-                    {stopping === t._id ? 'Stopping...' : 'Yes, Stop'}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button onClick={() => setConfirmStop(t._id)} style={{ width: '100%', padding: '8px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                <StopCircle size={12} /> Stop Copying
+            <p className={`text-3xl font-bold ${totalEarned >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              ${totalEarned.toFixed(2)}
+            </p>
+          </div>
+
+          <div className="bg-[#1e2538] rounded-2xl p-6 border border-gray-700/50 hover:border-gray-600 transition-all">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-gray-400 text-sm">Total Return</p>
+              <Percent className="w-5 h-5 text-purple-400" />
+            </div>
+            <p className={`text-3xl font-bold ${totalProfitPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              {totalProfitPercent}%
+            </p>
+          </div>
+        </div>
+
+        {/* Copy Trades List */}
+        <div className="bg-[#1e2538] rounded-2xl border border-gray-700/50 overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-700/50">
+            <h2 className="text-xl font-semibold">Your Copy Trades</h2>
+          </div>
+          
+          {!Array.isArray(copyTrades) || copyTrades.length === 0 ? (
+            <div className="text-center py-16">
+              <Copy className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-400 mb-4">No active copy trades</p>
+              <button
+                onClick={() => window.location.href = '/traders'}
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition"
+              >
+                Browse Traders
               </button>
-            )}
-          </div>
-        ))}
-
-        {/* Stopped Trades */}
-        {stopped.length > 0 && (
-          <>
-            <div style={{ fontSize: '10px', fontWeight: '700', margin: '16px 0 10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <div style={{ width: '4px', height: '14px', background: 'rgba(255,255,255,0.2)', borderRadius: '2px' }} />
-              Stopped
             </div>
-            {stopped.map(t => (
-              <div key={t._id} style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '10px', opacity: 0.6 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(255,255,255,0.1)', flexShrink: 0 }}>
-                    <img src={t.traderImg} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.target.src = 'https://ui-avatars.com/api/?name=' + t.traderName + '&background=6366f1&color=fff'} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '10px', fontWeight: '700', marginBottom: '2px' }}>{t.traderName}</div>
-                    <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.3)' }}>Stopped • ${t.amount.toFixed(2)} invested</div>
-                  </div>
-                  <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.3)' }}>{new Date(t.createdAt).toLocaleDateString()}</div>
-                </div>
-              </div>
-            ))}
-          </>
-        )}
+          ) : (
+            <div className="divide-y divide-gray-700/50">
+              {copyTrades.map((trade) => {
+                const profitPercent = trade.amount > 0 ? ((trade.totalEarned || 0) / trade.amount * 100).toFixed(2) : 0;
+                const isProfit = (trade.totalEarned || 0) >= 0;
+                
+                return (
+                  <div key={trade._id} className="p-6 hover:bg-[#252e44] transition-all">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                      {/* Trader Info */}
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-lg">{trade.traderName?.charAt(0)}</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-lg">{trade.traderName}</h3>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className={`px-2 py-1 text-xs rounded-full ${
+                              trade.status === 'active' 
+                                ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                                : 'bg-gray-500/20 text-gray-400 border border-gray-500/30'
+                            }`}>
+                              {trade.status === 'active' ? 'Active' : 'Stopped'}
+                            </span>
+                            <span className="text-xs text-gray-400 flex items-center gap-1">
+                              <Percent className="w-3 h-3" />
+                              Profit Share: {trade.profitShare || 20}%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
 
-        <button onClick={() => navigate('/dashboard/copy-trading')} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '600', cursor: 'pointer', borderRadius: '10px', marginTop: '8px' }}>
-          + Copy Another Trader
-        </button>
+                      {/* Stats */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Invested</p>
+                          <p className="font-semibold">${(trade.amount || 0).toFixed(2)}</p>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Total Earned</p>
+                          <p className={`font-semibold ${isProfit ? 'text-green-400' : 'text-red-400'}`}>
+                            ${(trade.totalEarned || 0).toFixed(2)}
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Return</p>
+                          <div className="flex items-center gap-1">
+                            {isProfit ? (
+                              <TrendingUp className="w-3 h-3 text-green-400" />
+                            ) : (
+                              <TrendingDown className="w-3 h-3 text-red-400" />
+                            )}
+                            <p className={`font-semibold ${isProfit ? 'text-green-400' : 'text-red-400'}`}>
+                              {profitPercent}%
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Last Profit</p>
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3 text-gray-400" />
+                            <p className="text-sm text-gray-300">
+                              {formatDate(trade.lastProfitAt)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
 
-        <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '8px' }}>2020-2026 © VertexTrade Pro</div>
+                      {/* Action Button */}
+                      {trade.status === 'active' && (
+                        <button
+                          onClick={() => {
+                            setSelectedTrade(trade);
+                            setShowStopModal(true);
+                          }}
+                          className="px-4 py-2 border border-red-500/50 text-red-400 rounded-lg hover:bg-red-500/10 transition font-medium text-sm"
+                        >
+                          Stop Copying
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Progress Bar */}
+                    {(trade.totalEarned || 0) > 0 && trade.amount > 0 && (
+                      <div className="mt-4">
+                        <div className="flex justify-between text-xs text-gray-400 mb-1">
+                          <span>Profit Progress</span>
+                          <span>{profitPercent}% of investment</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div 
+                            className={`h-2 rounded-full transition-all ${isProfit ? 'bg-green-500' : 'bg-red-500'}`}
+                            style={{ width: `${Math.min(Math.abs(profitPercent), 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* Stop Copy Modal */}
+      {showStopModal && selectedTrade && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div className="bg-[#1e2538] rounded-2xl max-w-md w-full p-6 border border-gray-700">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Stop Copy Trading</h2>
+              <button
+                onClick={() => {
+                  setShowStopModal(false);
+                  setSelectedTrade(null);
+                }}
+                className="text-gray-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-gray-300 mb-2">
+              Are you sure you want to stop copying <span className="font-semibold text-white">{selectedTrade.traderName}</span>?
+            </p>
+            <p className="text-sm text-gray-400 mb-6">
+              Total earned so far: <span className={selectedTrade.totalEarned >= 0 ? 'text-green-400' : 'text-red-400'}>
+                ${(selectedTrade.totalEarned || 0).toFixed(2)}
+              </span>
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleStopCopy}
+                className="flex-1 bg-red-600 hover:bg-red-700 py-2 rounded-lg font-semibold transition"
+              >
+                Yes, Stop Copying
+              </button>
+              <button
+                onClick={() => {
+                  setShowStopModal(false);
+                  setSelectedTrade(null);
+                }}
+                className="flex-1 border border-gray-600 hover:bg-gray-700 py-2 rounded-lg font-semibold transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default MyCopyTrades;
