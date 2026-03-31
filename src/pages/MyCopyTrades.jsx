@@ -91,7 +91,8 @@ export default function MyCopyTrades() {
         {/* Active Trades */}
         {copyTrades.filter(t => t.status === 'active').length > 0 && (
           <>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: "10px" }}>
+        <div style={{ marginBottom: "24px" }} />
               <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
               <span style={{ fontSize: '9px', fontWeight: '700', color: '#22c55e' }}>ACTIVE COPY TRADES</span>
             </div>
@@ -100,7 +101,7 @@ export default function MyCopyTrades() {
               const isProfit = (trade.totalEarned || 0) >= 0;
               const progress = Math.min(Math.abs(roi), 100);
               return (
-                <div key={trade._id} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '10px' }}>
+                <div key={trade._id} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: "10px" }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                     <div style={{ position: 'relative', flexShrink: 0 }}>
                       <img src={trade.traderImg || `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff&size=96`} style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(99,102,241,0.5)' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff`} />
@@ -116,7 +117,7 @@ export default function MyCopyTrades() {
                     {[{ label: 'Invested', value: '$' + trade.amount.toFixed(2), color: 'white' }, { label: 'Earned', value: (isProfit ? '+' : '') + '$' + (trade.totalEarned || 0).toFixed(2), color: isProfit ? '#22c55e' : '#ef4444' }, { label: 'ROI', value: (isProfit ? '+' : '') + roi.toFixed(2) + '%', color: isProfit ? '#22c55e' : '#ef4444' }].map((s, i) => (
                       <div key={i} style={{ background: '#0e1628', borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
                         <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>{s.label}</div>
-                        <div style={{ fontSize: '11px', fontWeight: '700', color: s.color }}>{s.value}</div>
+                        <div style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</div>
                       </div>
                     ))}
                   </div>
@@ -206,7 +207,8 @@ export default function MyCopyTrades() {
       {showStopModal && selectedTrade && (
         <div onClick={() => setShowStopModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div onClick={e => e.stopPropagation()} style={{ background: '#1a2e4a', borderRadius: '12px', padding: '20px', width: '85%', maxWidth: '300px', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <h3 style={{ fontSize: '11px', fontWeight: '700', marginBottom: '10px' }}>Stop Copy Trading</h3>
+            <h3 style={{ fontSize: '11px', fontWeight: '700', marginBottom: "10px" }}>
+            <h3 style={{ fontSize: "11px", fontWeight: "700", marginBottom: "10px" }}>Stop Copy Trading</h3>
             <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.5)', marginBottom: '16px' }}>Stop copying <strong>{selectedTrade.traderName}</strong>? This cannot be undone.</p>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setShowStopModal(false)} style={{ flex: 1, padding: '8px', background: 'rgba(255,255,255,0.06)', border: 'none', borderRadius: '6px', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
