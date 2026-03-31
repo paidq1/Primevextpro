@@ -114,7 +114,7 @@ export default function CopyTrading() {
                 </div>
               ))}
             </div>
-            <button onClick={() => { setModal(t); setAmount(''); setCopyError(''); setCopySuccess(''); }} style={{ width: '100%', padding: '10px', background: copied.has(t.id) ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
+            <button onClick={e => { e.stopPropagation(); setModal(t); setAmount(''); setCopyError(''); setCopySuccess(''); }} style={{ width: '100%', padding: '10px', background: copied.has(t.id) ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
               {copied.has(t.id) ? '✓ Strategy Copied!' : 'Copy Trader Strategy'}
             </button>
           </div>
