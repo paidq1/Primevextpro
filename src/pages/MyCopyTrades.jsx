@@ -93,8 +93,8 @@ export default function MyCopyTrades() {
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: "10px" }}>
         <div style={{ marginBottom: "24px" }} />
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
-              <span style={{ fontSize: '9px', fontWeight: '700', color: '#22c55e' }}>ACTIVE COPY TRADES</span>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#6366f1' }} />
+              <span style={{ fontSize: '9px', fontWeight: '700', color: '#6366f1' }}>ACTIVE COPY TRADES</span>
             </div>
             {copyTrades.filter(t => t.status === 'active').map(trade => {
               const roi = trade.amount > 0 ? ((trade.totalEarned || 0) / trade.amount * 100) : 0;
