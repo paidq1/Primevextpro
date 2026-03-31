@@ -87,6 +87,51 @@ export default function MyCopyTrades() {
           {statCard(<CheckCircle size={12} color='#94a3b8'/>, 'Stopped', String(stoppedCount), '#94a3b8')}
         </div>
 
+
+        {/* Active Trades */}
+        {copyTrades.filter(t => t.status === 'active').length > 0 && (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
+              <span style={{ fontSize: '9px', fontWeight: '700', color: '#22c55e' }}>ACTIVE COPY TRADES</span>
+            </div>
+            {copyTrades.filter(t => t.status === 'active').map(trade => {
+              const roi = trade.amount > 0 ? ((trade.totalEarned || 0) / trade.amount * 100) : 0;
+              const isProfit = (trade.totalEarned || 0) >= 0;
+              const progress = Math.min(Math.abs(roi), 100);
+              return (
+                <div key={trade._id} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                    <div style={{ position: 'relative', flexShrink: 0 }}>
+                      <img src={trade.traderImg || `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff&size=96`} style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(99,102,241,0.5)' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff`} />
+                      <div style={{ position: 'absolute', bottom: 0, right: 0, width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e', border: '2px solid #1a2e4a' }} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '12px', fontWeight: '700' }}>{trade.traderName}</div>
+                      <div style={{ fontSize: '7.5px', color: 'rgba(255,255,255,0.4)', marginTop: '2px' }}>{trade.profitShare}% profit share • Since {new Date(trade.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                    </div>
+                    <button onClick={() => { setSelectedTrade(trade); setShowStopModal(true); }} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', padding: '6px 10px', borderRadius: '6px', color: '#ef4444', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>✕ Stop</button>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px', marginBottom: '12px' }}>
+                    {[{ label: 'Invested', value: '$' + trade.amount.toFixed(2), color: 'white' }, { label: 'Earned', value: (isProfit ? '+' : '') + '$' + (trade.totalEarned || 0).toFixed(2), color: isProfit ? '#22c55e' : '#ef4444' }, { label: 'ROI', value: (isProfit ? '+' : '') + roi.toFixed(2) + '%', color: isProfit ? '#22c55e' : '#ef4444' }].map((s, i) => (
+                      <div key={i} style={{ background: '#0e1628', borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
+                        <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>{s.label}</div>
+                        <div style={{ fontSize: '11px', fontWeight: '700', color: s.color }}>{s.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: 'rgba(255,255,255,0.4)', marginBottom: '5px', display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Profit Progress</span><span style={{ color: isProfit ? '#22c55e' : '#ef4444', fontWeight: '600' }}>{roi.toFixed(2)}%</span>
+                  </div>
+                  <div style={{ height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '10px', overflow: 'hidden' }}>
+                    <div style={{ width: progress + '%', height: '100%', background: isProfit ? 'linear-gradient(90deg, #16a34a, #22c55e)' : 'linear-gradient(90deg, #b91c1c, #ef4444)', borderRadius: '10px' }} />
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        )}
+
         {/* Table */}
         <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
