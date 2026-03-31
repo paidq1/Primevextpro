@@ -101,7 +101,7 @@ export default function MyCopyTrades() {
               const isProfit = (trade.totalEarned || 0) >= 0;
               const progress = Math.min(Math.abs(roi), 100);
               return (
-                <div key={trade._id} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '12px', padding: '14px', marginBottom: "10px" }}>
+                <div key={trade._id} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '14px', marginBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                     <div style={{ position: 'relative', flexShrink: 0 }}>
                       <img src={trade.traderImg || `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff&size=96`} style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(99,102,241,0.5)' }} onError={e => e.target.src = `https://ui-avatars.com/api/?name=${trade.traderName}&background=6366f1&color=fff`} />
