@@ -140,6 +140,18 @@ export default function CopyTradingSetup() {
           </div>
         </div>
 
+        {/* Trader Bio */}
+        {trader.bio && (
+          <div style={{ background: "#1a2e4a", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", padding: "14px", marginBottom: "14px" }}>
+            <div style={{ fontSize: "10px", fontWeight: "700", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+              <TrendingUp size={12} color="#6366f1" /> About {trader.name}
+            </div>
+            <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.7)", lineHeight: "1.5", textAlign: "justify" }}>
+              {trader.bio}
+            </div>
+          </div>
+        )}
+
         {/* Duration Selector */}
         <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px', marginBottom: '14px' }}>
           <div style={{ fontSize: '10px', fontWeight: '700', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const TraderSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  bio: { type: String },
   location: { type: String },
   flag: { type: String },
   followers: { type: String },
