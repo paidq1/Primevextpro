@@ -207,8 +207,7 @@ export default function MyCopyTrades() {
       {showStopModal && selectedTrade && (
         <div onClick={() => setShowStopModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div onClick={e => e.stopPropagation()} style={{ background: '#1a2e4a', borderRadius: '12px', padding: '20px', width: '85%', maxWidth: '300px', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <h3 style={{ fontSize: '11px', fontWeight: '700', marginBottom: "10px" }}>
-            <h3 style={{ fontSize: "11px", fontWeight: "700", marginBottom: "10px" }}>Stop Copy Trading</h3>
+            <h3 style={{ fontSize: '11px', fontWeight: '700', marginBottom: '10px' }}>Stop Copy Trading</h3>
             <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.5)', marginBottom: '16px' }}>Stop copying <strong>{selectedTrade.traderName}</strong>? This cannot be undone.</p>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button onClick={() => setShowStopModal(false)} style={{ flex: 1, padding: '8px', background: 'rgba(255,255,255,0.06)', border: 'none', borderRadius: '6px', color: 'white', fontSize: '9px', cursor: 'pointer' }}>Cancel</button>
