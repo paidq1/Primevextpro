@@ -133,6 +133,7 @@ export default function MyCopyTrades() {
           </>
         )}
 
+        <div style={{ marginTop: "28px" }} />
         {/* Table */}
         <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
