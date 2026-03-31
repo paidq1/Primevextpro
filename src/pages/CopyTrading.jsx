@@ -119,10 +119,7 @@ export default function CopyTrading() {
             </button>
           </div>
         ))}
-        {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No traders found</div>}
-
-      {modal && (
-        <div onClick={() => setModal(null)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 9999, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+        {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No traders found</div>}style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 9999, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
           <div onClick={e => e.stopPropagation()} style={{ background: "#1a2e4a", borderRadius: "16px 16px 0 0", padding: "20px 16px", width: "100%", maxWidth: "480px", border: "1px solid rgba(255,255,255,0.08)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
               <img src={modal.img} style={{ width: "44px", height: "44px", borderRadius: "50%", border: "2px solid rgba(99,102,241,0.5)" }} />
@@ -134,10 +131,6 @@ export default function CopyTrading() {
             <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.4)", marginBottom: "6px" }}>Investment Amount (min $10)</div>
             <div style={{ position: "relative", marginBottom: "12px" }}>
               <span style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.4)", fontSize: "11px" }}>$</span>
-            <div style={{ marginBottom: "12px" }}>
-              <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.4)", marginBottom: "6px" }}>End Date (optional)</div>
-              <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={new Date().toISOString().split("T")[0]} style={{ width: "100%", background: "#0e1628", border: "1px solid rgba(255,255,255,0.1)", color: "white", fontSize: "11px", padding: "11px 10px", outline: "none", borderRadius: "8px", boxSizing: "border-box" }} />
-            </div>
               <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setCopyError(""); }} placeholder="0.00" style={{ width: "100%", background: "#0e1628", border: "1px solid rgba(255,255,255,0.1)", color: "white", fontSize: "13px", fontWeight: "700", padding: "11px 10px 11px 22px", outline: "none", borderRadius: "8px", boxSizing: "border-box" }} />
             </div>
             {copyError && <div style={{ fontSize: "8px", color: "#ef4444", marginBottom: "10px", background: "rgba(239,68,68,0.1)", padding: "8px 10px", borderRadius: "6px" }}>{copyError}</div>}

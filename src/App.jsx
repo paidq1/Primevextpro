@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CopyTrading from './pages/CopyTrading';
 import TraderProfile from './pages/TraderProfile';
+import TraderDetails from "./pages/TraderDetails";
 import MyCopyTrades from './pages/MyCopyTrades';
 import CopyTradingSetup from './pages/CopyTradingSetup';
 import 'aos/dist/aos.css';
@@ -153,6 +154,7 @@ function App() {
         <Route path="/dashboard/copy-trading" element={<PrivateRoute><CopyTrading /></PrivateRoute>} />
         <Route path="/dashboard/copy-trading/:id" element={<PrivateRoute><TraderProfile /></PrivateRoute>} />
         <Route path="/dashboard/my-copy-trades" element={<PrivateRoute><MyCopyTrades /></PrivateRoute>} />
+        <Route path="/dashboard/trader/:id" element={<PrivateRoute><TraderDetails /></PrivateRoute>} />
         <Route path="/dashboard/copy-trading/setup" element={<PrivateRoute><CopyTradingSetup /></PrivateRoute>} />
         <Route path="/staking-info" element={<StakingInfo />} />
         <Route path="/investing-info" element={<InvestingInfo />} />
