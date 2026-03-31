@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, Users, FlaskConical, Heart, CheckCircle2 } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
-import { getTraders, startCopyTrade } from '../services/api';
+import { getTraders } from '../services/api';
 
 const TRADERS_DEFAULT = [
   { id: 1, name: 'Ross Cameron', location: 'Vermont, USA', flag: '🇺🇸', followers: '1.2k', risk: 6.5, favorite: 'AAPL', totalTrades: 300, totalLoss: 12, profitShare: 20.5, winRate: 75, img: 'https://ui-avatars.com/api/?name=Ross+Cameron&background=6366f1&color=fff&size=128', verified: true },
@@ -28,12 +28,6 @@ export default function CopyTrading() {
     }).catch(() => setLoading(false));
   }, []);
   const [copied, setCopied] = useState(new Set());
-  const [modal, setModal] = useState(null);
-  const [amount, setAmount] = useState('');
-  const [copying, setCopying] = useState(false);
-  const [copyError, setCopyError] = useState('');
-  const [copySuccess, setCopySuccess] = useState('');
-  const [endDate, setEndDate] = useState('');
 
   const filtered = traders.filter(t =>
     t.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -44,27 +38,13 @@ export default function CopyTrading() {
   const riskColor = r => r <= 4 ? '#22c55e' : r <= 7 ? '#f59e0b' : '#ef4444';
 
 
-  const handleCopy = async () => {
-    if (!amount || isNaN(amount) || parseFloat(amount) < 10) { setCopyError("Minimum investment is $10"); return; }
-    setCopying(true); setCopyError("");
-    try {
-      await startCopyTrade({ traderId: modal.id, traderName: modal.name, traderImg: modal.img, amount: parseFloat(amount), profitShare: modal.profitShare, endDate: endDate || null });
-      setCopied(prev => new Set([...prev, modal.id]));
-      setCopySuccess("Strategy copied successfully!");
-      setTimeout(() => { setModal(null); setCopySuccess(""); }, 1500);
-    } catch (err) { setCopyError(err.message || "Failed to copy. Check your balance."); }
-    setCopying(false);
-  };
   return (
     <div style={{ minHeight: '100vh', background: '#0e1628', fontFamily: "'Segoe UI', sans-serif", color: 'white' }}>
       <PageHeader title="Copy Trading" />
       <div style={{ padding: '14px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
-            <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Copy Expert Traders</span>
-          </div>
-          <button onClick={() => navigate('/dashboard/my-copy-trades')} style={{ padding: '5px 10px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#6366f1', fontSize: '8px', fontWeight: '600', cursor: 'pointer', borderRadius: '6px' }}>My Copies</button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+          <div style={{ width: '4px', height: '16px', background: '#6366f1' }} />
+          <span style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Copy Expert Traders</span>
         </div>
         <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)', margin: '0 0 14px' }}>Copy expert traders from all over the world and enhance your investment portfolio.</p>
         <div style={{ position: 'relative', marginBottom: '16px' }}>
@@ -114,34 +94,13 @@ export default function CopyTrading() {
                 </div>
               ))}
             </div>
-            <button onClick={e => { e.stopPropagation(); setModal(t); setAmount(''); setCopyError(''); setCopySuccess(''); }} style={{ width: '100%', padding: '10px', background: copied.has(t.id) ? '#22c55e' : '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
-              {copied.has(t.id) ? '✓ Strategy Copied!' : 'Copy Trader Strategy'}
+            <button onClick={() => navigate('/dashboard/copy-trading/setup', { state: { trader: t } })} style={{ width: '100%', padding: '10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '700', cursor: 'pointer', borderRadius: '6px' }}>
+              Copy Trader Strategy
             </button>
           </div>
         ))}
-        {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No traders found</div>}style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 9999, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: "#1a2e4a", borderRadius: "16px 16px 0 0", padding: "20px 16px", width: "100%", maxWidth: "480px", border: "1px solid rgba(255,255,255,0.08)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-              <img src={modal.img} style={{ width: "44px", height: "44px", borderRadius: "50%", border: "2px solid rgba(99,102,241,0.5)" }} />
-              <div>
-                <div style={{ fontSize: "12px", fontWeight: "700" }}>{modal.name}</div>
-                <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.4)" }}>{modal.profitShare}% profit share • {modal.winRate}% win rate</div>
-              </div>
-            </div>
-            <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.4)", marginBottom: "6px" }}>Investment Amount (min $10)</div>
-            <div style={{ position: "relative", marginBottom: "12px" }}>
-              <span style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.4)", fontSize: "11px" }}>$</span>
-              <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setCopyError(""); }} placeholder="0.00" style={{ width: "100%", background: "#0e1628", border: "1px solid rgba(255,255,255,0.1)", color: "white", fontSize: "13px", fontWeight: "700", padding: "11px 10px 11px 22px", outline: "none", borderRadius: "8px", boxSizing: "border-box" }} />
-            </div>
-            {copyError && <div style={{ fontSize: "8px", color: "#ef4444", marginBottom: "10px", background: "rgba(239,68,68,0.1)", padding: "8px 10px", borderRadius: "6px" }}>{copyError}</div>}
-            {copySuccess && <div style={{ fontSize: "8px", color: "#22c55e", marginBottom: "10px", background: "rgba(34,197,94,0.1)", padding: "8px 10px", borderRadius: "6px" }}>✓ {copySuccess}</div>}
-            <div style={{ display: "flex", gap: "8px" }}>
-              <button onClick={() => setModal(null)} style={{ flex: 1, padding: "11px", background: "rgba(255,255,255,0.06)", border: "none", color: "white", fontSize: "10px", cursor: "pointer", borderRadius: "8px" }}>Cancel</button>
-              <button onClick={handleCopy} disabled={copying} style={{ flex: 2, padding: "11px", background: copying ? "rgba(99,102,241,0.5)" : "#6366f1", border: "none", color: "white", fontSize: "10px", fontWeight: "700", cursor: copying ? "default" : "pointer", borderRadius: "8px" }}>{copying ? "Processing..." : "Confirm & Start Copying"}</button>
-            </div>
-          </div>
-        </div>
-      )}
+        {filtered.length === 0 && <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.3)', fontSize: '9px' }}>No traders found</div>}
+
         <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '8px' }}>2020-2026 &copy; VertexTrade Pro</div>
       </div>
     </div>
