@@ -8,7 +8,7 @@ const Notification = require('../models/Notification');
 // Start copying a trader
 router.post('/', auth, async (req, res) => {
   try {
-    const { traderId, traderName, traderImg, amount, profitShare } = req.body;
+    const { traderId, traderName, traderImg, amount, profitShare, endDate } = req.body;
     if (!amount || amount < 10) return res.status(400).json({ message: 'Minimum investment is $10' });
 
     const user = await User.findById(req.user._id);
@@ -18,7 +18,7 @@ router.post('/', auth, async (req, res) => {
     user.balance -= parseFloat(amount);
     await user.save();
 
-    const copyTrade = await CopyTrade.create({ user: req.user._id, trader: traderId, traderName, traderImg, amount, profitShare });
+    const copyTrade = await CopyTrade.create({ user: req.user._id, trader: traderId, traderName, traderImg, amount, profitShare, endDate: endDate ? new Date(endDate) : null });
 
     await Notification.create({ user: req.user._id, type: 'system', title: 'Copy Trading Started', message: `You are now copying ${traderName} with $${amount}.` });
 

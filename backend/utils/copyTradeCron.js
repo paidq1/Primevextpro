@@ -38,6 +38,13 @@ const processCopyTradeProfits = async () => {
         }
 
         // Fetch trader data to get winRate and risk
+        // Auto-stop if end date passed
+        if (trade.endDate && now > new Date(trade.endDate)) {
+          await CopyTrade.findByIdAndUpdate(trade._id, { status: 'stopped' });
+          await Notification.create({ user: trade.user, title: 'Copy Trade Ended', message: `Your copy trade with ${trade.traderName} has ended as scheduled.`, type: 'system' });
+          console.log(`⏹ ${trade.traderName} auto-stopped - end date reached`);
+          continue;
+        }
         const trader = await Trader.findById(trade.trader);
         const winRate = trader ? trader.winRate : 70;
         const risk = trader ? trader.risk : 5;

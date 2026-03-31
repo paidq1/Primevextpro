@@ -8,6 +8,7 @@ const CopyTradeSchema = new mongoose.Schema({
   profitShare: { type: Number },
   status: { type: String, enum: ['active', 'stopped'], default: 'active' },
   totalEarned: { type: Number, default: 0 },
+  endDate: { type: Date },
   lastProfitAt: { type: Date },
 }, { timestamps: true });
 module.exports = mongoose.model('CopyTrade', CopyTradeSchema);

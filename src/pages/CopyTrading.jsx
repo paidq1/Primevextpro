@@ -33,6 +33,7 @@ export default function CopyTrading() {
   const [copying, setCopying] = useState(false);
   const [copyError, setCopyError] = useState('');
   const [copySuccess, setCopySuccess] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const filtered = traders.filter(t =>
     t.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -47,7 +48,7 @@ export default function CopyTrading() {
     if (!amount || isNaN(amount) || parseFloat(amount) < 10) { setCopyError("Minimum investment is $10"); return; }
     setCopying(true); setCopyError("");
     try {
-      await startCopyTrade({ traderId: modal.id, traderName: modal.name, traderImg: modal.img, amount: parseFloat(amount), profitShare: modal.profitShare });
+      await startCopyTrade({ traderId: modal.id, traderName: modal.name, traderImg: modal.img, amount: parseFloat(amount), profitShare: modal.profitShare, endDate: endDate || null });
       setCopied(prev => new Set([...prev, modal.id]));
       setCopySuccess("Strategy copied successfully!");
       setTimeout(() => { setModal(null); setCopySuccess(""); }, 1500);
@@ -133,6 +134,10 @@ export default function CopyTrading() {
             <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.4)", marginBottom: "6px" }}>Investment Amount (min $10)</div>
             <div style={{ position: "relative", marginBottom: "12px" }}>
               <span style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.4)", fontSize: "11px" }}>$</span>
+            <div style={{ marginBottom: "12px" }}>
+              <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.4)", marginBottom: "6px" }}>End Date (optional)</div>
+              <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={new Date().toISOString().split("T")[0]} style={{ width: "100%", background: "#0e1628", border: "1px solid rgba(255,255,255,0.1)", color: "white", fontSize: "11px", padding: "11px 10px", outline: "none", borderRadius: "8px", boxSizing: "border-box" }} />
+            </div>
               <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setCopyError(""); }} placeholder="0.00" style={{ width: "100%", background: "#0e1628", border: "1px solid rgba(255,255,255,0.1)", color: "white", fontSize: "13px", fontWeight: "700", padding: "11px 10px 11px 22px", outline: "none", borderRadius: "8px", boxSizing: "border-box" }} />
             </div>
             {copyError && <div style={{ fontSize: "8px", color: "#ef4444", marginBottom: "10px", background: "rgba(239,68,68,0.1)", padding: "8px 10px", borderRadius: "6px" }}>{copyError}</div>}
