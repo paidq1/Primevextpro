@@ -3,6 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Clock, CheckCircle } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import { getCopyTrades, stopCopyTrade } from '../services/api';
+import { formatAmountWithCode } from '../utils/currency';
+import { getDashboard } from '../services/api';
 
 const MOCK_TRADES = [
   { _id: '1', traderName: 'Ross Cameron', traderImg: 'https://ui-avatars.com/api/?name=Ross+Cameron&background=6366f1&color=fff&size=96', amount: 500, totalEarned: 87.50, profitShare: 20.5, status: 'active', createdAt: '2026-02-10T00:00:00Z' },
@@ -81,8 +84,8 @@ export default function MyCopyTrades() {
 
         {/* Stats */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-          {statCard(<TrendingUp size={12} color='#6366f1'/>, 'Total Invested', '$' + totalInvested.toFixed(2), '#6366f1')}
-          {statCard(<DollarSign size={12} color='#22c55e'/>, 'Total Returns', '$' + totalReturns.toFixed(2), totalReturns >= 0 ? '#22c55e' : '#ef4444')}
+          {statCard(<TrendingUp size={12} color='#6366f1'/>, 'Total Invested', formatAmountWithCode(totalInvested, currency), '#6366f1')}
+          {statCard(<DollarSign size={12} color='#22c55e'/>, 'Total Returns', formatAmountWithCode(Math.abs(totalReturns), currency), totalReturns >= 0 ? '#22c55e' : '#ef4444')}
           {statCard(<Clock size={12} color='#f59e0b'/>, 'Active', String(activeCount), '#f59e0b')}
           {statCard(<CheckCircle size={12} color='#94a3b8'/>, 'Stopped', String(stoppedCount), '#94a3b8')}
         </div>
@@ -114,7 +117,7 @@ export default function MyCopyTrades() {
                     <button onClick={() => { setSelectedTrade(trade); setShowStopModal(true); }} style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', padding: '6px 10px', borderRadius: '6px', color: '#ef4444', fontSize: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>✕ Stop</button>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px', marginBottom: '12px' }}>
-                    {[{ label: 'Invested', value: '$' + trade.amount.toFixed(2), color: 'white' }, { label: 'Earned', value: (isProfit ? '+' : '') + '$' + (trade.totalEarned || 0).toFixed(2), color: isProfit ? '#22c55e' : '#ef4444' }, { label: 'ROI', value: (isProfit ? '+' : '') + roi.toFixed(2) + '%', color: isProfit ? '#22c55e' : '#ef4444' }].map((s, i) => (
+                    {[{ label: 'Invested', value: formatAmountWithCode(trade.amount, currency), color: 'white' }, { label: 'Earned', value: (isProfit ? '+' : '-') + formatAmountWithCode(Math.abs(trade.totalEarned || 0), currency), color: isProfit ? '#22c55e' : '#ef4444' }, { label: 'ROI', value: (isProfit ? '+' : '') + roi.toFixed(2) + '%', color: isProfit ? '#22c55e' : '#ef4444' }].map((s, i) => (
                       <div key={i} style={{ background: '#0e1628', borderRadius: '8px', padding: '8px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.04)' }}>
                         <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>{s.label}</div>
                         <div style={{ fontSize: '9px', fontWeight: '700', color: s.color }}>{s.value}</div>

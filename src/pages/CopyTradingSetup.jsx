@@ -97,11 +97,11 @@ export default function CopyTradingSetup() {
                 {trader.verified && (
                   <svg width="16" height="16" viewBox="0 0 100 100"><path d="M 50,3 L 57,13 L 68,7 L 71,19 L 83,17 L 82,29 L 93,32 L 87,43 L 97,50 L 87,57 L 93,68 L 82,71 L 83,83 L 71,82 L 68,93 L 57,87 L 50,97 L 43,87 L 32,93 L 29,82 L 17,83 L 18,71 L 7,68 L 13,57 L 3,50 L 13,43 L 7,32 L 18,29 L 17,17 L 29,18 L 32,7 L 43,13 Z" fill="#3b82f6"/><path d="M32 51l12 12 24-26" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
                 )}
-                <span style={{ fontSize: '18px' }}>{trader.flag}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                 <MapPin size={8} color="rgba(255,255,255,0.4)" />
                 <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.4)' }}>{trader.location}</span>
+                <span style={{ fontSize: '14px', marginLeft: '4px' }}>{trader.flag}</span>
               </div>
             </div>
           </div>
@@ -173,10 +173,17 @@ export default function CopyTradingSetup() {
             <span style={{ fontSize: '10px', fontWeight: '700' }}>Investment Amount</span>
             <span style={{ fontSize: '9px', color: '#22c55e', fontWeight: '600' }}>Balance: {formatAmountWithCode(balance, currency)}</span>
           </div>
-          <div style={{ position: 'relative', marginBottom: '8px' }}>
+          <div style={{ position: 'relative', marginBottom: '4px' }}>
             <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>$</span>
-            <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '16px', fontWeight: '700', padding: '12px 12px 12px 26px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
+            <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', fontWeight: '700', padding: '10px 10px 10px 22px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
           </div>
+          {amount && Number(amount) > 0 && currency !== 'US Dollar (USD)' && (
+            <div style={{ fontSize: '8px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span>≈</span>
+              <span style={{ fontWeight: '700' }}>{formatAmountWithCode(Number(amount), currency)}</span>
+              <span style={{ color: 'rgba(255,255,255,0.3)' }}>in your local currency</span>
+            </div>
+          )}
           <div style={{ display: 'flex', gap: '6px' }}>
             {[25, 50, 100, 250].map(v => (
               <button key={v} onClick={() => setAmount(String(v))} style={{ flex: 1, padding: '5px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', fontSize: '8px', cursor: 'pointer', borderRadius: '6px' }}>${v}</button>
@@ -191,10 +198,10 @@ export default function CopyTradingSetup() {
               <TrendingUp size={12} color="#6366f1" /> Investment Summary
             </div>
             {[
-              { label: 'Investment Amount', value: '$' + Number(amount).toFixed(2), color: 'white' },
+              { label: 'Investment Amount', value: formatAmountWithCode(Number(amount), currency), color: 'white' },
               { label: 'Duration', value: duration + ' days', color: 'white' },
-              { label: 'Trader Commission', value: '$' + traderCommission, color: '#f59e0b' },
-              { label: 'Est. Profit (if wins)', value: '$' + estimatedProfit, color: '#22c55e' },
+              { label: 'Trader Commission', value: formatAmountWithCode(Number(traderCommission), currency), color: '#f59e0b' },
+              { label: 'Est. Profit (if wins)', value: formatAmountWithCode(Number(estimatedProfit), currency), color: '#22c55e' },
             ].map((s, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0', borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
                 <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.45)' }}>{s.label}</span>
