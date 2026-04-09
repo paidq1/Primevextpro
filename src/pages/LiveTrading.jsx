@@ -125,14 +125,15 @@ export default function LiveTrading() {
               </div>
 
               {/* Form fields */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', marginBottom: '12px' }}>
-                <div>
-                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
-                  <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: 'white', fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
-                  {amount && Number(amount) >= 10 && user?.currency && user.currency !== 'USD' && (
-                    <div style={{ fontSize: '6px', color: '#22c55e', marginTop: '2px' }}>≈ {formatAmount(Number(amount), user.currency)}</div>
-                  )}
-                </div>
+              <div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
+                <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: 'white', fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }} />
+                {amount && Number(amount) >= 10 && user?.currency && user.currency !== 'USD' && (
+                  <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '8px' }}>≈ {formatAmount(Number(amount), user.currency)} in your local currency</div>
+                )}
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
                 <div>
                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Duration</div>
                   <select value={duration} onChange={e => setDuration(e.target.value)} style={{ width: '100%', background: '#0a0f1e', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '8px', padding: '6px 4px', outline: 'none', boxSizing: 'border-box' }}>
