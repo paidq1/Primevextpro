@@ -160,9 +160,13 @@ export default function LiveTrading() {
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-        {/* Stats + New Trade button */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: '6px', flex: 1, marginRight: '8px' }}>
+        {/* New Trade button */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '14px' }}>
+          <button onClick={() => navigate("/dashboard/new-trade")} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer' }}>+ New Trade</button>
+        </div>
+
+        {/* Stats Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: '6px', marginBottom: '20px' }}>
             {stats && [
               { label: 'Trades', value: stats.totalTrades ?? 0, color: 'white' },
               { label: 'Wins', value: stats.wins ?? 0, color: '#22c55e' },
@@ -175,8 +179,6 @@ export default function LiveTrading() {
                 <div style={{ color: s.color, fontSize: '9px', fontWeight: '800' }}>{s.value}</div>
               </div>
             ))}
-          </div>
-          <button onClick={() => navigate("/dashboard/new-trade")} style={{ background: '#6366f1', border: 'none', color: 'white', fontSize: '9px', fontWeight: '700', padding: '8px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>+ New Trade</button>
         </div>
 
         {/* Trades Table */}
