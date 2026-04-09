@@ -174,9 +174,9 @@ export default function LiveTrading() {
               { label: 'Net P&L', value: formatAmount(parseFloat(stats.netProfitLoss ?? 0), user?.currency), color: parseFloat(stats.netProfitLoss) >= 0 ? '#22c55e' : '#ef4444' },
               { label: 'ROI', value: `${parseFloat(stats.roi ?? 0).toFixed(1)}%`, color: parseFloat(stats.roi) >= 0 ? '#22c55e' : '#ef4444' },
             ].map(s => (
-              <div key={s.label} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '6px', textAlign: 'center' }}>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '6px', marginBottom: '2px' }}>{s.label}</div>
-                <div style={{ color: s.color, fontSize: '9px', fontWeight: '800' }}>{s.value}</div>
+              <div key={s.label} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', textAlign: 'center' }}>
+                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{s.label}</div>
+                <div style={{ color: s.color, fontSize: '11px', fontWeight: '800' }}>{s.value}</div>
               </div>
             ))}
         </div>
