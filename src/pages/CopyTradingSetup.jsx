@@ -200,7 +200,7 @@ export default function CopyTradingSetup() {
             {[
               { label: 'Investment Amount', value: '$' + Number(amount).toFixed(2) + (currency !== 'USD' ? ' (' + formatAmountWithCode(Number(amount), currency) + ')' : ''), color: 'white' },
               { label: 'Duration', value: duration + ' days', color: 'white' },
-              { label: 'Trader Commission', value: '$' + traderCommission, color: '#f59e0b' },
+              { label: 'Trader Commission', value: '$' + traderCommission + (currency !== 'USD' ? ' (' + formatAmountWithCode(Number(traderCommission), currency) + ')' : ''), color: '#f59e0b' },
               { label: 'Est. Profit (if wins)', value: '$' + estimatedProfit + (currency !== 'USD' ? ' (' + formatAmountWithCode(Number(estimatedProfit), currency) + ')' : ''), color: '#22c55e' },
             ].map((s, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0', borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
