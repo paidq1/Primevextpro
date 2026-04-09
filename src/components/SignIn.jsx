@@ -199,7 +199,7 @@ const SignIn = () => {
               if (!otp || otp.length !== 6) { setErrors({ otp: 'Please enter 6-digit code' }); return; }
               setOtpLoading(true);
               try {
-                const res = await fetch('https://vertextrades.onrender.com/api/auth/2fa/verify', {
+                const res = await fetch('https://quantyrexs.onrender.com/api/auth/2fa/verify', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ email: otpEmail, otp })

@@ -36,7 +36,7 @@ export default function MyCopyTrades() {
 
   const fetchCopyTrades = async () => {
     try {
-      const res = await fetch('https://vertextrades.onrender.com/api/copy-trade', {
+      const res = await fetch('https://quantyrexs.onrender.com/api/copy-trade', {
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
       const data = await res.json();
@@ -48,7 +48,7 @@ export default function MyCopyTrades() {
   const handleStop = async () => {
     if (!selectedTrade) return;
     try {
-      await fetch(`https://vertextrades.onrender.com/api/copy-trade/${selectedTrade._id}/stop`, {
+      await fetch(`https://quantyrexs.onrender.com/api/copy-trade/${selectedTrade._id}/stop`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token || localStorage.getItem('token')}` }
       });
@@ -210,7 +210,7 @@ export default function MyCopyTrades() {
           </div>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © VertexTrade Pro</div>
+        <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
       </div>
 
       {/* Stop Modal */}

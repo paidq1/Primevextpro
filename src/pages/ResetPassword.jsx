@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BASE_URL = 'https://vertextrades.onrender.com/api';
+const BASE_URL = 'https://quantyrexs.onrender.com/api';
 
 export default function ResetPassword() {
   const navigate = useNavigate();

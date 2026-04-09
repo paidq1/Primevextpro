@@ -29,7 +29,7 @@ export default function InvestingInfo() {
           Choose an investment plan that suits your goals. Our managed investment packages deliver consistent daily returns with your capital fully protected.
         </p>
         {[
-          { icon: <Package size={13} color="#f59e0b"/>, title: 'What is Investing?', desc: 'Investing means putting your money to work. On VertexTrade Pro, you choose a plan, deposit funds, and earn daily returns managed by our expert trading team.' },
+          { icon: <Package size={13} color="#f59e0b"/>, title: 'What is Investing?', desc: 'Investing means putting your money to work. On Quantyrex Markets, you choose a plan, deposit funds, and earn daily returns managed by our expert trading team.' },
           { icon: <Shield size={13} color="#22c55e"/>, title: 'Capital Protection', desc: 'Your initial investment is returned in full at the end of the investment period, on top of all earned profits.' },
           { icon: <TrendingUp size={13} color="#6366f1"/>, title: 'Daily Returns', desc: 'Profits are credited to your account daily throughout the investment period. Watch your balance grow every day.' },
           { icon: <Star size={13} color="#818cf8"/>, title: 'Expert Management', desc: 'Our professional trading team manages all investments using advanced strategies across crypto, forex, and commodities markets.' },

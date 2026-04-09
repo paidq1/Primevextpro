@@ -40,7 +40,7 @@ export default function NewStake() {
     setError(''); setSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://vertextrades.onrender.com/api/stake', {
+      const res = await fetch('https://quantyrexs.onrender.com/api/stake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ plan: selected.symbol, amount: Number(amount), apy: selected.roi, duration: String(duration) })
@@ -221,7 +221,7 @@ export default function NewStake() {
         )}
       </div>
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © VertexTrade Pro</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

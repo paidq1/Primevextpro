@@ -18,7 +18,7 @@ export default function TradingInfo() {
           <h1 style={{ fontSize: '18px', fontWeight: '800', margin: 0 }}>Live Trading</h1>
         </div>
         <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '10px', lineHeight: '1.8', marginBottom: '24px' }}>
-          Trade cryptocurrencies and forex in real-time with professional tools. VertexTrade Pro gives you access to live markets 24/7 with competitive spreads and instant execution.
+          Trade cryptocurrencies and forex in real-time with professional tools. Quantyrex Markets gives you access to live markets 24/7 with competitive spreads and instant execution.
         </p>
         {[
           { icon: <BarChart2 size={13} color="#6366f1"/>, title: 'Real-Time Charts', desc: 'Advanced TradingView charts with 50+ technical indicators, multiple timeframes, and drawing tools.' },

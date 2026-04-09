@@ -33,7 +33,7 @@ export default function NewTrade() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    fetch('https://vertextrades.onrender.com/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } })
+    fetch('https://quantyrexs.onrender.com/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } })
       .then(r => r.json()).then(d => setBalance(d.user?.balance ?? d.balance ?? 0)).catch(() => {});
   }, []);
 

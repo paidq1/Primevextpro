@@ -229,7 +229,7 @@ export default function CopyTradingSetup() {
           Cancel
         </button>
 
-        <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '8px' }}>2020-2026 © VertexTrade Pro</div>
+        <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '8px' }}>2020-2026 © Quantyrex Markets</div>
       </div>
     </div>
   );

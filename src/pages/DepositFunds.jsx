@@ -82,7 +82,7 @@ export default function DepositFunds() {
               <div style={{ color: 'white', fontSize: '10px', fontWeight: '700', marginBottom: '4px' }}>Bank Transfer Details</div>
               {[
                 ['Bank Name', 'VertexTrade Bank'],
-                ['Account Name', 'VertexTrade Pro Ltd'],
+                ['Account Name', 'Quantyrex Markets Ltd'],
                 ['Account Number', '0123456789'],
                 ['Routing Number', '021000021'],
                 ['SWIFT/BIC', 'VTPROUS33'],
@@ -162,7 +162,7 @@ export default function DepositFunds() {
         </>
       )}
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © VertexTrade Pro</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function SettingsPage() {
     setTwoFALoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://vertextrades.onrender.com/api/auth/2fa/toggle', {
+      const res = await fetch('https://quantyrexs.onrender.com/api/auth/2fa/toggle', {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
       }).then(r => r.json());
@@ -131,7 +131,7 @@ export default function SettingsPage() {
           />
         </Section>
 
-        <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '9px', padding: '16px 0' }}>VertexTrade Pro © 2020-2026</div>
+        <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '9px', padding: '16px 0' }}>Quantyrex Markets © 2020-2026</div>
       </div>
     </div>
   );

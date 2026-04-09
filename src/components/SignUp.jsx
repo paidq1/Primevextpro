@@ -215,7 +215,7 @@ const SignUp = () => {
                   <svg width='22' height='22' fill='none' stroke='#22c55e' viewBox='0 0 24 24' strokeWidth='2'><path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7'/></svg>
                 </div>
                 <div style={{ color: '#111827', fontSize: '14px', fontWeight: '700', marginBottom: '8px' }}>Account Created!</div>
-                <div style={{ color: '#6b7280', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Welcome to VertexTrade Pro! Your account has been successfully created.</div>
+                <div style={{ color: '#6b7280', fontSize: '9px', marginBottom: '20px', lineHeight: '1.6' }}>Welcome to Quantyrex Markets! Your account has been successfully created.</div>
                 <button onClick={() => window.location.replace('/signin')} style={{ padding: '8px 28px', background: '#6366f1', border: 'none', color: 'white', fontSize: '10px', fontWeight: '600', cursor: 'pointer' }}>Login</button>
               </div>
             </>

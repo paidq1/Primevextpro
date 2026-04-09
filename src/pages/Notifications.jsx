@@ -10,7 +10,7 @@ const allNotifications = [
   { id: 4, icon: '💸', title: 'Withdrawal Processed', desc: 'Your withdrawal request of $200 has been processed successfully.', time: '1 day ago', unread: false, type: 'withdrawal' },
   { id: 5, icon: '🤝', title: 'Referral Bonus', desc: 'You earned a $10 referral bonus from a new signup.', time: '2 days ago', unread: false, type: 'referral' },
   { id: 6, icon: '📦', title: 'Package Activated', desc: 'Your Bronze investment package has been activated successfully.', time: '3 days ago', unread: false, type: 'package' },
-  { id: 7, icon: '🔔', title: 'System Update', desc: 'VertexTrade Pro has been updated with new features and improvements.', time: '1 week ago', unread: false, type: 'system' },
+  { id: 7, icon: '🔔', title: 'System Update', desc: 'Quantyrex Markets has been updated with new features and improvements.', time: '1 week ago', unread: false, type: 'system' },
 ];
 
 export default function Notifications() {
@@ -19,7 +19,7 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    fetch('https://vertextrades.onrender.com/api/notifications', {
+    fetch('https://quantyrexs.onrender.com/api/notifications', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     }).then(r => r.json()).then(d => {
       if (Array.isArray(d)) {

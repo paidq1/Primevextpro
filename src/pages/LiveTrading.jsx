@@ -58,7 +58,7 @@ export default function LiveTrading() {
   const fetchAll = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://vertextrades.onrender.com/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch('https://quantyrexs.onrender.com/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
       setBalance(data.user?.balance ?? data.balance ?? 0);
       setCurrency(data.user?.currency || user?.currency || 'USD');
@@ -69,7 +69,7 @@ export default function LiveTrading() {
     } catch {}
     try {
       const token = localStorage.getItem('token');
-      const sres = await fetch('https://vertextrades.onrender.com/api/trade/stats', { headers: { Authorization: `Bearer ${token}` } });
+      const sres = await fetch('https://quantyrexs.onrender.com/api/trade/stats', { headers: { Authorization: `Bearer ${token}` } });
       const sdata = await sres.json();
       setStats(sdata);
     } catch {}
@@ -271,7 +271,7 @@ export default function LiveTrading() {
         </div>
       </div>
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © VertexTrade Pro</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
       <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }`}</style>
     </div>
   );

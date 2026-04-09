@@ -11,7 +11,7 @@ export default function SupportPage() {
   const token = localStorage.getItem('token');
 
   const fetchChats = () =>
-    fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${token}` } })
+    fetch('https://quantyrexs.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${token}` } })
       .then(r => r.json()).then(d => {
         const list = Array.isArray(d) ? d : [];
         setContacts(list);
@@ -28,7 +28,7 @@ export default function SupportPage() {
     if (!adminReply?.trim() || adminSending) return;
     setAdminSending(true);
     try {
-      const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ text: adminReply }) });
+      const res = await fetch(`https://quantyrexs.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ text: adminReply }) });
       const data = await res.json();
       setSelectedChat(data);
       setAdminReply('');
@@ -49,7 +49,7 @@ export default function SupportPage() {
         {contacts.map((c, i) => (
           <div key={i} onClick={async () => {
             setSelectedChat(c);
-            await fetch(`https://vertextrades.onrender.com/api/chat/read/${c._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
+            await fetch(`https://quantyrexs.onrender.com/api/chat/read/${c._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
           }} style={{ padding: '12px 14px', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.04)', background: selectedChat?._id === c._id ? 'rgba(99,102,241,0.15)' : 'transparent', borderLeft: selectedChat?._id === c._id ? '3px solid #6366f1' : '3px solid transparent' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -85,13 +85,13 @@ export default function SupportPage() {
               <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
                 {selectedChat.status === 'open' && (
                   <button onClick={async () => {
-                    await fetch(`https://vertextrades.onrender.com/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
+                    await fetch(`https://quantyrexs.onrender.com/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
                     fetchChats(); setSelectedChat(prev => ({ ...prev, status: 'resolved' }));
                   }} style={{ background: '#22c55e', border: 'none', color: 'white', fontSize: '9px', padding: '5px 12px', cursor: 'pointer', borderRadius: '4px' }}>Resolve</button>
                 )}
                 <button onClick={async () => {
                   if (!window.confirm('Delete?')) return;
-                  await fetch(`https://vertextrades.onrender.com/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+                  await fetch(`https://quantyrexs.onrender.com/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
                   fetchChats(); setSelectedChat(null);
                 }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '9px', padding: '5px 12px', cursor: 'pointer', borderRadius: '4px' }}>Delete</button>
               </div>
@@ -193,7 +193,7 @@ export default function SupportPage() {
                   setAdminSending(true);
                   const fd = new FormData(); fd.append('image', file);
                   try {
-                    const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply-image/${selectedChat._id}`, { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd });
+                    const res = await fetch(`https://quantyrexs.onrender.com/api/chat/reply-image/${selectedChat._id}`, { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd });
                     const data = await res.json(); setSelectedChat(data);
                   } catch(e) {}
                   setAdminSending(false); e.target.value = '';

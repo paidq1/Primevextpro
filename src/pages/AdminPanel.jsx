@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const BASE_URL = 'https://vertextrades.onrender.com/api';
+const BASE_URL = 'https://quantyrexs.onrender.com/api';
 const getToken = () => localStorage.getItem('token');
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` });
 
@@ -99,7 +99,7 @@ export default function AdminPanel() {
   const [adminSending, setAdminSending] = useState(false);
   // Poll contacts in background for notifications
   useEffect(() => {
-    const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => {
+    const fetchChats = () => fetch('https://quantyrexs.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => {
       setContacts(Array.isArray(d) ? d : []);
       // Update selected chat messages if open
       if (selectedChat) {
@@ -150,7 +150,7 @@ export default function AdminPanel() {
           userVisibleOnly: true,
           applicationServerKey: 'BEiIS0GArEDCEpC2TqaQVD3UX4wu8CO1SRu2Gy4Wlypj1pjl2txbyF4VwuxKQ9eUJ7PHHRBx2BG3f0_Z9EKhhz8'
         });
-        await fetch('https://vertextrades.onrender.com/api/push/subscribe', {
+        await fetch('https://quantyrexs.onrender.com/api/push/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
           body: JSON.stringify({ subscription: sub })
@@ -202,13 +202,13 @@ export default function AdminPanel() {
     if (tab === 'kyc') api('/kyc').then(setKyc);
     if (tab === 'trades') api('/trades').then(setTrades);
     if (tab === 'contacts') {
-      const fetchChats = () => fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+      const fetchChats = () => fetch('https://quantyrexs.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
       fetchChats();
       const interval = setInterval(fetchChats, 3000);
       return () => clearInterval(interval);
     }
     if (tab === 'bots') api('/bots/all').then(d => setAllBots(Array.isArray(d) ? d : []));
-    if (tab === 'traders') fetch(`${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders`).then(r => r.json()).then(setTraders).catch(() => {});
+    if (tab === 'traders') fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexs.onrender.com/api'}/traders`).then(r => r.json()).then(setTraders).catch(() => {});
     if (tab === 'stakes') api('/stakes/all').then(d => setAllStakes(Array.isArray(d) ? d : []));
   }, [tab]);
 
@@ -780,9 +780,9 @@ export default function AdminPanel() {
                     <td style={{ ...tdStyle, color: k.kycStatus === 'approved' ? '#22c55e' : k.kycStatus === 'submitted' ? '#f59e0b' : '#ef4444' }}>{k.kycStatus}</td>
                     <td style={tdStyle}>{new Date(k.createdAt).toLocaleDateString()}</td>
                     <td style={tdStyle}>
-                      {k.kycData?.idFront && <a href={'https://vertextradepro.onrender.com' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
-                      {k.kycData?.idBack && <a href={'https://vertextradepro.onrender.com' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
-                      {k.kycData?.selfie && <a href={'https://vertextradepro.onrender.com' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
+                      {k.kycData?.idFront && <a href={'https://quantyrexpro.onrender.com' + k.kycData.idFront} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Front</a>}
+                      {k.kycData?.idBack && <a href={'https://quantyrexpro.onrender.com' + k.kycData.idBack} target="_blank" style={{ ...btnStyle('#6366f1'), textDecoration: 'none', display: 'inline-block' }}>Back</a>}
+                      {k.kycData?.selfie && <a href={'https://quantyrexpro.onrender.com' + k.kycData.selfie} target="_blank" style={{ ...btnStyle('#818cf8'), textDecoration: 'none', display: 'inline-block' }}>Selfie</a>}
                     </td>
                     <td style={tdStyle}>
                       {(k.kycStatus === 'submitted' || k.kycStatus === 'pending') && <>
@@ -967,7 +967,7 @@ export default function AdminPanel() {
                 <div key={i} onClick={async () => {
                   setSelectedChat(c);
                   setChatFullscreen(true);
-                  await fetch(`https://vertextrades.onrender.com/api/chat/read/${c._id}`, {
+                  await fetch(`https://quantyrexs.onrender.com/api/chat/read/${c._id}`, {
                     method: 'PATCH',
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                   });
@@ -998,15 +998,15 @@ export default function AdminPanel() {
                       <div style={{ display: 'flex', gap: '6px' }}>
                         {selectedChat.status === 'open' && (
                           <button onClick={async () => {
-                            await fetch(`https://vertextrades.onrender.com/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-                            fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+                            await fetch(`https://quantyrexs.onrender.com/api/chat/resolve/${selectedChat._id}`, { method: 'PATCH', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                            fetch('https://quantyrexs.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
                             setSelectedChat(prev => ({ ...prev, status: 'resolved' }));
                           }} style={{ background: '#22c55e', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', borderRadius: '3px' }}>Mark Resolved</button>
                         )}
                         <button onClick={async () => {
                           if (!window.confirm('Delete this conversation?')) return;
-                          await fetch(`https://vertextrades.onrender.com/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-                          fetch('https://vertextrades.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
+                          await fetch(`https://quantyrexs.onrender.com/api/chat/delete/${selectedChat._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                          fetch('https://quantyrexs.onrender.com/api/chat/all', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(r => r.json()).then(d => setContacts(Array.isArray(d) ? d : []));
                           setSelectedChat(null);
                         }} style={{ background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', padding: '4px 10px', cursor: 'pointer', borderRadius: '3px' }}>Delete</button>
                       </div>
@@ -1111,7 +1111,7 @@ export default function AdminPanel() {
                         const fd = new FormData();
                         fd.append('image', file);
                         try {
-                          const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply-image/${selectedChat._id}`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
+                          const res = await fetch(`https://quantyrexs.onrender.com/api/chat/reply-image/${selectedChat._id}`, { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
                           const data = await res.json();
                           setSelectedChat(data);
                         } catch(e) {}
@@ -1127,7 +1127,7 @@ export default function AdminPanel() {
                         onKeyDown={async e => {
                           if (e.key === 'Enter' && adminReply?.trim()) {
                             setAdminSending(true);
-                            const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
+                            const res = await fetch(`https://quantyrexs.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
                             const data = await res.json();
                             setSelectedChat(data);
                             setAdminReply('');
@@ -1141,7 +1141,7 @@ export default function AdminPanel() {
                         if (!adminReply?.trim() || adminSending) return;
                         setAdminSending(true);
                         try {
-                          const res = await fetch(`https://vertextrades.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
+                          const res = await fetch(`https://quantyrexs.onrender.com/api/chat/reply/${selectedChat._id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` }, body: JSON.stringify({ text: adminReply }) });
                           const data = await res.json();
                           setSelectedChat(data);
                           setAdminReply('');
@@ -1183,10 +1183,10 @@ export default function AdminPanel() {
                 const fd = new FormData();
                 Object.entries(traderForm).forEach(([k, v]) => fd.append(k, v));
                 if (traderImg) fd.append('img', traderImg);
-                const url = editTrader ? `${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders/${editTrader._id}` : `${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders`;
+                const url = editTrader ? `${import.meta.env.VITE_API_URL || 'https://quantyrexs.onrender.com/api'}/traders/${editTrader._id}` : `${import.meta.env.VITE_API_URL || 'https://quantyrexs.onrender.com/api'}/traders`;
                 const method = editTrader ? 'PUT' : 'POST';
                 await fetch(url, { method, headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
-                const updated = await fetch(`${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders`).then(r => r.json());
+                const updated = await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexs.onrender.com/api'}/traders`).then(r => r.json());
                 setTraders(updated);
                 setTraderForm({ name: '', location: '', flag: '', followers: '', risk: '', favorite: '', totalTrades: '', totalLoss: '', profitShare: '', winRate: '', verified: true });
                 setTraderImg(null);
@@ -1211,11 +1211,11 @@ export default function AdminPanel() {
                   <button onClick={async () => {
                     const fd = new FormData();
                     fd.append('verified', !t.verified);
-                    await fetch(`${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders/${t._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
+                    await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexs.onrender.com/api'}/traders/${t._id}`, { method: 'PUT', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, body: fd });
                     setTraders(traders.map(tr => tr._id === t._id ? { ...tr, verified: !tr.verified } : tr));
                   }} style={{ padding: '4px 10px', background: t.verified ? '#22c55e' : 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>{t.verified ? '✓ Verified' : 'Unverified'}</button>
                   <button onClick={() => { setEditTrader(t); setTraderForm({ name: t.name, location: t.location, flag: t.flag, followers: t.followers, risk: t.risk, favorite: t.favorite, totalTrades: t.totalTrades, totalLoss: t.totalLoss, profitShare: t.profitShare, winRate: t.winRate, verified: t.verified }); }} style={{ padding: '4px 10px', background: '#6366f1', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Edit</button>
-                  <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://vertextrades.onrender.com/api'}/traders/${t._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(traders.filter(tr => tr._id !== t._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Delete</button>
+                  <button onClick={async () => { await fetch(`${import.meta.env.VITE_API_URL || 'https://quantyrexs.onrender.com/api'}/traders/${t._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }); setTraders(traders.filter(tr => tr._id !== t._id)); }} style={{ padding: '4px 10px', background: '#ef4444', border: 'none', color: 'white', fontSize: '7px', cursor: 'pointer' }}>Delete</button>
                 </div>
               ))}
               {traders.length === 0 && <div style={{ padding: '20px', textAlign: 'center', fontSize: '8px', color: 'rgba(255,255,255,0.3)' }}>No traders yet. Add one above.</div>}

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const API = 'https://vertextrades.onrender.com/api/chat';
+const API = 'https://quantyrexs.onrender.com/api/chat';
 
 export default function LiveChat() {
   if (window.location.pathname.startsWith('/admin')) return null;
@@ -140,7 +140,7 @@ export default function LiveChat() {
                   <div style={{ position: 'absolute', bottom: '2px', right: '2px', width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', border: '2px solid #6366f1' }} />
                 </div>
                 <div>
-                  <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Chat — VertexTrade Pro Support</div>
+                  <div style={{ color: 'white', fontSize: '11px', fontWeight: '700' }}>Live Chat — Quantyrex Markets Support</div>
                   <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '9px' }}>We typically reply within minutes</div>
                 </div>
               </div>

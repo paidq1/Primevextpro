@@ -13,7 +13,7 @@ const bots = [
   { name: 'ELITE BOT',    amount: 25000, dailyRate: '70%', duration: '120 days', days: 120, color: '#9b59b6' },
 ];
 
-const BASE_URL = 'https://vertextrades.onrender.com/api';
+const BASE_URL = 'https://quantyrexs.onrender.com/api';
 const headers = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` });
 
 export default function BotPlans() {
@@ -130,7 +130,7 @@ export default function BotPlans() {
         </div>
       )}
 
-      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © VertexTrade Pro</div>
+      <div style={{ textAlign: 'center', padding: '16px', color: 'rgba(255,255,255,0.2)', fontSize: '7px', borderTop: '1px solid rgba(255,255,255,0.04)', marginTop: '16px' }}>2020-2026 © Quantyrex Markets</div>
     </div>
   );
 }

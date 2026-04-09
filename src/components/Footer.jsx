@@ -18,7 +18,7 @@ const Footer = () => {
             <h3 style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(9px, 2.2vw, 17px)', marginBottom: '6px' }}>Contact</h3>
             <div style={{ width: '28px', height: '2px', background: '#6366f1', marginBottom: '12px' }} />
             {[
-              { icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'Email', value: 'support@vertextradeprox.cc' },
+              { icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'Email', value: 'support@quantyrexprox.cc' },
               { icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z', label: 'Phone Number', value: '+14705427729' },
               { icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', label: 'Address', value: 'A108 Adam Street NY 535022, USA' },
             ].map((item, i) => (
@@ -102,7 +102,7 @@ const Footer = () => {
             <path d="M20 14L12 18V23L20 30L28 23V18L20 14Z" fill="#6366F1" stroke="#6366F1" strokeWidth="1"/>
           </svg>
           <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)', fontWeight: '700', letterSpacing: '2px' }}>VERTEXTRADE <span style={{ color: '#6366f1' }}>PRO</span></span>
-          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>© 2025 VertexTrade Pro All rights reserved</span>
+          <span style={{ color: 'white', fontSize: 'clamp(7px, 1.8vw, 15px)' }}>© 2025 Quantyrex Markets All rights reserved</span>
         </div>
       </div>
 

@@ -71,7 +71,7 @@ export default function Profile() {
   const handleRemoveAvatar = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('https://vertextrades.onrender.com/api/user/avatar', {
+      const res = await fetch('https://quantyrexs.onrender.com/api/user/avatar', {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -448,7 +448,7 @@ export default function Profile() {
           </div>
         )}
       </div>
-      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; VertexTrade Pro</div>
+      <div style={{ textAlign: "center", padding: "16px", color: "rgba(255,255,255,0.2)", fontSize: "7px", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: "16px" }}>2020-2026 &copy; Quantyrex Markets</div>
 
     </div>
   );
