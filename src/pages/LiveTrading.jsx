@@ -169,7 +169,7 @@ export default function LiveTrading() {
         </div>
 
         {/* Stats Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: '6px', marginBottom: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '20px' }}>
             {stats && [
               { label: 'Trades', value: stats.totalTrades ?? 0, color: 'white' },
               { label: 'Wins', value: stats.wins ?? 0, color: '#22c55e' },
@@ -177,9 +177,9 @@ export default function LiveTrading() {
               { label: 'Net P&L', value: formatAmount(parseFloat(stats.netProfitLoss ?? 0), user?.currency), color: parseFloat(stats.netProfitLoss) >= 0 ? '#22c55e' : '#ef4444' },
               { label: 'ROI', value: `${parseFloat(stats.roi ?? 0).toFixed(1)}%`, color: parseFloat(stats.roi) >= 0 ? '#22c55e' : '#ef4444' },
             ].map(s => (
-              <div key={s.label} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '8px', textAlign: 'center' }}>
-                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '7px', marginBottom: '3px' }}>{s.label}</div>
-                <div style={{ color: s.color, fontSize: '11px', fontWeight: '800' }}>{s.value}</div>
+              <div key={s.label} style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1))', border: '2px solid rgba(99,102,241,0.4)', borderRadius: '16px', padding: '16px 12px', textAlign: 'center', boxShadow: '0 8px 32px rgba(99,102,241,0.15)' }}>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginBottom: '6px', fontWeight: '600', letterSpacing: '0.5px', textTransform: 'uppercase' }}>{s.label}</div>
+                <div style={{ color: s.color, fontSize: '18px', fontWeight: '900', lineHeight: '1.2' }}>{s.value}</div>
               </div>
             ))}
         </div>
