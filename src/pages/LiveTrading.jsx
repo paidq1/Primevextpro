@@ -169,9 +169,8 @@ export default function LiveTrading() {
         </div>
 
         {/* Stats Cards */}
-        {stats && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '20px' }}>
-            {[
+            {stats ? [
               { label: 'Total Trades', value: stats.totalTrades ?? 0, color: 'white' },
               { label: 'Wins', value: stats.wins ?? 0, color: '#22c55e' },
               { label: 'Losses', value: stats.losses ?? 0, color: '#ef4444' },
@@ -180,9 +179,17 @@ export default function LiveTrading() {
                 <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginBottom: '6px', fontWeight: '600' }}>{s.label}</div>
                 <div style={{ color: s.color, fontSize: '14px', fontWeight: '800' }}>{s.value}</div>
               </div>
+            )) : [
+              { label: 'Total Trades', value: '...', color: 'rgba(255,255,255,0.3)' },
+              { label: 'Wins', value: '...', color: 'rgba(255,255,255,0.3)' },
+              { label: 'Losses', value: '...', color: 'rgba(255,255,255,0.3)' },
+            ].map(s => (
+              <div key={s.label} style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.8))', border: '1px solid rgba(99,102,241,0.3)', borderRadius: '12px', padding: '12px', textAlign: 'center', boxShadow: '0 4px 24px rgba(99,102,241,0.1)' }}>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '9px', marginBottom: '6px', fontWeight: '600' }}>{s.label}</div>
+                <div style={{ color: s.color, fontSize: '14px', fontWeight: '800' }}>{s.value}</div>
+              </div>
             ))}
         </div>
-        )}
 
         {/* Trades Table */}
         <div style={{ background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.06)' }}>
