@@ -124,6 +124,9 @@ export default function Stake() {
               <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '8px', marginBottom: '4px' }}>Amount (USD) — Balance: <span style={{ color: '#22c55e' }}>{formatAmount(balance, user?.currency)}</span></div>
               <input value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00"
                 style={{ width: '100%', background: '#1a2e4a', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '8px 10px', outline: 'none', boxSizing: 'border-box' }} />
+              {amount && Number(amount) > 0 && user?.currency && user.currency !== 'USD' && (
+                <div style={{ fontSize: '7px', color: '#f59e0b', marginTop: '4px' }}>≈ {formatAmount(Number(amount), user.currency)} in your currency</div>
+              )}
             </div>
             {error && <div style={{ color: '#ef4444', fontSize: '8px', marginBottom: '8px' }}>{error}</div>}
             <button onClick={handleSubmit} disabled={submitting}

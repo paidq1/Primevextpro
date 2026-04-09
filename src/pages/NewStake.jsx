@@ -150,8 +150,11 @@ export default function NewStake() {
                 value={amount}
                 onChange={e => setAmount(e.target.value)}
                 placeholder="Min. $100.00"
-                style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box', marginBottom: '12px' }}
+                style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '11px', padding: '10px 12px', outline: 'none', boxSizing: 'border-box', marginBottom: '6px' }}
               />
+              {amount && Number(amount) >= 100 && user?.currency && user.currency !== 'USD' && (
+                <div style={{ fontSize: '7px', color: '#f59e0b', marginBottom: '12px' }}>≈ {formatAmount(Number(amount), user.currency)} in your currency</div>
+              )}
 
               {/* Quick amounts */}
               <div style={{ display: 'flex', gap: '6px', marginBottom: '14px' }}>
