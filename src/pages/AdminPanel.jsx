@@ -131,7 +131,7 @@ export default function AdminPanel() {
         } catch(e) {}
         // Browser push
         if (Notification.permission === 'granted') {
-          new Notification('New Support Message', { body: 'A user sent a new chat message', icon: '/logo.png' });
+          // Notification disabled - new Notification('New Support Message', { body: 'A user sent a new chat message', icon: '/logo.png' });
         }
       }
       prevUnread.current = totalUnread;

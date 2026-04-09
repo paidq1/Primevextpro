@@ -130,7 +130,7 @@ export default function LiveTrading() {
                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
                   <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: 'white', fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box' }} />
                   {amount && Number(amount) >= 10 && user?.currency && user.currency !== 'USD' && (
-                    <div style={{ fontSize: '6px', color: '#f59e0b', marginTop: '2px' }}>≈ {formatAmount(Number(amount), user.currency)}</div>
+                    <div style={{ fontSize: '6px', color: '#22c55e', marginTop: '2px' }}>≈ {formatAmount(Number(amount), user.currency)}</div>
                   )}
                 </div>
                 <div>
