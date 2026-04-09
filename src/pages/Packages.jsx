@@ -278,8 +278,11 @@ export default function Packages() {
                 <input
                   value={amounts[i]}
                   onChange={e => { const a = [...amounts]; a[i] = e.target.value; setAmounts(a); }}
-                  style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '10px' }}
+                  style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.08)', color: 'white', fontSize: '9px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }}
                 />
+                {amounts[i] && Number(amounts[i]) >= plan.min && user?.currency && user.currency !== 'USD' && (
+                  <div style={{ fontSize: '7px', color: '#f59e0b', marginBottom: '10px' }}>≈ {formatAmount(Number(amounts[i]), user.currency)}</div>
+                )}
                 <button onClick={() => handleJoin(plan, i)} style={{ width: '100%', padding: '7px', background: '#6366f1', border: 'none', color: 'white', fontSize: '8px', fontWeight: '700', cursor: 'pointer' }}>
                   Join Plan
                 </button>

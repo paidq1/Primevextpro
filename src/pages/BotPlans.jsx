@@ -75,7 +75,10 @@ export default function BotPlans() {
             return (
               <div key={i} style={{ background: '#1a2e4a', border: '1px solid rgba(99,102,241,0.3)', padding: '12px', position: 'relative' }}>
                 <div style={{ color: bot.color, fontSize: '9px', fontWeight: '800', marginBottom: '4px' }}>{bot.name}</div>
-                <div style={{ color: bot.color, fontSize: '10px', fontWeight: '800', marginBottom: '8px' }}>${bot.amount.toLocaleString()}</div>
+                <div style={{ color: bot.color, fontSize: '10px', fontWeight: '800', marginBottom: '2px' }}>${bot.amount.toLocaleString()}</div>
+                {user?.currency && user.currency !== 'USD' && (
+                  <div style={{ fontSize: '7px', color: '#f59e0b', marginBottom: '8px' }}>≈ {formatAmount(bot.amount, user.currency)}</div>
+                )}
                 {[
                   ['Daily Return', bot.dailyRate, '#22c55e'],
                   ['Duration', bot.duration, 'white'],
