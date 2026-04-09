@@ -1,0 +1,13 @@
+
+const mongoose = require('mongoose');
+require('dotenv').config();
+const mongoUri = process.env.MONGO_URI;
+const bios = {"J Bravo": "An energetic day trader known for his bold trading style and high-energy live streams. J Bravo specializes in momentum trading and options, helping retail traders navigate volatile market conditions with confidence.", "DayTradeQueen": "A female day trading educator and live trader who has built a strong community of traders. She specializes in stocks and options, focusing on momentum setups and news catalysts for intraday opportunities.", "Lucha$trader": "A passionate trader known for combining technical analysis with real-time market reading. Lucha specializes in high-momentum setups and has a strong following in the retail trading community.", "Adrian Saenz": "A professional trader and educator specializing in futures and forex markets. Adrian focuses on institutional order flow and market structure to identify high-probability trading opportunities.", "CryptoMaster": "A cryptocurrency trading specialist with deep expertise in Bitcoin, Ethereum, and altcoin markets. CryptoMaster combines on-chain analysis with technical trading to identify major crypto market moves.", "CommoditiesExpert": "A veteran commodities trader with expertise in gold, oil, and agricultural markets. Specializes in macroeconomic analysis and futures trading with a focus on long-term trend identification.", "SwingKing": "A swing trading specialist who holds positions from days to weeks. SwingKing focuses on identifying major trend reversals and continuation patterns in stocks and ETFs using technical analysis.", "ForexqueenX": "A professional forex trader and educator with expertise in major and exotic currency pairs. ForexqueenX combines fundamental analysis with technical setups to identify high-probability forex trades.", "Cryptoxavant": "An avant-garde crypto trader specializing in DeFi, NFTs, and emerging blockchain technologies. Cryptoxavant identifies early opportunities in the crypto ecosystem before they become mainstream.", "Elon Reeve Musk": "CEO of Tesla and SpaceX, known for his significant influence on cryptocurrency and tech stock markets. His market insights and announcements frequently move markets, making him one of the most watched figures in trading."};
+mongoose.connect(mongoUri).then(async () => {
+  const Trader = require('./models/Trader');
+  for (const [name, bio] of Object.entries(bios)) {
+    const r = await Trader.updateOne({ name }, { $set: { bio } });
+    console.log(r.modifiedCount ? '✅ ' + name : '⚠️  Not found: ' + name);
+  }
+  process.exit();
+}).catch(e => { console.error(e); process.exit(1); });

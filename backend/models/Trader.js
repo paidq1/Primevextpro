@@ -12,6 +12,7 @@ const TraderSchema = new mongoose.Schema({
   profitShare: { type: Number },
   winRate: { type: Number },
   img: { type: String },
+  bio: { type: String, default: '' },
   verified: { type: Boolean, default: true },
   order: { type: Number, default: 99 },
 }, { timestamps: true });
