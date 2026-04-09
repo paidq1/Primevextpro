@@ -173,10 +173,17 @@ export default function CopyTradingSetup() {
             <span style={{ fontSize: '10px', fontWeight: '700' }}>Investment Amount</span>
             <span style={{ fontSize: '9px', color: '#22c55e', fontWeight: '600' }}>Balance: {formatAmountWithCode(balance, currency)}</span>
           </div>
-          <div style={{ position: 'relative', marginBottom: '8px' }}>
+          <div style={{ position: 'relative', marginBottom: '4px' }}>
             <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>$</span>
             <input type="number" value={amount} onChange={e => { setAmount(e.target.value); setError(''); }} placeholder="0.00" style={{ width: '100%', background: '#0e1628', border: '1px solid rgba(255,255,255,0.1)', color: 'white', fontSize: '16px', fontWeight: '700', padding: '12px 12px 12px 26px', outline: 'none', borderRadius: '8px', boxSizing: 'border-box' }} />
           </div>
+          {amount && Number(amount) > 0 && currency !== 'USD' && (
+            <div style={{ fontSize: '8px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span>≈</span>
+              <span style={{ fontWeight: '700' }}>{formatAmountWithCode(Number(amount), currency)}</span>
+              <span style={{ color: 'rgba(255,255,255,0.3)' }}>in your local currency</span>
+            </div>
+          )}
           <div style={{ display: 'flex', gap: '6px' }}>
             {[25, 50, 100, 250].map(v => (
               <button key={v} onClick={() => setAmount(String(v))} style={{ flex: 1, padding: '5px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', fontSize: '8px', cursor: 'pointer', borderRadius: '6px' }}>${v}</button>
