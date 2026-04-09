@@ -20,13 +20,19 @@ export default function MyCopyTrades() {
   const navigate = useNavigate();
   const [copyTrades, setCopyTrades] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currency, setCurrency] = useState('USD');
   const [show, setShow] = useState(10);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [showStopModal, setShowStopModal] = useState(false);
   const [selectedTrade, setSelectedTrade] = useState(null);
 
-  useEffect(() => { fetchCopyTrades(); }, []);
+  useEffect(() => { 
+    fetchCopyTrades(); 
+    getDashboard().then(data => {
+      setCurrency(data?.user?.currency || 'USD');
+    }).catch(() => {});
+  }, []);
 
   const fetchCopyTrades = async () => {
     try {
