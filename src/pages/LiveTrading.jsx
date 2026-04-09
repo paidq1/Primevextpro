@@ -20,6 +20,7 @@ export default function LiveTrading() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [balance, setBalance] = useState(null);
+  const [currency, setCurrency] = useState(user?.currency || 'USD');
   const [trades, setTrades] = useState([]);
   const [stats, setStats] = useState(null);
   const [symbol, setSymbol] = useState(SYMBOLS[0]);
@@ -60,6 +61,7 @@ export default function LiveTrading() {
       const res = await fetch('https://vertextrades.onrender.com/api/user/dashboard', { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
       setBalance(data.user?.balance ?? data.balance ?? 0);
+      setCurrency(data.user?.currency || user?.currency || 'USD');
     } catch {}
     try {
       const data = await getTrades();
@@ -128,8 +130,8 @@ export default function LiveTrading() {
               <div>
                 <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '7px', marginBottom: '3px' }}>Amount (USD)</div>
                 <input value={amount} onChange={e => setAmount(e.target.value)} placeholder='Min $10' style={{ width: '100%', background: '#0a0f1e', border: `1px solid ${sheetDir === 'buy' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, color: 'white', fontSize: '10px', padding: '6px 8px', outline: 'none', boxSizing: 'border-box', marginBottom: '4px' }} />
-                {amount && Number(amount) >= 10 && user?.currency && user.currency !== 'USD' && (
-                  <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '8px' }}>≈ {formatAmount(Number(amount), user.currency)} in your local currency</div>
+                {amount && Number(amount) >= 10 && currency && currency !== 'USD' && (
+                  <div style={{ fontSize: '7px', color: '#22c55e', marginBottom: '8px' }}>≈ {formatAmount(Number(amount), currency)} in your local currency</div>
                 )}
               </div>
 
